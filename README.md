@@ -1,7 +1,5 @@
 # Capstone Project
 
-Hello
-
 ### Members:
 * Gomez, Algilbert ([alexxShandsome](https://github.com/alexxShandsome))
 * Mayor, James
