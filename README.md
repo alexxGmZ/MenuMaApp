@@ -1,10 +1,10 @@
 # Capstone Project
 
 ### Members:
-* Gomez, Algilbert
+* Gomez, Algilbert ([alexxShandsome](https://github.com/alexxShandsome))
 * Mayor, James
 * Mojar, Justine
-* Seva, Kenneth
+* Seva, Kenneth ([kennethseva](https://github.com/kennethseva))
 
 <br>
 
