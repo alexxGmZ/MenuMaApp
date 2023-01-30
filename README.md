@@ -9,6 +9,5 @@
 <br>
 
 ## Idea/s:
-*
-*
-*
+* FOSS Customizable Menu
+* Teenage Pregnancy
