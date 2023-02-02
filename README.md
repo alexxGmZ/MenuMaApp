@@ -9,5 +9,21 @@
 <br>
 
 ## Idea/s:
-* FOSS Customizable Menu
-* Teenage Pregnancy
+* Free and Open Source
+* Generic
+* Customizable Menu System
+
+<br>
+
+## What??
+
+<br>
+
+## Why??
+
+<br>
+
+## How??
+
+<br>
+
