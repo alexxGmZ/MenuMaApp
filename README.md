@@ -15,15 +15,43 @@
 
 <br>
 
-## What??
+Organization: **Any Food serving organizations**
+
+# What
+- Free and Open Source
+- Customizable
+   + Logo
+   + Menu
+   + Name
+   + Background
+   + Color
+   + Order Customization
+   + Order Thumbnail
+   + Font
+- Web based
+- System
 
 <br>
 
-## Why??
+# Why
+- Outdated
+- Costly (Lessen Cost)
+   + Lamination cost
+   + Paper cost
+   + Printing cost
+- Modern
+- Future Proofing
 
 <br>
 
-## How??
+# How
+- Admin UI
+   + Menu Edit
 
-<br>
+- Kitchen UI
+   + Order Queue
+   + Serving Queue
+
+- Customer UI
+   + Service/Product Categories
 
