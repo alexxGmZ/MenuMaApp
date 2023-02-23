@@ -1,6 +1,16 @@
 # Capstone Project
 
-### Members:
+## Hazy Title/s
+* Menu Maker
+* LibreMenu
+
+## Hazy Tagline/s
+* A Customizable, Free and Open-Source Menu System
+
+<br>
+<br>
+
+## Members:
 * Gomez, Algilbert ([alexxShandsome](https://github.com/alexxShandsome))
 * Mayor, James
 * Mojar, Justine ([justinemedinamojar01](https://github.com/justinemedinamojar01))
@@ -15,7 +25,7 @@
 
 <br>
 
-Organization: **Any Food serving organizations**
+Organization: **Any Food Serving Organizations**
 
 # What
 - Free and Open Source
@@ -41,6 +51,7 @@ Organization: **Any Food serving organizations**
    + Printing cost
 - Modern
 - Future Proofing
+- Lack of Free Softwares
 
 <br>
 
