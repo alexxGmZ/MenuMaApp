@@ -1,13 +1,11 @@
-# Capstone Project
-
-## Hazy Title/s
-* Menu Maker
-* LibreMenu
-
-## Hazy Tagline/s
-* A Customizable, Free and Open-Source Menu System
+# FreEzMenu
+## A Customizable UI, Free and Open-source Menu System for Foodservice Industry
 
 <br>
+
+## Documents (Google Docs)
+* [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk/edit)
+
 <br>
 
 ## Members:
@@ -25,7 +23,9 @@
 
 <br>
 
-Organization: **Any Food Serving Organizations**
+## Organization: **Any Food Serving Organizations**
+
+<br>
 
 # What
 - Free and Open Source
