@@ -1,5 +1,6 @@
 # FreEzMenu
 ## A Customizable UI, Free and Open-source Menu System for Foodservice Industry
+Client or Target Market: **Any Food Service Infrastructure**
 
 <br>
 
@@ -16,14 +17,12 @@
 
 <br>
 
-## Idea/s:
+## Idea/s or Keywords:
+* Menu
+* Foodservice Industry
 * Free and Open Source
 * Generic
 * Customizable Menu System
-
-<br>
-
-## Organization: **Any Food Serving Organizations**
 
 <br>
 
