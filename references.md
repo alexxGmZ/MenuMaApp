@@ -10,5 +10,6 @@ of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
 # Used references
 List here all literatures that are used in the docs
 
-*
+* [The Effects of Restaurant Menu Item Descriptions on Perceptions of Quality, Price,
+and Purchase Intention](https://www.tandfonline.com/doi/pdf/10.1080/15378020802519850)
 
