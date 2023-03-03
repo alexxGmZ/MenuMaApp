@@ -29,4 +29,4 @@ List here all literatures that are used in the docs
    + [**2010:** Global Inflation](https://www.econstor.eu/bitstream/10419/70524/1/585159815.pdf)
    + [**2010:** Economic savings for scientific free and open source technology: A review](https://reader.elsevier.com/reader/sd/pii/S2468067220300481?token=6A6662E8B9F48FCB1A967C47F36B132D581711E18D2016231305406C4FAA4BDADC5E0CF1D2E81E993F6DA18877CE09D5&originRegion=eu-west-1&originCreation=20230303043451)
    + [**2005:** Is spyware an Internet nuisance or public menace?](https://www.researchgate.net/profile/Qing-Hu-10/publication/220422980_Is_Spyware_an_Internet_Nuisance_or_Public_Menace/links/00b7d52150cc23ca6f000000/Is-Spyware-an-Internet-Nuisance-or-Public-Menace.pdf)
-
+   + [**2015:** Implementation of Smart Restaurant with e-menu Card](http://www.kresttechnology.com/krest-academic-projects/krest-major-projects/ECE/BTech%20%20Major%20ECE%20EMBEDDED%202016-17/Btech%20ECE%20Embedded%20Major%20BP%202016-17/18.%20Implementation%20Of%20Smart%20Restaurant%20With%20E-Menu%20Card.pdf)
