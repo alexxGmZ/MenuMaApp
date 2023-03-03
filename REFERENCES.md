@@ -1,9 +1,20 @@
 # Unused or possible references
 List here all literatures that can be useful
 
-* [**2017:** Restaurant menu design and more responsible consumer food choice: an exploratory study
-of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
-* [**2018:** Complexity on the Menu and in the Meal](https://www.mdpi.com/2304-8158/7/10/158)
+* Restaurant Menu
+   + [**2017:** Restaurant menu design and more responsible consumer food choice: an exploratory study
+   of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
+   + [**2018:** Complexity on the Menu and in the Meal](https://www.mdpi.com/2304-8158/7/10/158)
+
+* Free and Open Source Software
+   + [**2007** Free/Open Source Software Development: Recent Research Results and Emerging
+   Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
+   + **2010** Free and Open Source Software
+      - https://ieeexplore.ieee.org/abstract/document/5662568
+      - https://upstreme.com/pdf/2010ITPro-OpenSourceEditorial.pdf
+   * **2008** Free/Libre open-source software development: What we know and what we do not know
+      - https://dl.acm.org/doi/abs/10.1145/2089125.2089127
+      - https://floss.syr.edu/sites/crowston.syr.edu/files/CrowstonFLOSSReviewPaperPreprint.pdf
 
 <br>
 
