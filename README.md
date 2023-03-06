@@ -5,6 +5,7 @@ Client or Target Market: **Any Food Service Infrastructure**
 <br>
 
 ## Documents (Google Docs)
+* [Draft Proposal](https://docs.google.com/document/d/1bcWLtB48ArufUy17uFiYptRV_mNLCcvPdWxIZq7_ODg/edit)
 * [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk/edit)
 
 <br>
