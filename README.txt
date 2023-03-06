@@ -1,0 +1,60 @@
+FreEzMenu
+A Customizable UI, Free and Open-source Menu Application System for Foodservice Industry
+Client or Target Market: Any Food Service Infrastructure
+
+
+Documents (Google Docs)
+* Draft Proposal
+   https://docs.google.com/document/d/1bcWLtB48ArufUy17uFiYptRV_mNLCcvPdWxIZq7_ODg/edit
+* Chapter 1-3
+   https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk/edit
+
+
+Members:
+* Gomez, Algilbert https://github.com/alexxShandsome
+* Mayor, James
+* Mojar, Justine https://github.com/justinemedinamojar01
+* Seva, Kenneth https://github.com/kennethseva
+
+
+Idea/s or Keywords:
+* Menu
+* Foodservice Industry
+* Free and Open Source
+* Generic
+* Customizable Menu System
+
+
+What
+- Free and Open Source
+- Customizable
+   + Logo
+   + Menu
+   + Name
+   + Background
+   + Color
+   + Order Customization
+   + Order Thumbnail
+   + Font
+- Desktop Application
+- Cross Platform (Windows 10, Linux, Android)
+- Menu Application System
+
+
+Why
+- Hardcopy Menu are getting Outdated
+- Costly (Lessen Cost)
+   + Lamination cost
+   + Paper cost
+   + Printing cost
+- Future Proofing
+- Lack of Free Softwares
+
+
+How
+- Electron desktop application framework
+- Admin UI
+   + Menu Edit
+- Customer UI
+   + Service/Product Categories
+
