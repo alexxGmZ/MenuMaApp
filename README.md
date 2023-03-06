@@ -38,31 +38,27 @@ Client or Target Market: **Any Food Service Infrastructure**
    + Order Customization
    + Order Thumbnail
    + Font
-- Web based
-- System
+- Desktop Application
+- Cross Platform (Windows 10, Linux, Android)
+- Menu Application System
 
 <br>
 
 # Why
-- Outdated
+- Hardcopy Menu are getting Outdated
 - Costly (Lessen Cost)
    + Lamination cost
    + Paper cost
    + Printing cost
-- Modern
 - Future Proofing
 - Lack of Free Softwares
 
 <br>
 
 # How
+- Electron desktop application framework
 - Admin UI
    + Menu Edit
-
-- Kitchen UI
-   + Order Queue
-   + Serving Queue
-
 - Customer UI
    + Service/Product Categories
 
