@@ -1,5 +1,5 @@
 # FreEzMenu
-## A Customizable UI, Free and Open-source Menu System for Foodservice Industry
+## A Customizable UI, Free and Open-source Menu Application System for Foodservice Industry
 Client or Target Market: **Any Food Service Infrastructure**
 
 <br>
