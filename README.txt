@@ -4,13 +4,15 @@ Client or Target Market: Any Food Service Infrastructure
 
 
 Documents (Google Docs)
+* Github Repository
+   https://github.com/alexxShandsome/Capstone
 * Draft Proposal
    https://docs.google.com/document/d/1bcWLtB48ArufUy17uFiYptRV_mNLCcvPdWxIZq7_ODg/edit
 * Chapter 1-3
    https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk/edit
 
 
-Members:
+Members and Github Account:
 * Gomez, Algilbert https://github.com/alexxShandsome
 * Mayor, James
 * Mojar, Justine https://github.com/justinemedinamojar01
@@ -23,6 +25,11 @@ Idea/s or Keywords:
 * Free and Open Source
 * Generic
 * Customizable Menu System
+
+
+Currently Agreed Scope and Delimitations:
+* FOSS tools only
+* For Albay provice in the meanwhile
 
 
 What
@@ -42,19 +49,23 @@ What
 
 
 Why
-- Hardcopy Menu are getting Outdated
+- To help food service startup businesses
 - Costly (Lessen Cost)
    + Lamination cost
    + Paper cost
    + Printing cost
-- Future Proofing
-- Lack of Free Softwares
-
 
 How
 - Electron desktop application framework
+- Mobile development framewoks
+   + Possible Candidates:
+      * Apache Cordova
+      * Capacitor
+      * React Native
 - Admin UI
    + Menu Edit
 - Customer UI
    + Service/Product Categories
+
+
 

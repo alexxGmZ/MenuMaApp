@@ -25,6 +25,10 @@ Client or Target Market: **Any Food Service Infrastructure**
 * Generic
 * Customizable Menu System
 
+## Currently Agreed Scope and Delimitations:
+* FOSS tools only
+* For Albay provice in the meanwhile
+
 <br>
 
 # What
@@ -45,18 +49,21 @@ Client or Target Market: **Any Food Service Infrastructure**
 <br>
 
 # Why
-- Hardcopy Menu are getting Outdated
+- To help food service startup businesses
 - Costly (Lessen Cost)
    + Lamination cost
    + Paper cost
    + Printing cost
-- Future Proofing
-- Lack of Free Softwares
 
 <br>
 
 # How
 - Electron desktop application framework
+- Mobile development framewoks
+   + Possible Candidates:
+      * Apache Cordova
+      * Capacitor
+      * React Native
 - Admin UI
    + Menu Edit
 - Customer UI
