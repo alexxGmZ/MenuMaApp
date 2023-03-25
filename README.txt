@@ -1,7 +1,9 @@
 FreEzMenu
 A Customizable UI, Free and Open-source Menu Application System for Foodservice Industry
-Client or Target Market: Any Food Service Infrastructure
-
+Initial Client or Target Market (Within Albay):
+* Local Restaurants
+* Cafe shops
+* Bars
 
 Documents (Google Docs)
 * Github Repository
