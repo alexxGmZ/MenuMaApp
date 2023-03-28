@@ -6,8 +6,8 @@ List here all literatures that can be useful
    exploratory study of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
    + [**2018:** Complexity on the Menu and in the Meal](https://www.mdpi.com/2304-8158/7/10/158)
    + [**2021:** Menu Design: Consumer preferences for the use of an innovative digital menu solution in public food service settings in four European countries?](https://www.sciencedirect.com/science/article/abs/pii/S095032932100207X)
-   + [**2014:** Menu Design: Exploring the promise of e-tablet restaurant menus](https://www.emerald.com/insight/content/doi/10.1108/IJCHM-01-2013-0039/full/html)
-   + [**2020:** Menu Design: An Evaluation of Digital Menu Types and Their Advantages](https://www.researchgate.net/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages)
+   + [**2014:** Menu Design: Exploring the promise of e-tablet restaurant menus.](https://www.emerald.com/insight/content/doi/10.1108/IJCHM-01-2013-0039/full/html)
+   + [**2020:** Menu Design: An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages)
 
 * **Free and Open Source Software**
    + [**2007:** Free/Open Source Software Development: Recent Research Results and Emerging
