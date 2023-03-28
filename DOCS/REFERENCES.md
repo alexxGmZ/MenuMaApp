@@ -15,6 +15,8 @@ List here all literatures that can be useful
    + **2008:** Free/Libre open-source software development: What we know and what we do not know
       - https://dl.acm.org/doi/abs/10.1145/2089125.2089127
       - https://floss.syr.edu/sites/crowston.syr.edu/files/CrowstonFLOSSReviewPaperPreprint.pdf
+   + [**2014** Free and Open Source Tools (FOSTs): An Empirical Investigation of
+   Pre-Service Teachers’ Competencies, Attitudes, and Pedagogical Intentions](https://files.eric.ed.gov/fulltext/EJ1043024.pdf)
 
 <br>
 
