@@ -10,8 +10,6 @@ List here all literatures that can be useful
    + [**2020:** Menu Design: An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages)
 
 * **Free and Open Source Software**
-   + [**2007:** Free/Open Source Software Development: Recent Research Results and Emerging
-   Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
    + **2010:** Free and Open Source Software
       - https://ieeexplore.ieee.org/abstract/document/5662568
       - https://upstreme.com/pdf/2010ITPro-OpenSourceEditorial.pdf
@@ -42,6 +40,7 @@ List here all literatures that are used in the docs
 * Chapter 2:
    + [**2015:** Menu Design: A review of Literature](https://www.tandfonline.com/doi/abs/10.1080/15378020.2015.1051428)
    + [**1995:** Menu Design: can menus sell?](https://www.emerald.com/insight/content/doi/10.1108/09596119510091699/full/html)
-   + [**2007:** Free/open source software development](https://dl.acm.org/doi/abs/10.1145/1287624.1287689)
+   + [**2007:** Free/Open Source Software Development: Recent Research Results and Emerging
+   Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
 
 
