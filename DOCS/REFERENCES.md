@@ -42,5 +42,6 @@ List here all literatures that are used in the docs
 * Chapter 2:
    + [**2015:** Menu Design: A review of Literature](https://www.tandfonline.com/doi/abs/10.1080/15378020.2015.1051428)
    + [**1995:** Menu Design: can menus sell?](https://www.emerald.com/insight/content/doi/10.1108/09596119510091699/full/html)
+   + [**2007:** Free/open source software development](https://dl.acm.org/doi/abs/10.1145/1287624.1287689)
 
 
