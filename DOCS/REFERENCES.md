@@ -7,8 +7,6 @@ List here all literatures that can be useful
    + [**2018:** Complexity on the Menu and in the Meal](https://www.mdpi.com/2304-8158/7/10/158)
    + [**2021:** Menu Design: Consumer preferences for the use of an innovative digital menu solution in public food service settings in four European countries?](https://www.sciencedirect.com/science/article/abs/pii/S095032932100207X)
    + [**2014:** Menu Design: Exploring the promise of e-tablet restaurant menus.](https://www.emerald.com/insight/content/doi/10.1108/IJCHM-01-2013-0039/full/html)
-   + [**2020:** Menu Design: An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages)
-   + [**1995:** Menu Design: can menus sell?](https://www.emerald.com/insight/content/doi/10.1108/09596119510091699/full/html)
 
 * **Free and Open Source Software**
    + **2010:** Free and Open Source Software
@@ -44,5 +42,6 @@ List here all literatures that are used in the docs
    Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
    + [**2008:** Barriers and facilitators to implementation of menu labelling interventions from a food service industry perspective: a mixed methods systematic review](https://link.springer.com/article/10.1186/s12966-020-00948-1#citeas)
    + [**2011:** Applying Importance-Performance Analysis as a Service Quality Measure in Food Service Industry](http://dx.doi.org/10.4067/S0718-27242011000300008)
+   + [**2020:** An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/profile/Esra-Sahin-11/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages/links/5ffadd4b92851c13fe003edd/An-Evaluation-of-Digital-Menu-Types-and-Their-Advantages.pdf)
 
 
