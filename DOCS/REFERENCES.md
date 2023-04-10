@@ -40,8 +40,9 @@ List here all literatures that are used in the docs
 
 * Chapter 2:
    + [**2015:** Menu Design: A review of Literature](https://www.tandfonline.com/doi/abs/10.1080/15378020.2015.1051428)
-   + [**2008:** Barriers and facilitators to implementation of menu labelling interventions from a food service industry perspective: a mixed methods systematic review](https://link.springer.com/article/10.1186/s12966-020-00948-1#citeas)
    + [**2007:** Free/Open Source Software Development: Recent Research Results and Emerging
    Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
+   + [**2008:** Barriers and facilitators to implementation of menu labelling interventions from a food service industry perspective: a mixed methods systematic review](https://link.springer.com/article/10.1186/s12966-020-00948-1#citeas)
+   + [**2011:** Applying Importance-Performance Analysis as a Service Quality Measure in Food Service Industry](http://dx.doi.org/10.4067/S0718-27242011000300008)
 
 
