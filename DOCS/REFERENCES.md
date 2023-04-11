@@ -41,6 +41,6 @@ List here all literatures that are used in the docs
    + [**2020:** Barriers and facilitators to implementation of menu labelling interventions from a food service industry perspective: a mixed methods systematic review](https://link.springer.com/article/10.1186/s12966-020-00948-1#citeas)
    + [**2011:** Applying Importance-Performance Analysis as a Service Quality Measure in Food Service Industry](http://dx.doi.org/10.4067/S0718-27242011000300008)
    + [**2020:** An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/profile/Esra-Sahin-11/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages/links/5ffadd4b92851c13fe003edd/An-Evaluation-of-Digital-Menu-Types-and-Their-Advantages.pdf)
-   + [**2017:** Restaurant menu design and more responsible consumer food choice: An exploratory study of managerial perceptions]([https://doi.org/10.1016/j.jclepro.2016.12.080](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf))
+   + [**2017:** Restaurant menu design and more responsible consumer food choice: An exploratory study of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
 
 
