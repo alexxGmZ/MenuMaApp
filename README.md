@@ -28,9 +28,14 @@ Initial Client or Target Market (**Within Albay**):
 * Generic
 * Customizable Menu System
 
-## Currently Agreed Scope and Delimitations:
+## Scope and Delimitations:
 * FOSS tools only
 * For Albay provice in the meanwhile
+* No integration for self service kiosk
+* Devices shall be only connected through LAN or WLAN
+* No online or cloud services
+* Designing the digital menu can only be done using Laptops or PCs only
+* No generation and tracking of receipts
 
 <br>
 
