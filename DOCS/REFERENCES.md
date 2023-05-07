@@ -23,6 +23,9 @@ List here all literatures that can be useful
 * **Agile**
    + [**2018:** Agile Methodologies in Education: A Review](https://www.researchgate.net/profile/Pasquale-Salza/publication/328516721_Agile_Methodologies_in_Education_A_Review_Bringing_Methodologies_from_Industry_to_the_Classroom/links/5c06482292851c6ca1fc6655/Agile-Methodologies-in-Education-A-Review-Bringing-Methodologies-from-Industry-to-the-Classroom.pdf)
 
+* **ISO 25010 Quality Model**
+   + [**ISO/IEC 25010**](https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+
 <br>
 
 # Used references
