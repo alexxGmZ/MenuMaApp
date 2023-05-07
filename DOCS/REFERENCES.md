@@ -1,7 +1,7 @@
 # Unused or possible references
 List here all literatures that can be useful
 
-* **Restaurant Menu**
+* **Food Menu**
    + [**2018:** Complexity on the Menu and in the Meal](https://www.mdpi.com/2304-8158/7/10/158)
    + [**2021:** Menu Design: Consumer preferences for the use of an innovative digital menu solution in public food service settings in four European countries?](https://www.sciencedirect.com/science/article/abs/pii/S095032932100207X)
    + [**2014:** Menu Design: Exploring the promise of e-tablet restaurant menus.](https://www.emerald.com/insight/content/doi/10.1108/IJCHM-01-2013-0039/full/html)
@@ -40,7 +40,7 @@ List here all literatures that can be useful
 # Used references
 List here all literatures that are used in the docs
 
-* Chapter 1:
+## Chapter 1:
    + [**2008:** The Effects of Restaurant Menu Item Descriptions on Perceptions of Quality, Price,
    and Purchase Intention](https://www.tandfonline.com/doi/pdf/10.1080/15378020802519850)
    + [**2021:** Paper Market Sees Increased Pricing, Adding Cost of Paper to Print and Mail](https://pcigroup.com/paper-market-sees-increased-pricing-adding-paper-costs-to-print-and-mail/)
@@ -50,13 +50,20 @@ List here all literatures that are used in the docs
    + [**2005:** Is spyware an Internet nuisance or public menace?](https://www.researchgate.net/profile/Qing-Hu-10/publication/220422980_Is_Spyware_an_Internet_Nuisance_or_Public_Menace/links/00b7d52150cc23ca6f000000/Is-Spyware-an-Internet-Nuisance-or-Public-Menace.pdf)
    + [**2015:** Implementation of Smart Restaurant with e-menu Card](http://www.kresttechnology.com/krest-academic-projects/krest-major-projects/ECE/BTech%20%20Major%20ECE%20EMBEDDED%202016-17/Btech%20ECE%20Embedded%20Major%20BP%202016-17/18.%20Implementation%20Of%20Smart%20Restaurant%20With%20E-Menu%20Card.pdf)
 
-* Chapter 2:
-   + [**2007:** Free/Open Source Software Development: Recent Research Results and Emerging
-   Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
-   + [**2020:** Barriers and facilitators to implementation of menu labelling interventions from a food service industry perspective: a mixed methods systematic review](https://link.springer.com/article/10.1186/s12966-020-00948-1#citeas)
-   + [**2011:** Applying Importance-Performance Analysis as a Service Quality Measure in Food Service Industry](http://dx.doi.org/10.4067/S0718-27242011000300008)
-   + [**2020:** An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/profile/Esra-Sahin-11/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages/links/5ffadd4b92851c13fe003edd/An-Evaluation-of-Digital-Menu-Types-and-Their-Advantages.pdf)
-   + [**2017:** Restaurant menu design and more responsible consumer food choice: An exploratory study of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
-   + [**2012:** User Requirements and Design Guidelines for Digital Restaurant Menus](https://umtl.cs.uni-saarland.de/paper_preprints/paper_user_requirements_and_design_guidelines.pdf)
+## Chapter 2:
+### Review of Related Literature
+   + **Food Menu**
+      + [**2020:** Barriers and facilitators to implementation of menu labelling interventions from a food service industry perspective: a mixed methods systematic review](https://link.springer.com/article/10.1186/s12966-020-00948-1#citeas)
+      + [**2017:** Restaurant menu design and more responsible consumer food choice: An exploratory study of managerial perceptions](http://eprints.bournemouth.ac.uk/26621/3/R1.pdf)
+
+   + **Digital Menu**
+      + [**2012:** User Requirements and Design Guidelines for Digital Restaurant Menus](https://umtl.cs.uni-saarland.de/paper_preprints/paper_user_requirements_and_design_guidelines.pdf)
+      + [**2020:** An Evaluation of Digital Menu Types and Their Advantages.](https://www.researchgate.net/profile/Esra-Sahin-11/publication/348084076_An_Evaluation_of_Digital_Menu_Types_and_Their_Advantages/links/5ffadd4b92851c13fe003edd/An-Evaluation-of-Digital-Menu-Types-and-Their-Advantages.pdf)
+   + **Food Service**
+      + [**2011:** Applying Importance-Performance Analysis as a Service Quality Measure in Food Service Industry](http://dx.doi.org/10.4067/S0718-27242011000300008)
+   + **Free and Open Source**
+      + [**2007:** Free/Open Source Software Development: Recent Research Results and Emerging
+      Opportunities](https://www.ics.uci.edu/~wscacchi/Presentations/ESEC-FSE07/ESEC-FSE07-Scacchi-Paper.pdf)
+
 
 
