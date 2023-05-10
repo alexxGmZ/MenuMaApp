@@ -12,13 +12,22 @@ Documents (Google Docs)
    https://docs.google.com/document/d/1bcWLtB48ArufUy17uFiYptRV_mNLCcvPdWxIZq7_ODg/edit
 * Chapter 1-3
    https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk/edit
+* RRL Matrix
+   https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988
+* Gantt Chart
+   https://docs.google.com/spreadsheets/d/1JkQk4EXdKY6eEB7bOFQpEsZL3rXmWnMvGPKvxSgIHUA
 
 
 Members and Github Account:
-* Gomez, Algilbert https://github.com/alexxShandsome
-* Mayor, James
-* Mojar, Justine https://github.com/justinemedinamojar01
-* Seva, Kenneth https://github.com/kennethseva
+* Gomez, Algilbert
+   - https://github.com/alexxShandsome
+   - algilberttibi.gomez@bicol-u.edu.ph
+* Mojar, Justine
+   - https://github.com/justinemedinamojar01
+   - justineiancarlosmedina.mojar@bicol-u.edu.ph
+* Seva, Kenneth
+   - https://github.com/kennethseva
+   - kennethbinalla.seva@bicol-u.edu.ph
 
 
 Idea/s or Keywords:
@@ -26,7 +35,7 @@ Idea/s or Keywords:
 * Foodservice Industry
 * Free and Open Source
 * Generic
-* Customizable Menu System
+* Customizable UI Menu System
 
 
 Scope and Delimitations:
@@ -85,6 +94,4 @@ How
    + Menu Edit
 - Customer UI
    + Service/Product Categories
-
-
 

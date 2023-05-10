@@ -20,6 +20,11 @@ Initial Client or Target Market (**Within Albay**):
 * Mojar, Justine ([justinemedinamojar01](https://github.com/justinemedinamojar01))
 * Seva, Kenneth ([kennethseva](https://github.com/kennethseva))
 
+**Contact us:**
+* ```algilberttibi.gomez@bicol-u.edu.ph```
+* ```justineiancarlosmedina.mojar@bicol-u.edu.ph```
+* ```kennethbinalla.seva@bicol-u.edu.ph```
+
 <br>
 
 ## Idea/s or Keywords:
@@ -27,7 +32,7 @@ Initial Client or Target Market (**Within Albay**):
 * Foodservice Industry
 * Free and Open Source
 * Generic
-* Customizable Menu System
+* Customizable UI Menu System
 
 ## Scope and Delimitations:
 * FOSS tools only
