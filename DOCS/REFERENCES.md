@@ -23,8 +23,8 @@ List here all literatures that can be useful
    + **2008:** Free/Libre open-source software development: What we know and what we do not know
       - https://dl.acm.org/doi/abs/10.1145/2089125.2089127
       - https://floss.syr.edu/sites/crowston.syr.edu/files/CrowstonFLOSSReviewPaperPreprint.pdf
-   + [**2014** Free and Open Source Tools (FOSTs): An Empirical Investigation of
-   Pre-Service Teachers’ Competencies, Attitudes, and Pedagogical Intentions](https://files.eric.ed.gov/fulltext/EJ1043024.pdf)
+   + [**2014:** Free and Open Source Tools (FOSTs): An Empirical Investigation of Pre-Service Teachers’ Competencies, Attitudes, and Pedagogical Intentions](https://files.eric.ed.gov/fulltext/EJ1043024.pdf)
+   + [**2015:** The intro and impacts of Open Source Software in modern Information Technology Management](https://research-advances.org/index.php/RAJMSS/article/view/3/3)
 
 * **Food service**
    + [**2002:** Consumer behaviour in the food service industry: a review](https://d1wqtxts1xzle7.cloudfront.net/40838366/Consumer_behaviour_in_the_food_service_industry_a_review-libre.pdf?1450750419=&response-content-disposition=inline%3B+filename%3DConsumer_behaviour_in_the_food_service_i.pdf&Expires=1680327487&Signature=hGaqetCA4xx1n7RzYvAp~89uTAGMQH3CxcMSazMd2A2Uwi23RAEeN2vlyD3wB2mVtRkySjVjjAVK2cejz9nqpKurdMtTfR4zBj89qABTD9yKT9QNkl4L96k1-LnnPc~YJMDc75232tT95RZLLFV6t9R7YnOKzyASJ0g7qsaW7DngQ8qTYyAGOHgA1ytkT2LWW7gpfRmWjv9zHvTKL8UNmmD95hiudkrgXi6KXOTfbxfYuVvj1FGYATji17rl6n8VgBzdUeEr5Om1PdkZBiHkUqCL5Gd0g3uIBIGznTgZ1kfCAmGeAm9g2d149ff6i1JEJ~~2xzgEL5oeT8xlTHiRaA__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA)
