@@ -26,9 +26,9 @@
      inkscape:document-units="px"
      showgrid="false"
      showguides="true"
-     inkscape:zoom="0.30903185"
-     inkscape:cx="852.66292"
-     inkscape:cy="567.90263"
+     inkscape:zoom="0.43703703"
+     inkscape:cx="1019.3644"
+     inkscape:cy="678.43221"
      inkscape:window-width="1280"
      inkscape:window-height="964"
      inkscape:window-x="0"
@@ -430,11 +430,11 @@
        y="65.967262" /><text
        xml:space="preserve"
        id="text19788-4"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:Cantarell;-inkscape-font-specification:'Cantarell, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;white-space:pre;shape-inside:url(#rect19790-4);display:inline;opacity:0.985781;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.20427;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:24;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       transform="matrix(1.4900013,0,0,1.5633636,-817.21971,-901.93899)"><tspan
-         x="1670.3277"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:Cantarell;-inkscape-font-specification:'Cantarell, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;white-space:pre;shape-inside:url(#rect19790-4);display:inline;opacity:0.985781;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.204;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:24;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       transform="matrix(1.4900013,0,0,1.5633636,-795.30254,-779.43323)"><tspan
+         x="1696.4277"
          y="648.52886"
-         id="tspan21956">Properties</tspan></text><path
+         id="tspan22064">Color</tspan></text><path
        style="display:inline;opacity:0.900426;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.80519;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:24;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.404326"
        d="m 1919.0737,633.45429 c -55.9105,-0.045 -111.8294,-0.0594 -167.75,-0.0626 -53.9398,-0.003 -107.8816,0.005 -161.8197,0.005"
        id="path5529-59-4"
@@ -458,7 +458,7 @@
        transform="matrix(1.4900013,0,0,1.5633636,-817.18395,-330.92566)"><tspan
          x="1696.4277"
          y="648.52886"
-         id="tspan21958">Color</tspan></text><g
+         id="tspan22066">Color</tspan></text><g
        id="g21728" /></g><g
      inkscape:groupmode="layer"
      id="layer3"
