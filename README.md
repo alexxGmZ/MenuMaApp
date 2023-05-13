@@ -7,6 +7,11 @@ Initial Client or Target Market (**Within Albay**):
 
 <br>
 
+## Prototype Design
+![Layout Design](./DOCS/Prototype/Layout.svg)
+
+<br>
+
 ## Documents (Google Docs)
 * [Draft Proposal](https://docs.google.com/document/d/1bcWLtB48ArufUy17uFiYptRV_mNLCcvPdWxIZq7_ODg)
 * [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk)
@@ -18,6 +23,7 @@ Initial Client or Target Market (**Within Albay**):
 ## Members:
 * Gomez, Algilbert ([alexxShandsome](https://github.com/alexxShandsome))
 * Mojar, Justine ([justinemedinamojar01](https://github.com/justinemedinamojar01))
+* Ortega, Ben Androz
 * Seva, Kenneth ([kennethseva](https://github.com/kennethseva))
 
 **Contact us:**
