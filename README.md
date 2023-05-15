@@ -30,7 +30,7 @@ Initial Client or Target Market (**Within Albay**):
 ## Members:
 * Gomez, Algilbert ([alexxShandsome](https://github.com/alexxShandsome))
 * Mojar, Justine ([justinemedinamojar01](https://github.com/justinemedinamojar01))
-* Ortega, Ben Androz
+* Ortega, Ben Androz ([benandroz](https://github.com/benandroz))
 * Seva, Kenneth ([kennethseva](https://github.com/kennethseva))
 
 **Contact us:**
