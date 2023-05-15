@@ -8,7 +8,14 @@ Initial Client or Target Market (**Within Albay**):
 <br>
 
 ## Prototype Design
-![Layout Design](./DOCS/Prototype/Layout.svg)
+**"Designer"** Version
+![Designer Design](./DOCS/Prototype/Designer.svg)
+
+<br>
+
+**"Order"** Version
+![Order Design 1](./DOCS/Prototype/Order1.svg)
+![Order Design 2](./DOCS/Prototype/Order2.svg)
 
 <br>
 
