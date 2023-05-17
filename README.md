@@ -1,5 +1,5 @@
 # FreEzMenu
-## A Customizable UI, Free and Open-source Menu Application System for Foodservice Industry
+## A Customizable User-Interface Menu Application System for Food Service Industry
 Initial Client or Target Market (**Within Albay**):
 * Local Restaurants
 * Cafe shops
@@ -37,6 +37,7 @@ Initial Client or Target Market (**Within Albay**):
 **Contact us:**
 * ```algilberttibi.gomez@bicol-u.edu.ph```
 * ```justineiancarlosmedina.mojar@bicol-u.edu.ph```
+* ```benandroz.ortega@bicol-u.edu.ph```
 * ```kennethbinalla.seva@bicol-u.edu.ph```
 
 <br>
