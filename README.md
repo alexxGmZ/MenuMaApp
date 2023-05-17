@@ -24,6 +24,7 @@ Initial Client or Target Market (**Within Albay**):
 * [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk)
 * [Review of Related Literature](https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988)
 * [Gantt Chart](https://docs.google.com/spreadsheets/d/1JkQk4EXdKY6eEB7bOFQpEsZL3rXmWnMvGPKvxSgIHUA)
+* [Kanban Board](https://docs.google.com/spreadsheets/d/1yw8BZZ5ZplD2GP6rAilWutbPJZLeB85U0xRRzcVIiGg)
 
 <br>
 
@@ -43,8 +44,7 @@ Initial Client or Target Market (**Within Albay**):
 ## Idea/s or Keywords:
 * Digital Menu
 * Foodservice Industry
-* Free and Open Source
-* Generic
+* API
 * Customizable UI Menu System
 
 ## Scope and Delimitations:
