@@ -25,6 +25,7 @@ Initial Client or Target Market (**Within Albay**):
 * [Review of Related Literature](https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988)
 * [Gantt Chart](https://docs.google.com/spreadsheets/d/1JkQk4EXdKY6eEB7bOFQpEsZL3rXmWnMvGPKvxSgIHUA)
 * [Kanban Board](https://docs.google.com/spreadsheets/d/1yw8BZZ5ZplD2GP6rAilWutbPJZLeB85U0xRRzcVIiGg)
+* [Survey Questionnaire](https://docs.google.com/document/d/1LyAaKLMv8iOGfkNaVWNHyk7oibZe6nA1IUUkC7MIv3c)
 
 <br>
 
