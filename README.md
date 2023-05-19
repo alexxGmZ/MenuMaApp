@@ -8,12 +8,20 @@ Initial Client or Target Market (**Within Albay**):
 <br>
 
 ## Prototype Design
-**"Designer"** Version
-![Designer Design](./DOCS/Prototype/Designer.svg)
+**Designer Mode**
+![Designer Design 1](./DOCS/Prototype/Designer2.svg)
+![Designer Design 2](./DOCS/Prototype/Designer1.svg)
 
 <br>
 
-**"Order"** Version
+**Queue Mode**
+![Queue Design 1](./DOCS/Prototype/Queue1.svg)
+![Queue Design 2](./DOCS/Prototype/Queue2.svg)
+![Queue Design 3](./DOCS/Prototype/Queue3.svg)
+
+<br>
+
+**Order Mode**
 ![Order Design 1](./DOCS/Prototype/Order1.svg)
 ![Order Design 2](./DOCS/Prototype/Order2.svg)
 
