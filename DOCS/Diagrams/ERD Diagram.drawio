@@ -333,7 +333,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="167" value="order_report" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;rounded=1;" parent="1" vertex="1">
+                <mxCell id="167" value="order_stats" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="590" y="470" width="200" height="180" as="geometry"/>
                 </mxCell>
                 <mxCell id="168" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="167" vertex="1">
