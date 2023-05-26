@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="Vfg_s8rGCRNalU27XtB3" name="Page-1">
-        <mxGraphModel dx="1262" dy="1011" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1000" math="0" shadow="0">
+        <mxGraphModel dx="1025" dy="821" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -49,7 +49,7 @@
                 <mxCell id="143" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Android 4.2.2 above&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
                     <mxGeometry x="735" y="510" width="230" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="144" value="Browser Menu&lt;br&gt;Items" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.externalEntity;fontSize=14;flipH=1;align=center;" vertex="1" parent="1">
+                <mxCell id="144" value="Browse Menu&lt;br&gt;Items" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.externalEntity;fontSize=14;flipH=1;align=center;" vertex="1" parent="1">
                     <mxGeometry x="760" y="593.1" width="160" height="76.9" as="geometry"/>
                 </mxCell>
                 <mxCell id="145" value="Input Order/s" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.externalEntity;fontSize=14;flipH=1;align=center;" vertex="1" parent="1">
