@@ -13,3 +13,5 @@ This is the documentation directory, put here all documentation related stuff
 <br>
 
 ## APPOINTMENT
+* [Content Adviser](https://docs.google.com/document/d/1jpFq7hyCC2voBh0GWJdWtEVFFhj25DG5A1y5bqHNcA8)
+* [Programming Adviser](https://docs.google.com/document/d/1CER8hfczVv-Py4L75sOejhbmtUFLqqNeJ_cQQkQWyAw)
