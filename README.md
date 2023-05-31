@@ -21,6 +21,11 @@ Initial Client or Target Market (**Within Albay**):
 
 <br>
 
+**List Mode**
+![List Design 1](./DOCS/Prototype/List1.svg)
+
+<br>
+
 **Order Mode**
 ![Order Design 1](./DOCS/Prototype/Order1.svg)
 ![Order Design 2](./DOCS/Prototype/Order2.svg)
