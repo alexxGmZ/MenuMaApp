@@ -1,11 +1,45 @@
 # FreEzMenu
-## A Customizable User-Interface Menu Application System for Food Service Industry
+## A Customizable User Interface Menu Application System for Food Service Industry
 Initial Client or Target Market (**Within Albay**):
 * Local Restaurants
 * Cafe shops
 * Bars
 
 <br>
+
+## Documents (Google Docs)
+* [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk)
+* [Review of Related Literature](https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988)
+* [Gantt Chart](https://docs.google.com/spreadsheets/d/1JkQk4EXdKY6eEB7bOFQpEsZL3rXmWnMvGPKvxSgIHUA)
+* [Kanban Board](https://docs.google.com/spreadsheets/d/1yw8BZZ5ZplD2GP6rAilWutbPJZLeB85U0xRRzcVIiGg)
+* [Survey Questionnaire](https://docs.google.com/document/d/1LyAaKLMv8iOGfkNaVWNHyk7oibZe6nA1IUUkC7MIv3c)
+
+## Before the Proposal Defense
+* [Capstone Proposal](https://docs.google.com/document/d/1InBxm5FohdIGzo2m0-IBJxu0iT_95YXDqlr3fEP19BY)
+### Certification
+* [Content Adviser](https://docs.google.com/document/d/1wfPRMxBzoWkWnnpsAhKgen6Tial7eKQVUs_BvdEUI_k)
+* [Programming Adviser](https://docs.google.com/document/d/152PEZHtWXx19EGeqcBsYJ6y2IS6Bqxnuj1nodh2SeR0)
+
+### Appointment
+* [Content Adviser](https://docs.google.com/document/d/1jpFq7hyCC2voBh0GWJdWtEVFFhj25DG5A1y5bqHNcA8)
+* [Programming Adviser](https://docs.google.com/document/d/1CER8hfczVv-Py4L75sOejhbmtUFLqqNeJ_cQQkQWyAw)
+* [Panel Chairman](https://docs.google.com/document/d/1nkdu9uDs6APKVJqI9UMlVuk5A2GZ5bFVXfd7jlw4Mmg)
+* [Panel Member 1](https://docs.google.com/document/d/1eRhGLGe_eNHi6dZ7QF_91N6onsOdGJ-rRxK-Vyp-41A)
+* [Panel Member 2](https://docs.google.com/document/d/1fmdADlPOk6VIP5lUv3h_AiBeJNc6ARnbmwNN9XSHxKM)
+
+<br>
+
+* [Proposal Defense Form](https://docs.google.com/document/d/12_68agKmhul3oFAW54zpFk_zuq7l9LnNV6zh8rifZxg)
+
+## During the Proposal Defense
+### Gradesheets
+* [Gradesheet Summary](https://docs.google.com/document/d/13mH1juc0abrQvWnc6Pixd7manJMpqFD3EQR-SeuGNzk)
+* [Panel Chairman](https://docs.google.com/document/d/1i0H8dZqasykhFKnzF_hFC9vxaUVmdkMkEN_nimDO_0Q)
+* [Panel Member 1](https://docs.google.com/document/d/1CPtd28XT1G4tKHKUvSqWC-K0oLVPeLRJdccb6dD9YJo)
+* [Panel Member 2](https://docs.google.com/document/d/1rxKTJqhXo7Mcjp2IP97Ive8P6r56IN4khQerBLl1UCM)
+
+<br>
+
 
 ## Prototype Design
 **Designer Mode**
@@ -32,16 +66,6 @@ Initial Client or Target Market (**Within Albay**):
 
 <br>
 
-## Documents (Google Docs)
-* [Draft Proposal](https://docs.google.com/document/d/1bcWLtB48ArufUy17uFiYptRV_mNLCcvPdWxIZq7_ODg)
-* [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk)
-* [Review of Related Literature](https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988)
-* [Gantt Chart](https://docs.google.com/spreadsheets/d/1JkQk4EXdKY6eEB7bOFQpEsZL3rXmWnMvGPKvxSgIHUA)
-* [Kanban Board](https://docs.google.com/spreadsheets/d/1yw8BZZ5ZplD2GP6rAilWutbPJZLeB85U0xRRzcVIiGg)
-* [Survey Questionnaire](https://docs.google.com/document/d/1LyAaKLMv8iOGfkNaVWNHyk7oibZe6nA1IUUkC7MIv3c)
-
-<br>
-
 ## Members:
 * Gomez, Algilbert ([alexxShandsome](https://github.com/alexxShandsome))
 * Mojar, Justine ([justinemedinamojar01](https://github.com/justinemedinamojar01))
@@ -53,22 +77,5 @@ Initial Client or Target Market (**Within Albay**):
 * ```justineiancarlosmedina.mojar@bicol-u.edu.ph```
 * ```benandroz.ortega@bicol-u.edu.ph```
 * ```kennethbinalla.seva@bicol-u.edu.ph```
-
-<br>
-
-## Idea/s or Keywords:
-* Digital Menu
-* Foodservice Industry
-* API
-* Customizable UI Menu System
-
-## Scope and Delimitations:
-* FOSS tools only
-* For Albay provice in the meanwhile
-* No integration for self service kiosk
-* Devices shall be only connected through LAN or WLAN
-* No online or cloud services
-* Designing the digital menu can only be done using Laptops or PCs only
-* No generation and tracking of receipts
 
 <br>
