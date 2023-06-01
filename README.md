@@ -9,12 +9,13 @@ Initial Client or Target Market (**Within Albay**):
 
 ## Documents (Google Docs)
 * [Chapter 1-3](https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk)
-* [Capstone Proposal](https://docs.google.com/document/d/1InBxm5FohdIGzo2m0-IBJxu0iT_95YXDqlr3fEP19BY)
 * [Review of Related Literature](https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988)
 * [Gantt Chart](https://docs.google.com/spreadsheets/d/1JkQk4EXdKY6eEB7bOFQpEsZL3rXmWnMvGPKvxSgIHUA)
 * [Kanban Board](https://docs.google.com/spreadsheets/d/1yw8BZZ5ZplD2GP6rAilWutbPJZLeB85U0xRRzcVIiGg)
 * [Survey Questionnaire](https://docs.google.com/document/d/1LyAaKLMv8iOGfkNaVWNHyk7oibZe6nA1IUUkC7MIv3c)
 
+## Before the Proposal Defense
+* [Capstone Proposal](https://docs.google.com/document/d/1InBxm5FohdIGzo2m0-IBJxu0iT_95YXDqlr3fEP19BY)
 ### Certification
 * [Content Adviser](https://docs.google.com/document/d/1wfPRMxBzoWkWnnpsAhKgen6Tial7eKQVUs_BvdEUI_k)
 * [Programming Adviser](https://docs.google.com/document/d/152PEZHtWXx19EGeqcBsYJ6y2IS6Bqxnuj1nodh2SeR0)
@@ -30,7 +31,15 @@ Initial Client or Target Market (**Within Albay**):
 
 * [Proposal Defense Form](https://docs.google.com/document/d/12_68agKmhul3oFAW54zpFk_zuq7l9LnNV6zh8rifZxg)
 
+## During the Proposal Defense
+### Gradesheets
+* [Gradesheet Summary](https://docs.google.com/document/d/13mH1juc0abrQvWnc6Pixd7manJMpqFD3EQR-SeuGNzk)
+* [Panel Chairman](https://docs.google.com/document/d/1i0H8dZqasykhFKnzF_hFC9vxaUVmdkMkEN_nimDO_0Q)
+* [Panel Member 1](https://docs.google.com/document/d/1CPtd28XT1G4tKHKUvSqWC-K0oLVPeLRJdccb6dD9YJo)
+* [Panel Member 2](https://docs.google.com/document/d/1rxKTJqhXo7Mcjp2IP97Ive8P6r56IN4khQerBLl1UCM)
+
 <br>
+
 
 ## Prototype Design
 **Designer Mode**
