@@ -40,6 +40,9 @@ Initial Client or Target Market (**Within Albay**):
 
 <br>
 
+## After the Proposal Defense
+* [Revision Form](https://docs.google.com/spreadsheets/d/1rQ0vqVQ4g3JFp0_HOR_9nt5sNWnwJQnu1hwKPZY8ggA)
+
 
 ## Prototype Design
 **Designer Mode**
