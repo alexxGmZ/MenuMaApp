@@ -16,6 +16,7 @@ Initial Client or Target Market (**Within Albay**):
 
 ## Before the Proposal Defense
 * [Capstone Proposal](https://docs.google.com/document/d/1InBxm5FohdIGzo2m0-IBJxu0iT_95YXDqlr3fEP19BY)
+
 ### Certification
 * [Content Adviser](https://docs.google.com/document/d/1wfPRMxBzoWkWnnpsAhKgen6Tial7eKQVUs_BvdEUI_k)
 * [Programming Adviser](https://docs.google.com/document/d/152PEZHtWXx19EGeqcBsYJ6y2IS6Bqxnuj1nodh2SeR0)
