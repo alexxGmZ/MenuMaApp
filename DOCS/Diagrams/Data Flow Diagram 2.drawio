@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="2TkmwpCd-micXmMu05DJ" name="Page-1">
-        <mxGraphModel dx="1431" dy="1341" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="832" dy="939" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -176,10 +176,10 @@
                 <mxCell id="94" value="&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp; D5&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt; Registered Employees&#9;&lt;/span&gt;&amp;nbsp;" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.dataStoreID;align=left;spacingLeft=3;points=[[0,0],[0.5,0],[1,0],[0,0.5],[1,0.5],[0,1],[0.5,1],[1,1]];" parent="1" vertex="1">
                     <mxGeometry x="745" y="1030" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="96" style="edgeStyle=none;html=1;entryX=0.396;entryY=0.007;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="20" edge="1">
+                <mxCell id="96" style="edgeStyle=none;html=1;entryX=0.396;entryY=0.007;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.472;exitY=1.013;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="20" edge="1" source="9">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="510.24242424242425" y="360" as="targetPoint"/>
-                        <mxPoint x="550" y="240" as="sourcePoint"/>
+                        <mxPoint x="551" y="330" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="101" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="9" target="74" edge="1">
@@ -250,80 +250,80 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="129" value="QR Code with Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="129" value="QR Code (E-receipt)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="604.37" y="30" width="165.63" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="130" value="Layout,&lt;br&gt;Images,&lt;br&gt;Colors, &amp;amp; Text" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="130" value="Layout,&lt;br&gt;Images,&lt;br&gt;Colors, &amp;amp; Text" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="40" y="600" width="110" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="133" value="Manage&lt;br&gt;Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="133" value="Manage&lt;br&gt;Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="360" y="980" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="134" value="Item name,&lt;br&gt;Image, Description,&lt;br&gt;&amp;amp; Price" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="134" value="Item name,&lt;br&gt;Image, Description,&lt;br&gt;&amp;amp; Price" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="305" y="380" width="90" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="136" value="Sales, Items, &amp;amp; Order&lt;br&gt;Report" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="136" value="Sales, Items, &amp;amp; Order&lt;br&gt;Report" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="645" y="945" width="130" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="137" value="Name &amp;amp; Password" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="137" value="Name &amp;amp; Password" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1030" y="1161" width="95" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="138" value="Order Statistics" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="138" value="Order Statistics" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="500" y="900" width="65" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="139" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="139" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="520" y="790" width="45" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="140" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="140" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="520" y="560" width="45" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="142" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="142" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="645" y="255" width="45" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="143" value="Ordered Items" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="143" value="Ordered Items" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="670" y="420" width="80" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="144" value="Update Ordered Items" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="144" value="Update Ordered Items" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="860" y="550" width="55" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="145" value="Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="145" value="Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="495.63" y="410" width="55.62" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="147" value="Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="147" value="Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="651" y="695" width="85.62" height="19" as="geometry"/>
                 </mxCell>
-                <mxCell id="151" value="Order Status" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-                    <mxGeometry x="960" y="650" width="110" height="19" as="geometry"/>
+                <mxCell id="151" value="Order Management" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="962.5" y="650" width="110" height="19" as="geometry"/>
                 </mxCell>
-                <mxCell id="152" value="Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-                    <mxGeometry x="950" y="714" width="120" height="19" as="geometry"/>
+                <mxCell id="152" value="Order Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="957.5" y="721" width="120" height="19" as="geometry"/>
                 </mxCell>
-                <mxCell id="155" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="155" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="977.5" y="845" width="95" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="156" value="Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="156" value="Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="832" y="940" width="68" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="157" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="157" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="832" y="1070" width="68" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="158" value="Report Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-                    <mxGeometry x="566.38" y="1120" width="93.62" height="30" as="geometry"/>
+                <mxCell id="158" value="View Report Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="576.38" y="1110" width="93.62" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="159" value="Order&lt;br&gt;Status" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="159" value="Order&lt;br&gt;Status" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="656" y="790" width="45" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="160" value="Ordered Items" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="160" value="Ordered Items" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="715" y="580" width="75" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="161" value="Update Order Queue" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="161" value="Update Order Queue" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="645" y="480" width="110" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="162" value="Design Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="162" value="Design Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="230" y="1005" width="67.5" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="163" value="Menu changes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-                    <mxGeometry x="305" y="550" width="110" height="50" as="geometry"/>
+                <mxCell id="163" value="Menu modifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="315" y="560" width="110" height="50" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
