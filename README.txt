@@ -7,9 +7,9 @@ Initial Client or Target Market (Within Albay):
 
 Documents (Google Docs)
 * Github Repository
-   https://github.com/alexxShandsome/Capstone
+   https://github.com/alexxShandsome/FreEzMenu
 * Chapter 1-3
-   https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk/edit
+   https://docs.google.com/document/d/1CyBjLKHEu7aeKQseCP-78buyEQsO7A2Cv2dc6O0QlFk
 * RRL Matrix
   https://docs.google.com/spreadsheets/d/15QQ7l_zyVy3mq8g3UHZ5sUtpZxLHcF7hvuwUmwKs988
 * Gantt Chart
