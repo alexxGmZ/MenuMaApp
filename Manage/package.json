@@ -1,0 +1,14 @@
+{
+  "name": "freezmenu-manage",
+  "version": "1.0.0",
+  "description": "FreEzMenu Manage",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Algilbert Gomez",
+  "license": "",
+  "devDependencies": {
+    "electron": "^25.2.0"
+  }
+}
