@@ -16,11 +16,6 @@
 
 ## How to Setup
 
-Make sure that you have ```npm``` and Node.js installed. Then run
-```bash
-npm init
-```
-
 To make sure that all the required dependencies are installed, type
 ```bash
 npm list
