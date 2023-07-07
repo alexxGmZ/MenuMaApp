@@ -16,6 +16,8 @@
 
 ## How to Setup
 
+Install Electron and Tailwind CSS using npm inside the ```Manage/``` directory.
+
 To make sure that all the required dependencies are installed, type
 ```bash
 npm list
