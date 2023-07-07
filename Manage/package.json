@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-css": "tailwindcss -i ./src/styles.css -o ./public/styles.css"
+    "build-css": "tailwindcss -i ./src/styles.css -o ./public/styles/styles.css",
+    "watch-css": "tailwindcss -i ./src/styles.css -o ./public/styles/styles.css --watch"
   },
   "author": "Algilbert Gomez",
   "license": "",
