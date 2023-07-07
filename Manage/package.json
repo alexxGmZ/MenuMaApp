@@ -4,7 +4,8 @@
   "description": "FreEzMenu Manage",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build-css": "tailwindcss -i ./src/styles.css -o ./public/styles.css"
   },
   "author": "Algilbert Gomez",
   "license": "",
