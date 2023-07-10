@@ -1,0 +1,8 @@
+{
+  "appId": "com.FreEzMenu.Order",
+  "appName": "freezmenu-order",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

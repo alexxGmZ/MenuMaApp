@@ -1,0 +1,15 @@
+{
+  "name": "freezmenu-order",
+  "version": "1.0.0",
+  "description": "FreEzMenu Order",
+  "main": "main.js",
+  "scripts": {},
+  "author": "FreEzMenu Team",
+  "license": "",
+  "devDependencies": {
+    "@capacitor/android": "^5.1.1",
+    "@capacitor/cli": "^5.1.1",
+    "@capacitor/core": "^5.1.1",
+    "@ionic/cli": "^7.1.1"
+  }
+}
