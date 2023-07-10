@@ -16,8 +16,40 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./styles/styles.css" rel="stylesheet">
+		<script src="./js/sqlconnection.js"></script>
 	</head>
+
+
 	<body>
+
+		<!--Buttons-->
+		<div>
+			<button onclick="testsql()">TEST THE CONNECTION</button>
+			<br>
+			<button onclick="refreshitems()">REFRESH ITEMS</button>
+		</div>
+		<!----------->
+
+		<!--Main Food Table-->
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Food ID</th>
+						<th>Food Name</th>
+						<th>Food Description ID</th>
+						<th>Food Image</th>
+						<th>Food Price</th>
+						<th>Food Sold</th>
+						<th>Revenue Generated</th>
+					</tr>
+				</thead>
+				<tbody id="data-output">
+					<!-- OUTPUT RESULT from sqlconnection.js -->
+				</tbody>
+			</table>
+		</div>
+		<!------------------->
 
 	</body>
 </html>
