@@ -15,7 +15,6 @@
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
-    "mysql": "^2.18.1",
     "mysql2": "^3.5.0"
   }
 }
