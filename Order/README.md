@@ -10,6 +10,7 @@ The Order application will be mainly developed for Android devices.
 * Capacitor
    * [documentation](https://capacitorjs.com/docs/)
 * Android Studio & Android SDK
+* Java v17+
 * Node v18.16.1
 * npm
 
