@@ -1,4 +1,4 @@
-package com.FreEzMenu.Order;
+package com.freezmenu.order;
 
 import com.getcapacitor.BridgeActivity;
 

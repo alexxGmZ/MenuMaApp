@@ -1,8 +1,12 @@
-# "Order" Application Directory
+## Created with Capacitor Create App
 
-<br>
+This app was created using [`@capacitor/create-app`](https://github.com/ionic-team/create-capacitor-app),
+and comes with a very minimal shell for building an app.
 
-**Dependencies:**
+### Running this example
 
-* Capacitor Core, CLI, & Android v5.1.1
-   * [documentation](https://capacitorjs.com/docs)
+To run the provided example, you can use `npm start` command.
+
+```bash
+npm start
+```
