@@ -10,7 +10,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "android": "cap run android"
   },
   "dependencies": {
     "@capacitor/android": "^5.1.1",
