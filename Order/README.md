@@ -1,1 +1,0 @@
-# "Order" Application Directory

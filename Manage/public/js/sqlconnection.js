@@ -1,5 +1,6 @@
 // MYSQL Connection //
 
+
 const mysql = require('mysql2');
 
 var connection = mysql.createConnection({
@@ -83,6 +84,7 @@ function refreshitems()
 }
 // End of Function for Refresh Item //
 
+
 // END OF MYSQL FUNCTIONS //
 
 
@@ -127,3 +129,9 @@ connection.connect(function(err) {
 })
 
 //----- End of Show Foods Function -----//
+
+// ADD NEW FOODS FUNCTION //
+
+
+
+// END OF ADD NEW FOODS FUNCTION //

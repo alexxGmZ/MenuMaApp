@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">freezmenu-order</string>
-    <string name="title_activity_main">freezmenu-order</string>
-    <string name="package_name">com.FreEzMenu.Order</string>
-    <string name="custom_url_scheme">com.FreEzMenu.Order</string>
-</resources>
