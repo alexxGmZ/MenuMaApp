@@ -1,0 +1,14 @@
+{
+  "appId": "com.freezmenu.order",
+  "appName": "FreEzMenu Order",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

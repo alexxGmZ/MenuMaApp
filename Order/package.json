@@ -1,0 +1,28 @@
+{
+  "name": "freezmenu-order",
+  "version": "1.0.0",
+  "description": "FreEzMenu Order",
+  "main": "index.js",
+  "keywords": [
+    "capacitor",
+    "mobile"
+  ],
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "android": "cap run android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^5.1.1",
+    "@capacitor/camera": "latest",
+    "@capacitor/core": "latest",
+    "@capacitor/splash-screen": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest",
+    "vite": "^2.9.13"
+  },
+  "author": "",
+  "license": "ISC"
+}

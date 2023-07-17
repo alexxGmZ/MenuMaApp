@@ -59,3 +59,28 @@ files.
 ```Manage/src/``` currently this is for the Tailwind CSS.
 
 ```main.js``` file is for Electron.js. This file is intended for all Electron scripts.
+
+<br>
+
+## MySql Database Setup
+```sql
+create database manage_db;
+use manage_db
+
+create table registered_users(
+   user_id int auto_increment,
+   name text not null,
+   password text not null,
+   design_priv int not null,
+   inventory_priv int not null,
+   view_reports_priv int not null,
+   primary key(user_id)
+);
+
+-- create a default admin user (OPTIONAL)
+insert into registered_users
+   (name, `password`, design_priv, inventory_priv, view_reports_priv)
+values
+   ("admin", "password", 1, 1, 1);
+
+```
