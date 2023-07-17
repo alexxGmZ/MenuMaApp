@@ -53,9 +53,14 @@
 
 		<!-- MAIN FORM FOR ADDING DATA -->
 		<div>
-			<form>
-				
-			</form>
+			<input type="text" id="fooditem" placeholder="Food Name"/> <br>
+			<input type="text" id="fooddesc" placeholder="Food Description"/> <br>
+			<label for="img">Select Food Image:</label>
+			<input type="file" id="img" name="foodimg" accept="image/*"/> <br>
+			<input type="text" id="foodprice" placeholder="Food Price"/>
+			<input type="text" id="foodsold" placeholder="Food Quantity Sold"/>
+			<input type="text" id="foodrevenue" placeholder="Food Revenue"/>
+			<button onclick="addItems()">Submit</button>
 		</div>
 		<!------------------->
 

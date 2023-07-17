@@ -1,6 +1,5 @@
 // MYSQL Connection //
 
-
 const mysql = require('mysql2');
 
 var connection = mysql.createConnection({
@@ -131,7 +130,39 @@ connection.connect(function(err) {
 //----- End of Show Foods Function -----//
 
 // ADD NEW FOODS FUNCTION //
-
-
-
+function addItems()
+{
+	// SQL CONNECTION
+	connection.connect((err) => {
+		if (err) {
+			return console.log(err.stack);
+		}
+		console.log("Connection Success");
+	});
+	
+	// FUNCTION TO INSERT
+	connection.connect(function(err) {
+		if (err) throw err;
+		
+		// VARIABLES FROM inventory.html
+		var fooditem = document.getElementById("fooditem").value;
+		var fooddesc = document.getElementById("fooddesc").value;
+		var foodprice = document.getElementById("foodprice").value;
+		var foodsold = document.getElementById("foodsold").value;
+		var foodrevenue = document.getElementById("foodrevenue").value;
+	
+		// THE QUESRY USED TO INSERT
+		const query = 'INSERT INTO menu_item (item_name, item_desc, item_price, quantity_sold, revenue_generated) VALUES (?, ?, ?, ?, ?);';
+		connection.query(query, [fooditem, fooddesc, foodprice, foodsold, foodrevenue], (error, results) => {
+			if(error){
+				alert(error);
+				res.status(500).send('Error insert!!!!!')
+			}else{
+				alert('Data inserted!');
+			}
+		});
+			
+	})
+	
+}
 // END OF ADD NEW FOODS FUNCTION //
