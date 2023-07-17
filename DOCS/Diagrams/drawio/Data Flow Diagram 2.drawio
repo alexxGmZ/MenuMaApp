@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="2TkmwpCd-micXmMu05DJ" name="Page-1">
-        <mxGraphModel dx="1179" dy="1105" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="283" dy="376" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -274,8 +274,8 @@
                 <mxCell id="138" value="Order Statistics" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="500" y="900" width="65" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="139" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="520" y="790" width="45" height="30" as="geometry"/>
+                <mxCell id="139" value="Organized&lt;br&gt;Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="790" width="45" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="140" value="Order&lt;br&gt;Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="520" y="560" width="45" height="30" as="geometry"/>
