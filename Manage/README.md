@@ -71,14 +71,14 @@ create table registered_users(
    name text not null,
    password text not null,
    design_priv int not null,
-   manage_prive int not null,
+   inventory_priv int not null,
    view_reports_priv int not null,
    primary key(user_id)
 );
 
 -- create a default admin user (OPTIONAL)
 insert into registered_users
-   (name, `password`, design_priv, manage_priv, view_reports_priv)
+   (name, `password`, design_priv, inventory_priv, view_reports_priv)
 values
    ("admin", "password", 1, 1, 1);
 
