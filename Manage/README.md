@@ -65,6 +65,7 @@ files.
 ## MySql Database Setup
 ```sql
 create database manage_db;
+use manage_db
 
 create table registered_users(
    user_id int auto_increment,
