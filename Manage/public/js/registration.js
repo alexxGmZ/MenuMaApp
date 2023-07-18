@@ -17,22 +17,32 @@ connection.connect((err) => {
 });
 
 function register_employee() {
-	// VARIABLES FROM register.html
+	// variables from register.html
 	var name = document.getElementById("name").value;
-	var password = document.getElementById("password").value;
-	var design_priv = 0;
-	var inventory_priv = 0;
-	var report_priv = 0;
+	// cancel if input box is empty
+	if (name.length == 0)
+		return alert("Name is empty");
 
+	var password = document.getElementById("password").value;
+	// cancel if input box is empty
+	if (password.length == 0)
+		return alert("Password is empty");
+
+
+	// privilege variables
 	// assign 1 if the corresponding checkbox id is checked
+	var design_priv = 0;
 	if (document.querySelector("#design_priv").checked == true)
 		design_priv = 1;
 
+	var inventory_priv = 0;
 	if (document.querySelector("#inventory_priv").checked == true)
 		inventory_priv = 1;
 
+	var report_priv = 0;
 	if (document.querySelector("#report_priv").checked == true)
 		report_priv = 1;
+
 
 	// debug purposes
 	console.log(name);
@@ -50,10 +60,12 @@ function register_employee() {
 		connection.query(query, [name, password, design_priv, inventory_priv, report_priv], (error, results) => {
 			if(error) {
 				alert(error);
-				res.status(500).send('Error insert!!!!!')
+				results.status(500).send('Error insert!!!!!')
 			}
 			else {
 				alert(name + " is registered");
+				//refresh page after insert
+				location.reload();
 			}
 		});
 	})
