@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="2TkmwpCd-micXmMu05DJ" name="Page-1">
-        <mxGraphModel dx="283" dy="376" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="708" dy="939" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -259,7 +259,7 @@
                 <mxCell id="130" value="Menu Interface" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="40" y="600" width="110" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="133" value="Manage&lt;br&gt;Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="133" value="Inventory&lt;br&gt;Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="360" y="980" width="70" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="134" value="Item Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
@@ -301,10 +301,10 @@
                 <mxCell id="155" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="968.12" y="840" width="95" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="156" value="Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="156" value="Verified&lt;br&gt;Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="832" y="940" width="68" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="157" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="157" value="Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="832" y="1070" width="68" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="158" value="View Report Privilege" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
