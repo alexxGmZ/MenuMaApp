@@ -18,14 +18,14 @@ connection.connect((err) => {
 
 function register_employee() {
 	// variables from register.html
-	var name = document.getElementById("name").value;
+	var name = document.getElementById("name").value.trim();
 	// cancel if input box is empty
-	if (name.length == 0)
+	if (name.length == 0 || name.trim() === "")
 		return alert("Name is empty");
 
 	var password = document.getElementById("password").value;
 	// cancel if input box is empty
-	if (password.length == 0)
+	if (password.length == 0 || password.trim() === "")
 		return alert("Password is empty");
 
 
