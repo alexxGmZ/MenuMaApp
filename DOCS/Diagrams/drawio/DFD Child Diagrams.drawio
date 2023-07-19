@@ -268,8 +268,8 @@
                 <mxCell id="136" value="Sales, Items, &amp;amp; Order&lt;br&gt;Report" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="645" y="945" width="130" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="137" value="Name &amp;amp; Password" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1030" y="1161" width="95" height="30" as="geometry"/>
+                <mxCell id="137" value="Login Information" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="1161" width="95" height="29" as="geometry"/>
                 </mxCell>
                 <mxCell id="138" value="Order Statistics" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="500" y="900" width="65" height="30" as="geometry"/>
@@ -298,11 +298,11 @@
                 <mxCell id="151" value="Order Management" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="650" width="110" height="19" as="geometry"/>
                 </mxCell>
-                <mxCell id="155" value="Employee Details" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="155" value="Registration&lt;br&gt;Information" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="968.12" y="840" width="95" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="156" value="Verified&lt;br&gt;Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="832" y="940" width="68" height="30" as="geometry"/>
+                    <mxGeometry x="832" y="940" width="68" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" value="Employee Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="832" y="1070" width="68" height="30" as="geometry"/>
