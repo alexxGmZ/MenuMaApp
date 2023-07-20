@@ -1,4 +1,5 @@
-const mysql = require('mysql2');
+const mysql = require("mysql2");
+const crypto = require("crypto");
 
 // create database connection
 var connection = mysql.createConnection({
@@ -28,6 +29,9 @@ function register_employee() {
 	if (password.length == 0 || password.trim() === "")
 		return alert("Password is empty");
 
+	// hash password with sha256
+	var hash_password = crypto.createHash("sha256").update(password).digest("hex");
+
 
 	// privilege variables
 	// assign 1 if the corresponding checkbox id is checked
@@ -47,9 +51,8 @@ function register_employee() {
 	// debug purposes
 	console.log(name);
 	console.log(password);
-	console.log(design_priv);
-	console.log(inventory_priv);
-	console.log(report_priv);
+	console.log(hash_password);
+	console.log(design_priv, inventory_priv, report_priv);
 
 	// insert employee to database
 	connection.connect(function(err) {
