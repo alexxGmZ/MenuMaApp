@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="mwzHj2hY8jrmvItp0jpS" name="Page-1">
-        <mxGraphModel dx="708" dy="939" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="459" dy="537" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -57,8 +57,8 @@
                         <mxPoint x="610" y="610.2" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="30" value="Preferences" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="305" y="260" width="90" height="30" as="geometry"/>
+                <mxCell id="30" value="Customer&lt;br&gt;Preferences" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="305" y="255" width="90" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="31" value="Menu&lt;br&gt;Items" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="440" y="255" width="50" height="40" as="geometry"/>
@@ -132,7 +132,7 @@
                 <mxCell id="49" value="Login Information" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="535" y="560" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="50" value="Registration Information" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="50" value="Registration Information" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="510" y="620" width="150" height="30" as="geometry"/>
                 </mxCell>
             </root>
