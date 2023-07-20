@@ -66,7 +66,7 @@ function refreshitems()
 						<td>${row.item_id}</td>
 						<td>${row.item_name}</td>
 						<td>${row.item_desc}</td>
-						<td>${row.item_image}</td>
+						<td><img src="${row.item_image}" alt="Foods Image"></td>
 						<td>${row.item_price}</td>
 						<td>${row.quantity_sold}</td>
 						<td>${row.revenue_generated}</td>
@@ -113,7 +113,7 @@ connection.connect(function(err) {
 					<td>${row.item_id}</td>
 					<td>${row.item_name}</td>
 					<td>${row.item_desc}</td>
-					<td>${row.item_image}</td>
+					<td><img src="${row.item_image}" alt="Foods Image"></td>
 					<td>${row.item_price}</td>
 					<td>${row.quantity_sold}</td>
 					<td>${row.revenue_generated}</td>
@@ -147,22 +147,23 @@ function addItems()
 		// VARIABLES FROM inventory.html
 		var fooditem = document.getElementById("fooditem").value;
 		var fooddesc = document.getElementById("fooddesc").value;
+		var foodimg = document.getElementById("foodimg").value.split('fakepath\\');
+		var withimg = ("./foods/" + foodimg[1])
 		var foodprice = document.getElementById("foodprice").value;
 		var foodsold = document.getElementById("foodsold").value;
 		var foodrevenue = document.getElementById("foodrevenue").value;
-	
+		
 		// THE QUESRY USED TO INSERT
-		const query = 'INSERT INTO menu_item (item_name, item_desc, item_price, quantity_sold, revenue_generated) VALUES (?, ?, ?, ?, ?);';
-		connection.query(query, [fooditem, fooddesc, foodprice, foodsold, foodrevenue], (error, results) => {
+		const query = 'INSERT INTO menu_item (item_name, item_desc, item_image, item_price, quantity_sold, revenue_generated) VALUES (?, ?, ?, ?, ?, ?);';
+		connection.query(query, [fooditem, fooddesc, withimg, foodprice, foodsold, foodrevenue], (error, results) => {
 			if(error){
 				alert(error);
-				res.status(500).send('Error insert!!!!!')
 			}else{
 				alert('Data inserted!');
 			}
 		});
 			
 	})
-	
+
 }
 // END OF ADD NEW FOODS FUNCTION //
