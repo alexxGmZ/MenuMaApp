@@ -15,27 +15,55 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./styles/styles.css" rel="stylesheet">
+		<script src="./js/registration.js"></script>
 	</head>
 	<body>
-		<h1 class="font-bold"></h1>
-		<script src="./js/registration.js"></script>
+		<h1 class="font-bold">Register Employee</h1><br>
 
-		<label for="name">Name:</label>
-		<input type="text" name="name" id="name"><br>
+		<div>
+			<label for="name">Name:</label>
+			<input type="text" name="name" id="name"><br>
 
-		<label for="password">Password:</label>
-		<input type="text" name="password" id="password"><br>
+			<label for="password">Password:</label>
+			<input type="text" name="password" id="password"><br>
 
-		<label for="design_priv">Design Privilege:</label>
-		<input type="checkbox" name="design_priv" id="design_priv"><br>
+			<label for="design_priv">Design Privilege:</label>
+			<input type="checkbox" name="design_priv" id="design_priv"><br>
 
-		<label for="inventory_priv">Inventory Privilege:</label>
-		<input type="checkbox" name="inventory_priv" id="inventory_priv"><br>
+			<label for="inventory_priv">Inventory Privilege:</label>
+			<input type="checkbox" name="inventory_priv" id="inventory_priv"><br>
 
-		<label for="report_priv">View Reports Privilege:</label>
-		<input type="checkbox" name="report_priv" id="report_priv"><br>
+			<label for="report_priv">View Reports Privilege:</label>
+			<input type="checkbox" name="report_priv" id="report_priv"><br>
 
-		<button onclick="register_employee()">Submit</button>
+			<button onclick="register_employee()">Submit</button>
+		</div>
 
+		<br>
+
+		<h1 class="font-bold">Registered Employees</h1><br>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Design Privilege</th>
+						<th>Inventory Privilege</th>
+						<th>View Reports Privilege</th>
+					</tr>
+				</thead>
+
+				<!-- registered employees -->
+				<tbody id="registered_employees">
+					<script>
+						// Call the function when the page is loaded or whenever appropriate
+						document.addEventListener("DOMContentLoaded", function() {
+							list_registered_employees();
+						});
+					</script>
+				</tbody>
+			</table>
+
+		</div>
 	</body>
 </html>
