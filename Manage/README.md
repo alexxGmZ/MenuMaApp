@@ -81,6 +81,6 @@ create table registered_users(
 insert into registered_users
    (user_id, name, `password`, design_priv, inventory_priv, view_reports_priv)
 values
-   (1, "admin", sha2("password", 256), 1, 1, 1);
+   (1, "admin", SHA2("password", 256), 1, 1, 1);
 
 ```
