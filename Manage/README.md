@@ -79,8 +79,8 @@ create table registered_users(
 
 -- create a default admin user (OPTIONAL)
 insert into registered_users
-   (name, `password`, design_priv, inventory_priv, view_reports_priv)
+   (user_id, name, `password`, design_priv, inventory_priv, view_reports_priv)
 values
-   ("admin", "password", 1, 1, 1);
+   (1, "admin", sha2("password", 256), 1, 1, 1);
 
 ```
