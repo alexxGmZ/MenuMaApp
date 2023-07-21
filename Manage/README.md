@@ -83,4 +83,15 @@ insert into registered_users
 values
    (1, "admin", SHA2("password", 256), 1, 1, 1);
 
+CREATE TABLE `menu_item` (
+   `item_id` int NOT NULL AUTO_INCREMENT,
+   `item_name` varchar(255) NOT NULL,
+   `item_desc` varchar(255) NOT NULL,
+   `item_image` blob,
+   `item_price` double NOT NULL DEFAULT '0',
+   `quantity_sold` int NOT NULL DEFAULT '0',
+   `revenue_generated` double NOT NULL DEFAULT '0',
+   PRIMARY KEY (`item_id`)
+)
+
 ```
