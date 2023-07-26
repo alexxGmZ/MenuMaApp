@@ -73,3 +73,44 @@ function register_employee() {
 		});
 	})
 }
+
+function list_registered_employees() {
+	connection.query("SELECT * FROM registered_users", function (err, result, fields){
+		if (err) throw err;
+
+		let placeholder = document.querySelector("#registered_employees");
+		let out = "";
+
+		for(let row of result){
+
+			if (row.design_priv == 1)
+				row.design_priv = "Yes";
+			else
+				row.design_priv = "No";
+
+			if (row.inventory_priv == 1)
+				row.inventory_priv = "Yes"
+			else
+				row.inventory_priv = "No";
+
+			if (row.view_reports_priv == 1)
+				row.view_reports_priv = "Yes"
+			else
+				row.view_reports_priv = "No";
+
+			out += `
+				<tr>
+					<td>${row.name}</td>
+					<td>${row.design_priv}</td>
+					<td>${row.inventory_priv}</td>
+					<td>${row.view_reports_priv}</td>
+				</tr>
+			`;
+		}
+		placeholder.innerHTML = out;
+	});
+}
+
+module.exports = {
+	list_registered_employees,
+};
