@@ -117,8 +117,20 @@ CREATE TABLE order_queue(
    kiosk_ip_address VARCHAR(30) NOT NULL,
    PRIMARY KEY(queue_number),
    INDEX idx_transaction_date (transaction_date),
+   INDEX idx_order_id (order_id),
    FOREIGN KEY (employee_id) REFERENCES registered_employees(employee_id),
    FOREIGN KEY (kiosk_ip_address) REFERENCES api_connected_devices(ip_address)
+);
+
+CREATE TABLE order_queue_history(
+   order_id INT,
+   queue_number INT,
+   transaction_date DATE NOT NULL,
+   customer_name TEXT,
+   total_price FLOAT DEFAULT 0,
+   kiosk_ip_address VARCHAR(30) NOT NULL,
+   PRIMARY KEY(order_id),
+   FOREIGN KEY (order_id) REFERENCES order_queue(order_id)
 );
 
 CREATE TABLE order_stats(
