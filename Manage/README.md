@@ -24,6 +24,7 @@ npm list
 ```
 
 This should output Electron and Tailwind CSS like this
+
 ```bash
 freezmenu-manage@1.0.0
 ├── electron@25.2.0
@@ -63,24 +64,96 @@ files.
 <br>
 
 ## MySql Database Setup
+> NOTE: this is subject to change. Prepare for change/s or improvements.
+
 ```sql
-create database manage_db;
+CREATE database manage_db;
 use manage_db
 
-create table registered_users(
-   user_id int auto_increment,
-   name text not null,
-   password text not null,
-   design_priv int not null,
-   inventory_priv int not null,
-   view_reports_priv int not null,
-   primary key(user_id)
+CREATE TABLE registered_employees(
+   employee_id INT AUTO_INCREMENT,
+   name TEXT NOT NULL,
+   password TEXT NOT NULL,
+   design_priv INT NOT NULL,
+   inventory_priv INT NOT NULL,
+   view_reports_priv INT NOT NULL,
+   PRIMARY KEY(employee_id)
 );
 
 -- create a default admin user (OPTIONAL)
-insert into registered_users
-   (user_id, name, `password`, design_priv, inventory_priv, view_reports_priv)
-values
+-- name: admin
+-- password: password
+INSERT INTO registered_employees
+   (employee_id, name, `password`, design_priv, inventory_priv, view_reports_priv)
+VALUES
    (1, "admin", SHA2("password", 256), 1, 1, 1);
 
+CREATE TABLE menu_items(
+   item_id INT AUTO_INCREMENT,
+   item_name TEXT NOT NULL,
+   item_desc TEXT,
+   item_image TEXT,
+   item_price FLOAT NOT NULL,
+   quantity_sold INT DEFAULT 0,
+   revenue_generated FLOAT DEFAULT 0,
+   PRIMARY KEY(item_id)
+);
+
+CREATE TABLE api_connected_devices(
+   ip_address VARCHAR(30) NOT NULL,
+   device_name TEXT not NULL,
+   api_token TEXT NOT NULL,
+   mac_address TEXT,
+   PRIMARY KEY(ip_address)
+);
+
+CREATE TABLE order_queue(
+   queue_number INT AUTO_INCREMENT,
+   order_id INT NOT NULL,
+   employee_id INT,
+   customer_name TEXT,
+   total_price FLOAT DEFAULT 0,
+   transaction_date DATE NOT NULL,
+   kiosk_ip_address VARCHAR(30) NOT NULL,
+   PRIMARY KEY(queue_number),
+   INDEX idx_transaction_date (transaction_date),
+   FOREIGN KEY (employee_id) REFERENCES registered_employees(employee_id),
+   FOREIGN KEY (kiosk_ip_address) REFERENCES api_connected_devices(ip_address)
+);
+
+CREATE TABLE order_stats(
+   transaction_date DATE,
+   total_orders_taken INT DEFAULT 0,
+   total_orders_done INT DEFAULT 0,
+   total_orders_canceled INT DEFAULT 0,
+   total_earnings float DEFAULT 0,
+   PRIMARY KEY(transaction_date),
+   FOREIGN KEY (transaction_date) REFERENCES order_queue(transaction_date)
+);
+
+CREATE TABLE items_ordered(
+   items_ordered_id INT AUTO_INCREMENT,
+   item_id INT NOT NULL,
+   item_name TEXT,
+   item_price FLOAT NOT NULL,
+   quantity INT DEFAULT 0,
+   quantity_times_price FLOAT DEFAULT 0,
+   queue_number INT NOT NULL,
+   order_id INT NOT NULL,
+   PRIMARY KEY(items_ordered_id),
+   FOREIGN KEY (item_id) REFERENCES menu_items(item_id),
+   FOREIGN KEY (queue_number) REFERENCES order_queue(queue_number)
+);
+
+CREATE TABLE items_ordered_history(
+   items_ordered_id INT,
+   order_id INT NOT NULL,
+   item_id INT NOT NULL,
+   item_name TEXT,
+   item_price FLOAT NOT NULL,
+   quantity INT DEFAULT 0,
+   quantity_times_price FLOAT DEFAULT 0,
+   PRIMARY KEY(items_ordered_id),
+   FOREIGN KEY (items_ordered_id) REFERENCES items_ordered(items_ordered_id)
+);
 ```
