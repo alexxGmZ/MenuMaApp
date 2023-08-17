@@ -59,7 +59,7 @@ function register_employee() {
 		if (err) throw err;
 
 		// insert registered user
-		const query = "INSERT INTO registered_users (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
+		const query = "INSERT INTO registered_employees (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
 		connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv], (error, results) => {
 			if(error) {
 				alert(error);
@@ -75,8 +75,9 @@ function register_employee() {
 }
 
 function list_registered_employees() {
-	connection.query("SELECT * FROM registered_users", function (err, result, fields){
+	connection.query("SELECT * FROM registered_employees", function (err, result, fields){
 		if (err) throw err;
+		console.log(result);
 
 		let placeholder = document.querySelector("#registered_employees");
 		let out = "";
