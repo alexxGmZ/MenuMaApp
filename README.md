@@ -1,4 +1,4 @@
-# FreEzMenu
+# MenuMaApp
 ## A Customizable User Interface Menu Application System for Food Service Industry
 Initial Client or Target Market (**Within Albay**):
 * Local Restaurants

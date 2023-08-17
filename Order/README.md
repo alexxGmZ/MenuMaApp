@@ -7,6 +7,7 @@ The Order application will be mainly developed for Android devices.
 <br>
 
 **Dependencies:**
+
 * Capacitor
    * [documentation](https://capacitorjs.com/docs/)
 * Android Studio & Android SDK
@@ -58,7 +59,7 @@ npm run build
 npm run preview
 ```
 ```npm run build``` builds the code. ```npm run preview``` runs the built code in the
-browser, it simulates the android environment.
+browser using vite, it simulates the android environment.
 
 > **NOTE:** always execute ```npm run build``` before executing ```npx cap run android``` or
 else the changes will not be applied inside the android device.

@@ -1,7 +1,7 @@
 {
-  "name": "freezmenu-order",
+  "name": "menumaapp-order",
   "version": "1.0.0",
-  "description": "FreEzMenu Order",
+  "description": "MenuMaApp Order",
   "main": "index.js",
   "keywords": [
     "capacitor",

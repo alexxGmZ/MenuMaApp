@@ -1,14 +1,14 @@
 {
-  "name": "freezmenu-manage",
+  "name": "menumaapp-manage",
   "version": "1.0.0",
-  "description": "FreEzMenu Manage",
+  "description": "MenuMaApp Manage",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build-css": "tailwindcss -i ./src/styles.css -o ./public/styles/styles.css",
     "watch-css": "tailwindcss -i ./src/styles.css -o ./public/styles/styles.css --watch"
   },
-  "author": "Algilbert Gomez",
+  "author": "MenuMaApp devs",
   "license": "",
   "devDependencies": {
     "electron": "^25.2.0",
