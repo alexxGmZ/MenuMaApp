@@ -5,8 +5,8 @@ const dns = require("dns");
 // create database connection
 var connection = mysql.createConnection({
 	host: "localhost",
-	user: "algilbert",
-	password: "Ilikefoods@123",
+	user: "",
+	password: "",
 	database: "manage_db"
 });
 
