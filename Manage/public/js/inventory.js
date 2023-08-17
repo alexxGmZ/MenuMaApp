@@ -21,7 +21,7 @@ function testsql()
 
 	// Queries Will be executed //
 
-	$queryString = 'SELECT * FROM manage_db.menu_item;';
+	$queryString = 'SELECT * FROM manage_db.menu_items;';
 	connection.query($queryString, (err, rows, fields) => {
 
 		if(err) {
@@ -54,7 +54,7 @@ function refreshitems()
 	connection.connect(function(err) {
 		if (err) throw err;
   		//Select all customers and return the result object:
-  		connection.query("SELECT * FROM manage_db.menu_item", function (err, result, fields) {
+  		connection.query("SELECT * FROM manage_db.menu_items", function (err, result, fields) {
     		if (err) throw err;
 
 			let placeholder = document.querySelector("#data-output");
@@ -101,7 +101,7 @@ connection.connect((err) => {
 connection.connect(function(err) {
 	if (err) throw err;
 	//Select all foods and return the result object:
-	connection.query("SELECT * FROM manage_db.menu_item", function (err, result, fields){
+	connection.query("SELECT * FROM manage_db.menu_items", function (err, result, fields){
 		if (err) throw err;
 
 		let placeholder = document.querySelector("#data-output");
@@ -154,7 +154,7 @@ function addItems()
 		var foodrevenue = document.getElementById("foodrevenue").value;
 		
 		// THE QUESRY USED TO INSERT
-		const query = 'INSERT INTO menu_item (item_name, item_desc, item_image, item_price, quantity_sold, revenue_generated) VALUES (?, ?, ?, ?, ?, ?);';
+		const query = 'INSERT INTO menu_items (item_name, item_desc, item_image, item_price, quantity_sold, revenue_generated) VALUES (?, ?, ?, ?, ?, ?);';
 		connection.query(query, [fooditem, fooddesc, withimg, foodprice, foodsold, foodrevenue], (error, results) => {
 			if(error){
 				alert(error);
