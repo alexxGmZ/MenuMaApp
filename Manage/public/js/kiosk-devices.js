@@ -18,15 +18,11 @@ connection.connect((err) => {
 	console.log("Connection Success");
 });
 
-function list_available_devices() {
-
-}
-
 function list_registered_devices() {
 
 }
 
-async function scan_lan_devices() {
+async function list_available_devices() {
 	const networkPrefix = "192.168.254.";
 	const startIP = 1;
 	const endIP = 255;
