@@ -1,25 +1,16 @@
 console.log("Directory: " + __dirname);
 
-const mysql = require("mysql2");
+// const mysql = require("mysql2");
 const ping = require("ping");
 const dns = require("dns");
-const config = require(__dirname + "/js/config.js");
 
-// create database connection
-var connection = mysql.createConnection({
-	host: config.database.host,
-	user: config.database.user,
-	password: config.database.password,
-	database: config.database.database
-});
-
+//
+// Mysql Database
+//
+// call mysql database module
+const mysql = require(__dirname + "/js/mysql.js")
 // check database connection
-connection.connect((err) => {
-	if (err) {
-		return console.log(err.stack);
-	}
-	console.log("Connection Success");
-});
+mysql.check_connection()
 
 function list_registered_devices() {
 

@@ -1,24 +1,17 @@
 console.log("Directory: " + __dirname);
 
-const mysql = require("mysql2");
 const crypto = require("crypto");
-const config = require(__dirname + "/js/config.js");
 
+//
+// Mysql Database
+//
+// call mysql database module
+const mysql = require(__dirname + "/js/mysql.js");
 // create database connection
-var connection = mysql.createConnection({
-	host: config.database.host,
-	user: config.database.user,
-	password: config.database.password,
-	database: config.database.database
-});
-
+const connection = mysql.connection;
 // check database connection
-connection.connect((err) => {
-	if (err) {
-		return console.log(err.stack);
-	}
-	console.log("Connection Success");
-});
+mysql.check_connection();
+
 
 function register_employee() {
 	// variables from register.html
