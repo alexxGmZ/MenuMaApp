@@ -8,7 +8,7 @@ const dns = require("dns");
 // Mysql Database
 //
 // call mysql database module
-const mysql = require(__dirname + "/js/mysql.js")
+const mysql = require(__dirname + "/js/modules/mysql.js")
 // check database connection
 mysql.check_connection()
 
