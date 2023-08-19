@@ -1,4 +1,4 @@
-# "Manage" Application Directory
+# MenuMaApp: Manage Directory
 
 <br>
 
@@ -11,12 +11,69 @@
    * [documentation](https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html)
 * Tailwind CSS v3.3.2
    * [documentation](https://tailwindcss.com/docs/installation)
+* Mysql v8
 
 <br>
 
-## How to Setup
+<!--toc:start-->
+## Table of Contents:
+- [MenuMaApp: Manage Directory](#menumaapp-manage-directory)
+  - [Directory and File Structure](#directory-and-file-structure)
+  - [Environment Setup](#environment-setup)
+    - [Packages or Dependencies Installation](#packages-or-dependencies-installation)
+    - [MySql Database Setup](#mysql-database-setup)
+  - [Custom Modules](#custom-modules)
+    - [mysql.js](#mysqljs)
+<!--toc:end-->
 
-Install Electron and Tailwind CSS using npm inside the ```Manage/``` directory.
+<br>
+
+## Directory and File Structure
+
+The structure is bound to change depending on the state of the development.
+
+```
+Manage/
+   public/
+      js/
+         modules/
+            *.js
+         *.js
+      style/
+         *.css
+   *.html
+   src/
+   main.js
+```
+
+```Manage/``` is the root folder, all code inside this folder is for the "Manage" application
+only. This directory is intended for framework configurations.
+
+```Manage/public/``` directory is for all of the html files.
+
+```Manage/public/js``` directory is for all of the javascript files.
+
+```Manage/public/js/modules``` directory is for all of the reusable javascript files.
+
+```Manage/public/styles/``` directory is for all of the css files needed for the html
+files.
+
+```Manage/src/``` currently this is for the Tailwind CSS.
+
+```main.js``` file is for Electron.js. This file is intended for all Electron scripts or
+configs.
+
+<br>
+
+## Environment Setup
+
+### Packages or Dependencies Installation
+
+Install Electron and Tailwind CSS using npm inside the ```Manage/``` directory. Or just
+run ```npm install``` since the [```package.json```](./package.json) is already established.
+```bash
+npm install
+`
 
 To make sure that all the required dependencies are installed, type
 ```bash
@@ -35,36 +92,10 @@ That's it, just read the documentation links provided at the top for these tools
 
 <br>
 
-## Directory and File Structure
+### MySql Database Setup
+Install MySql version 8.
 
-The structure is bound to change depending on the state of the development.
-
-```
-Manage/
-   public/
-      style/
-         *.css
-   *.html
-   src/
-   main.js
-```
-
-```Manage/``` is the root folder, all code inside this folder is for the "Manage" application
-only. This directory is intended for framework configurations.
-
-```Manage/public/``` directory is for all of the html files.
-
-```Manage/public/styles/``` directory is for all of the css files needed for the html
-files.
-
-```Manage/src/``` currently this is for the Tailwind CSS.
-
-```main.js``` file is for Electron.js. This file is intended for all Electron scripts.
-
-<br>
-
-## MySql Database Setup
-> NOTE: this is subject to change. Prepare for change/s or improvements.
+> NOTE: this database setup query is subject to change. Prepare for change/s or improvements.
 
 ```sql
 CREATE database manage_db;
@@ -169,3 +200,93 @@ CREATE TABLE items_ordered_history(
    FOREIGN KEY (items_ordered_id) REFERENCES items_ordered(items_ordered_id)
 );
 ```
+
+<br>
+
+## Custom Modules
+
+The custom modules are located inside the [```./public/js/modules/```](./public/js/modules/)
+directory.
+
+<br>
+
+### mysql.js
+
+The [mysql.js](./public/js/modules/mysql.js) custom module uses the
+[```mysql2```](https://www.npmjs.com/package/mysql2) package.
+
+**How to utilize:**
+
+Make sure to put your database username and password inside the ```connection```
+variable of the ```mysql.js``` file.
+> WARNING: Don't forget to **remove your username and password** in the ```connection```
+variable before committing any changes. **It's for your own safety and it causes a minor
+inconvenience for other developers**.
+
+```javascript
+// mysql.js
+
+const connection = mysql.createConnection({
+	host: "localhost",
+	user: "",
+	password: "",
+	database: "manage_db"
+})
+```
+Since all the JavaScript(*.js) files are inside the [```./public/js/```](./public/js/)
+directory. The [mysql.js](./public/js/modules/mysql.js) can be required inside a JavaScript
+file.
+
+```javascript
+// example_javascript.js
+
+// call mysql module (adjust the module directory based on the current script directory)
+const mysql = require(__dirname + "/js/modules/mysql.js");
+
+// check database connection
+mysql.check_connection()
+```
+
+To execute a MySql query, call the ```connection``` variable of the ```mysql.js``` module.
+
+```javascript
+// example_javascript.js
+
+// call mysql module
+const mysql = require(__dirname + "/js/modules/mysql.js");
+
+// check database connection
+mysql.check_connection();
+
+// create database connection
+const connection = mysql.connection;
+```
+
+After calling the ```connection``` variable, you can utilize any functions stated in the
+[mysql2 package documentation](https://www.npmjs.com/package/mysql2?activeTab=readme).
+
+```javascript
+// example_javascript.js
+
+// call mysql module
+const mysql = require(__dirname + "/js/modules/mysql.js");
+
+// check database connection
+mysql.check_connection();
+
+// create database connection
+const connection = mysql.connection;
+
+// simple query
+connection.query(
+   'SELECT * FROM `table` WHERE `name` = "Page" AND `age` > 45',
+   function(err, results, fields) {
+      console.log(results); // results contains rows returned by server
+      console.log(fields); // fields contains extra meta data about results, if available
+   }
+);
+```
+
+For more information, read the [mysql2 package documentation](https://www.npmjs.com/package/mysql2?activeTab=readme).
+
+<br>
