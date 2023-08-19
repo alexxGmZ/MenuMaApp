@@ -227,10 +227,10 @@ inconvenience for other developers**.
 // mysql.js
 
 const connection = mysql.createConnection({
-	host: "localhost",
-	user: "",
-	password: "",
-	database: "manage_db"
+   host: "localhost",
+   user: "",
+   password: "",
+   database: "manage_db"
 })
 ```
 Since all the JavaScript(*.js) files are inside the [```./public/js/```](./public/js/)

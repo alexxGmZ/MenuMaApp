@@ -57,6 +57,7 @@ async function list_available_devices() {
 
 	console.log(devices);
 
+	// place all the scanned devices inside a table body with a local_devices id
 	let placeholder = document.querySelector("#local_devices");
 	let out = "";
 
