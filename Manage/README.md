@@ -73,7 +73,7 @@ Install Electron and Tailwind CSS using npm inside the ```Manage/``` directory. 
 run ```npm install``` since the [```package.json```](./package.json) is already established.
 ```bash
 npm install
-`
+```
 
 To make sure that all the required dependencies are installed, type
 ```bash
