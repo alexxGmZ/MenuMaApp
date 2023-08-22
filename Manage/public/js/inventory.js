@@ -158,7 +158,9 @@ function addItems()
 		var imgFileName = foodimg[1];
 
 		const filePath = document.querySelector('input[type=file').files[0].path;
-		const filePathCopy = __dirname + '\\foods\\' + imgFileName;
+		const filePathCopy = __dirname + '/foods/' + imgFileName;
+
+		console.log(filePathCopy);
 
 		fs.copyFile(filePath, filePathCopy, (err) => {
 			if (err) throw err;

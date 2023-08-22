@@ -17,10 +17,7 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-<<<<<<< HEAD
-    "express-fileupload": "^1.4.0"
-=======
+    "express-fileupload": "^1.4.0",
     "ping": "^0.4.4"
->>>>>>> testing
   }
 }
