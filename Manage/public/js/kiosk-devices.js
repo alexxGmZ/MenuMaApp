@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-const mysql = require("mysql2");
-
-// create database connection
-var connection = mysql.createConnection({
-	host: "localhost",
-	user: "",
-	password: "",
-	database: "manage_db"
-});
-
-// check database connection
-connection.connect((err) => {
-	if (err) {
-		return console.log(err.stack);
-	}
-	console.log("Connection Success");
-});
-
-function list_available_devices() {
-
-}
-=======
 console.log("Directory: " + __dirname);
 
 // const mysql = require("mysql2");
@@ -31,16 +8,9 @@ const dns = require("dns");
 // Mysql Database
 //
 // call mysql database module
-const mysql = require(__dirname + "/js/mysql.js")
+const mysql = require(__dirname + "/js/modules/mysql.js")
 // check database connection
 mysql.check_connection()
->>>>>>> testing
-
-function list_registered_devices() {
-
-}
-<<<<<<< HEAD
-=======
 
 async function list_available_devices() {
 	const networkPrefix = "192.168.254.";
@@ -83,6 +53,7 @@ async function list_available_devices() {
 
 	console.log(devices);
 
+	// place all the scanned devices inside a table body with a local_devices id
 	let placeholder = document.querySelector("#local_devices");
 	let out = "";
 
@@ -99,4 +70,3 @@ async function list_available_devices() {
 
 	console.log('Scan completed.');
 }
->>>>>>> testing
