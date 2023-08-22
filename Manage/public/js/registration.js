@@ -8,17 +8,9 @@ const crypto = require("crypto");
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js");
 // create database connection
-<<<<<<< HEAD
-var connection = mysql.createConnection({
-	host: "localhost",
-	user: "root",
-	password: "1234",
-	database: "manage_db"
-});
 
-=======
 const connection = mysql.connection;
->>>>>>> testing
+
 // check database connection
 mysql.check_connection();
 
