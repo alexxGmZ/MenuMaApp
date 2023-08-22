@@ -16,12 +16,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./styles/styles.css" rel="stylesheet">
-		<script src="./js/sqlconnection.js"></script>
+		<script src="./js/inventory.js"></script>
 	</head>
 
 
 	<body>
-
 		<!--Buttons-->
 		<div>
 			<button onclick="testsql()">TEST THE CONNECTION</button>
@@ -51,18 +50,21 @@
 		</div>
 		<!------------------->
 
+		<br>
+
 		<!-- MAIN FORM FOR ADDING DATA -->
 		<div>
+			
 			<input type="text" id="fooditem" placeholder="Food Name"/> <br>
 			<input type="text" id="fooddesc" placeholder="Food Description"/> <br>
 			<label for="img">Select Food Image:</label>
-			<input type="file" id="img" name="foodimg" accept="image/*"/> <br>
-			<input type="text" id="foodprice" placeholder="Food Price"/>
-			<input type="text" id="foodsold" placeholder="Food Quantity Sold"/>
-			<input type="text" id="foodrevenue" placeholder="Food Revenue"/>
-			<button onclick="addItems()">Submit</button>
+			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
+			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
+			<button onclick="addItems()" name="submit"> Upload </button>
+			
 		</div>
-		<!------------------->
+
+		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
 
 	</body>
 </html>

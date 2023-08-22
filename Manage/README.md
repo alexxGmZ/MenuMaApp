@@ -119,6 +119,22 @@ INSERT INTO registered_employees
 VALUES
    (1, "admin", SHA2("password", 256), 1, 1, 1);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+CREATE TABLE `menu_item` (
+   `item_id` int NOT NULL AUTO_INCREMENT,
+   `item_name` varchar(255) NOT NULL,
+   `item_desc` varchar(255) NOT NULL,
+   `item_image` blob,
+   `item_price` double NOT NULL DEFAULT '0',
+   `quantity_sold` int NOT NULL DEFAULT '0',
+   `revenue_generated` double NOT NULL DEFAULT '0',
+   PRIMARY KEY (`item_id`)
+)
+
+=======
+=======
+>>>>>>> testing
 CREATE TABLE menu_items(
    item_id INT AUTO_INCREMENT,
    item_name TEXT NOT NULL,
@@ -199,6 +215,10 @@ CREATE TABLE items_ordered_history(
    PRIMARY KEY(items_ordered_id),
    FOREIGN KEY (items_ordered_id) REFERENCES items_ordered(items_ordered_id)
 );
+<<<<<<< HEAD
+>>>>>>> testing
+=======
+>>>>>>> testing
 ```
 
 <br>
