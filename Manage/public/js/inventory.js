@@ -1,3 +1,9 @@
+// Const for file handling
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const path = require('path');
+const fs = require('fs');
+
 // MYSQL Connection //
 
 const mysql = require('mysql2');
@@ -83,11 +89,7 @@ function refreshitems()
 }
 // End of Function for Refresh Item //
 
-
 // END OF MYSQL FUNCTIONS //
-
-
-
 
 //----- Show Foods Function -----//
 connection.connect((err) => {
@@ -129,9 +131,10 @@ connection.connect(function(err) {
 
 //----- End of Show Foods Function -----//
 
-// ADD NEW FOODS FUNCTION //
+// -----ADD NEW FOODS FUNCTION----- //
 function addItems()
 {
+
 	// SQL CONNECTION
 	connection.connect((err) => {
 		if (err) {
@@ -150,20 +153,31 @@ function addItems()
 		var foodimg = document.getElementById("foodimg").value.split('fakepath\\');
 		var withimg = ("./foods/" + foodimg[1])
 		var foodprice = document.getElementById("foodprice").value;
-		var foodsold = document.getElementById("foodsold").value;
-		var foodrevenue = document.getElementById("foodrevenue").value;
+
+		// IMAGE HANDLING
+		var imgFileName = foodimg[1];
+
+		const filePath = document.querySelector('input[type=file').files[0].path;
+		const filePathCopy = __dirname + '\\foods\\' + imgFileName;
+
+		fs.copyFile(filePath, filePathCopy, (err) => {
+			if (err) throw err;
+
+			console.log('File Copy Successfully.');
+		})
 		
-		// THE QUESRY USED TO INSERT
-		const query = 'INSERT INTO menu_items (item_name, item_desc, item_image, item_price, quantity_sold, revenue_generated) VALUES (?, ?, ?, ?, ?, ?);';
-		connection.query(query, [fooditem, fooddesc, withimg, foodprice, foodsold, foodrevenue], (error, results) => {
+		// THE QUERY USED TO INSERT
+		const query = 'INSERT INTO menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?);';
+		connection.query(query, [fooditem, fooddesc, withimg, foodprice], (error, results) => {
 			if(error){
 				alert(error);
 			}else{
-				alert('Data inserted!');
+				alert('Data Inserted Successfully!');
 			}
 		});
 			
 	})
 
 }
-// END OF ADD NEW FOODS FUNCTION //
+
+// -----END OF ADD NEW FOODS FUNCTION----- //

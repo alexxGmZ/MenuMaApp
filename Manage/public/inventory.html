@@ -21,7 +21,6 @@
 
 
 	<body>
-
 		<!--Buttons-->
 		<div>
 			<button onclick="testsql()">TEST THE CONNECTION</button>
@@ -55,16 +54,17 @@
 
 		<!-- MAIN FORM FOR ADDING DATA -->
 		<div>
+			
 			<input type="text" id="fooditem" placeholder="Food Name"/> <br>
 			<input type="text" id="fooddesc" placeholder="Food Description"/> <br>
 			<label for="img">Select Food Image:</label>
 			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
 			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
-			<input type="text" id="foodsold" placeholder="Food Quantity Sold"/> <br>
-			<input type="text" id="foodrevenue" placeholder="Food Revenue"/> <br>
-			<button onclick="addItems()">Submit</button>
+			<button onclick="addItems()" name="submit"> Upload </button>
+			
 		</div>
-		<!------------------->
+
+		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
 
 	</body>
 </html>
