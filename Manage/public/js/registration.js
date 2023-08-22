@@ -1,7 +1,14 @@
-const mysql = require("mysql2");
+console.log("Directory: " + __dirname);
+
 const crypto = require("crypto");
 
+//
+// Mysql Database
+//
+// call mysql database module
+const mysql = require(__dirname + "/js/mysql.js");
 // create database connection
+<<<<<<< HEAD
 var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
@@ -9,13 +16,12 @@ var connection = mysql.createConnection({
 	database: "manage_db"
 });
 
+=======
+const connection = mysql.connection;
+>>>>>>> testing
 // check database connection
-connection.connect((err) => {
-	if (err) {
-		return console.log(err.stack);
-	}
-	console.log("Connection Success");
-});
+mysql.check_connection();
+
 
 function register_employee() {
 	// variables from register.html
@@ -59,7 +65,7 @@ function register_employee() {
 		if (err) throw err;
 
 		// insert registered user
-		const query = "INSERT INTO registered_users (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
+		const query = "INSERT INTO registered_employees (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
 		connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv], (error, results) => {
 			if(error) {
 				alert(error);
@@ -75,8 +81,9 @@ function register_employee() {
 }
 
 function list_registered_employees() {
-	connection.query("SELECT * FROM registered_users", function (err, result, fields){
+	connection.query("SELECT * FROM registered_employees", function (err, result, fields){
 		if (err) throw err;
+		console.log(result);
 
 		let placeholder = document.querySelector("#registered_employees");
 		let out = "";

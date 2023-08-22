@@ -25,6 +25,7 @@
 		<script src="./js/kiosk-devices.js"></script>
 	</head>
 	<body>
+<<<<<<< HEAD
 		<!-- list all available devices in the LAN -->
 		<h1 class="font-bold">Available Devices</h1>
 
@@ -32,5 +33,36 @@
 
 		<!-- list all registered android devices -->
 		<h1 class="font-bold">Registered Devices</h1>
+=======
+		<!-- list all registered android devices -->
+		<h1 class="font-bold">Registered Devices</h1>
+
+		<br><br>
+
+		<!-- list all available devices in the LAN -->
+		<h1 class="font-bold">Available Devices</h1>
+		<button onclick="scan_lan_devices()">Scan Network for Devices</button>
+		<br><br>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Device Name</th>
+					<th>Local IP Address</th>
+				</tr>
+			</thead>
+
+			<tbody id="local_devices">
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+						list_available_devices();
+					});
+				</script>
+			</tbody>
+		</table>
+
+		<br><br>
+
+>>>>>>> testing
 	</body>
 </html>
