@@ -1,19 +1,17 @@
 // Const for file handling
-const express = require('express');
-const fileUpload = require('express-fileupload');
-const path = require('path');
 const fs = require('fs');
 
-// MYSQL Connection //
+//
+// Mysql Database
+//
+// call mysql database module
+const mysql = require(__dirname + "/js/modules/mysql.js");
+// create database connection
 
-const mysql = require('mysql2');
+const connection = mysql.connection;
 
-var connection = mysql.createConnection({
-	host: "localhost",
-	user: "root",
-	password: "1234",
-	database: "manage_db"
-});
+// check database connection
+mysql.check_connection();
 
 // SQL Connection Test
 function testsql()
@@ -83,7 +81,7 @@ function refreshitems()
 			placeholder.innerHTML = out;
 
   		});
-			
+
 	})
 
 }
@@ -126,7 +124,7 @@ connection.connect(function(err) {
 		placeholder.innerHTML = out;
 
 	  });
-		
+
 })
 
 //----- End of Show Foods Function -----//
@@ -142,11 +140,11 @@ function addItems()
 		}
 		console.log("Connection Success");
 	});
-	
+
 	// FUNCTION TO INSERT
 	connection.connect(function(err) {
 		if (err) throw err;
-		
+
 		// VARIABLES FROM inventory.html
 		var fooditem = document.getElementById("fooditem").value;
 		var fooddesc = document.getElementById("fooddesc").value;
@@ -167,7 +165,7 @@ function addItems()
 
 			console.log('File Copy Successfully.');
 		})
-		
+
 		// THE QUERY USED TO INSERT
 		const query = 'INSERT INTO menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?);';
 		connection.query(query, [fooditem, fooddesc, withimg, foodprice], (error, results) => {
@@ -177,7 +175,7 @@ function addItems()
 				alert('Data Inserted Successfully!');
 			}
 		});
-			
+
 	})
 
 }
