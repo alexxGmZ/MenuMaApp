@@ -52,24 +52,19 @@ function register_employee() {
 	console.log(hash_password);
 	console.log(design_priv, inventory_priv, report_priv);
 
-	// insert employee to database
-	connection.connect(function(err) {
-		if (err) throw err;
-
-		// insert registered user
-		const query = "INSERT INTO registered_employees (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
-		connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv], (error, results) => {
-			if(error) {
-				alert(error);
-				results.status(500).send('Error insert!!!!!')
-			}
-			else {
-				alert(name + " is registered");
-				//refresh page after insert
-				location.reload();
-			}
-		});
-	})
+	// insert registered user
+	const query = "INSERT INTO registered_employees (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
+	connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv], (error, results) => {
+		if(error) {
+			alert(error);
+			results.status(500).send('Error insert!!!!!')
+		}
+		else {
+			alert(name + " is registered");
+			//refresh page after insert
+			location.reload();
+		}
+	});
 }
 
 function list_registered_employees() {
