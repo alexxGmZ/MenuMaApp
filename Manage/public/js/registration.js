@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function() {
+	list_registered_employees();
+});
+
 console.log("Directory: " + __dirname);
 
 const crypto = require("crypto");
@@ -55,7 +59,7 @@ function register_employee() {
 	// insert registered user
 	const query = "INSERT INTO registered_employees (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
 	connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv], (error, results) => {
-		if(error) {
+		if (error) {
 			alert(error);
 			results.status(500).send('Error insert!!!!!')
 		}
@@ -68,14 +72,14 @@ function register_employee() {
 }
 
 function list_registered_employees() {
-	connection.query("SELECT * FROM registered_employees", function (err, result, fields){
+	connection.query("SELECT * FROM registered_employees", function(err, result, fields) {
 		if (err) throw err;
 		console.log(result);
 
 		let placeholder = document.querySelector("#registered_employees");
 		let out = "";
 
-		for(let row of result){
+		for (let row of result) {
 
 			if (row.design_priv == 1)
 				row.design_priv = "Yes";
@@ -104,7 +108,3 @@ function list_registered_employees() {
 		placeholder.innerHTML = out;
 	});
 }
-
-module.exports = {
-	list_registered_employees,
-};

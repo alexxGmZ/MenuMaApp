@@ -17,41 +17,40 @@
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Kiosk Devices</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="./styles/styles.css" rel="stylesheet">
-		<script src="./js/kiosk-devices.js"></script>
-	</head>
-	<body>
-		<!-- list all registered android devices -->
-		<h1 class="font-bold">Registered Devices</h1>
 
-		<br><br>
+<head>
+	<title>Kiosk Devices</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/styles.css" rel="stylesheet">
+	<script src="./js/kiosk-devices.js"></script>
+</head>
 
-		<!-- list all available devices in the LAN -->
-		<h1 class="font-bold">Available Devices</h1>
-		<button onclick="scan_lan_devices()">Scan Network for Devices</button>
-		<br><br>
+<body>
+	<!-- list all registered android devices -->
+	<h1 class="font-bold">Registered Devices</h1>
 
-		<table>
-			<thead>
-				<tr>
-					<th>Device Name</th>
-					<th>Local IP Address</th>
-				</tr>
-			</thead>
+	<br><br>
 
-			<tbody id="local_devices">
-				<script>
-					document.addEventListener("DOMContentLoaded", function() {
-						list_available_devices();
-					});
-				</script>
-			</tbody>
-		</table>
+	<!-- list all available devices in the LAN -->
+	<h1 class="font-bold">Available Devices</h1>
+	<button onclick="list_available_devices()">Scan Network for Devices</button>
+	<br><br>
 
-		<br><br>
-	</body>
+	<table>
+		<thead>
+			<tr>
+				<th>Device Name</th>
+				<th>Local IP Address</th>
+			</tr>
+		</thead>
+
+		<tbody id="local_devices">
+			<!-- call list_available_devices() function -->
+		</tbody>
+	</table>
+
+	<br><br>
+</body>
+
 </html>

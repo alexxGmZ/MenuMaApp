@@ -1,4 +1,12 @@
+document.addEventListener("DOMContentLoaded", function() {
+	api_menu_items();
+	api_order_queue();
+	api_items_ordered();
+	api_registered_employees();
+});
+
 console.log("Directory: " + __dirname);
+
 //
 // Mysql
 //
@@ -8,14 +16,6 @@ const mysql = require(__dirname + "/js/modules/mysql.js");
 mysql.check_connection();
 // call connection variable
 const connection = mysql.connection;
-
-document.addEventListener("DOMContentLoaded", function() {
-	// Call your API function or any other JavaScript code here
-	api_menu_items();
-	api_order_queue();
-	api_items_ordered();
-	api_registered_employees();
-});
 
 function api_menu_items() {
 	const query = "SELECT * from manage_db.menu_items";

@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function() {
+	list_available_devices();
+});
+
 console.log("Directory: " + __dirname);
 
 // const mysql = require("mysql2");
@@ -57,7 +61,7 @@ async function list_available_devices() {
 	let placeholder = document.querySelector("#local_devices");
 	let out = "";
 
-	for(let row of devices) {
+	for (let row of devices) {
 		out += `
 			<tr>
 				<td>${row.deviceName}</td>

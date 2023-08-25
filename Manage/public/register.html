@@ -10,60 +10,60 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Register Mode</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="./styles/styles.css" rel="stylesheet">
-		<script src="./js/registration.js"></script>
-	</head>
-	<body>
-		<h1 class="font-bold">Register Employee</h1><br>
 
-		<div>
-			<label for="name">Name:</label>
-			<input type="text" name="name" id="name"><br>
+<head>
+	<title>Register Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/styles.css" rel="stylesheet">
 
-			<label for="password">Password:</label>
-			<input type="text" name="password" id="password"><br>
+	<!-- javascript for this html page -->
+	<script src="./js/registration.js"></script>
+</head>
 
-			<label for="design_priv">Design Privilege:</label>
-			<input type="checkbox" name="design_priv" id="design_priv"><br>
+<body>
+	<h1 class="font-bold">Register Employee</h1><br>
 
-			<label for="inventory_priv">Inventory Privilege:</label>
-			<input type="checkbox" name="inventory_priv" id="inventory_priv"><br>
+	<div>
+		<label for="name">Name:</label>
+		<input type="text" name="name" id="name"><br>
 
-			<label for="report_priv">View Reports Privilege:</label>
-			<input type="checkbox" name="report_priv" id="report_priv"><br>
+		<label for="password">Password:</label>
+		<input type="text" name="password" id="password"><br>
 
-			<button onclick="register_employee()">Submit</button>
-		</div>
+		<label for="design_priv">Design Privilege:</label>
+		<input type="checkbox" name="design_priv" id="design_priv"><br>
 
-		<br>
+		<label for="inventory_priv">Inventory Privilege:</label>
+		<input type="checkbox" name="inventory_priv" id="inventory_priv"><br>
 
-		<h1 class="font-bold">Registered Employees</h1><br>
-		<div>
-			<table>
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Design Privilege</th>
-						<th>Inventory Privilege</th>
-						<th>View Reports Privilege</th>
-					</tr>
-				</thead>
+		<label for="report_priv">View Reports Privilege:</label>
+		<input type="checkbox" name="report_priv" id="report_priv"><br>
 
-				<!-- registered employees -->
-				<tbody id="registered_employees">
-					<script>
-						// Call the function when the page is loaded or whenever appropriate
-						document.addEventListener("DOMContentLoaded", function() {
-							list_registered_employees();
-						});
-					</script>
-				</tbody>
-			</table>
+		<button onclick="register_employee()">Submit</button>
+	</div>
 
-		</div>
-	</body>
+	<br>
+
+	<h1 class="font-bold">Registered Employees</h1><br>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Design Privilege</th>
+					<th>Inventory Privilege</th>
+					<th>View Reports Privilege</th>
+				</tr>
+			</thead>
+
+			<!-- registered employees -->
+			<tbody id="registered_employees">
+				<!-- call the list_registered_employees() function -->
+			</tbody>
+		</table>
+
+	</div>
+</body>
+
 </html>
