@@ -1,6 +1,6 @@
 {
-  "appId": "com.freezmenu.order",
-  "appName": "FreEzMenu Order",
+  "appId": "com.menumaapp.order",
+  "appName": "MenuMaApp Order",
   "bundledWebRuntime": false,
   "webDir": "dist",
   "plugins": {
