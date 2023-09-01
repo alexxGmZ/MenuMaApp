@@ -17,7 +17,8 @@ mysql.check_connection();
 // call connection variable
 const connection = mysql.connection;
 
-function api_menu_items() {
+
+function api_menu_items(callback) {
 	const query = "SELECT * from manage_db.menu_items";
 	connection.query(query, function(err, result) {
 		if (err) throw err;
@@ -25,6 +26,11 @@ function api_menu_items() {
 		// menu_items table data
 		// console.log(result);
 		const result_json = JSON.stringify(result, null, 2);
+
+		if (typeof callback === 'function') {
+			callback(result);
+		}
+
 		console.log(result_json);
 		const json_container = document.getElementById("menu_items");
 		json_container.textContent = result_json;
@@ -59,7 +65,7 @@ function api_items_ordered() {
 	})
 }
 
-function api_registered_employees() {
+function api_registered_employees(callback) {
 	const query = "SELECT * from manage_db.registered_employees";
 	connection.query(query, function(err, result) {
 		if (err) throw err;
@@ -67,9 +73,50 @@ function api_registered_employees() {
 		// items_ordered table data
 		// console.log(result);
 		const result_json = JSON.stringify(result, null, 2);
+
+		if (typeof callback === 'function') {
+			callback(result);
+		}
+
 		console.log(result_json);
 		const json_container = document.getElementById("registered_employees");
 		json_container.textContent = result_json;
 	})
 }
 
+// NOTE:
+// GET (read)
+// POST (create)
+// PATCH (update)
+// DELETE (destroy)
+
+//
+// EXPRESS practice from fireship
+//
+const express = require("express")();
+const PORT = 8080;
+
+express.listen(
+	PORT,
+	() => console.log(`It's alive on localhost:${PORT}`)
+)
+
+express.get("/menu_items",
+	// request (incoming data)
+	// response (outgoing data)
+	(request, response) => {
+		api_menu_items((result_json) => {
+			response.status(200).send(result_json);
+		});
+	}
+);
+
+express.get("/registered_employees",
+	// request (incoming data)
+	// response (outgoing data)
+	(request, response) => {
+		api_registered_employees((result_json) => {
+			response.status(200).send(result_json);
+		});
+	}
+);
