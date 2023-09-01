@@ -27,14 +27,30 @@
 		</div>
 		<!----------->
 
+		<!-- MAIN FORM FOR ADDING DATA -->
+		<div>
+
+			<input type="hidden" id="foodidfield" name="foodidfield" placeholder="Food ID"/> <br>
+			<input type="text" id="fooditem" placeholder="Food Name"/> <br>
+			<input type="text" id="fooddesc" placeholder="Food Description"/> <br>
+			<label for="img">Select Food Image:</label>
+			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
+			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
+			<button onclick="addItems()" name="submit"> Add Item </button>
+			<button onclick="updateItems()" name="submit"> Update Item </button>
+			<button onclick="deleteItems()" name="submit"> Delete Item </button>
+
+		</div>
+		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
+
 		<!--Main Food Table-->
 		<div>
-			<table>
+			<table id="food_table" onclick="rowClick()">
 				<thead>
 					<tr>
 						<th>Food ID</th>
 						<th>Food Name</th>
-						<th>Food Description ID</th>
+						<th>Food Description</th>
 						<th>Food Image</th>
 						<th>Food Price</th>
 						<th>Food Sold</th>
@@ -43,26 +59,13 @@
 				</thead>
 				<tbody id="data-output">
 					<!-- OUTPUT RESULT from sqlconnection.js -->
+					
 				</tbody>
 			</table>
 		</div>
 		<!------------------->
 
 		<br>
-
-		<!-- MAIN FORM FOR ADDING DATA -->
-		<div>
-
-			<input type="text" id="fooditem" placeholder="Food Name"/> <br>
-			<input type="text" id="fooddesc" placeholder="Food Description"/> <br>
-			<label for="img">Select Food Image:</label>
-			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
-			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
-			<button onclick="addItems()" name="submit"> Upload </button>
-
-		</div>
-
-		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
 
 	</body>
 </html>
