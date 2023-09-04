@@ -25,6 +25,8 @@
 	<h1 class="font-bold">Register Employee</h1><br>
 
 	<div>
+		<input type="hidden" id="id" name="id" placeholder="Employee ID"/><br>
+
 		<label for="name">Name:</label>
 		<input type="text" name="name" id="name"><br>
 
@@ -41,15 +43,18 @@
 		<input type="checkbox" name="report_priv" id="report_priv"><br>
 
 		<button onclick="register_employee()">Submit</button>
+		<button onclick="update_employee()">Update</button>
+		<button onclick="delete_employee()">Remove</button>
 	</div>
 
 	<br>
 
 	<h1 class="font-bold">Registered Employees</h1><br>
 	<div>
-		<table>
+		<table id="employee_table" onclick="rowClick()">
 			<thead>
 				<tr>
+					<th>ID</th>
 					<th>Name</th>
 					<th>Design Privilege</th>
 					<th>Inventory Privilege</th>
