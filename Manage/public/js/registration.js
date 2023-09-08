@@ -57,7 +57,7 @@ function register_employee() {
 	console.log(design_priv, inventory_priv, report_priv);
 
 	// insert registered user
-	const query = "INSERT INTO registered_employees (name, password, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
+	const query = "INSERT INTO registered_employees (name, password_hash, design_priv, inventory_priv, view_reports_priv) VALUES (?, ?, ?, ?, ?);";
 	connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv], (error, results) => {
 		if (error) {
 			alert(error);

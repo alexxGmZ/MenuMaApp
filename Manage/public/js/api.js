@@ -1,5 +1,3 @@
-console.log("Directory: " + __dirname);
-
 //
 // Mysql
 //
@@ -20,15 +18,16 @@ const connection = mysql.connection;
 //
 // EXPRESS practice from fireship
 //
-const express = require("express")();
+const express = require("express");
+const app = express();
 const PORT = 8080;
 
-express.listen(
+app.listen(
 	PORT,
 	() => console.log(`API Port:${PORT}`)
 )
 
-express.get("/menu_items",
+app.get("/menu_items",
 	// request (incoming data)
 	// response (outgoing data)
 	(request, response) => {
@@ -36,14 +35,13 @@ express.get("/menu_items",
 		connection.query(query, function(err, result) {
 			if (err) throw err;
 
-			// console.log(result_json);
 			console.log("GET request for menu_items");
 			response.status(200).send(result);
 		})
 	}
 );
 
-express.get("/registered_employees",
+app.get("/registered_employees",
 	// request (incoming data)
 	// response (outgoing data)
 	(request, response) => {
@@ -51,14 +49,13 @@ express.get("/registered_employees",
 		connection.query(query, function(err, result) {
 			if (err) throw err;
 
-			// console.log(result_json);
 			console.log("GET request for registered_employees");
 			response.status(200).send(result);
 		})
 	}
 );
 
-express.get("/order_queue",
+app.get("/order_queue",
 	// request (incoming data)
 	// response (outgoing data)
 	(request, response) => {
@@ -66,14 +63,13 @@ express.get("/order_queue",
 		connection.query(query, function(err, result) {
 			if (err) throw err;
 
-			// console.log(result_json);
 			console.log("GET request for order_queue");
 			response.status(200).send(result);
 		})
 	}
 );
 
-express.get("/items_ordered",
+app.get("/items_ordered",
 	// request (incoming data)
 	// response (outgoing data)
 	(request, response) => {
@@ -81,7 +77,6 @@ express.get("/items_ordered",
 		connection.query(query, function(err, result) {
 			if (err) throw err;
 
-			// console.log(result_json);
 			console.log("GET request for items_ordered");
 			response.status(200).send(result);
 		})
