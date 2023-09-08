@@ -217,19 +217,17 @@ The [mysql.js](./public/js/modules/mysql.js) custom module uses the
 
 **How to utilize:**
 
-Make sure to put your database username and password inside the ```connection```
-variable of the ```mysql.js``` file.
-> WARNING: Don't forget to **remove your username and password** in the ```connection```
-variable before committing any changes. **It's for your own safety and it causes a minor
-inconvenience for other developers**.
+Create the environment variables **DEV_MYSQL_USER** and **DEV_MYSQL_PASSWORD**, assign a value of
+the mysql user and password that you will utilize in development.
+
 
 ```javascript
 // mysql.js
 
 const connection = mysql.createConnection({
    host: "localhost",
-   user: "",
-   password: "",
+   user: process.env.DEV_MYSQL_USER,
+   password: process.env.DEV_MYSQL_PASSWORD,
    database: "manage_db"
 })
 ```
