@@ -201,6 +201,8 @@ CREATE TABLE items_ordered_history(
 );
 ```
 
+You can use the [dummy data](./dummy_data.sql) to save some hassle.
+
 <br>
 
 ## Custom Modules
