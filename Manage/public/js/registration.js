@@ -103,6 +103,12 @@ function list_registered_employees() {
 					<td>${row.design_priv}</td>
 					<td>${row.inventory_priv}</td>
 					<td>${row.view_reports_priv}</td>
+					<td>
+						<span class="action-btn">
+							<a href="#" onclick="showDialog()">Edit</button>
+							<a href="#" onclick="delete_employee()">Remove</a>
+						</span>
+					</td>
 				</tr>
 			`;
 		}
@@ -113,9 +119,9 @@ function list_registered_employees() {
 // TABLE CLICK FUNCTION //
 function rowClick()
 {
-	let design_privilege = document.getElementById("design_priv");
-	let inventory_privilege = document.getElementById("inventory_priv");
-	let report_privilege = document.getElementById("report_priv");
+	let design_privilege = document.getElementById("design_priv_2");
+	let inventory_privilege = document.getElementById("inventory_priv_2");
+	let report_privilege = document.getElementById("report_priv_2");
 
 	var table = document.getElementById("employee_table");
 	var rows = table.getElementsByTagName("tr");
@@ -143,7 +149,7 @@ function rowClick()
 					var reports = reports_priv.innerHTML;
 
 					document.getElementById("id").value = id;
-					document.getElementById("name").value = name;
+					document.getElementById("name_2").value = name;
 
 					if (design == "Yes")
 						design_privilege.checked = true;
@@ -175,7 +181,7 @@ function update_employee()
 	var id = document.getElementById("id").value;
 
 	// variables from register.html
-	var name = document.getElementById("name").value.trim();
+	var name = document.getElementById("name_2").value.trim();
 	// cancel if input box is empty
 	if (name.length == 0 || name.trim() === "")
 		return alert("Name is empty");
@@ -183,15 +189,15 @@ function update_employee()
 	// privilege variables
 	// assign 1 if the corresponding checkbox id is checked
 	var design_priv = 0;
-	if (document.querySelector("#design_priv").checked == true)
+	if (document.querySelector("#design_priv_2").checked == true)
 		design_priv = 1;
 
 	var inventory_priv = 0;
-	if (document.querySelector("#inventory_priv").checked == true)
+	if (document.querySelector("#inventory_priv_2").checked == true)
 		inventory_priv = 1;
 
 	var report_priv = 0;
-	if (document.querySelector("#report_priv").checked == true)
+	if (document.querySelector("#report_priv_2").checked == true)
 		report_priv = 1;
 
 	const query = `UPDATE registered_employees SET name = "${name}", design_priv = "${design_priv}", inventory_priv = "${inventory_priv}", view_reports_priv = "${report_priv}" WHERE employee_id = "${id}"`;
@@ -214,26 +220,50 @@ function update_employee()
 // DELETE EMPLOYEE FUNCTION
 function delete_employee()
 {
-	// hidden item input for id
-	var id = document.getElementById("id").value;
-	if (id.length == 0)
-		return alert("Select a employee first!");
 
-	connection.connect(function (err) {
-		const query = `DELETE FROM registered_employees WHERE employee_id = "${id}"`;
-		connection.query(query, function(error, results) {
-			if(error)
+	var table = document.getElementById("employee_table");
+	var rows = table.getElementsByTagName("tr");
+	for(i = 0; i < rows.length; i++)
+	{
+		var currentRow = table.rows[i];
+		var clickHandle = 
+			function(row)
 			{
-				alert("Select an item first!")
-				console.log(error)
-			}
-			else
-			{
-				alert('Employee has been removed!')
-				location.reload();
-			}
-		})
-	})
+				return function()
+				{
+					var employee_id = row.getElementsByTagName("td")[0];
+					var id = employee_id.innerHTML;
+
+					document.getElementById("id").value = id;
+
+					// hidden item input for id
+					var employeeid = document.getElementById("id").value;
+					if (id.length == 0)
+						return alert("Select a employee first!");
+
+					connection.connect(function (err) {
+						const query = `DELETE FROM registered_employees WHERE employee_id = "${employeeid}"`;
+						connection.query(query, function(error, results) {
+							if(error)
+							{
+								alert("Select an item first!")
+								console.log(error)
+							}
+							else
+							{
+								alert('Employee has been removed!')
+								location.reload();
+							}
+						})
+					})
+
+
+				};
+			};
+
+		currentRow.onclick = clickHandle(currentRow);
+	}
+
 
 }
 // END OF UPDATE EMPLOYEE FUNCTION //
