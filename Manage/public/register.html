@@ -42,9 +42,7 @@
 		<label for="report_priv">View Reports Privilege:</label>
 		<input type="checkbox" name="report_priv" id="report_priv"><br>
 
-		<button onclick="register_employee()">Submit</button>
-		<button onclick="update_employee()">Update</button>
-		<button onclick="delete_employee()">Remove</button>
+		<a href="#" onclick="register_employee()">Submit Employee</a>
 	</div>
 
 	<br>
@@ -59,6 +57,7 @@
 					<th>Design Privilege</th>
 					<th>Inventory Privilege</th>
 					<th>View Reports Privilege</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 
@@ -67,8 +66,38 @@
 				<!-- call the list_registered_employees() function -->
 			</tbody>
 		</table>
-
 	</div>
+
+	<dialog id="myModal">
+		<label for="name">Name:</label>
+		<input type="text" name="name_2" id="name_2"><br>
+
+		<label for="design_priv">Design Privilege:</label>
+		<input type="checkbox" name="design_priv_2" id="design_priv_2"><br>
+
+		<label for="inventory_priv">Inventory Privilege:</label>
+		<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2"><br>
+
+		<label for="report_priv">View Reports Privilege:</label>
+		<input type="checkbox" name="report_priv_2" id="report_priv_2"><br>
+		<a href="#" onclick="closeModal()">Cancel update</a>
+		<a href="#" onclick="update_employee()">Update Employee</a>
+	</dialog>
+
 </body>
+
+<script>
+	const favDialog = document.getElementById("myModal");
+
+	function showDialog()
+	{
+		rowClick();
+		favDialog.showModal();
+	}
+	function closeModal()
+	{
+		favDialog.close();
+	}
+</script>
 
 </html>
