@@ -35,6 +35,12 @@ function refreshitems() {
 						<td>${row.item_price}</td>
 						<td>${row.quantity_sold}</td>
 						<td>${row.revenue_generated}</td>
+						<td>
+						<span class="action-btn">
+							<a href="#" onclick="showDialog()">Edit</button>
+							<a href="#" onclick="deleteItems()">Remove</a>
+						</span>
+					</td>
 					</tr>
 				`;
 			}
@@ -67,6 +73,12 @@ connection.connect(function(err) {
 					<td>${row.item_price}</td>
 					<td>${row.quantity_sold}</td>
 					<td>${row.revenue_generated}</td>
+					<td>
+						<span class="action-btn">
+							<a href="#" onclick="showDialog()">Edit</button>
+							<a href="#" onclick="deleteItems()">Remove</a>
+						</span>
+					</td>
 				</tr>
 			`;
 		}
@@ -159,10 +171,10 @@ function rowClick()
 
 					//alert("id:" + id + " name: " + name + " desc: " + desc + " image: " + img + " price: " + price);
 
-					document.getElementById("foodidfield").value = id;
-					document.getElementById("fooditem").value = name;
-					document.getElementById("fooddesc").value = desc;
-					document.getElementById("foodprice").value = price;
+					document.getElementById("foodidfield_2").value = id;
+					document.getElementById("fooditem_2").value = name;
+					document.getElementById("fooddesc_2").value = desc;
+					document.getElementById("foodprice_2").value = price;
 
 				};
 			};
@@ -172,13 +184,15 @@ function rowClick()
 }
 //----- END OF TABLE CLICK EVENT -----//
 
+// POP UP FUNCTION //
+// END OF POPUP FUNCTION //
 
 //----- UPDATE FUNCTION EVENT -----//
 function updateItems()
 {
 
 	// CHECKS IF FILE INPUT IS EMPTY OR NOT
-	if(document.getElementById("foodimg").files.length == 0)
+	if(document.getElementById("foodimg_2").files.length == 0)
 	{
 		alert("Select a Image first!")
 	}
@@ -189,17 +203,18 @@ function updateItems()
 			if (err) throw err;
 
 			// VARIABLES FROM inventory.html
-			var foodid = document.getElementById("foodidfield").value;
-			var fooditem = document.getElementById("fooditem").value;
-			var fooddesc = document.getElementById("fooddesc").value;
-			var foodimg = document.getElementById("foodimg").value.split('fakepath\\');
+			var foodid = document.getElementById("foodidfield_2").value;
+			var fooditem = document.getElementById("fooditem_2").value;
+			var fooddesc = document.getElementById("fooddesc_2").value;
+			var foodimg = document.getElementById("foodimg_2").value.split('fakepath\\');
 			var withimg = ("./foods/" + foodimg[1])
-			var foodprice = document.getElementById("foodprice").value;
+			var foodprice = document.getElementById("foodprice_2").value;
 
 			// IMAGE HANDLING
 			var imgFileName = foodimg[1];
 
-			const filePath = document.querySelector('input[type=file').files[0].path;
+			const filePath = document.getElementById('foodimg_2').files[0].path;
+			console.log(filePath);
 			const filePathCopy = __dirname + '/foods/' + imgFileName;
 
 			console.log(filePathCopy);
@@ -235,24 +250,52 @@ function updateItems()
 //----- DELETE FUNCTION EVENT -----//
 function deleteItems()
 {
-	// FUNCTION TO DELETE ITEMS
-	connection.connect(function (err) {
-		// VARIABLES FROM inventory.html
-		var foodid = document.getElementById("foodidfield").value;
 
-		const query = `DELETE FROM menu_items WHERE item_id = "${foodid}"`;
-		connection.query(query, function(error, results) {
-			if(error)
+	var table = document.getElementById("food_table");
+	var rows = table.getElementsByTagName("tr");
+	for(i = 0; i < rows.length; i++)
+	{
+		var currentRow = table.rows[i];
+		var clickHandle = 
+			function(row)
 			{
-				alert("Select an item first!")
-				console.log(error)
-			}
-			else
-			{
-				alert('Data has been removed!')
-				location.reload();
-			}
-		})
-	})
+				return function()
+				{
+					var food_id = row.getElementsByTagName("td")[0];
+					var id = food_id.innerHTML;
+
+					//alert("id:" + id + " name: " + name + " desc: " + desc + " image: " + img + " price: " + price);
+
+					document.getElementById("foodidfield").value = id;
+
+					// FUNCTION TO DELETE ITEMS
+					connection.connect(function (err) {
+						// VARIABLES FROM inventory.html
+						var foodid = document.getElementById("foodidfield").value;
+
+						const query = `DELETE FROM menu_items WHERE item_id = "${foodid}"`;
+						connection.query(query, function(error, results) {
+							if(error)
+							{
+								alert("Select an item first!")
+								console.log(error)
+							}
+							else
+							{
+								alert('Data has been removed!')
+								location.reload();
+							}
+						})
+					})
+
+
+				};
+			};
+
+		currentRow.onclick = clickHandle(currentRow);
+	}
+
 }
 //----- END OF DELETE FUNCTION EVENT -----//
+
+

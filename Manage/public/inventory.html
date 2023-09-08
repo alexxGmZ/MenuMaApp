@@ -37,8 +37,6 @@
 			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
 			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
 			<button onclick="addItems()" name="submit"> Add Item </button>
-			<button onclick="updateItems()" name="submit"> Update Item </button>
-			<button onclick="deleteItems()" name="submit"> Delete Item </button>
 
 		</div>
 		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
@@ -55,6 +53,7 @@
 						<th>Food Price</th>
 						<th>Food Sold</th>
 						<th>Revenue Generated</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody id="data-output">
@@ -67,5 +66,32 @@
 
 		<br>
 
+		<!--THE POPUP WINDOW MODAL-->
+		<dialog id="myModal">
+			<h2>Updating item....</h2>
+			<input type="hidden" id="foodidfield_2" name="foodidfield" placeholder="Food ID"/> <br>
+			<input type="text" id="fooditem_2" placeholder="Food Name"/> <br>
+			<input type="text" id="fooddesc_2" placeholder="Food Description"/> <br>
+			<label for="img">Select Food Image:</label>
+			<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*"/> <br>
+			<input type="text" id="foodprice_2" placeholder="Food Price"/> <br>
+			<button onclick="closeModal()">Cancel update</button>
+			<button onclick="updateItems()" name="submit"> Update Item </button>
+		</dialog>
+
 	</body>
+
+	<script>
+		const favDialog = document.getElementById("myModal");
+
+		function showDialog()
+		{
+			favDialog.showModal();
+		}
+		function closeModal()
+		{
+			favDialog.close();
+		}
+	</script>
+
 </html>
