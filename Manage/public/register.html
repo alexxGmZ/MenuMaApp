@@ -42,7 +42,7 @@
 		<label for="report_priv">View Reports Privilege:</label>
 		<input type="checkbox" name="report_priv" id="report_priv"><br>
 
-		<button onclick="register_employee()">Submit</button>
+		<a href="#" onclick="register_employee()">Submit Employee</a>
 	</div>
 
 	<br>
@@ -91,6 +91,7 @@
 
 	function showDialog()
 	{
+		rowClick();
 		favDialog.showModal();
 	}
 	function closeModal()

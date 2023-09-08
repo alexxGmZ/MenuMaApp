@@ -36,7 +36,7 @@
 			<label for="img">Select Food Image:</label>
 			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
 			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
-			<button onclick="addItems()" name="submit"> Add Item </button>
+			<a href="#" onclick="addItems()" name="submit"> Add Item </a>
 
 		</div>
 		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
@@ -75,8 +75,8 @@
 			<label for="img">Select Food Image:</label>
 			<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*"/> <br>
 			<input type="text" id="foodprice_2" placeholder="Food Price"/> <br>
-			<button onclick="closeModal()">Cancel update</button>
-			<button onclick="updateItems()" name="submit"> Update Item </button>
+			<a href="#" onclick="closeModal()">Cancel update</a>
+			<a href="#" onclick="updateItems()" name="submit"> Update Item </a>
 		</dialog>
 
 	</body>
@@ -86,6 +86,7 @@
 
 		function showDialog()
 		{
+			rowClick();
 			favDialog.showModal();
 		}
 		function closeModal()
