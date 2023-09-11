@@ -19,11 +19,21 @@
 	<link rel="stylesheet" href="./css/style.css" />
 	<meta name="theme-color" content="#31d53d" />
 
-	<script src="./js/api_practice.js"></script>
+	<script src="./js/api_practice.js" type="module"></script>
+	<script src="./js/pull_to_refresh.js" type="module"></script>
 </head>
 
 <body>
-	<h1>heehee</h1>
+
+	<!-- call the pull_to_refresh script	 -->
+	<div class="pull-to-refresh">
+		<span>Pull to Refresh</span>
+	</div>
+
+	<h1 class="font-bold underline">heehee</h1><br><br>
+
+	<h1 class="font-bold underline">Menu Items</h1>
+	<pre id="menu_items"></pre>
 </body>
 
 </html>
