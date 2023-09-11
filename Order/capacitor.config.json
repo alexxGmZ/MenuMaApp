@@ -6,7 +6,10 @@
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
-    }
+    },
+	 "CapacitorHTTP": {
+		"enabled": true
+	 }
   },
   "server": {
     "androidScheme": "https"
