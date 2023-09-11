@@ -128,7 +128,7 @@ function rowClick()
 	for(i = 0; i < rows.length; i++)
 	{
 		var currentRow = table.rows[i];
-		var clickHandle = 
+		var clickHandle =
 			function(row)
 			{
 				return function()
@@ -185,7 +185,7 @@ function update_employee()
 	// cancel if input box is empty
 	if (name.length == 0 || name.trim() === "")
 		return alert("Name is empty");
-	
+
 	// privilege variables
 	// assign 1 if the corresponding checkbox id is checked
 	var design_priv = 0;
@@ -226,7 +226,7 @@ function delete_employee()
 	for(i = 0; i < rows.length; i++)
 	{
 		var currentRow = table.rows[i];
-		var clickHandle = 
+		var clickHandle =
 			function(row)
 			{
 				return function()
@@ -263,7 +263,5 @@ function delete_employee()
 
 		currentRow.onclick = clickHandle(currentRow);
 	}
-
-
 }
 // END OF UPDATE EMPLOYEE FUNCTION //
