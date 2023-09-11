@@ -19,9 +19,11 @@ const connection = mysql.connection;
 // EXPRESS practice from fireship
 //
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = 8080;
 
+app.use(cors());
 app.listen(
 	PORT,
 	() => console.log(`API Port:${PORT}`)
@@ -31,7 +33,7 @@ app.listen(
 function get_request_message(api_endpoint, ip_requested) {
 	const currentDate = new Date();
 	const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-	return console.log(`Get request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
+	return console.log(`GET request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
 }
 
 app.get("/menu_items",
@@ -43,7 +45,7 @@ app.get("/menu_items",
 			if (err) throw err;
 
 			get_request_message("menu_items", request.ip);
-			result = JSON.stringify(result, null, 2);
+			// result = JSON.stringify(result, null, 2);
 			response.status(200).send(result);
 		})
 	}
