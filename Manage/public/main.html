@@ -55,15 +55,22 @@
 		.then(data => {
 			console.log(data)
 			data.forEach(orders => {
+
+				const food_items = orders.items_ordered.map((item) => {
+					return `${item.quantity} ${item.item_name}`;
+				})
+				console.log(food_items);
+
 				const markup = `
 					<td>
 						<table>
 						<td><h1 style="padding-top: 5px; padding-bottom: 5px;">Order #${orders.queue_number}</h1></td>
 						<tr>
-						<td>${orders.items_ordered.item_name}</td>
-						</tr>
-						<tr>
-						<td>Yummy Hamburger</td>
+						<td>
+							<ul>
+								<li>${food_items}</li>
+							</ul>  
+						</td>
 						</tr>
 						<tr>
 						<td>Customer: ${orders.customer_name}</td>
