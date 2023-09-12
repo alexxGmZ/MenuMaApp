@@ -3,7 +3,7 @@
 //
 // mysql module
 // const mysql = require(__dirname + "/js/modules/mysql.js");
-const mysql = require("./modules/mysql.js");
+const mysql = require("./public/js/modules/mysql.js");
 // check database connection
 mysql.check_connection();
 // call connection variable
