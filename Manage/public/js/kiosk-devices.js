@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 console.log("Directory: " + __dirname);
 
-// const mysql = require("mysql2");
 const ping = require("ping");
 const dns = require("dns");
 
