@@ -11,88 +11,75 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Inventory Mode</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="./styles/styles.css" rel="stylesheet">
-		<script src="./js/inventory.js"></script>
-	</head>
+
+<head>
+	<title>Inventory Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/styles.css" rel="stylesheet">
+	<script src="./js/inventory.js"></script>
+</head>
 
 
-	<body>
-		<!--Buttons-->
-		<div>
-			<button onclick="refreshitems()">REFRESH ITEMS</button>
-		</div>
-		<!----------->
+<body>
+	<!--Buttons-->
+	<div>
+		<button onclick="refreshitems()">REFRESH ITEMS</button>
+	</div>
+	<!----------->
 
-		<!-- MAIN FORM FOR ADDING DATA -->
-		<div>
+	<!-- MAIN FORM FOR ADDING DATA -->
+	<div>
 
-			<input type="hidden" id="foodidfield" name="foodidfield" placeholder="Food ID"/> <br>
-			<input type="text" id="fooditem" placeholder="Food Name"/> <br>
-			<input type="text" id="fooddesc" placeholder="Food Description"/> <br>
-			<label for="img">Select Food Image:</label>
-			<input type="file" id="foodimg" name="foodimg" accept="image/*"/> <br>
-			<input type="text" id="foodprice" placeholder="Food Price"/> <br>
-			<a href="#" onclick="addItems()" name="submit"> Add Item </a>
+		<input type="hidden" id="foodidfield" name="foodidfield" placeholder="Food ID" /> <br>
+		<input type="text" id="fooditem" placeholder="Food Name" /> <br>
+		<input type="text" id="fooddesc" placeholder="Food Description" /> <br>
+		<label for="img">Select Food Image:</label>
+		<input type="file" id="foodimg" name="foodimg" accept="image/*" /> <br>
+		<input type="text" id="foodprice" placeholder="Food Price" /> <br>
+		<a onclick="addItems()" name="submit"> Add Item </a>
 
-		</div>
-		<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
+	</div>
+	<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
 
-		<!--Main Food Table-->
-		<div>
-			<table id="food_table" onclick="rowClick()">
-				<thead>
-					<tr>
-						<th>Food ID</th>
-						<th>Food Name</th>
-						<th>Food Description</th>
-						<th>Food Image</th>
-						<th>Food Price</th>
-						<th>Food Sold</th>
-						<th>Revenue Generated</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody id="data-output">
-					<!-- OUTPUT RESULT from sqlconnection.js -->
-					
-				</tbody>
-			</table>
-		</div>
-		<!------------------->
+	<!--Main Food Table-->
+	<div>
+		<table id="food_table" onclick="rowClick()">
+			<thead>
+				<tr>
+					<th>Food ID</th>
+					<th>Food Name</th>
+					<th>Food Description</th>
+					<th>Food Image</th>
+					<th>Food Price</th>
+					<th>Food Sold</th>
+					<th>Revenue Generated</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="data-output">
+				<!-- OUTPUT RESULT from sqlconnection.js -->
 
-		<br>
+			</tbody>
+		</table>
+	</div>
+	<!------------------->
 
-		<!--THE POPUP WINDOW MODAL-->
-		<dialog id="myModal">
-			<h2>Updating item....</h2>
-			<input type="hidden" id="foodidfield_2" name="foodidfield" placeholder="Food ID"/> <br>
-			<input type="text" id="fooditem_2" placeholder="Food Name"/> <br>
-			<input type="text" id="fooddesc_2" placeholder="Food Description"/> <br>
-			<label for="img">Select Food Image:</label>
-			<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*"/> <br>
-			<input type="text" id="foodprice_2" placeholder="Food Price"/> <br>
-			<a href="#" onclick="closeModal()">Cancel update</a>
-			<a href="#" onclick="updateItems()" name="submit"> Update Item </a>
-		</dialog>
+	<br>
 
-	</body>
+	<!--THE POPUP WINDOW MODAL-->
+	<dialog id="myModal">
+		<h2>Updating item....</h2>
+		<input type="hidden" id="foodidfield_2" name="foodidfield" placeholder="Food ID" /> <br>
+		<input type="text" id="fooditem_2" placeholder="Food Name" /> <br>
+		<input type="text" id="fooddesc_2" placeholder="Food Description" /> <br>
+		<label for="img">Select Food Image:</label>
+		<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*" /> <br>
+		<input type="text" id="foodprice_2" placeholder="Food Price" /> <br>
+		<a onclick="closeModal()">Cancel update</a>
+		<a onclick="updateItems()" name="submit"> Update Item </a>
+	</dialog>
 
-	<script>
-		const favDialog = document.getElementById("myModal");
-
-		function showDialog()
-		{
-			rowClick();
-			favDialog.showModal();
-		}
-		function closeModal()
-		{
-			favDialog.close();
-		}
-	</script>
+</body>
 
 </html>
