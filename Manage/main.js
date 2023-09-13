@@ -1,6 +1,3 @@
-// Queue Mode
-// Facilitates order queues
-
 const { app, BrowserWindow } = require('electron');
 const menumaapp_server = require("./server.js");
 
