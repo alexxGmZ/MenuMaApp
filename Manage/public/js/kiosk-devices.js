@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
 	list_available_devices();
+	list_registered_devices();
 });
 
 console.log("Directory: " + __dirname);
 
-// const mysql = require("mysql2");
 const ping = require("ping");
 const dns = require("dns");
 
@@ -15,6 +15,7 @@ const dns = require("dns");
 const mysql = require(__dirname + "/js/modules/mysql.js")
 // check database connection
 mysql.check_connection()
+const connection = mysql.connection;
 
 async function list_available_devices() {
 	const networkPrefix = "192.168.254.";
@@ -73,4 +74,29 @@ async function list_available_devices() {
 	placeholder.innerHTML = out;
 
 	console.log('Scan completed.');
+}
+
+function list_registered_devices() {
+	connection.query("SELECT * FROM api_connected_devices", (err, result) => {
+		if (err) throw err;
+		console.log(result);
+
+		let placeholder = document.querySelector("#registered_devices");
+		let out = ""
+
+		for (let row of result) {
+
+			out += `
+				<tr>
+					<td>${row.ip_address}</td>
+					<td>${row.device_name}</td>
+					<td>${row.api_token}</td>
+					<td>${row.mac_address}</td>
+				</tr>
+			`;
+		}
+
+		// display output in document/kiosk-devices.html
+		placeholder.innerHTML = out;
+	})
 }

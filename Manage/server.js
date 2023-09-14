@@ -3,17 +3,11 @@
 //
 // mysql module
 // const mysql = require(__dirname + "/js/modules/mysql.js");
-const mysql = require("./modules/mysql.js");
+const mysql = require("./public/js/modules/mysql.js");
 // check database connection
 mysql.check_connection();
 // call connection variable
 const connection = mysql.connection;
-
-// NOTE:
-// GET (read)
-// POST (create)
-// PATCH (update)
-// DELETE (destroy)
 
 //
 // EXPRESS practice from fireship
@@ -45,7 +39,7 @@ app.get("/menu_items",
 			if (err) throw err;
 
 			get_request_message("menu_items", request.ip);
-			// result = JSON.stringify(result, null, 2);
+			result = JSON.stringify(result, null, 2);
 			response.status(200).send(result);
 		})
 	}

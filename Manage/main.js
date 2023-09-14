@@ -1,8 +1,5 @@
-// Queue Mode
-// Facilitates order queues
-
 const { app, BrowserWindow } = require('electron');
-const menumaapp_api = require("./public/js/api.js");
+const menumaapp_server = require("./server.js");
 
 const createWindow = () => {
 	const win = new BrowserWindow({
