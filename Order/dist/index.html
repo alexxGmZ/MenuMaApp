@@ -9,29 +9,28 @@
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="msapplication-tap-highlight" content="no" />
 
-	<script type="module"
-		src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"></script>
-	<script nomodule
-		src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"></script>
-
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.155239cf.ico" />
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-
-	
-	
-	
-  <script type="module" crossorigin src="/assets/index.72354a42.js"></script>
-  <link rel="stylesheet" href="/assets/index.2023b261.css">
+  <script type="module" crossorigin src="/assets/index.a50eb6cb.js"></script>
+  <link rel="stylesheet" href="/assets/index.c15827ef.css">
 </head>
 
 <body>
-
 	<!-- call the pull_to_refresh script	 -->
 	<div class="pull-to-refresh">
 		<span>Pull to Refresh</span>
 	</div>
+
+	<custom-navbar>
+		<h1 class="text-red-300" slot="title">HEEHEE Navbar Title</h1>
+		<div slot="end">
+			<a href="/heehee.html">
+				<button type="">GO TO HEEHEE</button>
+			</a>
+		</div>
+	</custom-navbar>
 
 	<h1 class="font-bold underline">Connection</h1>
 	<pre id="connection_type"></pre>
@@ -39,6 +38,10 @@
 	<h1 class="font-bold underline">Menu Items</h1>
 	<pre id="menu_items"></pre>
 
+	
+	
+	
+	
 </body>
 
 </html>

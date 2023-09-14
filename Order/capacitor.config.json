@@ -1,7 +1,6 @@
 {
   "appId": "com.menumaapp.order",
   "appName": "MenuMaApp Order",
-  "bundledWebRuntime": false,
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {
@@ -10,8 +9,5 @@
 	 "CapacitorHTTP": {
 		"enabled": true
 	 }
-  },
-  "server": {
-    "androidScheme": "https"
   }
 }
