@@ -17,21 +17,30 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./styles/styles.css" rel="stylesheet">
 	</head>
+
+	<!--HOVER PURPOSES ONLY-->
+	<style>
+		.dropdown:hover .dropdown-menu {
+		display: block;
+		}
+	</style>
+
 	<body>
-		<h1 class="font-extrabold">hello world</h1>
-		<a href="inventory.html">Manage Foods</a>
-
-		<br>
-
-		<a href="register.html">Register Employee</a>
-
-		<br>
-
-		<a href="login.html">Login Page</a>
-
-		<br>
-
-		<a href="kiosk-devices.html">Kiosk Devices</a>
+		<div>
+			<div class="dropdown inline-block pt-4">
+				<button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center ml-3">
+					<span class="mr-1">Menu</span>
+					<svg class="fill-current h-4 w-4" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+					</svg>
+				</button>
+				<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
+					<li class=""><a href="inventory.html" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Foods</a></li>
+					<li class=""><a href="register.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Register Employee</a></li>
+					<li class=""><a href="login.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Login Page</a></li>
+					<li class=""><a href="kiosk-devices.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a></li>
+				</ul>
+			</div>
+		</div>
 
 		<br>
 
@@ -39,7 +48,7 @@
 
 		<!--SHOW FOOD QUEUE ORDERS-->
 		<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
-			<table>
+			<table class="border-separate border-spacing-2 border border-slate-500 rounded-lg border-4">
 				<tr id="data-output">
 					
 				</tr>
@@ -63,7 +72,7 @@
 
 				const markup = `
 					<td>
-						<table>
+						<table class="border-separate border-spacing-2 border border-slate-500 rounded-lg">
 						<td><h1 style="padding-top: 5px; padding-bottom: 5px;">Order #${orders.queue_number}</h1></td>
 						<tr>
 						<td>
