@@ -130,10 +130,10 @@ function rowClick() {
 			function(row) {
 				return function() {
 					var employee_id = row.getElementsByTagName("td")[0];
-					var id = employee_id.innerHTML;
+					document.getElementById("id").value = employee_id.innerHTML;
 
 					var employee_name = row.getElementsByTagName("td")[1];
-					var name = employee_name.innerHTML;
+					document.getElementById("name_2").value = employee_name.innerHTML;
 
 					var design_priv = row.getElementsByTagName("td")[2];
 					var design = design_priv.innerHTML;
@@ -143,9 +143,6 @@ function rowClick() {
 
 					var reports_priv = row.getElementsByTagName("td")[4];
 					var reports = reports_priv.innerHTML;
-
-					document.getElementById("id").value = id;
-					document.getElementById("name_2").value = name;
 
 					if (design == "Yes")
 						design_privilege.checked = true;
@@ -161,7 +158,6 @@ function rowClick() {
 						report_privilege.checked = true;
 					else
 						report_privilege.checked = false;
-
 				};
 			};
 
