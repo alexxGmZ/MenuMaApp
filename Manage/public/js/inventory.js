@@ -24,20 +24,20 @@ function refreshitems() {
 
 		for (let row of result) {
 			out += `
-				<tr>
-					<td>${row.item_id}</td>
-					<td>${row.item_name}</td>
-					<td>${row.item_desc}</td>
+				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-r border-l hover:bg-gray-300">
+					<td class="text-center">${row.item_id}</td>
+					<td class="text-center">${row.item_name}</td>
+					<td class="text-center">${row.item_desc}</td>
 					<td><img src="${row.item_image}" alt="Foods Image"></td>
-					<td>${row.item_price}</td>
-					<td>${row.quantity_sold}</td>
-					<td>${row.revenue_generated}</td>
+					<td class="text-center">${row.item_price}</td>
+					<td class="text-center">${row.quantity_sold}</td>
+					<td class="text-center">${row.revenue_generated}</td>
 					<td>
-					<span class="action-btn">
-						<a href="#" onclick="showDialog()">Edit</button>
-						<a href="#" onclick="deleteItems()">Remove</a>
-					</span>
-				</td>
+						<span class="action-btn">
+							<a onclick="showDialog()">Edit</button>
+							<a onclick="deleteItems()">Remove</a>
+						</span>
+					</td>
 				</tr>
 			`;
 		}
@@ -261,3 +261,15 @@ function closeModal() {
 	const favDialog = document.getElementById("myModal");
 	favDialog.close();
 }
+
+// add item modal (open and close)
+function additemdialogopen() {
+	const dialog = document.getElementById("addItemsModal");
+	dialog.showModal();
+}
+
+function additemdialogclose() {
+	const dialog = document.getElementById("addItemsModal");
+	dialog.close();
+}
+
