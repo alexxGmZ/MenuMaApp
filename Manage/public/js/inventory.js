@@ -24,7 +24,7 @@ function refreshitems() {
 
 		for (let row of result) {
 			out += `
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-r border-l hover:bg-gray-300">
+				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td class="text-center">${row.item_id}</td>
 					<td class="text-center">${row.item_name}</td>
 					<td class="text-center">${row.item_desc}</td>
@@ -59,7 +59,7 @@ connection.connect(function(err) {
 
 		for (let row of result) {
 			out += `
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-r border-l hover:bg-gray-300">
+				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td class="text-center">${row.item_id}</td>
 					<td class="text-center">${row.item_name}</td>
 					<td class="text-center">${row.item_desc}</td>
