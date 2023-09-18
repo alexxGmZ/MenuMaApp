@@ -24,7 +24,7 @@
 <body class="px-3 py-3">
 	<!--Buttons-->
 	<div>
-		<button onclick="refreshitems()">REFRESH ITEMS</button>
+		<a href="main.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO MAIN MENU</a>
 	</div>
 	<!----------->
 
@@ -51,17 +51,36 @@
 		
 	</div>
 
-	<dialog id="addItemsModal" class="rounded-lg drop-shadow-lg">
+	<!-- ADD ITEM DIALOG -->
+	<dialog id="addItemsModal" class="rounded-lg drop-shadow-lg w-4/12">
 		<input type="hidden" id="foodidfield" name="foodidfield" placeholder="Food ID" /> <br>
-		<input type="text" id="fooditem" placeholder="Food Name" /> <br>
-		<input type="text" id="fooddesc" placeholder="Food Description" /> <br>
-		<label for="img">Select Food Image:</label>
-		<input type="file" id="foodimg" name="foodimg" accept="image/*" /> <br>
-		<input type="text" id="foodprice" placeholder="Food Price" /> <br>
+		<p class="pb-3 text-center">Adding item...</p>
+		<input type="text" id="fooditem" placeholder="Food Name" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<textarea type="text" id="fooddesc" placeholder="Food Description" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea> <br>
+		<label for="img" class="ml-2">Select Food Image:</label>
+		<input type="file" id="foodimg" name="foodimg" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
+		<input type="text" id="foodprice" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
 			<div class="grid grid-cols-2 px-5 pt-2 gap-4">
 				<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="additemdialogclose()"> CANCEL </button>
 				<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="addItems()"> ADD ITEM </button>
 			</div>
+	</dialog>
+
+	<!-- ADD ITEM DIALOG CONFIRM -->
+	<dialog id="addsuccess" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+		
+		<span id="item_name_placeholder">Item Name Placeholder</span><span> is successfully added!</span> <br><br>
+		<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="additemsuccessclose()"> OK </button>
+		
+	</dialog>
+
+	<!-- ADD ITEM DIALOG ERROR -->
+	<dialog id="errordialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+		
+		<p>There is an error on adding / updating an item!</p>
+		<p>Please check if you already choose an image or the price input box must be number!</p> <br><br>
+		<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/6" onclick="errorclose()"> OK </button>
+		
 	</dialog>
 
 	<!--------- END EXECUTION OF MAIN FORM ADDING DATA---------->
@@ -92,16 +111,30 @@
 	<br>
 
 	<!--THE POPUP WINDOW MODAL-->
-	<dialog id="myModal">
-		<h2>Updating item....</h2>
-		<input type="hidden" id="foodidfield_2" name="foodidfield" placeholder="Food ID" /> <br>
-		<input type="text" id="fooditem_2" placeholder="Food Name" /> <br>
-		<input type="text" id="fooddesc_2" placeholder="Food Description" /> <br>
-		<label for="img">Select Food Image:</label>
-		<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*" /> <br>
-		<input type="text" id="foodprice_2" placeholder="Food Price" /> <br>
-		<a onclick="closeModal()">Cancel update</a>
-		<a onclick="updateItems()" name="submit"> Update Item </a>
+	<dialog id="myModal" class="rounded-lg drop-shadow-lg w-4/12">
+		<input type="hidden" id="foodidfield_2" name="foodidfield" placeholder="Food ID"  /> <br>
+		<h2 class="pb-3 text-center">Updating item....</h2>
+		<input type="text" id="fooditem_2" placeholder="Food Name" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<textarea type="text" id="fooddesc_2" placeholder="Food Description" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea> <br>
+		<label for="img" class="ml-2">Select Food Image:</label>
+		<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
+		<input type="text" id="foodprice_2" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
+			<button onclick="closeModal()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">Cancel update</button>
+			<button onclick="updateItems()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" name="submit"> Update Item </button>
+		</div>
+	</dialog>
+
+	<!-- UPDATE DIALOG SUCCESS MODAL -->
+	<dialog id="updatesuccess" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+		<span id="item_name_placeholder_2">Item Name Placeholder</span><span> is successfully updated!</span> <br><br>
+		<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="updateitemsuccessclose()"> OK </button>
+	</dialog>
+
+	<!-- REMOVE DIALOG -->
+	<dialog id="removemodal" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+		<span id="item_name_placeholder_3">Removed Successfully!</span> <br><br>
+		<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="removesuccessclose()"> OK </button>
 	</dialog>
 
 </body>
