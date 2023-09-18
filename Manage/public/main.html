@@ -35,20 +35,24 @@
 
 		<br>
 
+		<a href="designer.html">Designer Mode</a>
+
+		<br>
+
 		<center><h1 class="font-extrabold">Order Queue Below</h1></center>
 
 		<!--SHOW FOOD QUEUE ORDERS-->
 		<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
 			<table>
 				<tr id="data-output">
-					
+
 				</tr>
 			</table>
 		</div>
 
 	</body>
 	<script>
-		fetch('http://192.168.254.115:8080/orders')
+		fetch('http://localhost:8080/orders')
 		.then(res => {
 			return res.json();
 		})
@@ -69,7 +73,7 @@
 						<td>
 							<ul>
 								<li>${food_items}</li>
-							</ul>  
+							</ul>
 						</td>
 						</tr>
 						<tr>
