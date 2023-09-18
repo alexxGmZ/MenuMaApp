@@ -21,8 +21,8 @@
 	<script src="./js/registration.js"></script>
 </head>
 
-<body>
-	<h1 class="font-bold">Register Employee</h1><br>
+<body class="px-3 py-3">
+	<a href="main.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO MAIN MENU</a>
 
 	<div>
 		<input type="hidden" id="id" name="id" placeholder="Employee ID" /><br>
@@ -47,10 +47,11 @@
 
 	<br>
 
+	<!-- MAIN TABLE -->
 	<h1 class="font-bold">Registered Employees</h1><br>
-	<div>
-		<table id="employee_table">
-			<thead>
+	<div class="px-20">
+		<table id="employee_table" class="w-full">
+			<thead class="text-zinc-950 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
@@ -67,21 +68,33 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- END OF MAIN -->
 
-	<dialog id="myModal">
+	<!-- UPDATE MODAL -->
+	<dialog id="myModal" class="rounded-lg drop-shadow-lg w-6/12">
 		<label for="name">Name:</label>
-		<input type="text" name="name_2" id="name_2"><br>
+		<input type="text" name="name_2" id="name_2" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm""><br>
+			<div class="grid gap-4 grid-cols-3">
+				<div class="text-center">
+					<input type="checkbox" name="design_priv_2" id="design_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+					<label for="design_priv">Design Privilege</label>
+				</div>
 
-		<label for="design_priv">Design Privilege:</label>
-		<input type="checkbox" name="design_priv_2" id="design_priv_2"><br>
+				<div class="text-center">
+					<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+					<label for="inventory_priv">Inventory Privilege</label>
+				</div>
 
-		<label for="inventory_priv">Inventory Privilege:</label>
-		<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2"><br>
+				<div class="text-center">
+					<input type="checkbox" name="report_priv_2" id="report_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+					<label for="report_priv">View Reports Privilege</label>
+				</div>
+			</div>
 
-		<label for="report_priv">View Reports Privilege:</label>
-		<input type="checkbox" name="report_priv_2" id="report_priv_2"><br>
-		<a onclick="closeModal()">Cancel update</a>
-		<a onclick="update_employee()">Update Employee</a>
+			<div class="grid grid-cols-2 px-5 pt-2 gap-4">
+				<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="closeModal()">Cancel update</button>
+				<button class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" onclick="update_employee()">Update Employee</button>
+			</div>
 	</dialog>
 
 </body>
