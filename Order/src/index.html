@@ -12,23 +12,19 @@
 	<link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
 	<link rel="manifest" href="./manifest.json" />
 	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="stylesheet" href="./css/pull_to_refresh.css" />
 	<meta name="theme-color" content="#31d53d" />
 </head>
 
 <body>
-	<!-- call the pull_to_refresh script	 -->
+	<!-- uses the pull_to_refresh script	 -->
 	<div class="pull-to-refresh">
-		<span>Pull to Refresh</span>
+		<img class="animate-spin h-16 w-16" src="./assets/svg/spinner-loading-dots-svgrepo-com.svg" alt="">
 	</div>
 
-	<custom-navbar>
-		<h1 class="text-red-300" slot="title">HEEHEE Navbar Title</h1>
-		<div slot="end">
-			<a href="/heehee.html">
-				<button type="">GO TO HEEHEE</button>
-			</a>
-		</div>
-	</custom-navbar>
+	<nav>
+		<h1 class="text-center text-xl">Navbar (Establishment Name Here)</h1>
+	</nav>
 
 	<h1 class="font-bold underline">Connection</h1>
 	<pre id="connection_type"></pre>

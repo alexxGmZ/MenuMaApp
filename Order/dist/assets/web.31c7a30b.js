@@ -1,5 +1,5 @@
-import { W as WebPlugin } from "./main.351f8339.js";
-import "./navbar.6c3ccb54.js";
+import { W as WebPlugin } from "./index.64ff0b90.js";
+import "./navbar.dcbf3d0d.js";
 function translatedConnection() {
   const connection = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection;
   let result = "unknown";

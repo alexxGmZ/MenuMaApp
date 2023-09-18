@@ -8,8 +8,7 @@ export default defineConfig({
 		emptyOutDir: true,
 		rollupOptions: {
 			input: {
-				main: "./src/index.html",
-				heehee: "./src/heehee.html",
+				index: "./src/index.html",
 			}
 		}
 	},

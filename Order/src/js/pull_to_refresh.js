@@ -3,6 +3,7 @@ let touchstartY = 0;
 document.addEventListener('touchstart', e => {
 	touchstartY = e.touches[0].clientY;
 });
+
 document.addEventListener('touchmove', e => {
 	const touchY = e.touches[0].clientY;
 	const touchDiff = touchY - touchstartY;
@@ -11,6 +12,7 @@ document.addEventListener('touchmove', e => {
 		e.preventDefault();
 	}
 });
+
 document.addEventListener('touchend', e => {
 	if (pullToRefresh.classList.contains('visible')) {
 		pullToRefresh.classList.remove('visible');

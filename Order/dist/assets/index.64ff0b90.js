@@ -1,4 +1,5 @@
-import "./navbar.6c3ccb54.js";
+import "./navbar.dcbf3d0d.js";
+var pull_to_refresh = "";
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
   const defaultPlatformMap = /* @__PURE__ */ new Map();
@@ -529,7 +530,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.6bf0758f.js"), true ? ["assets/web.6bf0758f.js","assets/navbar.6c3ccb54.js","assets/navbar.8ccfb6e7.css"] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.31c7a30b.js"), true ? ["assets/web.31c7a30b.js","assets/navbar.dcbf3d0d.js","assets/navbar.9d3811c9.css"] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
