@@ -11,92 +11,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<title>Queue Mode</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="./styles/styles.css" rel="stylesheet">
-	</head>
+<head>
+	<title>Queue Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/styles.css" rel="stylesheet">
+	<script src="./js/order-queue.js"></script>
 
 	<!--HOVER PURPOSES ONLY-->
 	<style>
 		.dropdown:hover .dropdown-menu {
-		display: block;
+			display: block;
 		}
 	</style>
+</head>
 
-	<body class="px-3 py-3">
-		<div>
-			<div class="dropdown inline-block pt-4">
-				<button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center ml-3">
-					<span class="mr-1">Menu</span>
-					<svg class="fill-current h-4 w-4" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-					</svg>
-				</button>
-				<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
-					<li class=""><a href="inventory.html" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Foods</a></li>
-					<li class=""><a href="register.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Register Employee</a></li>
-					<li class=""><a href="login.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Login Page</a></li>
-					<li class=""><a href="kiosk-devices.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a></li>
-				</ul>
-			</div>
+<body class="px-3 py-3">
+	<div>
+		<div class="dropdown inline-block pt-4">
+			<button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center ml-3">
+				<span class="mr-1">Menu</span>
+				<svg class="fill-current h-4 w-4" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+				</svg>
+			</button>
+			<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
+				<li class="">
+					<a href="inventory.html" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Foods</a>
+				</li>
+				<li class="">
+					<a href="register.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Register Employee</a>
+				</li>
+				<li class="">
+					<a href="login.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Login Page</a>
+				</li>
+				<li class="">
+					<a href="kiosk-devices.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
+				</li>
+				<li class="">
+					<a href="designer.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer Mode</a>
+				</li>
+			</ul>
 		</div>
+	</div>
 
-		<br>
+	<br>
 
-		<a href="designer.html">Designer Mode</a>
+	<center><h1 class="font-extrabold">Order Queue Below</h1></center>
 
-		<br>
+	<!--SHOW FOOD QUEUE ORDERS-->
+	<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
+		<table class="border-separate border-spacing-2 border-slate-500 rounded-lg border-4">
+			<tr id="data-output">
 
-		<center><h1 class="font-extrabold">Order Queue Below</h1></center>
+			</tr>
+		</table>
+	</div>
 
-		<!--SHOW FOOD QUEUE ORDERS-->
-		<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
-			<table class="border-separate border-spacing-2 border border-slate-500 rounded-lg border-4">
-				<tr id="data-output">
-
-				</tr>
-			</table>
-		</div>
-
-	</body>
-	<script>
-		fetch('http://localhost:8080/orders')
-		.then(res => {
-			return res.json();
-		})
-		.then(data => {
-			console.log(data)
-			data.forEach(orders => {
-
-				const food_items = orders.items_ordered.map((item) => {
-					return `${item.quantity} ${item.item_name}`;
-				})
-				console.log(food_items);
-
-				const markup = `
-					<td>
-						<table class="border-separate border-spacing-2 border border-slate-500 rounded-lg">
-						<td><h1 style="padding-top: 5px; padding-bottom: 5px;">Order #${orders.queue_number}</h1></td>
-						<tr>
-						<td>
-							<ul>
-								<li>${food_items}</li>
-							</ul>
-						</td>
-						</tr>
-						<tr>
-						<td>Customer: ${orders.customer_name}</td>
-						</tr>
-						<tr>
-						<td style="padding-top: 5px; padding-bottom: 5px;">Total: ₱${orders.total_price}</td>
-						</table>
-					</td>
-				`;
-				document.querySelector("#data-output").insertAdjacentHTML('beforeend', markup);
-			})
-		})
-		.catch(error => console.log(error));
-	</script>
-
+</body>
 </html>
