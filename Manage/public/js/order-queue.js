@@ -35,7 +35,7 @@ function display_orders() {
 						</table>
 					</td>
 				`;
-				document.querySelector("#data-output").insertAdjacentHTML('beforeend', markup);
+				document.querySelector("#order-list").insertAdjacentHTML('beforeend', markup);
 			})
 		})
 		.catch(error => console.log(error));

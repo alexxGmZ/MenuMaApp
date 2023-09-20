@@ -16,14 +16,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="./styles/styles.css" rel="stylesheet">
+	<link href="./styles/order-queue.css" rel="stylesheet">
 	<script src="./js/order-queue.js"></script>
-
-	<!--HOVER PURPOSES ONLY-->
-	<style>
-		.dropdown:hover .dropdown-menu {
-			display: block;
-		}
-	</style>
 </head>
 
 <body class="px-3 py-3">
@@ -36,19 +30,16 @@
 			</button>
 			<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
 				<li class="">
-					<a href="inventory.html" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Foods</a>
+					<a href="inventory.html" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Inventory</a>
 				</li>
 				<li class="">
-					<a href="register.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Register Employee</a>
-				</li>
-				<li class="">
-					<a href="login.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Login Page</a>
+					<a href="register.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Employee</a>
 				</li>
 				<li class="">
 					<a href="kiosk-devices.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
 				</li>
 				<li class="">
-					<a href="designer.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer Mode</a>
+					<a href="designer.html" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer</a>
 				</li>
 			</ul>
 		</div>
@@ -61,8 +52,8 @@
 	<!--SHOW FOOD QUEUE ORDERS-->
 	<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
 		<table class="border-separate border-spacing-2 border-slate-500 rounded-lg border-4">
-			<tr id="data-output">
-
+			<tr id="order-list">
+				<!-- call the display_orders() function -->
 			</tr>
 		</table>
 	</div>
