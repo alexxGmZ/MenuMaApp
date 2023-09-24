@@ -606,6 +606,10 @@ video {
   width: 16.666667%;
 }
 
+.w-2\/12 {
+  width: 16.666667%;
+}
+
 .w-3\/6 {
   width: 50%;
 }
@@ -831,6 +835,10 @@ video {
 
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pl-12 {
+  padding-left: 3rem;
 }
 
 .pl-2 {

@@ -36,12 +36,12 @@ connection.connect(function(err) {
 					<td class="text-center">${row.revenue_generated}</td>
 					<td>
 						<span class="action-btn">
-						<button class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-600 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_item_dialog')">
+						<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-600 text-zinc-50 hover:drop-shadow-lg">
 							<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
 							<path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
 							</svg>
 						</button>
-						<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-700 text-zinc-50 hover:drop-shadow-lg" onclick="delete_item()">
+						<button onclick="dialog_open('remove_item_dialog')" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-700 text-zinc-50 hover:drop-shadow-lg">
 							<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
 							</svg>
 						</button>
@@ -111,18 +111,29 @@ function row_click() {
 				var food_desc = row.getElementsByTagName("td")[2];
 				var food_img = row.getElementsByTagName("td")[3];
 				var food_price = row.getElementsByTagName("td")[4];
+				var food_revenue = row.getElementsByTagName("td")[5];
 				var id = food_id.innerHTML;
 				var name = food_name.innerHTML;
 				var desc = food_desc.innerHTML;
 				var img = food_img.innerHTML;
 				var price = food_price.innerHTML;
+				var revenue = food_revenue.innerHTML;
 
-				//alert("id:" + id + " name: " + name + " desc: " + desc + " image: " + img + " price: " + price);
+				var imgElement = row.querySelector('img');
+				var imgSrc = imgElement.getAttribute('src');
+
+				//alert("id:" + id + " name: " + name + " desc: " + desc + " image: " + imgSrc+ " price: " + price);
 
 				document.getElementById("foodidfield_2").value = id;
 				document.getElementById("fooditem_2").value = name;
 				document.getElementById("fooddesc_2").value = desc;
 				document.getElementById("foodprice_2").value = price;
+				document.getElementById("show_id").value = id;
+				document.getElementById("show_name").innerHTML = name;
+				document.getElementById("show_desc").innerHTML = desc;
+				document.getElementById("show_food").src = imgSrc;
+				document.getElementById("show_price").innerHTML = price;
+				document.getElementById("show_revenue").innerHTML = revenue;
 
 			};
 		};
@@ -181,34 +192,19 @@ function update_item() {
 
 //----- DELETE FUNCTION EVENT -----//
 function delete_item() {
-	var table = document.getElementById("food_table");
-	var rows = table.getElementsByTagName("tr");
-	for (let i = 0; i < rows.length; i++) {
-		var currentRow = table.rows[i];
-		var clickHandle =
-			function(row) {
-				return function() {
-					var food_id = row.getElementsByTagName("td")[0];
-					var id = food_id.innerHTML;
+	
+	var id = document.getElementById("show_id").value;
 
-					var food_name = row.getElementsByTagName("td")[1];
-					var name = food_name.innerHTML;
-
-					const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
-					connection.query(query, error => {
-						if (error) {
-							alert("Select an item first!")
-							console.log(error)
-						}
-						else {
-							dialog_open("remove_item_success_dialog");
-						}
-					})
-				};
-			};
-
-		currentRow.onclick = clickHandle(currentRow);
-	}
+	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
+	connection.query(query, error => {
+		if (error) {
+			alert("Error!")
+			console.log(error)
+		}
+		else {
+			dialog_open("remove_item_success_dialog");
+		}
+	})
 }
 //----- END OF DELETE FUNCTION EVENT -----//
 
@@ -228,6 +224,9 @@ function dialog_open(element_id) {
 	}
 	if (element_id == "remove_item_success_dialog") {
 		document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("fooditem_2").value;
+	}
+	if (element_id == "remove_item_dialog") {
+		row_click();
 	}
 
 	fav_dialog.showModal();

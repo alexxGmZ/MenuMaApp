@@ -120,7 +120,36 @@
 
 	<!-- add a dialog popup for item preview before deleting or removing -->
 
-	<!-- REMOVE DIALOG -->
+	<!-- POPUP REMOVE DIALOG -->
+	<dialog id="remove_item_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+		<p class="p-2">Are you sure you want to delete this item?</p>
+		<input type="hidden" id="show_id" name="show_id" placeholder="ID HERE">
+		<span class="float-left pl-12">Item name: <span id="show_name">Item Name Place Holder</span></span>
+		<br>
+
+		<span class="float-left pl-12 pt-2">Item description: <span id="show_desc">Item Description Place Holder</span></span>
+		<br>
+		<br>
+
+		<span class="float-left pl-12 pt-2">Item image: </span>
+		<br>
+		<br>
+		
+		<center><img src="" id="show_food"></center>
+		
+		<span class="float-left pl-12 pt-2">Item price: <span id="show_price">Item Price Place Holder</span></span>
+		<br>
+		<br>
+
+		<span class="float-left pl-12 pt-2">Item revenue: <span id="show_revenue">Item Revenue Place Holder</span></span>
+		<br>
+		<br>
+
+		<button onclick="dialog_close('remove_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-2/12 mx-2"> NO </button>
+		<button onclick="delete_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-2/12 mx-2"> YES </button>
+	</dialog>
+
+	<!-- SUUCCESS REMOVE DIALOG -->
 	<dialog id="remove_item_success_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
 		<span id="removed_item_placeholder">Item Name</span>
 		<span> is successfully removed.</span><br><br>
