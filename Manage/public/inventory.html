@@ -46,7 +46,7 @@
 						</button>
 					</li>
 					<li>
-						<button onclick="" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-yellow-500 hover:text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="dialog_open('search_item_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-yellow-500 hover:text-zinc-50 hover:drop-shadow-lg">
 							<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
 							</svg>
 							<span class="mx-2">SEARCH ITEM VIA ID</span>
@@ -167,6 +167,19 @@
 		<span id="removed_item_placeholder">Item Name</span>
 		<span> is successfully removed.</span><br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
+	</dialog>
+
+	<!-- SEARCH ID DIALOG -->
+	<dialog id="search_item_dialog" class="rounded-lg drop-shadow-lg w-1/4 text-center">
+		<span> Searching food... </span><br>
+		<input type="text" id="search_item_box" placeholder="Enter food id here" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<button onclick="search_via_id()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> SEARCH </button>
+	</dialog>
+
+	<!-- SEARCH ID BLANK ERROR -->
+	<dialog id="search_item_error_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+		<span> Input cant be blank!</span><br>
+		<button onclick="dialog_close('search_item_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
 </body>
