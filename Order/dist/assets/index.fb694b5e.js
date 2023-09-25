@@ -1,4 +1,46 @@
-import "./navbar.dcbf3d0d.js";
+const p = function polyfill() {
+  const relList = document.createElement("link").relList;
+  if (relList && relList.supports && relList.supports("modulepreload")) {
+    return;
+  }
+  for (const link of document.querySelectorAll('link[rel="modulepreload"]')) {
+    processPreload(link);
+  }
+  new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type !== "childList") {
+        continue;
+      }
+      for (const node of mutation.addedNodes) {
+        if (node.tagName === "LINK" && node.rel === "modulepreload")
+          processPreload(node);
+      }
+    }
+  }).observe(document, { childList: true, subtree: true });
+  function getFetchOpts(script) {
+    const fetchOpts = {};
+    if (script.integrity)
+      fetchOpts.integrity = script.integrity;
+    if (script.referrerpolicy)
+      fetchOpts.referrerPolicy = script.referrerpolicy;
+    if (script.crossorigin === "use-credentials")
+      fetchOpts.credentials = "include";
+    else if (script.crossorigin === "anonymous")
+      fetchOpts.credentials = "omit";
+    else
+      fetchOpts.credentials = "same-origin";
+    return fetchOpts;
+  }
+  function processPreload(link) {
+    if (link.ep)
+      return;
+    link.ep = true;
+    const fetchOpts = getFetchOpts(link);
+    fetch(link.href, fetchOpts);
+  }
+};
+p();
+var style = "";
 var pull_to_refresh = "";
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
@@ -119,20 +161,20 @@ const createCapacitor = (win) => {
     const createPluginMethodWrapper = (prop) => {
       let remove;
       const wrapper = (...args) => {
-        const p = loadPluginImplementation().then((impl) => {
+        const p2 = loadPluginImplementation().then((impl) => {
           const fn = createPluginMethod(impl, prop);
           if (fn) {
-            const p2 = fn(...args);
-            remove = p2 === null || p2 === void 0 ? void 0 : p2.remove;
-            return p2;
+            const p3 = fn(...args);
+            remove = p3 === null || p3 === void 0 ? void 0 : p3.remove;
+            return p3;
           } else {
             throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
           }
         });
         if (prop === "addListener") {
-          p.remove = async () => remove();
+          p2.remove = async () => remove();
         }
-        return p;
+        return p2;
       };
       wrapper.toString = () => `${prop.toString()}() { [capacitor code] }`;
       Object.defineProperty(wrapper, "name", {
@@ -153,12 +195,12 @@ const createCapacitor = (win) => {
           callbackId
         }, callback);
       };
-      const p = new Promise((resolve) => call.then(() => resolve({ remove })));
-      p.remove = async () => {
+      const p2 = new Promise((resolve) => call.then(() => resolve({ remove })));
+      p2.remove = async () => {
         console.warn(`Using addListener() without 'await' is deprecated.`);
         await remove();
       };
-      return p;
+      return p2;
     };
     const proxy = new Proxy({}, {
       get(_, prop) {
@@ -228,14 +270,14 @@ class WebPlugin {
       this.addWindowListener(windowListener);
     }
     const remove = async () => this.removeListener(eventName, listenerFunc);
-    const p = Promise.resolve({ remove });
-    Object.defineProperty(p, "remove", {
+    const p2 = Promise.resolve({ remove });
+    Object.defineProperty(p2, "remove", {
       value: async () => {
         console.warn(`Using addListener() without 'await' is deprecated.`);
         await remove();
       }
     });
-    return p;
+    return p2;
   }
   async removeAllListeners() {
     this.listeners = {};
@@ -477,13 +519,13 @@ class CapacitorHttpPluginWeb extends WebPlugin {
 const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
-const server_url = "http://192.168.254.115";
-const server_port = 8080;
+const server_url$1 = "http://192.168.254.115";
+const server_port$1 = 8080;
 function get_request_menu_items() {
   const json_container = document.getElementById("menu_items");
   CapacitorHttp.get(
     {
-      url: `${server_url}:${server_port}/menu_items`
+      url: `${server_url$1}:${server_port$1}/menu_items`
     }
   ).then((response) => {
     console.log("Response Status: " + response.status);
@@ -492,7 +534,7 @@ function get_request_menu_items() {
   }).catch((error, response) => {
     console.error(error);
     json_container.textContent = `Failed to establishment connection to
-${server_url}`;
+${server_url$1}`;
   });
 }
 get_request_menu_items();
@@ -530,7 +572,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.31c7a30b.js"), true ? ["assets/web.31c7a30b.js","assets/navbar.dcbf3d0d.js","assets/navbar.9d3811c9.css"] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.655f8dfd.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
@@ -544,4 +586,71 @@ const logCurrentNetworkStatus = async () => {
 Type: ${status.connectionType}`;
 };
 logCurrentNetworkStatus();
+const pullToRefresh = document.querySelector(".pull-to-refresh");
+let touchstartY = 0;
+document.addEventListener("touchstart", (e) => {
+  touchstartY = e.touches[0].clientY;
+});
+document.addEventListener("touchmove", (e) => {
+  const touchY = e.touches[0].clientY;
+  const touchDiff = touchY - touchstartY;
+  if (touchDiff > 0 && window.scrollY === 0) {
+    pullToRefresh.classList.add("visible");
+    e.preventDefault();
+  }
+});
+document.addEventListener("touchend", (e) => {
+  if (pullToRefresh.classList.contains("visible")) {
+    pullToRefresh.classList.remove("visible");
+    location.reload();
+  }
+});
+window.customElements.define(
+  "custom-navbar",
+  class extends HTMLElement {
+    constructor() {
+      super();
+      const root = this.attachShadow({ mode: "open" });
+      root.innerHTML = `
+				<style>
+					:host {
+						display: block;
+						background-color: #333;
+						color: white;
+						padding: 15px;
+					}
+				</style>
+				<div class="nav">
+					<div><slot name="start"></slot></div>
+					<div><slot name="title"></slot></div>
+					<div><slot name="end"></slot></div>
+				</div>
+			`;
+    }
+  }
+);
+const server_url = "http://192.168.254.115";
+const server_port = 8080;
+function get_request_shitty_images() {
+  const image_container = document.getElementById("shitty_images");
+  CapacitorHttp.get(
+    {
+      url: `${server_url}:${server_port}/shitty-images`
+    }
+  ).then((response) => {
+    console.log("Response Status: " + response.status);
+    console.log(response.data);
+    const imageDataUrls = response.data.images;
+    image_container.innerHTML = "";
+    for (const imageDataUrl of imageDataUrls) {
+      const img = document.createElement("img");
+      img.src = imageDataUrl;
+      img.alt = "Shitty Image";
+      image_container.appendChild(img);
+    }
+  }).catch((error, response) => {
+    console.error(error);
+  });
+}
+get_request_shitty_images();
 export { WebPlugin as W };
