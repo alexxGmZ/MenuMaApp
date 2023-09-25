@@ -24,12 +24,12 @@ function register_employee() {
 	var name = document.getElementById("name").value.trim();
 	// cancel if input box is empty
 	if (name.length == 0 || name.trim() === "")
-		return alert("Name is empty");
+		return dialog_open('add_employee_name_error_dialog');
 
 	var password = document.getElementById("password").value;
 	// cancel if input box is empty
 	if (password.length == 0 || password.trim() === "")
-		return alert("Password is empty");
+		return dialog_open('add_employee_password_error_dialog');
 
 	// hash password with sha256
 	var hash_password = crypto.createHash("sha256").update(password).digest("hex");
@@ -64,9 +64,7 @@ function register_employee() {
 			results.status(500).send('Error insert!!!!!')
 		}
 		else {
-			alert(name + " is registered");
-			//refresh page after insert
-			location.reload();
+			dialog_open("add_employee_successs_dialog");
 		}
 	});
 }
@@ -141,6 +139,7 @@ function rowClick() {
 
 					var employee_name = row.getElementsByTagName("td")[1];
 					document.getElementById("name_2").value = employee_name.innerHTML;
+					document.getElementById("removed_employee_placeholder").innerHTML = employee_name.innerHTML;
 
 					var design_priv = row.getElementsByTagName("td")[2];
 					var design = design_priv.innerHTML;
@@ -205,8 +204,7 @@ function update_employee() {
 			console.log(error);
 		}
 		else {
-			alert("Employee updated!!");
-			location.reload();
+			dialog_open('update_employee_successs_dialog');
 		}
 	});
 
@@ -227,6 +225,7 @@ function delete_employee() {
 
 					var employee_name = row.getElementsByTagName("td")[1];
 					var name = employee_name.innerHTML;
+					document.getElementById("removed_employee_placeholder").innerHTML = employee_name.innerHTML;
 
 					if (id.length == 0)
 						return alert("Select a employee first!");
@@ -238,8 +237,7 @@ function delete_employee() {
 							console.log(error);
 						}
 						else {
-							alert(name + " has been removed!");
-							location.reload();
+							dialog_open('remove_employee_success_dialog');
 						}
 					})
 				};
@@ -260,3 +258,29 @@ function closeModal() {
 	const favDialog = document.getElementById("myModal");
 	favDialog.close();
 }
+
+// open modal dialog based on element id
+function dialog_open(element_id) {
+	const fav_dialog = document.getElementById(element_id)
+
+	// any element id specific statements
+	if(element_id == "remove_employee_success_dialog") {
+		rowClick();
+	}
+	if(element_id == "add_employee_successs_dialog") {
+		document.getElementById("add_employee_placeholder").innerHTML = document.getElementById("name").value;
+	}
+	if(element_id == "update_employee_successs_dialog") {
+		document.getElementById("update_employee_placeholder").innerHTML = document.getElementById("name_2").value;
+	}
+
+	fav_dialog.showModal();
+}
+
+// close the modal
+function dialog_close(element_id) {
+	const fav_dialog = document.getElementById(element_id);
+	fav_dialog.close();
+}
+
+
