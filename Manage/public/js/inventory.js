@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", function() {
+	add_item();
+});
 // Const for file handling
 const fs = require('fs');
 
@@ -25,12 +28,14 @@ connection.connect(function(err) {
 		let out = "";
 
 		for (let row of result) {
+			// to read the blob data type
+			let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
 			out += `
 				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td class="text-center">${row.item_id}</td>
 					<td class="text-center">${row.item_name}</td>
 					<td class="text-center">${row.item_desc}</td>
-					<td><img src="${row.item_image}" alt="Foods Image"></td>
+					<td><img src="${image_src}" alt="Foods Image"></td>
 					<td class="text-center">${row.item_price}</td>
 					<td class="text-center">${row.quantity_sold}</td>
 					<td class="text-center">${row.revenue_generated}</td>
@@ -58,42 +63,22 @@ connection.connect(function(err) {
 
 // -----ADD NEW FOODS FUNCTION----- //
 function add_item() {
-	// CHECKS IF FILE INPUT IS EMPTY OR NOT
-	if (document.getElementById("foodimg").files.length == 0) {
-		dialog_open("error_dialog");
-	}
-	else {
-		// VARIABLES FROM inventory.html
-		var fooditem = document.getElementById("fooditem").value;
-		var fooddesc = document.getElementById("fooddesc").value;
-		var foodimg = document.getElementById("foodimg").value.split('fakepath\\');
-		var withimg = ("./foods/" + foodimg[1])
-		var foodprice = document.getElementById("foodprice").value;
-
-		// IMAGE HANDLING
-		var imgFileName = foodimg[1];
-
-		const filePath = document.querySelector('input[type=file').files[0].path;
-		const filePathCopy = __dirname + '/foods/' + imgFileName;
-
-		console.log(filePathCopy);
-
-		fs.copyFile(filePath, filePathCopy, (err) => {
-			if (err) throw err;
-
-			console.log('File Copy Successfully.');
-		})
-
-		// THE QUERY USED TO INSERT
-		const query = 'INSERT INTO menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?);';
-		connection.query(query, [fooditem, fooddesc, withimg, foodprice], (error, results) => {
-			if (error) {
-				dialog_open("error_dialog");
-			} else {
-				dialog_open("add_item_success_dialog");
+	const food_form = document.getElementById("add_item_form");
+	fetch("http://localhost:8080/upload-item", {
+		method: "POST",
+		body: new FormData(food_form)
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data);
+			if (data.success) {
+				food_form.reset();
+				dialog_close("add_item_dialog");
 			}
-		});
-	}
+		})
+		.catch((error) => {
+			console.log("Error: ", error);
+		})
 }
 // -----END OF ADD NEW FOODS FUNCTION----- //
 
@@ -192,7 +177,7 @@ function update_item() {
 
 //----- DELETE FUNCTION EVENT -----//
 function delete_item() {
-	
+
 	var id = document.getElementById("show_id").value;
 
 	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;

@@ -123,7 +123,7 @@ CREATE TABLE menu_items(
    item_id INT AUTO_INCREMENT,
    item_name TEXT NOT NULL,
    item_desc TEXT,
-   item_image TEXT,
+   item_image LONGBLOB,
    item_price FLOAT NOT NULL,
    quantity_sold INT DEFAULT 0,
    revenue_generated FLOAT DEFAULT 0,

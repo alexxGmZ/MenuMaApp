@@ -1,6 +1,3 @@
-//
-// Mysql
-//
 // mysql module
 // const mysql = require(__dirname + "/js/modules/mysql.js");
 const mysql = require("./public/js/modules/mysql.js");
@@ -9,19 +6,86 @@ mysql.check_connection();
 // call connection variable
 const connection = mysql.connection;
 
-//
-// EXPRESS practice from fireship
-//
+// express
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = 8080;
 
+// multer
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 app.use(cors());
-app.listen(
-	PORT,
-	() => console.log(`API Port:${PORT}`)
-)
+app.use(express.static("public"));
+
+app.post("/upload-image", upload.single("image"), (req, res) => {
+	if (!req.file) {
+		return res.json({ success: false });
+	}
+
+	// Insert the image into the database
+	connection.query("INSERT INTO practice_table (image) VALUES (?)", [req.file.buffer], (err) => {
+		if (err) {
+			console.error("Error inserting image into MySQL:", err);
+			return res.json({ success: false });
+		}
+		// return res.json({ success: true });
+		return console.log("Image upload from " + req.ip);
+	});
+});
+
+app.post("/upload-item", upload.single("foodimg"), (req, res) => {
+	if (!req.file) {
+		return res.json({ success: false });
+	}
+
+	const { fooditem, fooddesc, foodprice } = req.body;
+	const body = JSON.stringify(req.body, null, 2);
+	console.log(body);
+	console.log(req.file.buffer);
+
+	// Insert the image into the database
+	connection.query("INSERT INTO manage_db.menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?)",
+		[fooditem, fooddesc, req.file.buffer, foodprice], (err) => {
+		if (err) {
+			console.error("Error inserting data into MySQL:", err);
+			return res.json({ success: false });
+		}
+		// return res.json({ success: true });
+	});
+});
+
+// practice shit
+app.get("/shitty-images",
+	(request, response) => {
+		const query = "SELECT * from manage_db.practice_table";
+		connection.query(query, function(err, result) {
+			if (err) {
+				console.error(err);
+				return response.status(500).json({ error: "Internal Server Error" });
+			}
+
+			if (result.length === 0) {
+				return response.status(404).json({ error: "No images found" });
+			}
+
+			// Create an array to store image data URLs
+			const imageDataUrls = [];
+
+			// Loop through the result set and convert each image to a data URL
+			for (const row of result) {
+				const imageDataUrl = `data:image/jpeg;base64,${row.image.toString("base64")}`;
+				imageDataUrls.push(imageDataUrl);
+			}
+
+			// Send the array of image data URLs as a JSON response
+			response.status(200).json({ images: imageDataUrls });
+			get_request_message("shitty-images", request.ip);
+		});
+	}
+);
 
 // format get request message
 function get_request_message(api_endpoint, ip_requested) {
@@ -94,3 +158,7 @@ app.get("/orders",
 	}
 );
 
+app.listen(
+	PORT,
+	() => console.log(`API Port:${PORT}`)
+)
