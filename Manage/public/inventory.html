@@ -22,30 +22,43 @@
 
 
 <body class="px-3 py-3">
-	<!--Buttons-->
-	<div>
-		<a href="main.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO MAIN MENU</a>
-	</div>
-	<!----------->
 
-	<!-- MAIN FORM FOR ADDING DATA -->
-	<div class="px-5 py-5 gap-4">
-		<button onclick="location.reload()" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
-			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-			</svg>
-			<span class="mx-2">REFRESH ITEMS</span>
-		</button>
-		<button onclick="dialog_open('add_item_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-			</svg>
-			<span class="mx-2">NEW ITEM</span>
-		</button>
-		<button onclick="" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-yellow-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-			</svg>
-			<span class="mx-2">SEARCH ITEM VIA ID</span>
-		</button>
-	</div>
+	<!-- NAVBAR -->
+	<nav class="flex justify-center bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+			<div class="justify-between hidden w-full md:flex md:w-auto md:order-1">
+				<ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+					<li>
+						<a href="main.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO MAIN MENU</a>
+					</li>
+					<li>
+						<button onclick="location.reload()" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
+							<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+							</svg>
+							<span class="mx-2">REFRESH ITEMS</span>
+						</button>
+					</li>
+					<li>
+						<button onclick="dialog_open('add_item_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+							<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+							</svg>
+							<span class="mx-2">NEW ITEM</span>
+						</button>
+					</li>
+					<li>
+						<button onclick="" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-yellow-500 hover:text-zinc-50 hover:drop-shadow-lg">
+							<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+							</svg>
+							<span class="mx-2">SEARCH ITEM VIA ID</span>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<br>
 
 	<!--Menu Items Table-->
 	<div>
