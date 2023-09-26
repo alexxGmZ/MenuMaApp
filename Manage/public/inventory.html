@@ -94,11 +94,11 @@
 			<label for="img" class="ml-2">Select Food Image:</label>
 			<input type="file" id="foodimg" name="foodimg" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
 			<input type="text" id="foodprice" name="foodprice" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
-				<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-					<button onclick="dialog_close('add_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg"> CANCEL </button>
-					<button onclick="add_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> ADD ITEM </button>
-				</div>
 		</form>
+		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
+			<button onclick="dialog_close('add_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg"> CANCEL </button>
+			<button onclick="add_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> ADD ITEM </button>
+		</div>
 	</dialog>
 	<!-- ADD ITEM DIALOG CONFIRM -->
 	<dialog id="add_item_success_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
