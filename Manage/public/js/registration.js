@@ -181,7 +181,7 @@ function update_employee() {
 	var name = document.getElementById("name_2").value.trim();
 	// cancel if input box is empty
 	if (name.length == 0 || name.trim() === "")
-		return alert("Name is empty");
+		return dialog_open('add_employee_name_error_dialog');
 
 	// privilege variables
 	// assign 1 if the corresponding checkbox id is checked

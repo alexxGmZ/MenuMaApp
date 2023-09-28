@@ -73,12 +73,29 @@ function add_item() {
 			console.log(data);
 			if (data.success) {
 				food_form.reset();
-				dialog_close("add_item_dialog");
 			}
 		})
 		.catch((error) => {
 			console.log("Error: ", error);
 		})
+}
+// For success dialog message after adding
+function add_item_message() {
+
+	if(document.getElementById("fooditem").value.length == 0)
+		return dialog_open("error_dialog");
+
+	if(document.getElementById("fooddesc").value.length == 0)
+		return dialog_open("error_dialog");
+
+	if (document.getElementById("foodimg").files.length == 0)
+		return dialog_open("error_dialog");
+
+	if(document.getElementById("foodprice").value.length == 0)
+		return dialog_open("error_dialog");
+
+	dialog_open("add_item_success_dialog");
+	
 }
 // -----END OF ADD NEW FOODS FUNCTION----- //
 
@@ -211,12 +228,13 @@ function search_via_id() {
 		let out = "";
 
 		for (let row of result) {
+			let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
 			out += `
 				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td class="text-center">${row.item_id}</td>
 					<td class="text-center">${row.item_name}</td>
 					<td class="text-center">${row.item_desc}</td>
-					<td><img src="${row.item_image}" alt="Foods Image"></td>
+					<td><img src="${image_src}" alt="Foods Image"></td>
 					<td class="text-center">${row.item_price}</td>
 					<td class="text-center">${row.quantity_sold}</td>
 					<td class="text-center">${row.revenue_generated}</td>
