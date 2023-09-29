@@ -1,70 +1,66 @@
 document.addEventListener("DOMContentLoaded", function() {
 	add_item();
+	display_menu_items();
 });
-// Const for file handling
+
 const fs = require('fs');
 
-//
-// Mysql Database
-//
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js");
 // create database connection
-
 const connection = mysql.connection;
-
 // check database connection
 mysql.check_connection();
 
 //----- Show Foods Function -----//
 // Start Query Here
-connection.connect(function(err) {
-	if (err) throw err;
-	//Select all foods and return the result object:
-	connection.query("SELECT * FROM manage_db.menu_items", function(err, result) {
+function display_menu_items() {
+	connection.connect(function(err) {
 		if (err) throw err;
+		//Select all foods and return the result object:
+		connection.query("SELECT * FROM manage_db.menu_items", function(err, result) {
+			if (err) throw err;
 
-		let placeholder = document.querySelector("#menu_item_list");
-		let out = "";
+			let placeholder = document.querySelector("#menu_item_list");
+			let out = "";
 
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
-			out += `
-				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-					<td class="text-center">${row.item_id}</td>
-					<td class="text-center">${row.item_name}</td>
-					<td class="text-center">${row.item_desc}</td>
-					<td><img src="${image_src}" alt="Foods Image"></td>
-					<td class="text-center">${row.item_price}</td>
-					<td class="text-center">${row.quantity_sold}</td>
-					<td class="text-center">${row.revenue_generated}</td>
-					<td>
-						<span class="action-btn">
-						<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-600 text-zinc-50 hover:drop-shadow-lg">
-							<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-							<path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-							</svg>
-						</button>
-						<button onclick="dialog_open('remove_item_dialog')" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-700 text-zinc-50 hover:drop-shadow-lg">
-							<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-})
+			for (let row of result) {
+				// to read the blob data type
+				let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
+				out += `
+					<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
+						<td class="text-center">${row.item_id}</td>
+						<td class="text-center">${row.item_name}</td>
+						<td class="text-center">${row.item_desc}</td>
+						<td><img src="${image_src}" alt="Foods Image"></td>
+						<td class="text-center">${row.item_price}</td>
+						<td class="text-center">${row.quantity_sold}</td>
+						<td class="text-center">${row.revenue_generated}</td>
+						<td>
+							<span class="action-btn">
+							<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-600 text-zinc-50 hover:drop-shadow-lg">
+								<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+								<path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+								</svg>
+							</button>
+							<button onclick="dialog_open('remove_item_dialog')" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-700 text-zinc-50 hover:drop-shadow-lg">
+								<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+								</svg>
+							</button>
+							</span>
+						</td>
+					</tr>
+				`;
+			}
+			placeholder.innerHTML = out;
+		});
+	})
+}
 
-//----- End of Show Foods Function -----//
-
-// -----ADD NEW FOODS FUNCTION----- //
+// add new menu item
 function add_item() {
 	const food_form = document.getElementById("add_item_form");
-	fetch("http://localhost:8080/upload-item", {
+	fetch("http://localhost:8080/upload_item_image", {
 		method: "POST",
 		body: new FormData(food_form)
 	})
@@ -79,28 +75,26 @@ function add_item() {
 			console.log("Error: ", error);
 		})
 }
+
 // For success dialog message after adding
 function add_item_message() {
 
-	if(document.getElementById("fooditem").value.length == 0)
+	if (document.getElementById("fooditem").value.length == 0)
 		return dialog_open("error_dialog");
 
-	if(document.getElementById("fooddesc").value.length == 0)
+	if (document.getElementById("fooddesc").value.length == 0)
 		return dialog_open("error_dialog");
 
 	if (document.getElementById("foodimg").files.length == 0)
 		return dialog_open("error_dialog");
 
-	if(document.getElementById("foodprice").value.length == 0)
+	if (document.getElementById("foodprice").value.length == 0)
 		return dialog_open("error_dialog");
 
 	dialog_open("add_item_success_dialog");
-	
 }
-// -----END OF ADD NEW FOODS FUNCTION----- //
 
-
-//----- TABLE CLICK EVENT ------//
+// table row click, used for updating and deleting an item
 function row_click() {
 	var table = document.getElementById("food_table");
 	var rows = table.getElementsByTagName("tr");
@@ -142,14 +136,10 @@ function row_click() {
 		currentRow.onclick = clickHandle(currentRow);
 	}
 }
-//----- END OF TABLE CLICK EVENT -----//
 
-// POP UP FUNCTION //
-// END OF POPUP FUNCTION //
-
-//----- UPDATE FUNCTION EVENT -----//
+// update an existing menu item
 function update_item() {
-	// CHECKS IF FILE INPUT IS EMPTY OR NOT
+	// checks if the image input is empty
 	if (document.getElementById("foodimg_2").files.length == 0) {
 		dialog_open("error_dialog");
 	}
@@ -190,11 +180,9 @@ function update_item() {
 		});
 	}
 }
-//----- END OF UPDATE FUNCTION EVENT -----//
 
-//----- DELETE FUNCTION EVENT -----//
+// delete an item based on the item id
 function delete_item() {
-
 	var id = document.getElementById("show_id").value;
 
 	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
@@ -206,30 +194,27 @@ function delete_item() {
 		else {
 			dialog_open("remove_item_success_dialog");
 		}
-	})
+	});
 }
-//----- END OF DELETE FUNCTION EVENT -----//
 
-// MYSQL SEARCH FUNNCTION //
+// search an item via id
 function search_via_id() {
-
 	if (document.getElementById("search_item_box").value == "") {
 		dialog_open('search_item_error_dialog');
 	}
-	else
-	{
+	else {
 		var food_id = document.getElementById("search_item_box").value;
-	console.log(food_id);
+		console.log(food_id);
 
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_id = "${food_id}"`, function(err, result) {
-		if (err) throw err;
+		connection.query(`SELECT * FROM manage_db.menu_items WHERE item_id = "${food_id}"`, function(err, result) {
+			if (err) throw err;
 
-		let placeholder = document.querySelector("#menu_item_list");
-		let out = "";
+			let placeholder = document.querySelector("#menu_item_list");
+			let out = "";
 
-		for (let row of result) {
-			let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
-			out += `
+			for (let row of result) {
+				let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
+				out += `
 				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td class="text-center">${row.item_id}</td>
 					<td class="text-center">${row.item_name}</td>
@@ -253,16 +238,11 @@ function search_via_id() {
 					</td>
 				</tr>
 			`;
-		}
-		placeholder.innerHTML = out;
-
-	});
-
-	dialog_close('search_item_dialog');
-
+			}
+			placeholder.innerHTML = out;
+		});
+		dialog_close('search_item_dialog');
 	}
-
-
 }
 
 // open modal dialog based on element id
