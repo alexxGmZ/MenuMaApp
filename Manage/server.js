@@ -39,13 +39,48 @@ app.post("/upload_item", upload.single("foodimg"), (req, res) => {
 				return res.json({ success: false });
 			}
 			// return res.json({ success: true });
+			request_message_format("POST", "upload_item", req.ip);
 		}
 	);
 });
 
 // for updating inventory items to database
 app.post("/update_item", upload.single("image"), (req, res) => {
+	// Extract data from the request body
+	const { id, name, description, price } = req.body;
+	const body = JSON.stringify(req.body, null, 2);
+	console.log(body);
 
+	var sql_query = "";
+	var sql_parameters = [];
+
+	// check if there's an image buffer then adjust the query
+	if (req.file) {
+		sql_query = "UPDATE manage_db.menu_items SET item_name = ?, item_desc = ?, item_price = ?, item_image = ? WHERE item_id = ?";
+		sql_parameters = [name, description, price, req.file.buffer, id];
+		console.log(req.file.buffer);
+	}
+	else {
+		sql_query = "UPDATE manage_db.menu_items SET item_name = ?, item_desc = ?, item_price = ? WHERE item_id = ?";
+		sql_parameters = [name, description, price, id];
+	}
+
+	// Build and execute the SQL update query
+	connection.query(sql_query, sql_parameters, (error, results) => {
+		if (error) {
+			console.error("Error updating item:", error);
+			return res.status(500).json({ success: false, error: "Internal Server Error" });
+		}
+
+		// Check if any rows were affected
+		if (results.affectedRows === 0) {
+			return res.status(404).json({ success: false, error: "Item not found" });
+		}
+
+		// Item updated successfully
+		request_message_format("POST", "update_item", req.ip);
+		return res.status(200).json({ success: true, message: "Item updated successfully" });
+	});
 });
 
 // practice shit

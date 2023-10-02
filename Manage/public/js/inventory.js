@@ -26,7 +26,7 @@ function display_menu_items() {
 
 			for (let row of result) {
 				// to read the blob data type
-				let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
+				let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
 				out += `
 					<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 						<td class="text-center">${row.item_id}</td>
@@ -148,34 +148,54 @@ function update_item() {
 	var item_id = document.getElementById("update_item_id").value;
 	var item_name = document.getElementById("update_item_name").value;
 	var item_desc = document.getElementById("update_item_desc").value;
-	var item_img = document.getElementById("update_image_preview").src
 	var item_new_img = document.getElementById("update_new_image");
 	var item_price = document.getElementById("update_item_price").value;
 
-	// if the image input is empty use the current image
+	// check if a new image is selected
+	var item_image = ""
 	if (item_new_img.files.length > 0) {
-		// Use the selected file as the item_img
-		item_img = URL.createObjectURL(item_new_img.files[0]);
-		console.log("new image will be used");
+		item_image = item_new_img.files[0];
 	}
 
-	// console.log(item_id);
-	// console.log(item_name);
-	// console.log(item_desc);
-	// console.log(item_img);
-	// console.log(item_price);
+	console.log(item_id);
+	console.log(item_name);
+	console.log(item_desc);
+	console.log(item_image);
+	console.log(item_price);
 
 	const form_data = new FormData();
 	form_data.append("id", item_id);
 	form_data.append("name", item_name);
 	form_data.append("description", item_desc);
-	form_data.append("image", item_img);
+	form_data.append("image", item_image);
 	form_data.append("price", item_price);
 
 	// preview the contents for form_data
 	// for (const pair of form_data.entries()) {
 	// 	console.log(`${pair[0]}: ${pair[1]}`);
 	// }
+
+	// establish connection to server.js
+	fetch("http://localhost:8080/update_item", {
+		method: "POST",
+		body: form_data,
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data);
+			if (data.success) {
+				// Item updated successfully
+				console.log("Item updated successfully:", data.message);
+				// dialog_close("update_item_dialog");
+				dialog_open("update_item_success_dialog");
+			} else {
+				// Error occurred while updating
+				console.error("Error updating item:", data.error);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 }
 
 // delete an item based on the item id
@@ -254,10 +274,10 @@ function dialog_open(element_id) {
 		row_click();
 	}
 	if (element_id == "update_item_success_dialog") {
-		document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("fooditem_2").value;
+		document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("update_item_name").value;
 	}
 	if (element_id == "remove_item_success_dialog") {
-		document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("fooditem_2").value;
+		document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("remove_item_name").value;
 	}
 	if (element_id == "remove_item_dialog") {
 		row_click();
