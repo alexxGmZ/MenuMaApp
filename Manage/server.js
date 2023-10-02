@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.static("public"));
 
 // for adding inventory items to database
-app.post("/upload_item_image", upload.single("foodimg"), (req, res) => {
+app.post("/upload_item", upload.single("foodimg"), (req, res) => {
 	if (!req.file) {
 		return res.json({ success: false });
 	}
@@ -41,6 +41,11 @@ app.post("/upload_item_image", upload.single("foodimg"), (req, res) => {
 			// return res.json({ success: true });
 		}
 	);
+});
+
+// for updating inventory items to database
+app.post("/update_item", upload.single("image"), (req, res) => {
+
 });
 
 // practice shit

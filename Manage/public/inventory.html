@@ -114,13 +114,26 @@
 
 	<!--THE POPUP WINDOW FOR ITEM UPDATE -->
 	<dialog id="update_item_dialog" class="rounded-lg drop-shadow-lg w-4/12">
-		<input type="hidden" id="foodidfield_2" name="foodidfield" placeholder="Food ID"  /> <br>
+		<input type="hidden" id="update_item_id" name="foodidfield" placeholder="Food ID"  /> <br>
 		<h2 class="pb-3 text-center">Updating item....</h2>
-		<input type="text" id="fooditem_2" placeholder="Food Name" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
-		<textarea type="text" id="fooddesc_2" placeholder="Food Description" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea> <br>
+
+		<!-- preview current item name -->
+		<input type="text" id="update_item_name" placeholder="Food Name" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+
+		<!-- preview current item description -->
+		<textarea type="text" id="update_item_desc" placeholder="Food Description" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea> <br>
+
+		<!-- preview current item image -->
+		<center><img src="" id="update_image_preview"></center>
+
+		<!-- new image update button -->
 		<label for="img" class="ml-2">Select Food Image:</label>
-		<input type="file" id="foodimg_2" name="foodimg_2" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
-		<input type="text" id="foodprice_2" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<input type="file" id="update_new_image" name="update_new_image" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
+
+		<!-- preview current item price -->
+		<input type="text" id="update_item_price" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+
+		<!-- close and update button -->
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
 			<button onclick="dialog_close('update_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">Cancel update</button>
 			<button onclick="update_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" name="submit"> Update Item </button>
@@ -138,11 +151,11 @@
 	<!-- POPUP REMOVE DIALOG -->
 	<dialog id="remove_item_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
 		<p class="p-2">Are you sure you want to delete this item?</p>
-		<input type="hidden" id="show_id" name="show_id" placeholder="ID HERE">
-		<span class="float-left pl-12">Item name: <span id="show_name">Item Name Place Holder</span></span>
+		<input type="hidden" id="remove_item_id" name="remove_item_id" placeholder="ID HERE">
+		<span class="float-left pl-12">Item name: <span id="remove_item_name">Item Name Place Holder</span></span>
 		<br>
 
-		<span class="float-left pl-12 pt-2">Item description: <span id="show_desc">Item Description Place Holder</span></span>
+		<span class="float-left pl-12 pt-2">Item description: <span id="remove_item_desc">Item Description Place Holder</span></span>
 		<br>
 		<br>
 
@@ -150,13 +163,17 @@
 		<br>
 		<br>
 
-		<center><img src="" id="show_food"></center>
+		<center><img src="" id="remove_item_image"></center>
 
-		<span class="float-left pl-12 pt-2">Item price: <span id="show_price">Item Price Place Holder</span></span>
+		<span class="float-left pl-12 pt-2">Item price: <span id="remove_item_price">Item Price Place Holder</span></span>
 		<br>
 		<br>
 
-		<span class="float-left pl-12 pt-2">Item revenue: <span id="show_revenue">Item Revenue Place Holder</span></span>
+		<span class="float-left pl-12 pt-2">Quantity Sold: <span id="remove_item_quantity_sold">Item Price Place Holder</span></span>
+		<br>
+		<br>
+
+		<span class="float-left pl-12 pt-2">Item revenue: <span id="remove_item_revenue">Item Revenue Place Holder</span></span>
 		<br>
 		<br>
 

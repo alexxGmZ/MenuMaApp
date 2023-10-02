@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-	add_item();
+	// add_item();
 	display_menu_items();
 });
 
@@ -60,7 +60,7 @@ function display_menu_items() {
 // add new menu item
 function add_item() {
 	const food_form = document.getElementById("add_item_form");
-	fetch("http://localhost:8080/upload_item_image", {
+	fetch("http://localhost:8080/upload_item", {
 		method: "POST",
 		body: new FormData(food_form)
 	})
@@ -102,35 +102,40 @@ function row_click() {
 		var currentRow = table.rows[i];
 		var clickHandle = function(row) {
 			return function() {
-				var food_id = row.getElementsByTagName("td")[0];
-				var food_name = row.getElementsByTagName("td")[1];
-				var food_desc = row.getElementsByTagName("td")[2];
-				var food_img = row.getElementsByTagName("td")[3];
-				var food_price = row.getElementsByTagName("td")[4];
-				var food_revenue = row.getElementsByTagName("td")[5];
-				var id = food_id.innerHTML;
-				var name = food_name.innerHTML;
-				var desc = food_desc.innerHTML;
-				var img = food_img.innerHTML;
-				var price = food_price.innerHTML;
-				var revenue = food_revenue.innerHTML;
+				var item_id = row.getElementsByTagName("td")[0];
+				var item_name = row.getElementsByTagName("td")[1];
+				var item_desc = row.getElementsByTagName("td")[2];
+				var item_img = row.getElementsByTagName("td")[3];
+				var item_price = row.getElementsByTagName("td")[4];
+				var item_quantity_sold = row.getElementsByTagName("td")[5];
+				var item_revenue = row.getElementsByTagName("td")[6];
+
+				var id = item_id.innerHTML;
+				var name = item_name.innerHTML;
+				var desc = item_desc.innerHTML;
+				var img = item_img.innerHTML;
+				var price = item_price.innerHTML;
+				var quantity_sold = item_quantity_sold.innerHTML;
+				var revenue = item_revenue.innerHTML;
 
 				var imgElement = row.querySelector('img');
 				var imgSrc = imgElement.getAttribute('src');
 
-				//alert("id:" + id + " name: " + name + " desc: " + desc + " image: " + imgSrc+ " price: " + price);
+				// for item update
+				document.getElementById("update_item_id").value = id;
+				document.getElementById("update_item_name").value = name;
+				document.getElementById("update_item_desc").value = desc;
+				document.getElementById("update_image_preview").src = imgSrc;
+				document.getElementById("update_item_price").value = price;
 
-				document.getElementById("foodidfield_2").value = id;
-				document.getElementById("fooditem_2").value = name;
-				document.getElementById("fooddesc_2").value = desc;
-				document.getElementById("foodprice_2").value = price;
-				document.getElementById("show_id").value = id;
-				document.getElementById("show_name").innerHTML = name;
-				document.getElementById("show_desc").innerHTML = desc;
-				document.getElementById("show_food").src = imgSrc;
-				document.getElementById("show_price").innerHTML = price;
-				document.getElementById("show_revenue").innerHTML = revenue;
-
+				// used for item delete or remove
+				document.getElementById("remove_item_id").value = id;
+				document.getElementById("remove_item_name").innerHTML = name;
+				document.getElementById("remove_item_desc").innerHTML = desc;
+				document.getElementById("remove_item_image").src = imgSrc;
+				document.getElementById("remove_item_price").innerHTML = price;
+				document.getElementById("remove_item_quantity_sold").innerHTML = quantity_sold;
+				document.getElementById("remove_item_revenue").innerHTML = revenue;
 			};
 		};
 		currentRow.onclick = clickHandle(currentRow);
@@ -139,46 +144,38 @@ function row_click() {
 
 // update an existing menu item
 function update_item() {
-	// checks if the image input is empty
-	if (document.getElementById("foodimg_2").files.length == 0) {
-		dialog_open("error_dialog");
+	// values from row_click() function
+	var item_id = document.getElementById("update_item_id").value;
+	var item_name = document.getElementById("update_item_name").value;
+	var item_desc = document.getElementById("update_item_desc").value;
+	var item_img = document.getElementById("update_image_preview").src
+	var item_new_img = document.getElementById("update_new_image");
+	var item_price = document.getElementById("update_item_price").value;
+
+	// if the image input is empty use the current image
+	if (item_new_img.files.length > 0) {
+		// Use the selected file as the item_img
+		item_img = URL.createObjectURL(item_new_img.files[0]);
+		console.log("new image will be used");
 	}
-	else {
-		// VARIABLES FROM inventory.html
-		var foodid = document.getElementById("foodidfield_2").value;
-		var fooditem = document.getElementById("fooditem_2").value;
-		var fooddesc = document.getElementById("fooddesc_2").value;
-		var foodimg = document.getElementById("foodimg_2").value.split('fakepath\\');
-		var withimg = ("./foods/" + foodimg[1])
-		var foodprice = document.getElementById("foodprice_2").value;
 
-		// IMAGE HANDLING
-		var imgFileName = foodimg[1];
+	// console.log(item_id);
+	// console.log(item_name);
+	// console.log(item_desc);
+	// console.log(item_img);
+	// console.log(item_price);
 
-		const filePath = document.getElementById('foodimg_2').files[0].path;
-		console.log(filePath);
-		const filePathCopy = __dirname + '/foods/' + imgFileName;
+	const form_data = new FormData();
+	form_data.append("id", item_id);
+	form_data.append("name", item_name);
+	form_data.append("description", item_desc);
+	form_data.append("image", item_img);
+	form_data.append("price", item_price);
 
-		console.log(filePathCopy);
-
-		fs.copyFile(filePath, filePathCopy, (err) => {
-			if (err) throw err;
-
-			console.log('File Copy Successfully.');
-		})
-
-		// QUERY USED TO UPDATE
-		const query = `UPDATE menu_items SET item_name = "${fooditem}", item_desc = "${fooddesc}", item_image = "${withimg}", item_price = "${foodprice}" WHERE item_id = "${foodid}"`;
-		connection.query(query, function(error, results) {
-			if (error) {
-				console.log(error);
-				dialog_open("error_dialog");
-			}
-			else {
-				dialog_open("update_item_success_dialog");
-			}
-		});
-	}
+	// preview the contents for form_data
+	// for (const pair of form_data.entries()) {
+	// 	console.log(`${pair[0]}: ${pair[1]}`);
+	// }
 }
 
 // delete an item based on the item id
