@@ -12,18 +12,21 @@ function display_orders() {
 			data.forEach(orders => {
 
 				const food_items = orders.items_ordered.map((item) => {
-					return `${item.quantity} ${item.item_name}`;
+					return `${item.quantity} ${item.item_name}\n`;
 				})
 				console.log(food_items);
 
+				const removed_comma = food_items.join('');
+				console.log(removed_comma);
+
 				const markup = `
 					<td>
-						<table class="border-separate border-spacing-2 border border-slate-500 rounded-lg">
-						<td><h1 style="padding-top: 5px; padding-bottom: 5px;">Order #${orders.queue_number}</h1></td>
+						<table class="border-separate border-spacing-2 border border-slate-500 rounded-lg bg-amber-200 rounded-lg">
+						<td><center><h1 class="font-bold">Order #${orders.queue_number}</h1></center></td>
 						<tr>
 						<td>
 							<ul>
-								<li>${food_items}</li>
+								<li><textarea disabled class="h-48 pl-2 bg-white rounded-lg">${removed_comma}</textarea></li>
 							</ul>
 						</td>
 						</tr>
