@@ -50,14 +50,24 @@
 	<center><h1 class="font-extrabold">Order Queue Below</h1></center>
 
 	<!--SHOW FOOD QUEUE ORDERS-->
-	<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
-		<table class="border-separate border-spacing-2 border-slate-500 rounded-lg">
-			<tr id="order-list">
+	<div>
+		<table id="order_table" onclick="row_click()">
+			<tbody id="order-list">
 				<!-- call the display_orders() function -->
-			</tr>
+			</tbody>
 		</table>
 	</div>
 	<br><br>
 	<a href="./practice.html">Practice</a>
+
+	<!-- Cancel Order Dialog -->
+	<dialog id="cancel_order_dialog" class="rounded-lg drop-shadow-lg">
+		<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
+			
+		</div>
+		<p>TEST DIALOG TO SHOW</p>
+		<button onclick="dialog_close('cancel_order_dialog')"> CLOSE DIALOG</button>
+	</dialog>
+
 </body>
 </html>
