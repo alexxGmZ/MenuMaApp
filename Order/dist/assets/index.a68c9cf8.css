@@ -502,6 +502,9 @@ video {
 .block {
   display: block;
 }
+.table {
+  display: table;
+}
 .h-16 {
   height: 4rem;
 }

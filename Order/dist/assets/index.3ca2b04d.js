@@ -519,22 +519,35 @@ class CapacitorHttpPluginWeb extends WebPlugin {
 const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
-const server_url$1 = "http://192.168.254.115";
-const server_port$1 = 8080;
+const server_url = "http://192.168.254.115";
+const server_port = 8080;
 function get_request_menu_items() {
-  const json_container = document.getElementById("menu_items");
+  const table = document.getElementById("menu_items");
   CapacitorHttp.get(
     {
-      url: `${server_url$1}:${server_port$1}/menu_items`
+      url: `${server_url}:${server_port}/menu_items`
     }
   ).then((response) => {
     console.log("Response Status: " + response.status);
-    console.log(response.data);
-    json_container.textContent = response.data;
+    const data = response.data;
+    let placeholder = document.querySelector("#menu_items");
+    let out = "";
+    for (let row of data) {
+      console.log(row);
+      out += `
+				<tr class="">
+					<td class="">${row.item_name}</td>
+					<td class="">${row.item_desc}</td>
+					<td><img src="${row.item_image}" alt="Item Image"></td>
+					<td class="">${row.item_price}</td>
+				</tr>
+			`;
+    }
+    placeholder.innerHTML = out;
   }).catch((error, response) => {
     console.error(error);
-    json_container.textContent = `Failed to establishment connection to
-${server_url$1}`;
+    table.textContent = `Failed to establishment connection to
+${server_url}`;
   });
 }
 get_request_menu_items();
@@ -572,7 +585,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.655f8dfd.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.09004610.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
@@ -629,28 +642,4 @@ window.customElements.define(
     }
   }
 );
-const server_url = "http://192.168.254.115";
-const server_port = 8080;
-function get_request_shitty_images() {
-  const image_container = document.getElementById("shitty_images");
-  CapacitorHttp.get(
-    {
-      url: `${server_url}:${server_port}/shitty-images`
-    }
-  ).then((response) => {
-    console.log("Response Status: " + response.status);
-    console.log(response.data);
-    const imageDataUrls = response.data.images;
-    image_container.innerHTML = "";
-    for (const imageDataUrl of imageDataUrls) {
-      const img = document.createElement("img");
-      img.src = imageDataUrl;
-      img.alt = "Shitty Image";
-      image_container.appendChild(img);
-    }
-  }).catch((error, response) => {
-    console.error(error);
-  });
-}
-get_request_shitty_images();
 export { WebPlugin as W };

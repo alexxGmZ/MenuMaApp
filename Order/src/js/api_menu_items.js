@@ -4,7 +4,7 @@ const server_url = "http://192.168.254.115";
 const server_port = 8080;
 
 function get_request_menu_items() {
-	const json_container = document.getElementById("menu_items");
+	const table = document.getElementById("menu_items");
 
 	const request_promise = CapacitorHttp.get(
 		//options
@@ -13,14 +13,28 @@ function get_request_menu_items() {
 		}
 	).then(response => {
 		console.log("Response Status: " + response.status);
-		console.log(response.data);
+		const data = response.data;
+		// console.log(data);
 
-		// display data in the html page
-		// const display_data = JSON.stringify(response.data, null, 2)
-		json_container.textContent = response.data;
+		let placeholder = document.querySelector("#menu_items");
+		let out = ""
+
+		// iterate all data and display on a table
+		for (let row of data) {
+			// console.log(row);
+			out += `
+				<tr class="">
+					<td class="">${row.item_name}</td>
+					<td class="">${row.item_desc}</td>
+					<td><img src="${row.item_image}" alt="Item Image"></td>
+					<td class="">${row.item_price}</td>
+				</tr>
+			`;
+		}
+		placeholder.innerHTML = out;
 	}).catch((error, response) => {
 		console.error(error);
-		json_container.textContent = `Failed to establishment connection to\n${server_url}`;
+		table.textContent = `Failed to establishment connection to\n${server_url}`;
 	});
 }
 
