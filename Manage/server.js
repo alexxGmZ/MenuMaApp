@@ -20,6 +20,13 @@ const upload = multer({ storage: storage });
 app.use(cors());
 app.use(express.static("public"));
 
+// format get request message
+function request_message_format(request_protocol, api_endpoint, ip_requested) {
+	const currentDate = new Date();
+	const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
+}
+
 // for adding inventory items to database
 app.post("/upload_item", upload.single("foodimg"), (req, res) => {
 	if (!req.file) {
@@ -113,13 +120,6 @@ app.get("/shitty-images",
 	}
 );
 
-// format get request message
-function request_message_format(request_protocol, api_endpoint, ip_requested) {
-	const currentDate = new Date();
-	const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
-}
-
 // for the Order application to display menu items
 app.get("/menu_items",
 	// request (incoming data)
@@ -129,10 +129,15 @@ app.get("/menu_items",
 		connection.query(query, function(err, result) {
 			if (err) throw err;
 
-			request_message_format("GET", "menu_items", request.ip);
+			// Convert image data to base64-encoded strings
+			for (const row of result) {
+				if (row.item_image) {
+					row.item_image = `data:image/jpeg;base64,${row.item_image.toString("base64")}`;
+				}
+			}
 
-			result = JSON.stringify(result, null, 2);
-			response.status(200).send(result);
+			request_message_format("GET", "menu_items", request.ip);
+			response.status(200).json(result);
 		})
 	}
 );
@@ -190,4 +195,4 @@ app.get("/orders",
 app.listen(
 	PORT,
 	() => console.log(`API Port:${PORT}`)
-)
+);
