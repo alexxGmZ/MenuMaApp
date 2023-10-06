@@ -533,7 +533,6 @@ function get_request_menu_items() {
     let placeholder = document.querySelector("#menu_items");
     let out = "";
     for (let row of data) {
-      console.log(row);
       out += `
 				<tr class="">
 					<td class="">${row.item_name}</td>
@@ -585,7 +584,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.09004610.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.d41808f0.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
