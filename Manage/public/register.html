@@ -70,7 +70,7 @@
 	<!-- END OF MAIN -->
 
 	<!-- UPDATE MODAL -->
-	<dialog id="myModal" class="rounded-lg drop-shadow-lg w-6/12">
+	<dialog id="myModal" class="rounded-lg drop-shadow-lg mx-auto">
 		<label for="name">Name:</label>
 		<input type="text" name="name_2" id="name_2" class="w-full my-1.5 placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm""><br>
 			<div class="grid gap-4 grid-cols-3">
@@ -97,7 +97,7 @@
 	</dialog>
 
 	<!-- ADD NEW ITEMM MODAL -->
-	<dialog id="add_item_dialog" class="rounded-lg drop-shadow-lg w-4/12">
+	<dialog id="add_item_dialog" class="rounded-lg drop-shadow-lg mx-auto">
 		<p class="flex justify-center">Add new employee</p>
 		<input type="hidden" id="id" name="id" placeholder="Employee ID" /><br>
 
@@ -130,33 +130,33 @@
 	</dialog>
 
 	<!-- ADD EMPLOYEE SUCCESS -->
-	<dialog id="add_employee_successs_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+	<dialog id="add_employee_successs_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="add_employee_placeholder">EMPLOYEE NAME</span>
 		<span> is successfully added.</span><br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
 	<!-- ADD EMPLOYEE NAME BLANK ERROR -->
-	<dialog id="add_employee_name_error_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+	<dialog id="add_employee_name_error_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span> Name cant be blank!</span><br>
 		<button onclick="dialog_close('add_employee_name_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
 	<!-- ADD EMPLOYEE PASSWORD BLANK ERROR -->
-	<dialog id="add_employee_password_error_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+	<dialog id="add_employee_password_error_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span> Password cant be blank!</span><br>
 		<button onclick="dialog_close('add_employee_password_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
 	<!-- REMOMVE SUCCESS Modal -->
-	<dialog id="remove_employee_success_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+	<dialog id="remove_employee_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="removed_employee_placeholder">EMPLOYEE NAME</span>
 		<span> is successfully removed.</span><br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
 	<!-- UPDATE EMPLOYEE SUCCESS -->
-	<dialog id="update_employee_successs_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+	<dialog id="update_employee_successs_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="update_employee_placeholder">Employee NAME</span>
 		<span> is successfully updated.</span><br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>

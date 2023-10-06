@@ -82,7 +82,7 @@
 	<br>
 
 	<!-- ADD ITEM DIALOG -->
-	<dialog id="add_item_dialog" class="rounded-lg drop-shadow-lg w-4/12">
+	<dialog id="add_item_dialog" class="rounded-lg drop-shadow-lg mx-auto">
 		<form id="add_item_form">
 			<input type="hidden" id="foodidfield" name="foodidfield" placeholder="Food ID" /> <br>
 			<p class="pb-3 text-center">Adding item...</p>
@@ -98,19 +98,19 @@
 		</div>
 	</dialog>
 	<!-- ADD ITEM DIALOG CONFIRM -->
-	<dialog id="add_item_success_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+	<dialog id="add_item_success_dialog" class="rounded-lg drop-shadow-lg text-center mx-auto">
 		<span id="item_name_placeholder">Item Name Placeholder</span><span> is successfully added!</span> <br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 	<!-- ADD ITEM DIALOG ERROR -->
-	<dialog id="error_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+	<dialog id="error_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<p>There is an error on adding / updating an item!</p>
 		<p>Please check if the inputs are not empty, choose image is a must or the price input box must be number!</p> <br><br>
 		<button onclick="dialog_close('error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/6"> OK </button>
 	</dialog>
 
 	<!--THE POPUP WINDOW FOR ITEM UPDATE -->
-	<dialog id="update_item_dialog" class="rounded-lg drop-shadow-lg w-4/12">
+	<dialog id="update_item_dialog" class="rounded-lg drop-shadow-lg mx-auto">
 		<input type="hidden" id="update_item_id" name="foodidfield" placeholder="Food ID"  /> <br>
 		<h2 class="pb-3 text-center">Updating item....</h2>
 
@@ -137,7 +137,7 @@
 		</div>
 	</dialog>
 	<!-- UPDATE DIALOG SUCCESS MODAL -->
-	<dialog id="update_item_success_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+	<dialog id="update_item_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="updated_item_placeholder">Item Name</span>
 		<span> is successfully updated.</span><br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
@@ -146,7 +146,7 @@
 	<!-- add a dialog popup for item preview before deleting or removing -->
 
 	<!-- POPUP REMOVE DIALOG -->
-	<dialog id="remove_item_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+	<dialog id="remove_item_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<p class="p-2">Are you sure you want to delete this item?</p>
 		<input type="hidden" id="remove_item_id" name="remove_item_id" placeholder="ID HERE">
 		<span class="float-left pl-12">Item name: <span id="remove_item_name">Item Name Place Holder</span></span>
@@ -179,14 +179,14 @@
 	</dialog>
 
 	<!-- SUUCCESS REMOVE DIALOG -->
-	<dialog id="remove_item_success_dialog" class="rounded-lg drop-shadow-lg w-3/6 text-center">
+	<dialog id="remove_item_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="removed_item_placeholder">Item Name</span>
 		<span> is successfully removed.</span><br><br>
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
 	<!-- SEARCH ID DIALOG -->
-	<dialog id="search_item_dialog" class="rounded-lg drop-shadow-lg w-1/4 text-center">
+	<dialog id="search_item_dialog" class="rounded-lg drop-shadow-lg text-center mx-auto">
 		<span> Searching food... </span><br>
 		<input type="text" id="search_item_box" placeholder="Enter food id here" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
 		<button onclick="dialog_close('search_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg"> CANCEL </button>
@@ -194,7 +194,7 @@
 	</dialog>
 
 	<!-- SEARCH ID BLANK ERROR -->
-	<dialog id="search_item_error_dialog" class="rounded-lg drop-shadow-lg w-2/6 text-center">
+	<dialog id="search_item_error_dialog" class="rounded-lg drop-shadow-lg text-center mx-auto">
 		<span> Input cant be blank!</span><br>
 		<button onclick="dialog_close('search_item_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
