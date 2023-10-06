@@ -42,6 +42,58 @@ const p = function polyfill() {
 p();
 var style = "";
 var pull_to_refresh = "";
+const pullToRefresh = document.querySelector(".pull-to-refresh");
+let touchstartY = 0;
+document.addEventListener("touchstart", (e) => {
+  touchstartY = e.touches[0].clientY;
+});
+document.addEventListener("touchmove", (e) => {
+  const touchY = e.touches[0].clientY;
+  const touchDiff = touchY - touchstartY;
+  if (touchDiff > 0 && window.scrollY === 0) {
+    pullToRefresh.classList.add("visible");
+    e.preventDefault();
+  }
+});
+document.addEventListener("touchend", (e) => {
+  if (pullToRefresh.classList.contains("visible")) {
+    pullToRefresh.classList.remove("visible");
+    location.reload();
+  }
+});
+const scriptRel = "modulepreload";
+const seen = {};
+const base = "/";
+const __vitePreload = function preload(baseModule, deps) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  return Promise.all(deps.map((dep) => {
+    dep = `${base}${dep}`;
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
   const defaultPlatformMap = /* @__PURE__ */ new Map();
@@ -519,60 +571,8 @@ class CapacitorHttpPluginWeb extends WebPlugin {
 const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
-const server_url$1 = "http://192.168.254.115";
-const server_port$1 = 8080;
-function get_request_menu_items() {
-  const json_container = document.getElementById("menu_items");
-  CapacitorHttp.get(
-    {
-      url: `${server_url$1}:${server_port$1}/menu_items`
-    }
-  ).then((response) => {
-    console.log("Response Status: " + response.status);
-    console.log(response.data);
-    json_container.textContent = response.data;
-  }).catch((error, response) => {
-    console.error(error);
-    json_container.textContent = `Failed to establishment connection to
-${server_url$1}`;
-  });
-}
-get_request_menu_items();
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.655f8dfd.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.9e1e5c4b.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
@@ -586,71 +586,4 @@ const logCurrentNetworkStatus = async () => {
 Type: ${status.connectionType}`;
 };
 logCurrentNetworkStatus();
-const pullToRefresh = document.querySelector(".pull-to-refresh");
-let touchstartY = 0;
-document.addEventListener("touchstart", (e) => {
-  touchstartY = e.touches[0].clientY;
-});
-document.addEventListener("touchmove", (e) => {
-  const touchY = e.touches[0].clientY;
-  const touchDiff = touchY - touchstartY;
-  if (touchDiff > 0 && window.scrollY === 0) {
-    pullToRefresh.classList.add("visible");
-    e.preventDefault();
-  }
-});
-document.addEventListener("touchend", (e) => {
-  if (pullToRefresh.classList.contains("visible")) {
-    pullToRefresh.classList.remove("visible");
-    location.reload();
-  }
-});
-window.customElements.define(
-  "custom-navbar",
-  class extends HTMLElement {
-    constructor() {
-      super();
-      const root = this.attachShadow({ mode: "open" });
-      root.innerHTML = `
-				<style>
-					:host {
-						display: block;
-						background-color: #333;
-						color: white;
-						padding: 15px;
-					}
-				</style>
-				<div class="nav">
-					<div><slot name="start"></slot></div>
-					<div><slot name="title"></slot></div>
-					<div><slot name="end"></slot></div>
-				</div>
-			`;
-    }
-  }
-);
-const server_url = "http://192.168.254.115";
-const server_port = 8080;
-function get_request_shitty_images() {
-  const image_container = document.getElementById("shitty_images");
-  CapacitorHttp.get(
-    {
-      url: `${server_url}:${server_port}/shitty-images`
-    }
-  ).then((response) => {
-    console.log("Response Status: " + response.status);
-    console.log(response.data);
-    const imageDataUrls = response.data.images;
-    image_container.innerHTML = "";
-    for (const imageDataUrl of imageDataUrls) {
-      const img = document.createElement("img");
-      img.src = imageDataUrl;
-      img.alt = "Shitty Image";
-      image_container.appendChild(img);
-    }
-  }).catch((error, response) => {
-    console.error(error);
-  });
-}
-get_request_shitty_images();
-export { WebPlugin as W };
+export { CapacitorHttp as C, WebPlugin as W };
