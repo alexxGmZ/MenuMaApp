@@ -9,6 +9,7 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				index: "./src/index.html",
+				menu: "./src/menu_items.html",
 			}
 		}
 	},

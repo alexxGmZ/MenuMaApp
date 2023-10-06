@@ -499,9 +499,6 @@ video {
 .visible {
   visibility: visible;
 }
-.block {
-  display: block;
-}
 .table {
   display: table;
 }

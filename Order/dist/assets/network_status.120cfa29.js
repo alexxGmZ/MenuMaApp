@@ -42,6 +42,58 @@ const p = function polyfill() {
 p();
 var style = "";
 var pull_to_refresh = "";
+const pullToRefresh = document.querySelector(".pull-to-refresh");
+let touchstartY = 0;
+document.addEventListener("touchstart", (e) => {
+  touchstartY = e.touches[0].clientY;
+});
+document.addEventListener("touchmove", (e) => {
+  const touchY = e.touches[0].clientY;
+  const touchDiff = touchY - touchstartY;
+  if (touchDiff > 0 && window.scrollY === 0) {
+    pullToRefresh.classList.add("visible");
+    e.preventDefault();
+  }
+});
+document.addEventListener("touchend", (e) => {
+  if (pullToRefresh.classList.contains("visible")) {
+    pullToRefresh.classList.remove("visible");
+    location.reload();
+  }
+});
+const scriptRel = "modulepreload";
+const seen = {};
+const base = "/";
+const __vitePreload = function preload(baseModule, deps) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  return Promise.all(deps.map((dep) => {
+    dep = `${base}${dep}`;
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
   const defaultPlatformMap = /* @__PURE__ */ new Map();
@@ -519,72 +571,8 @@ class CapacitorHttpPluginWeb extends WebPlugin {
 const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
-const server_url = "http://192.168.254.115";
-const server_port = 8080;
-function get_request_menu_items() {
-  const table = document.getElementById("menu_items");
-  CapacitorHttp.get(
-    {
-      url: `${server_url}:${server_port}/menu_items`
-    }
-  ).then((response) => {
-    console.log("Response Status: " + response.status);
-    const data = response.data;
-    let placeholder = document.querySelector("#menu_items");
-    let out = "";
-    for (let row of data) {
-      out += `
-				<tr class="">
-					<td class="">${row.item_name}</td>
-					<td class="">${row.item_desc}</td>
-					<td><img src="${row.item_image}" alt="Item Image"></td>
-					<td class="">${row.item_price}</td>
-				</tr>
-			`;
-    }
-    placeholder.innerHTML = out;
-  }).catch((error, response) => {
-    console.error(error);
-    table.textContent = `Failed to establishment connection to
-${server_url}`;
-  });
-}
-get_request_menu_items();
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.d41808f0.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.9e1e5c4b.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
@@ -598,47 +586,4 @@ const logCurrentNetworkStatus = async () => {
 Type: ${status.connectionType}`;
 };
 logCurrentNetworkStatus();
-const pullToRefresh = document.querySelector(".pull-to-refresh");
-let touchstartY = 0;
-document.addEventListener("touchstart", (e) => {
-  touchstartY = e.touches[0].clientY;
-});
-document.addEventListener("touchmove", (e) => {
-  const touchY = e.touches[0].clientY;
-  const touchDiff = touchY - touchstartY;
-  if (touchDiff > 0 && window.scrollY === 0) {
-    pullToRefresh.classList.add("visible");
-    e.preventDefault();
-  }
-});
-document.addEventListener("touchend", (e) => {
-  if (pullToRefresh.classList.contains("visible")) {
-    pullToRefresh.classList.remove("visible");
-    location.reload();
-  }
-});
-window.customElements.define(
-  "custom-navbar",
-  class extends HTMLElement {
-    constructor() {
-      super();
-      const root = this.attachShadow({ mode: "open" });
-      root.innerHTML = `
-				<style>
-					:host {
-						display: block;
-						background-color: #333;
-						color: white;
-						padding: 15px;
-					}
-				</style>
-				<div class="nav">
-					<div><slot name="start"></slot></div>
-					<div><slot name="title"></slot></div>
-					<div><slot name="end"></slot></div>
-				</div>
-			`;
-    }
-  }
-);
-export { WebPlugin as W };
+export { CapacitorHttp as C, WebPlugin as W };
