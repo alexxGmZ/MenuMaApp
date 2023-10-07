@@ -27,16 +27,16 @@ function display_orders() {
 						<td class="text-center">${orders.total_price}</td>
 						<td>
 							<center>
-							<button onclick="location.reload()" class="font-bold rounded-full bg-green-500 mt-2 py-2 px-2 hover:text-zinc-50 hover:drop-shadow-lg w-3/4 flex items-center justify-center">
-								<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
-								<span class="mx-2"> DONE </span>
-							</button>
+								<button onclick="location.reload()" class="font-bold rounded-full bg-green-500 mt-2 py-2 px-2 hover:text-zinc-50 hover:drop-shadow-lg w-3/4 flex items-center justify-center">
+									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
+									<span class="mx-2"> DONE </span>
+								</button>
 							</center>
 							<center>
-							<button onclick="dialog_open('cancel_order_dialog')" class="font-bold rounded-full bg-red-500 mt-2 py-2 px-2 hover:text-zinc-50 hover:drop-shadow-lg w-3/4 flex items-center justify-center">
-								<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
-								<span class="mx-2"> CANCEL </span>
-							</button>
+								<button onclick="dialog_open('cancel_order_dialog')" class="font-bold rounded-full bg-red-500 mt-2 py-2 px-2 hover:text-zinc-50 hover:drop-shadow-lg w-3/4 flex items-center justify-center">
+									<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
+									<span class="mx-2"> CANCEL </span>
+								</button>
 							</center>
 						</td>
 					</tr>
@@ -53,7 +53,7 @@ function row_click() {
 	var table = document.getElementById("order_table");
 	var rows = table.getElementsByTagName("tr");
 
-	for(let i = 0; i < rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var currentRow = table.rows[i];
 		var clickHandle = function(row) {
 			return function() {
@@ -80,7 +80,7 @@ function row_click() {
 function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id);
 
-	
+
 
 	fav_dialog.showModal();
 }
