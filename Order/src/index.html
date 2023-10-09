@@ -17,13 +17,8 @@
 </head>
 
 <body>
-	<!-- uses the pull_to_refresh script	 -->
-	<div class="pull-to-refresh">
-		<img class="animate-spin h-16 w-16" src="./assets/svg/spinner-loading-dots-svgrepo-com.svg" alt="">
-	</div>
-
 	<nav>
-		<h1 class="text-center text-xl">Navbar (Establishment Name Here)</h1>
+		<h1 class="text-center text-xl">MenuMaApp Order</h1>
 	</nav>
 
 	<h1 class="font-bold underline">Connection</h1>
@@ -33,14 +28,18 @@
 
 	<div>
 		<h1 class="font-bold underline">Server LAN IP:</h1>
-		<input type="text" id="server_ip">
-		<a href="./menu_items.html">Connect</a>
+		<input type="text" id="server_ip" class="">
+		<button id="connect_button">Connect</button>
 	</div>
+
+	<dialog id="connection_failed_dialog">
+		<h1>Connection Failed HEEHEE</h1>
+		<button id="connection_failed_dialog_cancel">CANCEL</button>
+	</dialog>
 
 	<br>
 
 	<script src="./js/global.js" type="module"></script>
-	<script src="./js/pull_to_refresh.js" type="module"></script>
 	<script src="./js/network_status.js" type="module"></script>
 </body>
 
