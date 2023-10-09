@@ -50,23 +50,57 @@
 	<center><h1 class="font-extrabold">Order Queue Below</h1></center>
 
 	<!--SHOW FOOD QUEUE ORDERS-->
-	<div>
-		<table id="order_table" onclick="row_click()">
-			<tbody id="order-list">
+	<div class="pt-4">
+		<table id="order_table" class="justify-center mx-auto table-fixed md:table-fixed" onclick="row_click()">
+			<tbody id="order-list" class="grid grid-cols-2 gap-4 place-content-center">
+				
 				<!-- call the display_orders() function -->
+				
 			</tbody>
 		</table>
 	</div>
+
 	<br><br>
+
 	<a href="./practice.html">Practice</a>
 
 	<!-- Cancel Order Dialog -->
-	<dialog id="cancel_order_dialog" class="rounded-lg drop-shadow-lg">
-		<div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap; margin: 10px 10px; padding: 10px;">
-			
+	<dialog id="cancel_order_dialog" class="rounded-lg drop-shadow-lg bg-red-200 mx-auto">
+		<div class="grid grid-cols-2 gap-4 place-content-center">
+			<div>
+				<p class="text-center">You are about to cancel a order!</p>
+				<p class="pb-1">Oder info below:</p>
+
+				<p class="text-center font-bold">Order #</p>
+				<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
+				
+				<p class="text-center font-bold">Food ordered</p>
+				<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md h-24" disabled></textarea>
+
+				<p class="text-center font-bold">Customer name</p>
+				<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel" placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
+
+				<p class="text-center font-bold">Total Price</p>
+				<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
+			</div>
+			<div class="grid place-items-center">
+				<div>
+					<p class="text-center pb-3">Proceed anyways?</p>
+					<center>
+						<button onclick="dialog_close('cancel_order_dialog')" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+							<span class="mx-2"> NO </span>
+						</button>
+					</center>
+					<center>
+						<button onclick="" class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-red-500 bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+							<span class="mx-2"> YES </span>
+							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+						</button>
+					</center>
+				</div>
+			</div>
 		</div>
-		<p>TEST DIALOG TO SHOW</p>
-		<button onclick="dialog_close('cancel_order_dialog')"> CLOSE DIALOG</button>
 	</dialog>
 
 </body>

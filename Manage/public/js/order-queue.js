@@ -17,23 +17,23 @@ function display_orders() {
 				console.log(food_items);
 
 				const removed_comma = food_items.join('');
-				console.log(removed_comma);
+				//console.log(removed_comma);
 
 				const markup = `
-					<tr class="bg-amber-200 border-b dark:border-gray-700 hover:bg-gray-300">
-						<td class="text-center">${orders.queue_number}</td>
-						<td class="text-center bg-slate-50 rounded-lg">${removed_comma}</td>
-						<td class="text-center">${orders.customer_name}</td>
-						<td class="text-center">${orders.total_price}</td>
-						<td>
+					<tr class="bg-sky-300 rounded-lg border-b dark:border-gray-700 py-3">
+						<td class="text-center px-7 font-bold">${orders.queue_number}</td>
+						<td class="text-center bg-slate-50 rounded-lg px-3 whitespace-pre w-32">${removed_comma}</td>
+						<td class="text-center px-2">${orders.customer_name}</td>
+						<td class="text-center">₱${orders.total_price}</td>
+						<td class="px-3">
 							<center>
-								<button onclick="location.reload()" class="font-bold rounded-full bg-green-500 mt-2 py-2 px-2 hover:text-zinc-50 hover:drop-shadow-lg w-3/4 flex items-center justify-center">
+								<button onclick="location.reload()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
 									<span class="mx-2"> DONE </span>
 								</button>
 							</center>
 							<center>
-								<button onclick="dialog_open('cancel_order_dialog')" class="font-bold rounded-full bg-red-500 mt-2 py-2 px-2 hover:text-zinc-50 hover:drop-shadow-lg w-3/4 flex items-center justify-center">
+								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 									<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
 									<span class="mx-2"> CANCEL </span>
 								</button>
@@ -70,11 +70,18 @@ function row_click() {
 				var total_price = ordered_total_price.innerHTML;
 
 				console.log(order + " " + items + " " + customers + " " + total_price);
+
+				//for cancel item
+				document.getElementById("order_num_cancel").value = order;
+				document.getElementById("order_foods_cancel").value = items;
+				document.getElementById("order_customer_name_cancel").value = customers;
+				document.getElementById("order_price_cancel").value = total_price;
 			};
 		};
 		currentRow.onclick = clickHandle(currentRow);
 	}
 }
+
 
 // Open Dialog
 function dialog_open(element_id) {
