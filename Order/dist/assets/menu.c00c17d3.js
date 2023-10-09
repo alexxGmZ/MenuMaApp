@@ -1,4 +1,4 @@
-import { C as CapacitorHttp } from "./network_status.120cfa29.js";
+import { C as CapacitorHttp } from "./network_status.c934821c.js";
 const server_url = "http://192.168.254.115";
 const server_port = 8080;
 let menu_items_data = [];
@@ -38,4 +38,23 @@ get_request_menu_items().then(() => {
   display_menu_items();
 }).catch((error) => {
   console.log(error);
+});
+const pullToRefresh = document.querySelector(".pull-to-refresh");
+let touchstartY = 0;
+document.addEventListener("touchstart", (e) => {
+  touchstartY = e.touches[0].clientY;
+});
+document.addEventListener("touchmove", (e) => {
+  const touchY = e.touches[0].clientY;
+  const touchDiff = touchY - touchstartY;
+  if (touchDiff > 0 && window.scrollY === 0) {
+    pullToRefresh.classList.add("visible");
+    e.preventDefault();
+  }
+});
+document.addEventListener("touchend", (e) => {
+  if (pullToRefresh.classList.contains("visible")) {
+    pullToRefresh.classList.remove("visible");
+    location.reload();
+  }
 });

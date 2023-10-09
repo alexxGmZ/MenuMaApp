@@ -20,12 +20,23 @@ const upload = multer({ storage: storage });
 app.use(cors());
 app.use(express.static("public"));
 
+const os = require("os");
+
 // format get request message
 function request_message_format(request_protocol, api_endpoint, ip_requested) {
 	const currentDate = new Date();
 	const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
 	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
 }
+
+app.get("/", (request, response) => {
+	const server_ip = Object.values(os.networkInterfaces())
+		.flat()
+		.filter((iface) => iface.family === 'IPv4' && !iface.internal)
+		.map((iface) => iface.address)[0];
+	response.send(`Connected To MenuMaApp Manage Server: ${server_ip}`);
+	request_message_format("GET", "/", request.ip);
+});
 
 // for adding inventory items to database
 app.post("/upload_item", upload.single("foodimg"), (req, res) => {

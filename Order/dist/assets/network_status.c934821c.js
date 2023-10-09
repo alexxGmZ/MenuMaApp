@@ -42,25 +42,6 @@ const p = function polyfill() {
 p();
 var style = "";
 var pull_to_refresh = "";
-const pullToRefresh = document.querySelector(".pull-to-refresh");
-let touchstartY = 0;
-document.addEventListener("touchstart", (e) => {
-  touchstartY = e.touches[0].clientY;
-});
-document.addEventListener("touchmove", (e) => {
-  const touchY = e.touches[0].clientY;
-  const touchDiff = touchY - touchstartY;
-  if (touchDiff > 0 && window.scrollY === 0) {
-    pullToRefresh.classList.add("visible");
-    e.preventDefault();
-  }
-});
-document.addEventListener("touchend", (e) => {
-  if (pullToRefresh.classList.contains("visible")) {
-    pullToRefresh.classList.remove("visible");
-    location.reload();
-  }
-});
 const scriptRel = "modulepreload";
 const seen = {};
 const base = "/";
@@ -572,7 +553,7 @@ const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.9e1e5c4b.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.ee616cb2.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);

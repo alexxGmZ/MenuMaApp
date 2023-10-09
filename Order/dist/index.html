@@ -8,24 +8,20 @@
 		content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="msapplication-tap-highlight" content="no" />
-
+	<meta name="theme-color" content="#31d53d" />
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.155239cf.ico" />
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
+
 	
 	
-	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/network_status.120cfa29.js"></script>
+  <script type="module" crossorigin src="/assets/index.c0202880.js"></script>
+  <link rel="modulepreload" href="/assets/network_status.c934821c.js">
   <link rel="stylesheet" href="/assets/network_status.c924ec1c.css">
 </head>
 
 <body>
-	<!-- uses the pull_to_refresh script	 -->
-	<div class="pull-to-refresh">
-		<img class="animate-spin h-16 w-16" src="/assets/spinner-loading-dots-svgrepo-com.a60c90df.svg" alt="">
-	</div>
-
 	<nav>
-		<h1 class="text-center text-xl">Navbar (Establishment Name Here)</h1>
+		<h1 class="text-center text-xl">MenuMaApp Order</h1>
 	</nav>
 
 	<h1 class="font-bold underline">Connection</h1>
@@ -33,13 +29,19 @@
 
 	<br>
 
-	<h1 class="font-bold underline">Server LAN IP:</h1>
-	<input type="text" id="server_ip">
-	<a href="./menu_items.html">Connect</a>
+	<div>
+		<h1 class="font-bold underline">Server LAN IP:</h1>
+		<input type="text" id="server_ip" class="">
+		<button id="connect_button">Connect</button>
+	</div>
+
+	<dialog id="connection_failed_dialog">
+		<h1>Connection Failed HEEHEE</h1>
+		<button id="connection_failed_dialog_cancel">CANCEL</button>
+	</dialog>
 
 	<br>
 
-	
 	
 	
 </body>
