@@ -96,7 +96,7 @@ const createCapacitorPlatforms = (win) => {
   return capPlatforms;
 };
 const initPlatforms = (win) => win.CapacitorPlatforms = createCapacitorPlatforms(win);
-const CapacitorPlatforms = /* @__PURE__ */ initPlatforms(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
+const CapacitorPlatforms = /* @__PURE__ */ initPlatforms(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof {} !== "undefined" ? {} : {});
 CapacitorPlatforms.addPlatform;
 CapacitorPlatforms.setPlatform;
 var ExceptionCode;
@@ -280,7 +280,7 @@ const createCapacitor = (win) => {
   return cap;
 };
 const initCapacitorGlobal = (win) => win.Capacitor = createCapacitor(win);
-const Capacitor = /* @__PURE__ */ initCapacitorGlobal(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
+const Capacitor = /* @__PURE__ */ initCapacitorGlobal(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof {} !== "undefined" ? {} : {});
 const registerPlugin = Capacitor.registerPlugin;
 Capacitor.Plugins;
 class WebPlugin {
@@ -553,7 +553,7 @@ const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.ee616cb2.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.9b90e294.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);

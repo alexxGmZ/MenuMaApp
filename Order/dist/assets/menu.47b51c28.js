@@ -1,5 +1,6 @@
-import { C as CapacitorHttp } from "./network_status.c934821c.js";
-const server_url = "http://192.168.254.115";
+import { C as CapacitorHttp } from "./network_status.8a4c6ee1.js";
+console.log("Server IP: ", sessionStorage.getItem("server_IP"));
+const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_port = 8080;
 let menu_items_data = [];
 function get_request_menu_items() {

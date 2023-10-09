@@ -1,6 +1,8 @@
 import { CapacitorHttp } from '@capacitor/core';
+console.log("Server IP: ", sessionStorage.getItem("server_IP"));
 
-const server_url = "http://192.168.254.115";
+// const server_url = "http://192.168.254.115";
+const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_port = 8080;
 let menu_items_data = [];
 
