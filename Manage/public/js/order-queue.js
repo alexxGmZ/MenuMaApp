@@ -48,6 +48,46 @@ function display_orders() {
 							</center>
 						</td>
 					</tr>
+					<tr class="bg-sky-300 rounded-lg border-b dark:border-gray-700 py-3">
+						<td class="text-center px-7 font-bold">${orders.queue_number}</td>
+						<td class="text-center bg-slate-50 rounded-lg px-3 whitespace-pre w-32">${removed_comma}</td>
+						<td class="text-center px-2">${orders.customer_name}</td>
+						<td class="text-center">₱${orders.total_price}</td>
+						<td class="px-3">
+							<center>
+								<button onclick="location.reload()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
+									<span class="mx-2"> DONE </span>
+								</button>
+							</center>
+							<center>
+								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+									<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
+									<span class="mx-2"> CANCEL </span>
+								</button>
+							</center>
+						</td>
+					</tr>
+					<tr class="bg-sky-300 rounded-lg border-b dark:border-gray-700 py-3">
+						<td class="text-center px-7 font-bold">${orders.queue_number}</td>
+						<td class="text-center bg-slate-50 rounded-lg px-3 whitespace-pre w-32">${removed_comma}</td>
+						<td class="text-center px-2">${orders.customer_name}</td>
+						<td class="text-center">₱${orders.total_price}</td>
+						<td class="px-3">
+							<center>
+								<button onclick="location.reload()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
+									<span class="mx-2"> DONE </span>
+								</button>
+							</center>
+							<center>
+								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+									<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
+									<span class="mx-2"> CANCEL </span>
+								</button>
+							</center>
+						</td>
+					</tr>
 				`;
 				document.querySelector("#order-list").insertAdjacentHTML('beforeend', markup);
 			})
