@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	display_orders();
 });
 
+// call mysql database module
+const mysql = require(__dirname + "/js/modules/mysql.js");
+// create database connection
+const connection = mysql.connection;
+// check database connection
+mysql.check_connection();
+
 function display_orders() {
 	fetch('http://localhost:8080/orders')
 		.then(res => {
@@ -14,6 +21,7 @@ function display_orders() {
 				const food_items = orders.items_ordered.map((item) => {
 					return `${item.quantity} ${item.item_name}\n`;
 				})
+
 				console.log(food_items);
 
 				const removed_comma = food_items.join('');
@@ -87,7 +95,10 @@ function row_click() {
 function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id);
 
-
+	// any element id specific statements
+	if(element_id == "cancel_order_success_dialog") {
+		document.getElementById("cancel_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
+	}
 
 	fav_dialog.showModal();
 }
@@ -103,5 +114,29 @@ function order_done() {
 }
 
 function order_cancel() {
+// START SA ITEMS ORDERED BAGO ORDER QUEUE ang pag DELETE
+
+	var queue_num = document.getElementById("order_num_cancel").value;
+	console.log("Order Number:" + queue_num);
+
+	const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${queue_num}"`;
+	const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${queue_num}"`;
+
+	connection.query(items_ordered_query, error => {
+		if (error) {
+			console.log(error);
+		} else {
+			console.log("Removed Success from items_ordered");
+
+			connection.query(ordered_num_query, error => {
+				if(error) {
+					console.log(error);
+				} else {
+					console.log("Removed success from order_queue")
+					dialog_open('cancel_order_success_dialog');
+				}
+			});
+		}
+	});
 
 }
