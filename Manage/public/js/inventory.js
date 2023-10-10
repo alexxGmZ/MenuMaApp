@@ -35,7 +35,7 @@ function display_menu_items() {
 						<td><img src="${image_src}" alt="Foods Image"></td>
 						<td class="text-center">${row.item_price}</td>
 						<td class="text-center">${row.quantity_sold}</td>
-						<td class="text-center">${row.revenue_generated}</td>
+						<td class="text-center">₱${row.revenue_generated}</td>
 						<td>
 							<span class="action-btn">
 							<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
@@ -197,7 +197,7 @@ function update_item() {
 
 // delete an item based on the item id
 function delete_item() {
-	var id = document.getElementById("show_id").value;
+	var id = document.getElementById("remove_item_id").value;
 
 	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
 	connection.query(query, error => {
@@ -271,7 +271,7 @@ function dialog_open(element_id) {
 		document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("update_item_name").value;
 	}
 	if (element_id == "remove_item_success_dialog") {
-		document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("remove_item_name").value;
+		document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("remove_item_name").innerHTML;
 	}
 	if (element_id == "remove_item_dialog") {
 		row_click();
