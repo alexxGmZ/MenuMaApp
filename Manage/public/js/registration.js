@@ -245,17 +245,6 @@ function delete_employee() {
 }
 // END OF UPDATE EMPLOYEE FUNCTION //
 
-function showDialog() {
-	const favDialog = document.getElementById("myModal");
-	rowClick();
-	favDialog.showModal();
-}
-
-function closeModal() {
-	const favDialog = document.getElementById("myModal");
-	favDialog.close();
-}
-
 // open modal dialog based on element id
 function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id)
