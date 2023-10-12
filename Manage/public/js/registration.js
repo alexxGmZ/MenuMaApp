@@ -11,8 +11,8 @@ const crypto = require("crypto");
 //
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js");
-// create database connection
 
+// create database connection
 const connection = mysql.connection;
 
 // check database connection
