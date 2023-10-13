@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-	// add_item();
 	display_menu_items();
 });
 

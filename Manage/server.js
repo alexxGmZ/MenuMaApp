@@ -203,6 +203,12 @@ app.get("/orders",
 	}
 );
 
+app.get("/designer",
+	(request, response) => {
+
+	}
+);
+
 app.listen(
 	PORT,
 	() => console.log(`API Port:${PORT}`)

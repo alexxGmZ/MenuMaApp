@@ -26,56 +26,98 @@
 
 <body class="">
 	<!-- top navbar	 -->
-	<div id="top_navbar" class="border border-black grid grid-rows-1 grid-flow-col grid-cols-2 gap-2 p-2">
-		<div class="border border-black justify-start">
-			<a href="#">Create</a>
-			<a href="#">Open</a>
-			<a href="#">Save</a>
-			<a href="#">Import</a>
 
-			<a href="#">Undo</a>
-			<a href="#">Redo</a>
-			<a href="#">Copy</a>
-			<a href="#">Cut</a>
-			<a href="#">Paste</a>
+	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+		<div class="px-3 py-3 lg:px-5 lg:pl-3">
+			<div class="flex items-center justify-between">
+				<a href="#">Create</a>
+				<a href="#">Open</a>
+				<a href="#">Save</a>
+				<a href="#">Import</a>
+
+				<a href="#">Undo</a>
+				<a href="#">Redo</a>
+				<a href="#">Copy</a>
+				<a href="#">Cut</a>
+				<a href="#">Paste</a>
+
+				<a href="#">Preview: PC</a>
+				<a href="#">Preview: Mobile</a>
+				<a href="#">Preview: Tablet</a>
+
+				<a href="inventory.html">Inventory</a>
+				<a href="main.html">Order Queue</a>
+			</div>
 		</div>
+	</nav>
 
-		<div class="border border-black justify-end">
-			<a href="#">Preview: PC</a>
-			<a href="#">Preview: Mobile</a>
-			<a href="#">Preview: Tablet</a>
-
-			<a href="inventory.html">Inventory</a>
-			<a href="main.html">Order Queue</a>
+	<aside id="left_sidebar"
+		class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+		aria-label="Sidebar">
+		<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+			<ul class="space-y-2 font-medium">
+				<li>
+					<a href="#"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="ml-3">Presets</span>
+					</a>
+				</li>
+				<li>
+					<button onclick="sidebar_generate_rectangle()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Rectangle</span>
+					</button>
+				</li>
+				<li>
+					<button onclick="sidebar_generate_circle()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Circle</span>
+					</button>
+				</li>
+				<li>
+					<a href="#"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Text</span>
+					</a>
+				</li>
+				<li>
+					<a href="#"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Line</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.youtube.com"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Tutorial</span>
+					</a>
+				</li>
+				<li>
+					<a href="#"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Menu Items Cards</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.youtube.com"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Color Picker</span>
+					</a>
+				</li>
+			</ul>
 		</div>
-	</div>
+	</aside>
 
-	<div id="left_sidebar" class="float-left bg-red-300 h-screen p-1">
-		<ul class="py-4">
-			<li>Presets</li>
-			<li>Box</li>
-			<li>Circle</li>
-			<li>Text</li>
-			<li>Line</li>
-		</ul>
-	</div>
-
-	<!-- right sidebar -->
-	<div id="right_sidebar" class="float-right bg-red-300 h-screen p-1">
-		<ul class="py-4">
-			<li>menu item cards</li>
-			<li>color picker</li>
-		</ul>
-	</div>
-
-	<div id="canvas">
-		<h1>This is the canvas area</h1>
+	<div class="p-4 sm:ml-64">
+		<canvas id="canvas_area" class="border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-14 sm:order-1 sm:ml-0 sm:mr-4">
+		</canvas>
 	</div>
 
 	<!-- statusline -->
-	<!-- <nav class="">
-		<p>Bottom navbar</p>
-	</nav> -->
+	<!-- <div class="fixed bottom-0 left-0 z-50 w-full h-7 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+		<h1>Statusline</h1>
+	</div> -->
+
 </body>
 
 </html>
