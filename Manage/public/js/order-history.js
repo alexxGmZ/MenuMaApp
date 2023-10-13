@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	// put something if needed
+	display_order_history();
 });
 
 // call mysql database module
@@ -9,7 +10,99 @@ const connection = mysql.connection;
 // check database connection
 mysql.check_connection();
 
+// SHOW ITEMS ORDERED HISTORY
+function display_order_history() {
+	connection.connect(function(err) {
+		if (err) throw err;
 
+		//const queries
+		const items_ordered_history_query = `SELECT * FROM manage_db.items_ordered_history`;
+		const ordered_queue_history_query = `SELECT * FROM manage_db.order_queue_history`;
+
+		//get all history from table "items_ordered_history"
+		connection.query(items_ordered_history_query, function(err, items_history_result) {
+			if (err) throw err;
+			
+			// get all history from table "ordered_queue_history"
+			connection.query(ordered_queue_history_query, function(err, orders_history_result) {
+				if (err) throw err;
+
+				// Combined Result
+				const combined = {
+					items_history: items_history_result,
+					order_history: orders_history_result
+				};
+
+				console.log(combined);
+
+				//Organized Data
+				const nestedData = orders_history_result.map(order => {
+					const matchedItems = items_history_result.filter(item => item.order_id === order.order_id)
+
+					return {
+						...order,
+						items_ordered: matchedItems
+					};
+				});
+
+				console.log(nestedData);
+				
+				// For each loop
+				nestedData.forEach(order_history => {
+
+					const food_items = order_history.items_ordered.map((item) => {
+						return `${item.quantity} ${item.item_name}\n`;
+					})
+					const removed_comma = food_items.join('');
+
+					// console.log("Order Number: " + order_history.queue_number);
+					// console.log("Items Ordered: " + removed_comma);
+					// console.log("Customer Name: " + order_history.customer_name);
+					// console.log("Total Price: ₱" + order_history.total_price);
+					// console.log("Transaction Date: " + order_history.transaction_date);
+					// console.log("Status: " + order_history.order_status);
+
+					var originalDatFormat = order_history.transaction_date;
+					var dateObject = new Date(originalDatFormat);
+
+					var options = { year: 'numeric', month: 'long', day: 'numeric' };
+					var formattedDate = dateObject.toLocaleDateString('en-US', options);
+
+					const markup =`
+						<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
+							<td class="text-center">Order #${order_history.queue_number}</td>
+							<td class="text-center">${order_history.customer_name}</td>
+							<td class="text-center whitespace-pre py-3">${removed_comma}</td>
+							<td class="text-center">₱${order_history.total_price}</td>
+							<td class="text-center">${formattedDate}</td>
+							<td class="text-center">${order_history.order_status}</td>
+							<td>
+								<span class="action-btn">
+									<center><button onclick="" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
+										<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
+									</button></center>
+								</span>
+							</td>
+						</tr>
+					`;
+					document.querySelector("#order_history_list").insertAdjacentHTML('beforeend', markup);
+
+				})
+				
+
+				// for(let row of orders_history_result) {
+
+				// 	console.log("Order Number: " + row.queue_number);
+				// 	// console.log("Items Ordered: " + nestedData);
+				// 	console.log("Customer Name: " + row.customer_name);
+				// }
+
+			})
+
+		});
+		
+	})
+}
 
 // open modal dialog based on element id
 function dialog_open(element_id) {

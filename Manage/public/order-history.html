@@ -16,6 +16,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./styles/styles.css" rel="stylesheet">
+    <script src="./js/order-history.js"></script>
 </head>
 
 <body class="px-3 py-3">
@@ -37,11 +38,26 @@
 	<br>
 	<br>
 
-    <center><h1 class="font-extrabold">SHOWING ORDER HISTORY</h1></center>
+    <center><h1 class="font-extrabold pb-3">SHOWING ORDER HISTORY</h1></center>
 
     <!--ORDER HISTORY TABLE-->
     <div>
-        
+        <table id="order_history_table" onclick="" class="w-full justify-center mx-auto table-fixed md:table-fixed">
+            <thead class="ttext-zinc-950 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
+				<tr>
+					<th>Queue Order#</th>
+					<th>Customer Name</th>
+					<th>Items Ordered</th>
+					<th>Total Price</th>
+					<th>Transaction Date</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+            <tbody id="order_history_list">
+                <!--OUTPUT OF HISTORY from order-history.js-->
+            </tbody>
+        </table>
     </div>
 
 </body>
