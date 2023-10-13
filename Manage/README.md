@@ -174,8 +174,8 @@ CREATE TABLE order_queue_history(
    customer_name TEXT,
    total_price FLOAT DEFAULT 0,
    kiosk_ip_address VARCHAR(30) NOT NULL,
-   PRIMARY KEY(order_queue_history_id),
-   order_status TEXT
+   order_status TEXT,
+   PRIMARY KEY(order_queue_history_id)
 );
 
 CREATE TABLE order_stats(
@@ -196,8 +196,8 @@ CREATE TABLE items_ordered_history(
    item_price FLOAT NOT NULL,
    quantity INT DEFAULT 0,
    quantity_times_price FLOAT DEFAULT 0,
-   PRIMARY KEY(items_ordered_history_id),
-   queue_number INT DEFAULT NULL
+   queue_number INT DEFAULT NULL,
+   PRIMARY KEY(items_ordered_history_id)
 );
 ```
 
