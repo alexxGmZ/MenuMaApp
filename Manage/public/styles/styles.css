@@ -546,12 +546,21 @@ video {
   z-index: 20;
 }
 
+<<<<<<< HEAD
 .z-40 {
   z-index: 40;
 }
 
 .z-50 {
   z-index: 50;
+=======
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+.float-right {
+  float: right;
+>>>>>>> kennethseva-patch-1
 }
 
 .float-left {
@@ -561,6 +570,11 @@ video {
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .mx-auto {
@@ -611,6 +625,10 @@ video {
   margin-top: 1rem;
 }
 
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -651,6 +669,7 @@ video {
   height: 6rem;
 }
 
+<<<<<<< HEAD
 .h-28 {
   height: 7rem;
 }
@@ -661,6 +680,10 @@ video {
 
 .h-3\.5 {
   height: 0.875rem;
+=======
+.h-32 {
+  height: 8rem;
+>>>>>>> kennethseva-patch-1
 }
 
 .h-4 {
@@ -719,8 +742,13 @@ video {
   width: 1.5rem;
 }
 
+<<<<<<< HEAD
 .w-64 {
   width: 16rem;
+=======
+.w-auto {
+  width: auto;
+>>>>>>> kennethseva-patch-1
 }
 
 .w-full {
@@ -772,6 +800,10 @@ video {
   place-items: center;
 }
 
+.content-center {
+  align-content: center;
+}
+
 .items-center {
   align-items: center;
 }
@@ -788,6 +820,7 @@ video {
   gap: 1rem;
 }
 
+<<<<<<< HEAD
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -800,6 +833,10 @@ video {
 
 .whitespace-nowrap {
   white-space: nowrap;
+=======
+.place-self-center {
+  place-self: center;
+>>>>>>> kennethseva-patch-1
 }
 
 .whitespace-pre {
@@ -1075,9 +1112,14 @@ video {
   text-transform: uppercase;
 }
 
+<<<<<<< HEAD
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
+=======
+.italic {
+  font-style: italic;
+>>>>>>> kennethseva-patch-1
 }
 
 .text-gray-700 {
@@ -1120,12 +1162,15 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+<<<<<<< HEAD
 .transition-transform {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
+=======
+>>>>>>> kennethseva-patch-1
 .file\:mr-4::file-selector-button {
   margin-right: 1rem;
 }
