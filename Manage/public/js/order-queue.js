@@ -167,7 +167,6 @@ function order_done() {
 									console.log("Successfully Added! (Order Queue)")
 								}
 							});
-
 						}
 
 						// Get Specific data when clicked for items ordered
@@ -193,14 +192,35 @@ function order_done() {
 								}
 							})
 						}
+
+						document.getElementById("order_num_cancel").value = order;
+						// This will be the delete function after order is done or cancelled
+						const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order}"`;
+						const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order}"`;
+
+						connection.query(items_ordered_query, error => {
+							if (error) {
+								console.log(error);
+							} else {
+								console.log("Removed Success from items_ordered");
+					
+								connection.query(ordered_num_query, error => {
+									if(error) {
+										console.log(error);
+									} else {
+										console.log("Removed success from order_queue")
+										dialog_open('cancel_order_success_dialog');
+									}
+								});
+							}
+						});
+
 						
 						
 					})
 
 
 				})
-
-				// This will be the delete function after order is done or cancelled
 
 			};
 		};
