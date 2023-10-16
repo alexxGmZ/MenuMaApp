@@ -171,7 +171,7 @@ CREATE TABLE order_queue_history(
    order_queue_history_id INT AUTO_INCREMENT,
    order_id INT,
    queue_number INT,
-   transaction_date DATE NOT NULL,
+   transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    customer_name TEXT,
    total_price FLOAT DEFAULT 0,
    kiosk_ip_address VARCHAR(30) NOT NULL,

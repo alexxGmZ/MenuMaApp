@@ -62,11 +62,7 @@ function display_order_history() {
 					// console.log("Transaction Date: " + order_history.transaction_date);
 					// console.log("Status: " + order_history.order_status);
 
-					var originalDatFormat = order_history.transaction_date;
-					var dateObject = new Date(originalDatFormat);
-
-					var options = { year: 'numeric', month: 'long', day: 'numeric' };
-					var formattedDate = dateObject.toLocaleDateString('en-US', options);
+					var formattedDate = new Date (order_history.transaction_date).toLocaleString();
 
 					const markup =`
 						<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
