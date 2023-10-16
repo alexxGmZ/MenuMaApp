@@ -124,18 +124,9 @@ function order_done() {
 				var ordered_number = row.getElementsByTagName("td")[0];
 				var order = ordered_number.innerHTML;
 
-				var ordered_items = row.getElementsByTagName("td")[1];
-				var items = ordered_items.innerHTML;
+				// console.log("Test results: \n" + order);
 
-				var ordered_cutomer_name = row.getElementsByTagName("td")[2];
-				var customers = ordered_cutomer_name.innerHTML;
-
-				var ordered_total_price = row.getElementsByTagName("td")[3];
-				var total_price = ordered_total_price.innerHTML;
-
-				console.log("Test results: \n" + order + "\n" + " " + items + " " + customers + " " + total_price);
-
-				// Queries for getting data from order queue and items ordered tables
+				// Queries for getting data from order queue and items ordered tables specific for orders / row click
 				const items_ordered_data = `SELECT * FROM manage_db.items_ordered WHERE queue_number = "${order}"`;
 				const order_queue_data = `SELECT * FROM manage_db.order_queue WHERE queue_number = "${order}"`;
 				
@@ -147,7 +138,51 @@ function order_done() {
 					connection.query(order_queue_data, function(err, order_queue_data_result) {
 						if (err) throw err;
 
-						// Combined result
+						const orderQueueResult = order_queue_data_result;
+						// const itemsOrderedResult = items_ordered_data_result;
+
+						// Get specific data when clicked for order queue
+						if (orderQueueResult.length > 0) {
+							const orderRow = orderQueueResult[0];
+							const order_num = orderRow.queue_number;
+							const order_id = orderRow.order_id;
+							const customer_names = orderRow.customer_name;
+							const overall_price = orderRow.total_price;
+							// // Formatted Date
+							// var formattedDate = new Date (orderRow.transaction_date).toLocaleString();
+							// // Removed comma on the Formatted Date
+							// formattedDate = formattedDate.replace(/,/g, '');
+							const kiosks = orderRow.kiosk_ip_address;
+							var status = "Served";
+
+							// console.log("Here are the order queue: \n" + order_num + "\n" + order_id + "\n" + customer_names + "\n" + overall_price + "\n" + formattedDate + "\n" + kiosks + "\n" + status);
+
+							// Insertion Query
+							const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
+							// function of insert data into order_queue_history
+							connection.query(insert_order_queue_query, [order_id, order_num, orderRow.transaction_date, customer_names, overall_price, kiosks, status], (error, results) => {
+								if (error) {
+									console.log(error);
+								} else {
+									console.log("Successfully Added!")
+								}
+							});
+
+						}
+
+						// Get Specific data when clicked for items ordered
+						// console.log("Here are the orders per row:")
+						// for (itemRow of items_ordered_data_result) {
+						// 	console.log("Items ordered id: " + itemRow.items_ordered_id);
+						// 	console.log("Item id: " + itemRow.item_id);
+						// 	console.log("Item Name: " + itemRow.item_name);
+						// 	console.log("Item Price: " + itemRow.item_price);
+						// 	console.log("Item Quantity: " + itemRow.quantity);
+						// 	console.log("Total price per quantity: " + itemRow.quantity_times_price);
+						// 	console.log("Queue Number: " + itemRow.queue_number);
+						// 	console.log("Order ID: " + itemRow.order_id);
+						// }
+						
 						
 					})
 
