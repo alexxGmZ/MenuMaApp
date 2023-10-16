@@ -48,7 +48,7 @@ function display_order_history() {
 				console.log(nestedData);
 				
 				// For each loop
-				nestedData.forEach(order_history => {
+				nestedData.forEach((order_history, index) => {
 
 					const food_items = order_history.items_ordered.map((item) => {
 						return `${item.quantity} ${item.item_name}\n`;
@@ -64,14 +64,25 @@ function display_order_history() {
 
 					var formattedDate = new Date (order_history.transaction_date).toLocaleString();
 
+					// Design purposes for served or cancelled
+					let statusClass = '';
+					if (order_history.order_status === 'Served') {
+						statusClass = 'text-green-700 bg-green-200';
+					} else if (order_history.order_status === 'Cancelled') {
+						statusClass = 'text-red-700 bg-red-200';
+					}
+
+					//Design purposes for changing color background per row
+					const rowColors = index % 2 === 0 ? 'bg-white' : 'bg-zinc-50';
+
 					const markup =`
-						<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-							<td class="text-center">Order #${order_history.queue_number}</td>
-							<td class="text-center">${order_history.customer_name}</td>
-							<td class="text-center whitespace-pre py-3">${removed_comma}</td>
-							<td class="text-center">₱${order_history.total_price}</td>
-							<td class="text-center">${formattedDate}</td>
-							<td class="text-center">${order_history.order_status}</td>
+						<tr class="bg-white border-b dark:border-gray-700 border-r border-l ${rowColors}">
+							<td class="px-2">Order #${order_history.queue_number}</td>
+							<td class="">${order_history.customer_name}</td>
+							<td class="whitespace-pre py-3">${removed_comma}</td>
+							<td class="">₱${order_history.total_price}</td>
+							<td class="">${formattedDate}</td>
+							<td class="text-center"><p class="rounded-full font-bold py-2 mx-4 ${statusClass}">${order_history.order_status}</p></td>
 							<td>
 								<span class="action-btn">
 									<center><button onclick="" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
