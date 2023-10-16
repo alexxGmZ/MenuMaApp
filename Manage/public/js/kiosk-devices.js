@@ -24,7 +24,7 @@ async function list_available_devices() {
 	const endIP = 255;
 	let devices = [];
 
-	// console.log('Scanning network...');
+	console.log('Scanning network...');
 
 	const promises = [];
 
@@ -57,7 +57,7 @@ async function list_available_devices() {
 		}
 	}
 
-	// console.log(devices);
+	console.log(devices);
 
 	// place all the scanned devices inside a table body with a local_devices id
 	let placeholder = document.querySelector("#local_devices");
@@ -74,7 +74,7 @@ async function list_available_devices() {
 
 	placeholder.innerHTML = out;
 
-	// console.log('Scan completed.');
+	console.log('Scan completed.');
 }
 
 function list_registered_devices() {
@@ -125,6 +125,17 @@ function register_device() {
 	console.log(`"${device_mac_address}"`);
 	console.log(`${timestamp}`);
 	console.log(`${api_token}`);
+
+	connection.query(
+		"insert into api_connected_devices (ip_address, device_name, api_token, mac_address) values (?, ?, ?, ?)",
+		[device_ip, device_name, api_token, device_mac_address],
+		(error) => {
+			if (error)
+				alert(error);
+			else
+				alert("Device Successfully Registered");
+		}
+	);
 }
 
 function generate_api_token(device_ip, timestamp) {
@@ -154,6 +165,6 @@ function is_valid_ipv4(ip) {
 }
 
 function is_valid_mac_address(mac) {
-    const mac_pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
-    return mac_pattern.test(mac);
+	const mac_pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+	return mac_pattern.test(mac);
 }
