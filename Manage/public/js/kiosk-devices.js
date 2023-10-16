@@ -24,7 +24,7 @@ async function list_available_devices() {
 	const endIP = 255;
 	let devices = [];
 
-	console.log('Scanning network...');
+	// console.log('Scanning network...');
 
 	const promises = [];
 
@@ -57,7 +57,7 @@ async function list_available_devices() {
 		}
 	}
 
-	console.log(devices);
+	// console.log(devices);
 
 	// place all the scanned devices inside a table body with a local_devices id
 	let placeholder = document.querySelector("#local_devices");
@@ -74,7 +74,7 @@ async function list_available_devices() {
 
 	placeholder.innerHTML = out;
 
-	console.log('Scan completed.');
+	// console.log('Scan completed.');
 }
 
 function list_registered_devices() {
@@ -94,6 +94,13 @@ function list_registered_devices() {
 					<td>${row.api_token}</td>
 					<td>${row.mac_address}</td>
 					<td>${formatted_timestamp}</td>
+					<td>
+						<span class="">
+							<button class="" onclick="dialog_open('delete_device_dialog')">
+								<img src="assets/svg/trash.svg" class="">
+							</button>
+						</span>
+					</td>
 				</tr>
 			`;
 		}
@@ -104,7 +111,7 @@ function list_registered_devices() {
 }
 
 function register_device() {
-	console.log("call register_device()")
+	console.log("called register_device()")
 
 	// validate ip address
 	const device_ip = document.getElementById("device_ip").value.trim();
@@ -127,15 +134,99 @@ function register_device() {
 	console.log(`${api_token}`);
 
 	connection.query(
-		"insert into api_connected_devices (ip_address, device_name, api_token, mac_address) values (?, ?, ?, ?)",
-		[device_ip, device_name, api_token, device_mac_address],
-		(error) => {
-			if (error)
-				alert(error);
-			else
-				alert("Device Successfully Registered");
+		"SELECT COUNT(*) AS count FROM api_connected_devices WHERE ip_address = ?",
+		[device_ip],
+		(error, results) => {
+			if (error) alert(error);
+
+			else {
+				const existing_record_count = results[0].count;
+				if (existing_record_count > 0)
+					alert("Device IP already exists");
+				else {
+					// Insert the new record if the IP doesn't exist
+					connection.query(
+						"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
+						[device_ip, device_name, api_token, device_mac_address],
+						(error) => {
+							if (error) {
+								alert(error);
+							} else {
+								alert("Device Successfully Registered");
+							}
+						}
+					);
+				}
+			}
 		}
 	);
+}
+
+function delete_device() {
+	console.log("called delete_device()");
+	var ip = document.getElementById("delete_device_ip").textContent;
+	console.log(ip + " deleted");
+
+	const query = `DELETE FROM api_connected_devices WHERE ip_address = "${ip}"`;
+	connection.query(query, error => {
+		if (error) {
+			alert("Error!");
+			console.log(error);
+		}
+		else {
+			dialog_open('delete_device_success_dialog');
+		}
+	});
+}
+
+function row_click() {
+	console.log("called row_click()");
+
+	const table = document.getElementById("registered_devices");
+	const rows = table.getElementsByTagName("tr");
+
+	for (let i = 0; i < rows.length; i++) {
+		let current_row = table.rows[i];
+		let click_handle = function(row) {
+			return function() {
+				var device_ip = row.getElementsByTagName("td")[0].innerHTML;
+				var device_name = row.getElementsByTagName("td")[1].innerHTML;
+				var api_token = row.getElementsByTagName("td")[2].innerHTML;
+				var mac_address = row.getElementsByTagName("td")[3].innerHTML;
+
+				document.getElementById("delete_device_ip").innerHTML = device_ip;
+				document.getElementById("delete_device_name").innerHTML = device_name;
+				document.getElementById("delete_device_api_token").innerHTML = api_token;
+				document.getElementById("delete_device_mac_address").innerHTML = mac_address;
+
+				// console.log(device_ip);
+				// console.log(device_name);
+				// console.log(api_token);
+				// console.log(mac_address);
+			}
+		}
+		current_row.onclick = click_handle(current_row);
+	}
+}
+
+function dialog_open(element_id) {
+	console.log("called dialog_open()")
+	const fav_dialog = document.getElementById(element_id);
+
+	// any element id specific statements
+	if (element_id == "delete_device_dialog")
+		row_click();
+
+	if (element_id == "delete_device_success_dialog")
+		document.getElementById("delete_device_success_ip").innerHTML = document.getElementById("delete_device_ip").innerHTML;
+
+	fav_dialog.showModal();
+}
+
+function dialog_close(element_id) {
+	console.log("called dialog_close()")
+	const fav_dialog = document.getElementById(element_id);
+	fav_dialog.close();
 }
 
 function generate_api_token(device_ip, timestamp) {
