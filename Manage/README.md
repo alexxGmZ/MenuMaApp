@@ -145,7 +145,7 @@ CREATE TABLE order_queue(
    order_id INT NOT NULL,
    customer_name TEXT,
    total_price FLOAT DEFAULT 0,
-   transaction_date DATE NOT NULL,
+   transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    kiosk_ip_address VARCHAR(30) NOT NULL,
    PRIMARY KEY(queue_number),
    FOREIGN KEY (kiosk_ip_address) REFERENCES api_connected_devices(ip_address)
