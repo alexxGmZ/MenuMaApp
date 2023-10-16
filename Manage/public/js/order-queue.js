@@ -9,6 +9,9 @@ const connection = mysql.connection;
 // check database connection
 mysql.check_connection();
 
+// Global Data
+var global_order_num = "";
+
 function display_orders() {
 	fetch('http://localhost:8080/orders')
 		.then(res => {
@@ -35,7 +38,7 @@ function display_orders() {
 						<td class="text-center">₱${orders.total_price}</td>
 						<td class="px-3">
 							<center>
-								<button onclick="order_done(); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+								<button onclick="order_done()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
 									<span class="mx-2"> DONE </span>
 								</button>
@@ -79,9 +82,6 @@ function row_click() {
 
 				console.log("These are the orders: \n" + order + "\n" + " " + items + " " + customers + " " + total_price);
 
-				// The Global variables
-				
-
 				//for cancel item
 				document.getElementById("order_num_cancel").value = order;
 				document.getElementById("order_foods_cancel").value = items;
@@ -112,13 +112,52 @@ function dialog_close(element_id) {
 }
 
 function order_done() {
-	console.log("Test results: ");
+	// find the clicked row
+	var table = document.getElementById("order_table");
+	var rows = table.getElementsByTagName("tr");
+
+	// For all loop
+	for (let i = 0; i < rows.length; i++) {
+		var currentRow = table.rows[i];
+		var clickHandle = function(row) {
+			return function() {
+				var ordered_number = row.getElementsByTagName("td")[0];
+				var order = ordered_number.innerHTML;
+
+				var ordered_items = row.getElementsByTagName("td")[1];
+				var items = ordered_items.innerHTML;
+
+				var ordered_cutomer_name = row.getElementsByTagName("td")[2];
+				var customers = ordered_cutomer_name.innerHTML;
+
+				var ordered_total_price = row.getElementsByTagName("td")[3];
+				var total_price = ordered_total_price.innerHTML;
+
+				console.log("Test results: \n" + order + "\n" + " " + items + " " + customers + " " + total_price);
+
+				// Queries for getting data from order queue and items ordered tables
+				const items_ordered_data = `SELECT * FROM manage_db.items_ordered WHERE queue_number = "${order}"`;
+				const order_queue_data = `SELECT * FROM manage_db.order_queue WHERE queue_number = "${order}"`;
+				
+				// get all data from items ordered table
+				connection.query(items_ordered_data, function(err, items_ordered_data_result) {
+					if (err) throw err;
+
+					// get all data from order queue table
+					connection.query(order_queue_data, function(err, order_queue_data_result) {
+						if (err) throw err;
+
+						// Combined result
+						
+					})
 
 
+				})
 
-	// Queries for inserting order queue and items ordered
-	const insert_queue_order_history = ``;
-
+			};
+		};
+		currentRow.onclick = clickHandle(currentRow);
+	}
 }
 
 function order_cancel() {
