@@ -133,9 +133,10 @@ CREATE TABLE menu_items(
 
 CREATE TABLE api_connected_devices(
    ip_address VARCHAR(30) NOT NULL,
-   device_name TEXT not NULL,
+   device_name TEXT,
    api_token TEXT NOT NULL,
    mac_address TEXT,
+   timestamp_column TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY(ip_address)
 );
 

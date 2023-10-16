@@ -23,7 +23,7 @@ async function list_available_devices() {
 	const endIP = 255;
 	let devices = [];
 
-	console.log('Scanning network...');
+	// console.log('Scanning network...');
 
 	const promises = [];
 
@@ -56,7 +56,7 @@ async function list_available_devices() {
 		}
 	}
 
-	console.log(devices);
+	// console.log(devices);
 
 	// place all the scanned devices inside a table body with a local_devices id
 	let placeholder = document.querySelector("#local_devices");
@@ -73,13 +73,13 @@ async function list_available_devices() {
 
 	placeholder.innerHTML = out;
 
-	console.log('Scan completed.');
+	// console.log('Scan completed.');
 }
 
 function list_registered_devices() {
 	connection.query("SELECT * FROM api_connected_devices", (err, result) => {
 		if (err) throw err;
-		console.log(result);
+		// console.log(result);
 
 		let placeholder = document.querySelector("#registered_devices");
 		let out = ""
@@ -99,4 +99,15 @@ function list_registered_devices() {
 		// display output in document/kiosk-devices.html
 		placeholder.innerHTML = out;
 	})
+}
+
+function register_device() {
+	const device_ip = document.getElementById("device_ip").value.trim();
+	if (device_ip.length == 0 || device_ip.trim() === "")
+		return alert("Device IP is empty");
+
+	const device_name = document.getElementById("device_name").value.trim();
+
+	console.log(`"${device_ip}"`);
+	console.log(`"${device_name}"`);
 }
