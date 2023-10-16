@@ -4,16 +4,17 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 console.log("Directory: " + __dirname);
+console.log("Timestamp: " + get_current_timestamp());
 
 const ping = require("ping");
 const dns = require("dns");
+const crypto = require("crypto");
 
 //
 // Mysql Database
 //
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js")
-// check database connection
 mysql.check_connection()
 const connection = mysql.connection;
 
@@ -77,7 +78,7 @@ async function list_available_devices() {
 }
 
 function list_registered_devices() {
-	connection.query("SELECT * FROM api_connected_devices", (err, result) => {
+	connection.query("SELECT * FROM api_connected_devices ORDER BY timestamp_column DESC", (err, result) => {
 		if (err) throw err;
 		// console.log(result);
 
@@ -85,13 +86,14 @@ function list_registered_devices() {
 		let out = ""
 
 		for (let row of result) {
-
+			var formatted_timestamp = new Date(row.timestamp_column).toLocaleString();
 			out += `
 				<tr>
 					<td>${row.ip_address}</td>
 					<td>${row.device_name}</td>
 					<td>${row.api_token}</td>
 					<td>${row.mac_address}</td>
+					<td>${formatted_timestamp}</td>
 				</tr>
 			`;
 		}
@@ -102,12 +104,56 @@ function list_registered_devices() {
 }
 
 function register_device() {
+	console.log("call register_device()")
+
+	// validate ip address
 	const device_ip = document.getElementById("device_ip").value.trim();
-	if (device_ip.length == 0 || device_ip.trim() === "")
-		return alert("Device IP is empty");
+	if (!is_valid_ipv4(device_ip))
+		return alert("Invalid IPV4 address");
+
+	// validate mac address
+	const device_mac_address = document.getElementById("device_mac_address").value.trim();
+	if (device_mac_address !== null && device_mac_address !== "" && !is_valid_mac_address(device_mac_address))
+		return alert("Invalid Mac address");
 
 	const device_name = document.getElementById("device_name").value.trim();
+	const timestamp = get_current_timestamp();
+	const api_token = generate_api_token(device_ip, timestamp);
 
 	console.log(`"${device_ip}"`);
 	console.log(`"${device_name}"`);
+	console.log(`"${device_mac_address}"`);
+	console.log(`${timestamp}`);
+	console.log(`${api_token}`);
+}
+
+function generate_api_token(device_ip, timestamp) {
+	const salt = device_ip + timestamp;
+	const hash = crypto.createHash("sha256").update(salt).digest("hex");
+	const api_token = hash.slice(0, 10);
+	return api_token;
+}
+
+function get_current_timestamp() {
+	const now = new Date();
+	const year = now.getFullYear();
+	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
+	const day = now.getDate().toString().padStart(2, '0');
+	const hours = now.getHours().toString().padStart(2, '0');
+	const minutes = now.getMinutes().toString().padStart(2, '0');
+	const seconds = now.getSeconds().toString().padStart(2, '0');
+
+	const timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+	return timestamp;
+}
+
+function is_valid_ipv4(ip) {
+	const ipv4_pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+	return ipv4_pattern.test(ip);
+}
+
+function is_valid_mac_address(mac) {
+    const mac_pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+    return mac_pattern.test(mac);
 }
