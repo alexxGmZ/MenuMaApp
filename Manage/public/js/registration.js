@@ -103,7 +103,7 @@ function list_registered_employees() {
 					<td class="text-center">${row.view_reports_priv}</td>
 					<td class="text-center">
 						<span class="action-btn">
-							<button class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="showDialog()">
+							<button class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_employee_dialog')">
 								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 							</button>
 							<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg" onclick="delete_employee()">
@@ -204,7 +204,6 @@ function update_employee() {
 			dialog_open('update_employee_successs_dialog');
 		}
 	});
-
 }
 // END OF UPDATE EMPLOYEE FUNCTION //
 
@@ -251,6 +250,9 @@ function dialog_open(element_id) {
 
 	// any element id specific statements
 	if(element_id == "remove_employee_success_dialog") {
+		rowClick();
+	}
+	if(element_id == "update_employee_dialog") {
 		rowClick();
 	}
 	if(element_id == "add_employee_successs_dialog") {
