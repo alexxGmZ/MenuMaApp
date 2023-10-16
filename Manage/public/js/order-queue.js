@@ -138,8 +138,8 @@ function order_done() {
 					connection.query(order_queue_data, function(err, order_queue_data_result) {
 						if (err) throw err;
 
-						const orderQueueResult = order_queue_data_result;
 						// const itemsOrderedResult = items_ordered_data_result;
+						const orderQueueResult = order_queue_data_result;
 
 						// Get specific data when clicked for order queue
 						if (orderQueueResult.length > 0) {
@@ -164,30 +164,43 @@ function order_done() {
 								if (error) {
 									console.log(error);
 								} else {
-									console.log("Successfully Added!")
+									console.log("Successfully Added! (Order Queue)")
 								}
 							});
 
 						}
 
 						// Get Specific data when clicked for items ordered
-						// console.log("Here are the orders per row:")
-						// for (itemRow of items_ordered_data_result) {
-						// 	console.log("Items ordered id: " + itemRow.items_ordered_id);
-						// 	console.log("Item id: " + itemRow.item_id);
-						// 	console.log("Item Name: " + itemRow.item_name);
-						// 	console.log("Item Price: " + itemRow.item_price);
-						// 	console.log("Item Quantity: " + itemRow.quantity);
-						// 	console.log("Total price per quantity: " + itemRow.quantity_times_price);
-						// 	console.log("Queue Number: " + itemRow.queue_number);
-						// 	console.log("Order ID: " + itemRow.order_id);
-						// }
+						console.log("Here are the orders per row:")
+						for (itemRow of items_ordered_data_result) {
+							// console.log("Items ordered id: " + itemRow.items_ordered_id);
+							// console.log("Item id: " + itemRow.item_id);
+							// console.log("Item Name: " + itemRow.item_name);
+							// console.log("Item Price: " + itemRow.item_price);
+							// console.log("Item Quantity: " + itemRow.quantity);
+							// console.log("Total price per quantity: " + itemRow.quantity_times_price);
+							// console.log("Queue Number: " + itemRow.queue_number);
+							// console.log("Order ID: " + itemRow.order_id);
+
+							//Insertion query
+							const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+							// functio nto insert data into items_ordered_history
+							connection.query(insert_items_ordered_query, [itemRow.items_ordered_id, itemRow.order_id, itemRow.item_id, itemRow.item_name, itemRow.item_price, itemRow.quantity, itemRow.quantity_times_price, itemRow.queue_number], (error, results) => {
+								if (error) {
+									console.log(error)
+								} else {
+									console.log("Successfully Added! (Items Ordered)")
+								}
+							})
+						}
 						
 						
 					})
 
 
 				})
+
+				// This will be the delete function after order is done or cancelled
 
 			};
 		};
