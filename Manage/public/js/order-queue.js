@@ -35,7 +35,7 @@ function display_orders() {
 						<td class="text-center">₱${orders.total_price}</td>
 						<td class="px-3">
 							<center>
-								<button onclick="location.reload()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+								<button onclick="order_done(); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
 									<span class="mx-2"> DONE </span>
 								</button>
@@ -77,7 +77,10 @@ function row_click() {
 				var ordered_total_price = row.getElementsByTagName("td")[3];
 				var total_price = ordered_total_price.innerHTML;
 
-				console.log(order + " " + items + " " + customers + " " + total_price);
+				console.log("These are the orders: \n" + order + "\n" + " " + items + " " + customers + " " + total_price);
+
+				// The Global variables
+				
 
 				//for cancel item
 				document.getElementById("order_num_cancel").value = order;
@@ -89,7 +92,6 @@ function row_click() {
 		currentRow.onclick = clickHandle(currentRow);
 	}
 }
-
 
 // Open Dialog
 function dialog_open(element_id) {
@@ -110,6 +112,12 @@ function dialog_close(element_id) {
 }
 
 function order_done() {
+	console.log("Test results: ");
+
+
+
+	// Queries for inserting order queue and items ordered
+	const insert_queue_order_history = ``;
 
 }
 
