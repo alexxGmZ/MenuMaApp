@@ -57,6 +57,7 @@
 				<th>API Token</th>
 				<th>MAC Address</th>
 				<th>Timestamp</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 
@@ -86,6 +87,43 @@
 	</table>
 
 	<br><br>
+
+	<!-- delete device dialog -->
+	<dialog id="delete_device_dialog">
+		<h1>Delete Device?</h1>
+
+		<label for="delete_device_ip">Device IP:</label>
+		<span id="delete_device_ip"></span>
+		<br>
+
+		<label for="delete_device_name">Device Name:</label>
+		<span id="delete_device_name"></span>
+		<br>
+
+		<label for="delete_device_api_token">API Token:</label>
+		<span id="delete_device_api_token"></span>
+		<br>
+
+		<label for="delete_device_mac_address">MAC Address:</label>
+		<span id="delete_device_mac_address"></span>
+		<br>
+
+		<center>
+			<button onclick="dialog_close('delete_device_dialog')">Cancel</button>
+			<br>
+			<button onclick="delete_device()">Yes</button>
+		</center>
+	</dialog>
+
+	<!-- delete device success dialog -->
+	<dialog id="delete_device_success_dialog">
+		<span id="delete_device_success_ip"></span>
+		<p>is successfully deleted</p>
+		<br>
+		<center>
+			<button onclick="location.reload()">Ok</button>
+		</center>
+	</dialog>
 </body>
 
 </html>
