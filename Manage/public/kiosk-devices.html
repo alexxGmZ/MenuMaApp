@@ -88,23 +88,54 @@
 
 	<br><br>
 
-	<!-- delete device dialog -->
-	<dialog id="delete_device_dialog">
-		<h1>Delete Device?</h1>
+	<!-- update device details dialog -->
+	<dialog id="update_device_dialog" class="rounded-lg">
+		<h1 class="font-bold">Update Device</h1>
 
-		<label for="delete_device_ip">Device IP:</label>
+		<label for="update_device_ip">Device IP: </label>
+		<span id="update_device_ip"></span>
+		<br>
+
+		<label for="">Device Name: </label>
+		<input type="text" id="update_device_name">
+		<br>
+
+		<label for="update_device_api_token">API Token: </label>
+		<span id="update_device_api_token"></span>
+		<br>
+
+		<button onclick="">Generate New Token</button>
+		<br>
+
+		<label for="update_device_mac_address">MAC Address: </label>
+		<input type="text" id="update_device_mac_address">
+		<br>
+
+		<center>
+			<button onclick="dialog_close('update_device_dialog')">Cancel</button>
+			<br>
+			<button onclick="update_device()">Yes</button>
+		</center>
+	</dialog>
+
+
+	<!-- delete device dialog -->
+	<dialog id="delete_device_dialog" class="rounded-lg">
+		<h1 class="font-bold">Delete Device?</h1>
+
+		<label for="delete_device_ip">Device IP: </label>
 		<span id="delete_device_ip"></span>
 		<br>
 
-		<label for="delete_device_name">Device Name:</label>
+		<label for="delete_device_name">Device Name: </label>
 		<span id="delete_device_name"></span>
 		<br>
 
-		<label for="delete_device_api_token">API Token:</label>
+		<label for="delete_device_api_token">API Token: </label>
 		<span id="delete_device_api_token"></span>
 		<br>
 
-		<label for="delete_device_mac_address">MAC Address:</label>
+		<label for="delete_device_mac_address">MAC Address: </label>
 		<span id="delete_device_mac_address"></span>
 		<br>
 
@@ -116,8 +147,8 @@
 	</dialog>
 
 	<!-- delete device success dialog -->
-	<dialog id="delete_device_success_dialog">
-		<span id="delete_device_success_ip"></span>
+	<dialog id="delete_device_success_dialog" class="rounded-lg">
+		<span id="delete_device_success_ip" class="font-bold"></span>
 		<p>is successfully deleted</p>
 		<br>
 		<center>

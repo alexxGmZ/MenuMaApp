@@ -96,6 +96,9 @@ function list_registered_devices() {
 					<td>${formatted_timestamp}</td>
 					<td>
 						<span class="">
+							<button class="" onclick="dialog_open('update_device_dialog')">
+								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
+							</button>
 							<button class="" onclick="dialog_open('delete_device_dialog')">
 								<img src="assets/svg/trash.svg" class="">
 							</button>
@@ -165,7 +168,6 @@ function register_device() {
 function delete_device() {
 	console.log("called delete_device()");
 	var ip = document.getElementById("delete_device_ip").textContent;
-	console.log(ip + " deleted");
 
 	const query = `DELETE FROM api_connected_devices WHERE ip_address = "${ip}"`;
 	connection.query(query, error => {
@@ -175,8 +177,19 @@ function delete_device() {
 		}
 		else {
 			dialog_open('delete_device_success_dialog');
+			console.log(ip + " deleted");
 		}
 	});
+}
+
+function update_device() {
+	console.log("called update_device()");
+	var ip = document.getElementById("update_device_ip").textContent;
+	console.log(ip + " updated");
+
+	var mac_address = document.getElementById("update_device_mac_address").value.trim();
+	if (mac_address !== null && mac_address !== "" && !is_valid_mac_address(mac_address))
+		return alert("Invalid Mac address");
 }
 
 function row_click() {
@@ -194,15 +207,22 @@ function row_click() {
 				var api_token = row.getElementsByTagName("td")[2].innerHTML;
 				var mac_address = row.getElementsByTagName("td")[3].innerHTML;
 
+				console.log(device_ip);
+				console.log(device_name);
+				console.log(api_token);
+				console.log(mac_address);
+
+				// for deleting device
 				document.getElementById("delete_device_ip").innerHTML = device_ip;
 				document.getElementById("delete_device_name").innerHTML = device_name;
 				document.getElementById("delete_device_api_token").innerHTML = api_token;
 				document.getElementById("delete_device_mac_address").innerHTML = mac_address;
 
-				// console.log(device_ip);
-				// console.log(device_name);
-				// console.log(api_token);
-				// console.log(mac_address);
+				// for updating device
+				document.getElementById("update_device_ip").innerHTML = device_ip;
+				document.getElementById("update_device_name").value = device_name;
+				document.getElementById("update_device_api_token").innerHTML = api_token;
+				document.getElementById("update_device_mac_address").value = mac_address;
 			}
 		}
 		current_row.onclick = click_handle(current_row);
@@ -220,6 +240,9 @@ function dialog_open(element_id) {
 	if (element_id == "delete_device_success_dialog")
 		document.getElementById("delete_device_success_ip").innerHTML = document.getElementById("delete_device_ip").innerHTML;
 
+	if (element_id == "update_device_dialog")
+		row_click();
+
 	fav_dialog.showModal();
 }
 
@@ -230,6 +253,7 @@ function dialog_close(element_id) {
 }
 
 function generate_api_token(device_ip, timestamp) {
+	console.log("called generate_api_token()");
 	const salt = device_ip + timestamp;
 	const hash = crypto.createHash("sha256").update(salt).digest("hex");
 	const api_token = hash.slice(0, 10);
@@ -237,6 +261,7 @@ function generate_api_token(device_ip, timestamp) {
 }
 
 function get_current_timestamp() {
+	console.log("called get_current_timestamp()");
 	const now = new Date();
 	const year = now.getFullYear();
 	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
