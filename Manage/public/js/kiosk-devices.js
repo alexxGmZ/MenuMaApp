@@ -184,13 +184,47 @@ function delete_device() {
 
 function update_device() {
 	console.log("called update_device()");
-	var ip = document.getElementById("update_device_ip").textContent;
-	console.log(ip + " updated");
+	const ip = document.getElementById("update_device_ip").textContent;
 
-	var mac_address = document.getElementById("update_device_mac_address").value.trim();
+	const mac_address = document.getElementById("update_device_mac_address").value.trim();
 	if (mac_address !== null && mac_address !== "" && !is_valid_mac_address(mac_address))
 		return alert("Invalid Mac address");
+
+	const device_name = document.getElementById("update_device_name").value;
+	const api_token = document.getElementById("update_device_api_token").innerHTML;
+
+	console.log("IP: " + ip);
+	console.log("MAC: " + mac_address);
+	console.log("Name: " + device_name);
+	console.log("Token: " + api_token);
+
+	connection.query(
+		"UPDATE api_connected_devices SET device_name = ?, api_token = ?, mac_address = ? WHERE ip_address = ?",
+		[device_name, api_token, mac_address, ip],
+		error => {
+			if (error) {
+				console.log(error);
+				return alert(error);
+			}
+			else {
+				dialog_open("update_device_success_dialog");
+				console.log(ip + " updated");
+			}
+		}
+	);
 }
+
+// update an existing api token if the button is clicked
+document.getElementById("update_device_gen_token_button").addEventListener(
+	"click",
+	function() {
+		const device_ip = document.getElementById("update_device_ip").innerHTML;
+		const timestamp = get_current_timestamp();
+		const api_token = generate_api_token(device_ip, timestamp)
+
+		document.getElementById("update_device_api_token").innerHTML = api_token;
+	}
+);
 
 function row_click() {
 	console.log("called row_click()");
@@ -242,6 +276,9 @@ function dialog_open(element_id) {
 
 	if (element_id == "update_device_dialog")
 		row_click();
+
+	if (element_id == "update_device_success_dialog")
+		document.getElementById("update_device_success_ip").innerHTML = document.getElementById("update_device_ip").innerHTML;
 
 	fav_dialog.showModal();
 }

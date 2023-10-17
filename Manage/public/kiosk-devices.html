@@ -23,7 +23,6 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="./styles/styles.css" rel="stylesheet">
-	<script src="./js/kiosk-devices.js"></script>
 </head>
 
 <body>
@@ -104,7 +103,7 @@
 		<span id="update_device_api_token"></span>
 		<br>
 
-		<button onclick="">Generate New Token</button>
+		<button id="update_device_gen_token_button">Generate New Token</button>
 		<br>
 
 		<label for="update_device_mac_address">MAC Address: </label>
@@ -118,6 +117,15 @@
 		</center>
 	</dialog>
 
+	<!-- update device success dialog -->
+	<dialog id="update_device_success_dialog" class="rounded-lg">
+		<span id="update_device_success_ip" class="font-bold"></span>
+		<p>is successfully updated</p>
+		<br>
+		<center>
+			<button onclick="location.reload()">Ok</button>
+		</center>
+	</dialog>
 
 	<!-- delete device dialog -->
 	<dialog id="delete_device_dialog" class="rounded-lg">
@@ -155,6 +163,8 @@
 			<button onclick="location.reload()">Ok</button>
 		</center>
 	</dialog>
+
+	<script src="./js/kiosk-devices.js"></script>
 </body>
 
 </html>
