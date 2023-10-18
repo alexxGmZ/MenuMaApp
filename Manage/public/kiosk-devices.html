@@ -46,6 +46,28 @@
 
 	<br><br>
 
+	<!-- ipv4 address already exist dialog -->
+	<dialog id="ipv4_already_exist_dialog" class="rounded-lg">
+		<p>
+			<span id="existing_ip" class="font-bold"></span>
+			already exist
+		</p>
+		<center>
+			<button onclick="dialog_close('ipv4_already_exist_dialog')">OK</button>
+		</center>
+	</dialog>
+
+	<!-- mac address already exist dialog -->
+	<dialog id="mac_address_already_exist_dialog" class="rounded-lg">
+		<p>
+			<span id="existing_mac_address" class="font-bold"></span>
+			already exist
+		</p>
+		<center>
+			<button onclick="dialog_close('mac_address_already_exist_dialog')">OK</button>
+		</center>
+	</dialog>
+
 	<!-- invalid ipv4 dialog -->
 	<dialog id="invalid_ipv4_dialog" class="rounded-lg">
 		<p>

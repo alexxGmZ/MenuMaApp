@@ -139,23 +139,36 @@ function register_device() {
 	connection.query(
 		"SELECT COUNT(*) AS count FROM api_connected_devices WHERE ip_address = ?",
 		[device_ip],
-		(error, results) => {
-			if (error) alert(error);
-
+		(ipError, ipResults) => {
+			if (ipError) alert(ipError);
 			else {
-				const existing_record_count = results[0].count;
-				if (existing_record_count > 0)
-					alert("Device IP already exists");
+				const existing_ip_record_count = ipResults[0].count;
+				if (existing_ip_record_count > 0)
+					dialog_open("ipv4_already_exist_dialog");
 				else {
-					// Insert the new record if the IP doesn't exist
+					// If the IP is valid and not already in use, proceed to MAC address validation
 					connection.query(
-						"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
-						[device_ip, device_name, api_token, device_mac_address],
-						(error) => {
-							if (error) {
-								alert(error);
-							} else {
-								alert("Device Successfully Registered");
+						"SELECT COUNT(*) AS count FROM api_connected_devices WHERE mac_address = ?",
+						[device_mac_address],
+						(error, results) => {
+							if (error) alert(error);
+							else {
+								const existing_record_count = results[0].count;
+								if (existing_record_count > 0)
+									dialog_open("mac_address_already_exist_dialog");
+								else {
+									// Insert the new record if neither IP nor MAC address exists
+									connection.query(
+										"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
+										[device_ip, device_name, api_token, device_mac_address],
+										(insertError) => {
+											if (insertError) alert(insertError);
+											else {
+												alert("Device Successfully Registered");
+											}
+										}
+									);
+								}
 							}
 						}
 					);
@@ -172,7 +185,7 @@ function delete_device() {
 	const query = `DELETE FROM api_connected_devices WHERE ip_address = "${ip}"`;
 	connection.query(query, error => {
 		if (error) {
-			alert("Error!");
+			alert(error);
 			console.log(error);
 		}
 		else {
@@ -270,6 +283,12 @@ function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id);
 
 	// any element id specific statements
+	if (element_id == "ipv4_already_exist_dialog")
+		document.getElementById("existing_ip").innerHTML = document.getElementById("device_ip").value;
+
+	if (element_id == "mac_address_already_exist_dialog")
+		document.getElementById("existing_mac_address").innerHTML = document.getElementById("device_mac_address").value;
+
 	if (element_id == "invalid_ipv4_dialog")
 		document.getElementById("invalid_ip").innerHTML = document.getElementById("device_ip").value;
 
