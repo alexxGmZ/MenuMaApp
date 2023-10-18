@@ -119,12 +119,12 @@ function register_device() {
 	// validate ip address
 	const device_ip = document.getElementById("device_ip").value.trim();
 	if (!is_valid_ipv4(device_ip))
-		return alert("Invalid IPV4 address");
+		return dialog_open("invalid_ipv4_dialog");
 
 	// validate mac address
 	const device_mac_address = document.getElementById("device_mac_address").value.trim();
 	if (device_mac_address !== null && device_mac_address !== "" && !is_valid_mac_address(device_mac_address))
-		return alert("Invalid Mac address");
+		return dialog_open("invalid_mac_address_dialog");
 
 	const device_name = document.getElementById("device_name").value.trim();
 	const timestamp = get_current_timestamp();
@@ -192,6 +192,7 @@ function update_device() {
 
 	const device_name = document.getElementById("update_device_name").value;
 	const api_token = document.getElementById("update_device_api_token").innerHTML;
+	const timestamp = get_current_timestamp();
 
 	console.log("IP: " + ip);
 	console.log("MAC: " + mac_address);
@@ -268,6 +269,12 @@ function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id);
 
 	// any element id specific statements
+	if (element_id == "invalid_ipv4_dialog")
+		document.getElementById("invalid_ip").innerHTML = document.getElementById("device_ip").value;
+
+	if (element_id == "invalid_mac_address_dialog")
+		document.getElementById("invalid_mac_address").innerHTML = document.getElementById("device_mac_address").value;
+
 	if (element_id == "delete_device_dialog")
 		row_click();
 

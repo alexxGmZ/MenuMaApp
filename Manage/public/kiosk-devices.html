@@ -46,6 +46,28 @@
 
 	<br><br>
 
+	<!-- invalid ipv4 dialog -->
+	<dialog id="invalid_ipv4_dialog" class="rounded-lg">
+		<p>
+			<span id="invalid_ip" class="font-bold"></span>
+			is invalid IPV4 address
+		</p>
+		<center>
+			<button onclick="dialog_close('invalid_ipv4_dialog')">OK</button>
+		</center>
+	</dialog>
+
+	<!-- invalid ipv4 dialog -->
+	<dialog id="invalid_mac_address_dialog" class="rounded-lg">
+		<p>
+			<span id="invalid_mac_address" class="font-bold"></span>
+			is invalid MAC address
+		</p>
+		<center>
+			<button onclick="dialog_close('invalid_mac_address_dialog')">OK</button>
+		</center>
+	</dialog>
+
 	<!-- list all registered android devices -->
 	<h1 class="font-bold">Registered Devices</h1>
 	<table>
