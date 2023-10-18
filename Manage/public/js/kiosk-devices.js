@@ -198,10 +198,11 @@ function update_device() {
 	console.log("MAC: " + mac_address);
 	console.log("Name: " + device_name);
 	console.log("Token: " + api_token);
+	console.log("Timestamp: " + timestamp);
 
 	connection.query(
-		"UPDATE api_connected_devices SET device_name = ?, api_token = ?, mac_address = ? WHERE ip_address = ?",
-		[device_name, api_token, mac_address, ip],
+		"UPDATE api_connected_devices SET device_name = ?, api_token = ?, mac_address = ?, timestamp_column = ? WHERE ip_address = ?",
+		[device_name, api_token, mac_address, timestamp, ip],
 		error => {
 			if (error) {
 				console.log(error);
