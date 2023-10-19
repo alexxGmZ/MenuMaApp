@@ -1,5 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
 	display_menu_items();
+
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#menu_items_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_menu_items(document.getElementById("menu_items_table"), column, sortOrders[column]);
+		});
+	});
 });
 
 const fs = require('fs');
@@ -20,7 +34,7 @@ function display_menu_items() {
 		connection.query("SELECT * FROM manage_db.menu_items", function(err, result) {
 			if (err) throw err;
 
-			let placeholder = document.querySelector("#menu_item_list");
+			let placeholder = document.querySelector("#menu_items_list");
 			let out = "";
 
 			for (let row of result) {
@@ -28,13 +42,13 @@ function display_menu_items() {
 				let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
 				out += `
 					<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-						<td class="text-center">${row.item_id}</td>
-						<td class="text-center">${row.item_name}</td>
-						<td class="text-center">${row.item_desc}</td>
+						<td data-column="item_id" class="text-center">${row.item_id}</td>
+						<td data-column="item_name" class="text-center">${row.item_name}</td>
+						<td data-column="item_description" class="text-center">${row.item_desc}</td>
 						<td><img src="${image_src}" alt="Foods Image"></td>
-						<td class="text-center">${row.item_price}</td>
-						<td class="text-center">${row.quantity_sold}</td>
-						<td class="text-center">₱${row.revenue_generated}</td>
+						<td data-column="item_price" class="text-center">${row.item_price}</td>
+						<td data-column="item_quantity_sold" class="text-center">${row.quantity_sold}</td>
+						<td data-column="item_revenue" class="text-center">₱${row.revenue_generated}</td>
 						<td>
 							<span class="action-btn">
 							<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
@@ -90,9 +104,30 @@ function add_item_message() {
 	dialog_open("add_item_success_dialog");
 }
 
+function sort_menu_items(table, column, sortOrder) {
+	console.log("called sort_menu_items()");
+
+	const tbody = table.querySelector("tbody");
+	const rows = Array.from(tbody.querySelectorAll("tr"));
+
+	rows.sort((a, b) => {
+		const cell_a = a.querySelector(`td[data-column="${column}"]`);
+		const cell_b = b.querySelector(`td[data-column="${column}"]`);
+		if (cell_a && cell_b) {
+			const comparison = cell_a.textContent.localeCompare(cell_b.textContent, undefined, { numeric: true });
+			return sortOrder === "asc" ? comparison : -comparison;
+		}
+		return 0; // Default comparison when one or both cells are missing
+	});
+
+	rows.forEach((row) => {
+		tbody.appendChild(row);
+	});
+}
+
 // table row click, used for updating and deleting an item
 function row_click() {
-	var table = document.getElementById("food_table");
+	var table = document.getElementById("menu_items_table");
 	var rows = table.getElementsByTagName("tr");
 	for (let i = 0; i < rows.length; i++) {
 		var currentRow = table.rows[i];
@@ -222,7 +257,7 @@ function search_via_id() {
 		connection.query(`SELECT * FROM manage_db.menu_items WHERE item_id = "${food_id}"`, function(err, result) {
 			if (err) throw err;
 
-			let placeholder = document.querySelector("#menu_item_list");
+			let placeholder = document.querySelector("#menu_items_list");
 			let out = "";
 
 			for (let row of result) {

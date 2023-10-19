@@ -59,20 +59,20 @@
 
 	<!--Menu Items Table-->
 	<div>
-		<table id="food_table" onclick="row_click()" class="w-full">
+		<table id="menu_items_table" class="w-full">
 			<thead class="text-zinc-950 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
 				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Description</th>
+					<th data-column="item_id">ID</th>
+					<th data-column="item_name">Name</th>
+					<th data-column="item_description">Description</th>
 					<th>Image</th>
-					<th>Price</th>
-					<th>Quantity Sold</th>
-					<th>Revenue Generated</th>
+					<th data-column="item_price">Price</th>
+					<th data-column="item_quantity_sold">Quantity Sold</th>
+					<th data-column="item_revenue">Revenue Generated</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
-			<tbody id="menu_item_list">
+			<tbody id="menu_items_list">
 				<!-- OUTPUT RESULT from sqlconnection.js -->
 			</tbody>
 		</table>
