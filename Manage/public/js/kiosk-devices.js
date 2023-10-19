@@ -1,6 +1,21 @@
 document.addEventListener("DOMContentLoaded", function() {
 	list_available_devices();
 	list_registered_devices();
+
+	// Add click event listeners to table headers for sorting
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#registered_devices_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_registered_devices(document.getElementById("registered_devices_table"), column, sortOrders[column]);
+		});
+	});
 });
 
 console.log("Directory: " + __dirname);
@@ -89,11 +104,11 @@ function list_registered_devices() {
 			var formatted_timestamp = new Date(row.timestamp_column).toLocaleString();
 			out += `
 				<tr>
-					<td>${row.ip_address}</td>
-					<td>${row.device_name}</td>
-					<td>${row.api_token}</td>
-					<td>${row.mac_address}</td>
-					<td>${formatted_timestamp}</td>
+					<td data-column="ip_address">${row.ip_address}</td>
+					<td data-column="device_name">${row.device_name}</td>
+					<td data-column="api_token">${row.api_token}</td>
+					<td data-column="mac_address">${row.mac_address}</td>
+					<td data-column="timestamp_column">${formatted_timestamp}</td>
 					<td>
 						<span class="">
 							<button class="" onclick="dialog_open('update_device_dialog')">
@@ -112,6 +127,7 @@ function list_registered_devices() {
 		placeholder.innerHTML = out;
 	})
 }
+
 
 function register_device() {
 	console.log("called register_device()")
@@ -251,6 +267,27 @@ function update_device() {
 			}
 		}
 	);
+}
+
+function sort_registered_devices(table, column, sortOrder) {
+	console.log("called sort_registered_devices()");
+
+	const tbody = table.querySelector("tbody");
+	const rows = Array.from(tbody.querySelectorAll("tr"));
+
+	rows.sort((a, b) => {
+		const cell_a = a.querySelector(`td[data-column="${column}"]`);
+		const cell_b = b.querySelector(`td[data-column="${column}"]`);
+		if (cell_a && cell_b) {
+			const comparison = cell_a.textContent.localeCompare(cell_b.textContent, undefined, { numeric: true });
+			return sortOrder === "asc" ? comparison : -comparison;
+		}
+		return 0; // Default comparison when one or both cells are missing
+	});
+
+	rows.forEach((row) => {
+		tbody.appendChild(row);
+	});
 }
 
 // update an existing api token if the button is clicked
