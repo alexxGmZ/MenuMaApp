@@ -148,7 +148,6 @@ CREATE TABLE order_queue(
    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    kiosk_ip_address VARCHAR(30) NOT NULL,
    PRIMARY KEY(queue_number),
-   FOREIGN KEY (kiosk_ip_address) REFERENCES api_connected_devices(ip_address)
 );
 
 CREATE TABLE items_ordered(
