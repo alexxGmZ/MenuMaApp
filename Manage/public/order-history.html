@@ -45,6 +45,7 @@
         <table id="order_history_table" onclick="" class="text-left w-full mx-auto shadow-md table-fixed">
             <thead class="text-zinc-950 uppercase font-bold">
 				<tr>
+                    <th>Hsitory ID#</th>
 					<th>Queue Order#</th>
 					<th>Customer Name</th>
 					<th>Items Ordered</th>
@@ -59,6 +60,61 @@
             </tbody>
         </table>
     </div>
+
+    <!--Dialog for remove history item-->
+    <dialog id="remove_item_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+        <p class="text-center">Confirm to remove this order history?</p>
+        <br>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <p>History item selected:</p><br>
+
+                <p>Order ID</p>
+                <input type="text" id="history_id" name="history_id" placeholder="Order ID" class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled/>
+
+                <p class="pt-2">Order Queue</p>
+                <input type="text" id="history_queue_number" name="history_queue_number" placeholder="Order Queue#" class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled/>
+
+                <p class="pt-2">Customer Name</p>
+                <input type="text" id="history_customer" name="history_customer" placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled/>
+
+                <p>Total Price</p>
+                <input type="text" id="history_price" name="history_price" placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled/>
+
+            </div>
+            <div>
+                <br><br>
+                <p>Items Ordered</p>
+                <textarea type="text" id="history_items" name="history_items" placeholder="Foods Ordered" class="bg-white w-full placeholder:text-slate-800 rounded-md h-24 border border-slate-300 pl-2" disabled></textarea>
+
+                <p>Transaction Date</p>
+                <input type="text" id="history_date" name="history_date" placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled/>
+
+                <span>Status</span>
+                <span id="history_status" class="text-center">Status Placeholder</span>
+            </div>
+        </div>
+        <div>
+            <center>
+                <button onclick="dialog_close('remove_item_dialog')" class="font-bold rounded-full mt-2 py-2 px-2 bg-gray-300 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-full flex items-center justify-center">
+                    <span class="mx-2"> NO </span>
+                </button>
+            </center>
+            <center>
+                <button onclick="remove_history()" class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-green-500 bg-gray-300 hover:text-zinc-50 hover:drop-shadow-lg w-full flex items-center justify-center">
+                    <span class="mx-2"> YES </span>
+                </button>
+            </center>
+        </div>
+    </dialog>
+
+    <!--Remove success dialog-->
+	<dialog id="history_remove_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+		<span>History ID #</span>
+		<span id="history_id_remove_placeholder">HISTORY ID</span>
+		<span> is successfully removed!</span><br>
+		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
+	</dialog>
 
 </body>
 </html>
