@@ -24,7 +24,7 @@ async function list_available_devices() {
 	const endIP = 255;
 	let devices = [];
 
-	// console.log('Scanning network...');
+	console.log('Scanning network...');
 
 	const promises = [];
 
@@ -74,7 +74,7 @@ async function list_available_devices() {
 
 	placeholder.innerHTML = out;
 
-	// console.log('Scan completed.');
+	console.log('Network Scan completed.');
 }
 
 function list_registered_devices() {
