@@ -196,8 +196,7 @@ app.get("/orders",
 				});
 
 				// Format the result as JSON with 2 spaces indentation
-				const result = JSON.stringify(nestedData, null, 2);
-				response.status(200).send(result);
+				response.status(200).send(nestedData);
 			});
 		});
 	}
