@@ -46,6 +46,32 @@
 
 	<br><br>
 
+	<!-- device register success dialog -->
+	<dialog id="device_register_success_dialog" class="rounded-lg">
+		<h1 class="font-bold">Device successfully registered</h1>
+		<br>
+
+		<label for="success_device_ip">IP Address:</label>
+		<span id="success_device_ip" class="font-bold"></span>
+		<br>
+
+		<label for="success_device_name">Device Name:</label>
+		<span id="success_device_name" class="font-bold"></span>
+		<br>
+
+		<label for="success_device_mac">MAC Address:</label>
+		<span id="success_device_mac" class="font-bold"></span>
+		<br>
+
+		<label for="success_device_api_token">Token:</label>
+		<span id="success_device_api_token" class="font-bold"></span>
+		<br>
+
+		<center>
+			<button onclick="location.reload()">OK</button>
+		</center>
+	</dialog>
+
 	<!-- ipv4 address already exist dialog -->
 	<dialog id="ipv4_already_exist_dialog" class="rounded-lg">
 		<p>

@@ -127,14 +127,6 @@ function register_device() {
 		return dialog_open("invalid_mac_address_dialog");
 
 	const device_name = document.getElementById("device_name").value.trim();
-	const timestamp = get_current_timestamp();
-	const api_token = generate_api_token(device_ip, timestamp);
-
-	console.log(`"${device_ip}"`);
-	console.log(`"${device_name}"`);
-	console.log(`"${device_mac_address}"`);
-	console.log(`${timestamp}`);
-	console.log(`${api_token}`);
 
 	connection.query(
 		"SELECT COUNT(*) AS count FROM api_connected_devices WHERE ip_address = ?",
@@ -143,35 +135,67 @@ function register_device() {
 			if (ipError) alert(ipError);
 			else {
 				const existing_ip_record_count = ipResults[0].count;
-				if (existing_ip_record_count > 0)
+				if (existing_ip_record_count > 0) {
 					dialog_open("ipv4_already_exist_dialog");
+				}
 				else {
-					// If the IP is valid and not already in use, proceed to MAC address validation
-					connection.query(
-						"SELECT COUNT(*) AS count FROM api_connected_devices WHERE mac_address = ?",
-						[device_mac_address],
-						(error, results) => {
-							if (error) alert(error);
-							else {
-								const existing_record_count = results[0].count;
-								if (existing_record_count > 0)
-									dialog_open("mac_address_already_exist_dialog");
+					// Check if MAC address is blank or null
+					if (!device_mac_address || device_mac_address.trim() === "") {
+						// Proceed to insertion if MAC address is blank
+						const api_token = generate_api_token(device_ip, get_current_timestamp());
+						document.getElementById("success_device_api_token").innerHTML = api_token;
+						connection.query(
+							"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
+							[device_ip, device_name, api_token, device_mac_address],
+							(insertError) => {
+								if (insertError) alert(insertError);
 								else {
-									// Insert the new record if neither IP nor MAC address exists
-									connection.query(
-										"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
-										[device_ip, device_name, api_token, device_mac_address],
-										(insertError) => {
-											if (insertError) alert(insertError);
-											else {
-												alert("Device Successfully Registered");
-											}
-										}
-									);
+									console.log("IP: " + device_ip);
+									console.log("Name: " + device_name);
+									console.log("Mac: " + device_mac_address);
+									console.log("Token: " + api_token);
+									console.log("Timestamp: " + get_current_timestamp());
+									dialog_open("device_register_success_dialog");
 								}
 							}
-						}
-					);
+						);
+					}
+					else {
+						// If the MAC address is not blank, proceed to MAC address validation
+						connection.query(
+							"SELECT COUNT(*) AS count FROM api_connected_devices WHERE mac_address = ?",
+							[device_mac_address],
+							(error, results) => {
+								if (error) alert(error);
+								else {
+									const existing_record_count = results[0].count;
+									if (existing_record_count > 0) {
+										dialog_open("mac_address_already_exist_dialog");
+									}
+									else {
+										// Insert the new record if neither IP nor MAC address exists
+										const api_token = generate_api_token(device_ip, get_current_timestamp());
+										document.getElementById("success_device_api_token").innerHTML = api_token;
+										connection.query(
+											"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
+											[device_ip, device_name, api_token, device_mac_address],
+											(insertError) => {
+												if (insertError) alert(insertError);
+												else {
+													console.log("IP: " + device_ip);
+													console.log("Name: " + device_name);
+													console.log("Mac: " + device_mac_address);
+													console.log("Token: " + api_token);
+													console.log("Timestamp: " + get_current_timestamp());
+													dialog_open("device_register_success_dialog");
+												}
+											}
+										);
+									}
+								}
+							}
+						);
+					}
 				}
 			}
 		}
@@ -283,6 +307,13 @@ function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id);
 
 	// any element id specific statements
+	if (element_id == "device_register_success_dialog") {
+		const device_ip = document.getElementById("device_ip").value;
+		document.getElementById("success_device_ip").innerHTML = device_ip;
+		document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
+		document.getElementById("success_device_mac").innerHTML = document.getElementById("device_mac_address").value;
+	}
+
 	if (element_id == "ipv4_already_exist_dialog")
 		document.getElementById("existing_ip").innerHTML = document.getElementById("device_ip").value;
 
