@@ -24,7 +24,7 @@ async function list_available_devices() {
 	const endIP = 255;
 	let devices = [];
 
-	// console.log('Scanning network...');
+	console.log('Scanning network...');
 
 	const promises = [];
 
@@ -74,7 +74,7 @@ async function list_available_devices() {
 
 	placeholder.innerHTML = out;
 
-	// console.log('Scan completed.');
+	console.log('Network Scan completed.');
 }
 
 function list_registered_devices() {
@@ -127,14 +127,6 @@ function register_device() {
 		return dialog_open("invalid_mac_address_dialog");
 
 	const device_name = document.getElementById("device_name").value.trim();
-	const timestamp = get_current_timestamp();
-	const api_token = generate_api_token(device_ip, timestamp);
-
-	console.log(`"${device_ip}"`);
-	console.log(`"${device_name}"`);
-	console.log(`"${device_mac_address}"`);
-	console.log(`${timestamp}`);
-	console.log(`${api_token}`);
 
 	connection.query(
 		"SELECT COUNT(*) AS count FROM api_connected_devices WHERE ip_address = ?",
@@ -143,35 +135,67 @@ function register_device() {
 			if (ipError) alert(ipError);
 			else {
 				const existing_ip_record_count = ipResults[0].count;
-				if (existing_ip_record_count > 0)
+				if (existing_ip_record_count > 0) {
 					dialog_open("ipv4_already_exist_dialog");
+				}
 				else {
-					// If the IP is valid and not already in use, proceed to MAC address validation
-					connection.query(
-						"SELECT COUNT(*) AS count FROM api_connected_devices WHERE mac_address = ?",
-						[device_mac_address],
-						(error, results) => {
-							if (error) alert(error);
-							else {
-								const existing_record_count = results[0].count;
-								if (existing_record_count > 0)
-									dialog_open("mac_address_already_exist_dialog");
+					// Check if MAC address is blank or null
+					if (!device_mac_address || device_mac_address.trim() === "") {
+						// Proceed to insertion if MAC address is blank
+						const api_token = generate_api_token(device_ip, get_current_timestamp());
+						document.getElementById("success_device_api_token").innerHTML = api_token;
+						connection.query(
+							"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
+							[device_ip, device_name, api_token, device_mac_address],
+							(insertError) => {
+								if (insertError) alert(insertError);
 								else {
-									// Insert the new record if neither IP nor MAC address exists
-									connection.query(
-										"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
-										[device_ip, device_name, api_token, device_mac_address],
-										(insertError) => {
-											if (insertError) alert(insertError);
-											else {
-												alert("Device Successfully Registered");
-											}
-										}
-									);
+									console.log("IP: " + device_ip);
+									console.log("Name: " + device_name);
+									console.log("Mac: " + device_mac_address);
+									console.log("Token: " + api_token);
+									console.log("Timestamp: " + get_current_timestamp());
+									dialog_open("device_register_success_dialog");
 								}
 							}
-						}
-					);
+						);
+					}
+					else {
+						// If the MAC address is not blank, proceed to MAC address validation
+						connection.query(
+							"SELECT COUNT(*) AS count FROM api_connected_devices WHERE mac_address = ?",
+							[device_mac_address],
+							(error, results) => {
+								if (error) alert(error);
+								else {
+									const existing_record_count = results[0].count;
+									if (existing_record_count > 0) {
+										dialog_open("mac_address_already_exist_dialog");
+									}
+									else {
+										// Insert the new record if neither IP nor MAC address exists
+										const api_token = generate_api_token(device_ip, get_current_timestamp());
+										document.getElementById("success_device_api_token").innerHTML = api_token;
+										connection.query(
+											"INSERT INTO api_connected_devices (ip_address, device_name, api_token, mac_address) VALUES (?, ?, ?, ?)",
+											[device_ip, device_name, api_token, device_mac_address],
+											(insertError) => {
+												if (insertError) alert(insertError);
+												else {
+													console.log("IP: " + device_ip);
+													console.log("Name: " + device_name);
+													console.log("Mac: " + device_mac_address);
+													console.log("Token: " + api_token);
+													console.log("Timestamp: " + get_current_timestamp());
+													dialog_open("device_register_success_dialog");
+												}
+											}
+										);
+									}
+								}
+							}
+						);
+					}
 				}
 			}
 		}
@@ -241,6 +265,51 @@ document.getElementById("update_device_gen_token_button").addEventListener(
 	}
 );
 
+function dialog_open(element_id) {
+	console.log("called dialog_open()")
+	const fav_dialog = document.getElementById(element_id);
+
+	// any element id specific statements
+	if (element_id == "device_register_success_dialog") {
+		const device_ip = document.getElementById("device_ip").value;
+		document.getElementById("success_device_ip").innerHTML = device_ip;
+		document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
+		document.getElementById("success_device_mac").innerHTML = document.getElementById("device_mac_address").value;
+	}
+
+	if (element_id == "ipv4_already_exist_dialog")
+		document.getElementById("existing_ip").innerHTML = document.getElementById("device_ip").value;
+
+	if (element_id == "mac_address_already_exist_dialog")
+		document.getElementById("existing_mac_address").innerHTML = document.getElementById("device_mac_address").value;
+
+	if (element_id == "invalid_ipv4_dialog")
+		document.getElementById("invalid_ip").innerHTML = document.getElementById("device_ip").value;
+
+	if (element_id == "invalid_mac_address_dialog")
+		document.getElementById("invalid_mac_address").innerHTML = document.getElementById("device_mac_address").value;
+
+	if (element_id == "delete_device_dialog")
+		row_click();
+
+	if (element_id == "delete_device_success_dialog")
+		document.getElementById("delete_device_success_ip").innerHTML = document.getElementById("delete_device_ip").innerHTML;
+
+	if (element_id == "update_device_dialog")
+		row_click();
+
+	if (element_id == "update_device_success_dialog")
+		document.getElementById("update_device_success_ip").innerHTML = document.getElementById("update_device_ip").innerHTML;
+
+	fav_dialog.showModal();
+}
+
+function dialog_close(element_id) {
+	console.log("called dialog_close()")
+	const fav_dialog = document.getElementById(element_id);
+	fav_dialog.close();
+}
+
 function row_click() {
 	console.log("called row_click()");
 
@@ -276,44 +345,6 @@ function row_click() {
 		}
 		current_row.onclick = click_handle(current_row);
 	}
-}
-
-function dialog_open(element_id) {
-	console.log("called dialog_open()")
-	const fav_dialog = document.getElementById(element_id);
-
-	// any element id specific statements
-	if (element_id == "ipv4_already_exist_dialog")
-		document.getElementById("existing_ip").innerHTML = document.getElementById("device_ip").value;
-
-	if (element_id == "mac_address_already_exist_dialog")
-		document.getElementById("existing_mac_address").innerHTML = document.getElementById("device_mac_address").value;
-
-	if (element_id == "invalid_ipv4_dialog")
-		document.getElementById("invalid_ip").innerHTML = document.getElementById("device_ip").value;
-
-	if (element_id == "invalid_mac_address_dialog")
-		document.getElementById("invalid_mac_address").innerHTML = document.getElementById("device_mac_address").value;
-
-	if (element_id == "delete_device_dialog")
-		row_click();
-
-	if (element_id == "delete_device_success_dialog")
-		document.getElementById("delete_device_success_ip").innerHTML = document.getElementById("delete_device_ip").innerHTML;
-
-	if (element_id == "update_device_dialog")
-		row_click();
-
-	if (element_id == "update_device_success_dialog")
-		document.getElementById("update_device_success_ip").innerHTML = document.getElementById("update_device_ip").innerHTML;
-
-	fav_dialog.showModal();
-}
-
-function dialog_close(element_id) {
-	console.log("called dialog_close()")
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.close();
 }
 
 function generate_api_token(device_ip, timestamp) {
