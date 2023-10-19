@@ -50,11 +50,11 @@
 		<table id="employee_table" class="w-full">
 			<thead class="text-zinc-950 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
 				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Design Privilege</th>
-					<th>Inventory Privilege</th>
-					<th>View Reports Privilege</th>
+					<th data-column="employee_id">ID</th>
+					<th data-column="employee_name">Name</th>
+					<th data-column="employee_design_priv">Design Privilege</th>
+					<th data-column="employee_inventory_priv">Inventory Privilege</th>
+					<th data-column="employee_reports_priv">View Reports Privilege</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -70,7 +70,7 @@
 	<!-- UPDATE MODAL -->
 	<dialog id="update_employee_dialog" class="rounded-lg drop-shadow-lg mx-auto">
 		<label for="name">Name:</label>
-		<input type="text" name="name_2" id="name_2" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm""><br>
+		<input type="text" name="name_2" id="name_2" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 		<div class="grid gap-4 grid-cols-3">
 			<div class="text-center">
 				<input type="checkbox" name="design_priv_2" id="design_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>

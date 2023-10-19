@@ -1,5 +1,20 @@
 document.addEventListener("DOMContentLoaded", function() {
 	list_registered_employees();
+
+	// sort table columns when column name is clicked
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#employee_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_registered_employees(document.getElementById("employee_table"), column, sortOrders[column]);
+		});
+	});
 });
 
 console.log("Directory: " + __dirname);
@@ -96,11 +111,11 @@ function list_registered_employees() {
 
 			out += `
 				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-					<td class="text-center">${row.employee_id}</td>
-					<td class="text-center">${row.name}</td>
-					<td class="text-center">${row.design_priv}</td>
-					<td class="text-center">${row.inventory_priv}</td>
-					<td class="text-center">${row.view_reports_priv}</td>
+					<td data-column="employee_id" class="text-center">${row.employee_id}</td>
+					<td data-column="employee_name" class="text-center">${row.name}</td>
+					<td data-column="employee_design_priv" class="text-center">${row.design_priv}</td>
+					<td data-column="employee_inventory_priv" class="text-center">${row.inventory_priv}</td>
+					<td data-column="employee_reports_priv" class="text-center">${row.view_reports_priv}</td>
 					<td class="text-center">
 						<span class="action-btn">
 							<button class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_employee_dialog')">
@@ -115,6 +130,27 @@ function list_registered_employees() {
 			`;
 		}
 		placeholder.innerHTML = out;
+	});
+}
+
+function sort_registered_employees(table, column, sortOrder) {
+	console.log("called sort_registered_employees()");
+
+	const tbody = table.querySelector("tbody");
+	const rows = Array.from(tbody.querySelectorAll("tr"));
+
+	rows.sort((a, b) => {
+		const cell_a = a.querySelector(`td[data-column="${column}"]`);
+		const cell_b = b.querySelector(`td[data-column="${column}"]`);
+		if (cell_a && cell_b) {
+			const comparison = cell_a.textContent.localeCompare(cell_b.textContent, undefined, { numeric: true });
+			return sortOrder === "asc" ? comparison : -comparison;
+		}
+		return 0; // Default comparison when one or both cells are missing
+	});
+
+	rows.forEach((row) => {
+		tbody.appendChild(row);
 	});
 }
 
