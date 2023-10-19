@@ -265,43 +265,6 @@ document.getElementById("update_device_gen_token_button").addEventListener(
 	}
 );
 
-function row_click() {
-	console.log("called row_click()");
-
-	const table = document.getElementById("registered_devices");
-	const rows = table.getElementsByTagName("tr");
-
-	for (let i = 0; i < rows.length; i++) {
-		let current_row = table.rows[i];
-		let click_handle = function(row) {
-			return function() {
-				var device_ip = row.getElementsByTagName("td")[0].innerHTML;
-				var device_name = row.getElementsByTagName("td")[1].innerHTML;
-				var api_token = row.getElementsByTagName("td")[2].innerHTML;
-				var mac_address = row.getElementsByTagName("td")[3].innerHTML;
-
-				console.log(device_ip);
-				console.log(device_name);
-				console.log(api_token);
-				console.log(mac_address);
-
-				// for deleting device
-				document.getElementById("delete_device_ip").innerHTML = device_ip;
-				document.getElementById("delete_device_name").innerHTML = device_name;
-				document.getElementById("delete_device_api_token").innerHTML = api_token;
-				document.getElementById("delete_device_mac_address").innerHTML = mac_address;
-
-				// for updating device
-				document.getElementById("update_device_ip").innerHTML = device_ip;
-				document.getElementById("update_device_name").value = device_name;
-				document.getElementById("update_device_api_token").innerHTML = api_token;
-				document.getElementById("update_device_mac_address").value = mac_address;
-			}
-		}
-		current_row.onclick = click_handle(current_row);
-	}
-}
-
 function dialog_open(element_id) {
 	console.log("called dialog_open()")
 	const fav_dialog = document.getElementById(element_id);
@@ -345,6 +308,43 @@ function dialog_close(element_id) {
 	console.log("called dialog_close()")
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.close();
+}
+
+function row_click() {
+	console.log("called row_click()");
+
+	const table = document.getElementById("registered_devices");
+	const rows = table.getElementsByTagName("tr");
+
+	for (let i = 0; i < rows.length; i++) {
+		let current_row = table.rows[i];
+		let click_handle = function(row) {
+			return function() {
+				var device_ip = row.getElementsByTagName("td")[0].innerHTML;
+				var device_name = row.getElementsByTagName("td")[1].innerHTML;
+				var api_token = row.getElementsByTagName("td")[2].innerHTML;
+				var mac_address = row.getElementsByTagName("td")[3].innerHTML;
+
+				console.log(device_ip);
+				console.log(device_name);
+				console.log(api_token);
+				console.log(mac_address);
+
+				// for deleting device
+				document.getElementById("delete_device_ip").innerHTML = device_ip;
+				document.getElementById("delete_device_name").innerHTML = device_name;
+				document.getElementById("delete_device_api_token").innerHTML = api_token;
+				document.getElementById("delete_device_mac_address").innerHTML = mac_address;
+
+				// for updating device
+				document.getElementById("update_device_ip").innerHTML = device_ip;
+				document.getElementById("update_device_name").value = device_name;
+				document.getElementById("update_device_api_token").innerHTML = api_token;
+				document.getElementById("update_device_mac_address").value = mac_address;
+			}
+		}
+		current_row.onclick = click_handle(current_row);
+	}
 }
 
 function generate_api_token(device_ip, timestamp) {
