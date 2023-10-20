@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 	display_menu_items();
 
+	// sort by column
 	const sortOrders = {};
 	const headers = document.querySelectorAll("#menu_items_table th[data-column]");
 
@@ -28,6 +29,8 @@ mysql.check_connection();
 //----- Show Foods Function -----//
 // Start Query Here
 function display_menu_items() {
+	console.log("called display_menu_items()")
+
 	connection.connect(function(err) {
 		if (err) throw err;
 		//Select all foods and return the result object:
@@ -67,8 +70,29 @@ function display_menu_items() {
 	})
 }
 
+function refresh_menu_items() {
+	console.log("called refresh_menu_items()");
+
+	// close all active dialogs with active-dialog class
+	// NOTE: will execute if dialog_open() is executed
+	const activeDialogs = document.querySelectorAll(".active-dialog");
+	activeDialogs.forEach((dialog) => {
+		dialog.close();
+		dialog.classList.remove("active-dialog");
+	});
+
+	// empty the registered_devices table body
+	const table_body = document.getElementById("menu_items_list");
+	table_body.innerHTML = "";
+
+	// repopulate the registered_devices table body
+	display_menu_items();
+}
+
 // add new menu item
 function add_item() {
+	console.log("called add_item()");
+
 	const food_form = document.getElementById("add_item_form");
 	fetch("http://localhost:8080/upload_item", {
 		method: "POST",
@@ -88,18 +112,19 @@ function add_item() {
 
 // For success dialog message after adding
 function add_item_message() {
+	console.log("called add_item_message()");
 
 	if (document.getElementById("fooditem").value.length == 0)
-		return dialog_open("error_dialog");
+		return dialog_open("add_item_error_dialog");
 
 	if (document.getElementById("fooddesc").value.length == 0)
-		return dialog_open("error_dialog");
+		return dialog_open("add_item_error_dialog");
 
 	if (document.getElementById("foodimg").files.length == 0)
-		return dialog_open("error_dialog");
+		return dialog_open("add_item_error_dialog");
 
 	if (document.getElementById("foodprice").value.length == 0)
-		return dialog_open("error_dialog");
+		return dialog_open("add_item_error_dialog");
 
 	dialog_open("add_item_success_dialog");
 }
@@ -127,6 +152,8 @@ function sort_menu_items(table, column, sortOrder) {
 
 // table row click, used for updating and deleting an item
 function row_click() {
+	console.log("called row_click()");
+
 	var table = document.getElementById("menu_items_table");
 	var rows = table.getElementsByTagName("tr");
 	for (let i = 0; i < rows.length; i++) {
@@ -175,6 +202,8 @@ function row_click() {
 
 // update an existing menu item
 function update_item() {
+	console.log("called update_item()");
+
 	// values from row_click() function
 	var item_id = document.getElementById("update_item_id").value;
 	var item_name = document.getElementById("update_item_name").value;
@@ -231,6 +260,8 @@ function update_item() {
 
 // delete an item based on the item id
 function delete_item() {
+	console.log("called delete_item()");
+
 	var id = document.getElementById("remove_item_id").value;
 
 	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
@@ -247,6 +278,8 @@ function delete_item() {
 
 // search an item via id
 function search_via_id() {
+	console.log("called search_via_id()");
+
 	if (document.getElementById("search_item_box").value == "") {
 		dialog_open('search_item_error_dialog');
 	}
@@ -292,7 +325,11 @@ function search_via_id() {
 
 // open modal dialog based on element id
 function dialog_open(element_id) {
+	console.log("called dialog_open()");
 	const fav_dialog = document.getElementById(element_id);
+
+	// add active-dialog class in all current active dialogs
+	fav_dialog.classList.add("active-dialog");
 
 	// any element id specific statements
 	if (element_id == "add_item_success_dialog") {
@@ -316,6 +353,7 @@ function dialog_open(element_id) {
 
 // close modal dialog based on element id
 function dialog_close(element_id) {
+	console.log("called dialog_close()");
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.close();
 }
