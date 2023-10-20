@@ -29,6 +29,62 @@ function request_message_format(request_protocol, api_endpoint, ip_requested) {
 	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
 }
 
+function authenticate_api_connection(req, res, next) {
+	// const ip = req.ip;
+	let ip = extractIPv4(req.ip);
+	const token = req.query.api_token;
+	console.log(ip, token);
+
+	// Query the database to check if the IP and token combination exists
+	const query = `SELECT * FROM api_connected_devices WHERE ip_address = ? AND api_token = ?`;
+	connection.query(
+		query,
+		[ip, token],
+		(err, results) => {
+			if (err) {
+				console.error(err);
+				return res.status(500).json({ error: 'Internal Server Error' });
+			}
+
+			// If a valid combination is found, proceed to the next middleware
+			if (results.length > 0) {
+				next();
+			}
+			else {
+				return res.status(401).json({ error: 'Unauthorized' });
+			}
+		}
+	);
+}
+
+function extractIPv4(ip) {
+	if (ip.startsWith('::ffff:')) {
+		return ip.replace('::ffff:', ''); // Remove the '::ffff:' prefix
+	}
+	return ip;
+}
+
+// for the Order application to display menu items
+app.get("/menu_items",
+	authenticate_api_connection,
+	(request, response) => {
+		const query = "SELECT * from manage_db.menu_items";
+		connection.query(query, function(err, result) {
+			if (err) throw err;
+
+			// Convert image data to base64-encoded strings
+			for (const row of result) {
+				if (row.item_image) {
+					row.item_image = `data:image/jpeg;base64,${row.item_image.toString("base64")}`;
+				}
+			}
+
+			request_message_format("GET", "menu_items", request.ip);
+			response.status(200).json(result);
+		})
+	}
+);
+
 app.get("/", (request, response) => {
 	const server_ip = Object.values(os.networkInterfaces())
 		.flat()
@@ -128,28 +184,6 @@ app.get("/shitty-images",
 			response.status(200).json({ images: imageDataUrls });
 			request_message_format("GET", "shitty-images", request.ip);
 		});
-	}
-);
-
-// for the Order application to display menu items
-app.get("/menu_items",
-	// request (incoming data)
-	// response (outgoing data)
-	(request, response) => {
-		const query = "SELECT * from manage_db.menu_items";
-		connection.query(query, function(err, result) {
-			if (err) throw err;
-
-			// Convert image data to base64-encoded strings
-			for (const row of result) {
-				if (row.item_image) {
-					row.item_image = `data:image/jpeg;base64,${row.item_image.toString("base64")}`;
-				}
-			}
-
-			request_message_format("GET", "menu_items", request.ip);
-			response.status(200).json(result);
-		})
 	}
 );
 
