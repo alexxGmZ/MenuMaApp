@@ -128,6 +128,24 @@ function list_registered_devices() {
 	})
 }
 
+function refresh_registered_devices_table() {
+	console.log("called refresh_registered_devices_table()");
+
+	// close all active dialogs with active-dialog class
+	// NOTE: will execute if dialog_open() is executed
+	const activeDialogs = document.querySelectorAll(".active-dialog");
+	activeDialogs.forEach((dialog) => {
+		dialog.close();
+		dialog.classList.remove("active-dialog");
+	});
+
+	// empty the registered_devices table body
+	const table_body = document.getElementById("registered_devices");
+	table_body.innerHTML = "";
+
+	// repopulate the registered_devices table body
+	list_registered_devices();
+}
 
 function register_device() {
 	console.log("called register_device()")
@@ -306,7 +324,10 @@ function dialog_open(element_id) {
 	console.log("called dialog_open()")
 	const fav_dialog = document.getElementById(element_id);
 
-	// any element id specific statements
+	// add active-dialog class in all current active dialogs
+	fav_dialog.classList.add("active-dialog");
+
+	// any dialog element id specific statements
 	if (element_id == "device_register_success_dialog") {
 		const device_ip = document.getElementById("device_ip").value;
 		document.getElementById("success_device_ip").innerHTML = device_ip;
