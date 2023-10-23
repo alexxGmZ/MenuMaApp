@@ -31,22 +31,20 @@ function display_orders() {
 				//console.log(removed_comma);
 
 				const markup = `
-					<tr class="bg-sky-300 rounded-lg border-b dark:border-gray-700 py-3">
-						<td class="text-center px-7 font-bold">${orders.queue_number}</td>
-						<td class="text-center bg-slate-50 rounded-lg px-3 whitespace-pre w-32">${removed_comma}</td>
-						<td class="text-center px-2">${orders.customer_name}</td>
-						<td class="text-center">₱${orders.total_price}</td>
-						<td class="px-3">
-							<center>
-								<button onclick="order_done()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
-									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
-									<span class="mx-2"> DONE </span>
-								</button>
-							</center>
+					<tr class="mx-auto bg-sky-300 rounded-lg grid grid-cols-1 gap-2 w-60 rounded-lg">
+						<td class="text-center font-bold rounded-t-lg pt-2 pb-2">${orders.queue_number}</td>
+						<td class="text-center bg-slate-50 rounded-lg whitespace-pre mx-2 h-24">${removed_comma}</td>
+						<td class="text-center px-2 italic">${orders.customer_name}</td>
+						<td class="text-center font-bold">₱${orders.total_price}</td>
+						<td class="grid grid-cols-2 gap-2 bg-sky-500 pb-2 rounded-b-lg">
 							<center>
 								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 									<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
-									<span class="mx-2"> CANCEL </span>
+								</button>
+							</center>
+							<center>
+								<button onclick="order_done()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
 								</button>
 							</center>
 						</td>

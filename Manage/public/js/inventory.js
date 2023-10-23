@@ -45,13 +45,13 @@ function display_menu_items() {
 				let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
 				out += `
 					<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-						<td data-column="item_id" class="text-center">${row.item_id}</td>
+						<td data-column="item_id" class="text-center font-bold">${row.item_id}</td>
 						<td data-column="item_name" class="text-center">${row.item_name}</td>
 						<td data-column="item_description" class="text-center">${row.item_desc}</td>
-						<td><img src="${image_src}" alt="Foods Image"></td>
+						<td><img src="${image_src}" alt="Foods Image" width="300"></td>
 						<td data-column="item_price" class="text-center">${row.item_price}</td>
 						<td data-column="item_quantity_sold" class="text-center">${row.quantity_sold}</td>
-						<td data-column="item_revenue" class="text-center">₱${row.revenue_generated}</td>
+						<td data-column="item_revenue" class="text-center font-bold">₱${row.revenue_generated}</td>
 						<td>
 							<span class="action-btn">
 							<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
@@ -297,10 +297,10 @@ function search_via_id() {
 				let image_src = `data:image/jpeg;base64,${row.item_image.toString('base64')}`;
 				out += `
 				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-					<td class="text-center">${row.item_id}</td>
+					<td class="text-center font-bold">${row.item_id}</td>
 					<td class="text-center">${row.item_name}</td>
 					<td class="text-center">${row.item_desc}</td>
-					<td><img src="${image_src}" alt="Foods Image"></td>
+					<td><img src="${image_src}" alt="Foods Image" width="300"></td>
 					<td class="text-center">${row.item_price}</td>
 					<td class="text-center">${row.quantity_sold}</td>
 					<td class="text-center">${row.revenue_generated}</td>
