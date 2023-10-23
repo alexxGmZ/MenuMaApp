@@ -41,13 +41,13 @@ CREATE TABLE api_connected_devices(
 );
 
 CREATE TABLE order_queue(
-   queue_number INT AUTO_INCREMENT,
-   order_id INT NOT NULL,
+   order_id INT AUTO_INCREMENT,
+   queue_number INT NOT NULL,
    customer_name TEXT,
    total_price FLOAT DEFAULT 0,
    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    kiosk_ip_address VARCHAR(30) NOT NULL,
-   PRIMARY KEY(queue_number),
+   PRIMARY KEY(order_id)
 );
 
 CREATE TABLE items_ordered(
@@ -57,11 +57,11 @@ CREATE TABLE items_ordered(
    item_price FLOAT NOT NULL,
    quantity INT DEFAULT 0,
    quantity_times_price FLOAT DEFAULT 0,
-   queue_number INT NOT NULL,
    order_id INT NOT NULL,
+   queue_number INT NOT NULL,
    PRIMARY KEY(items_ordered_id),
    FOREIGN KEY (item_id) REFERENCES menu_items(item_id),
-   FOREIGN KEY (queue_number) REFERENCES order_queue(queue_number)
+   FOREIGN KEY (order_id) REFERENCES order_queue(order_id)
 );
 
 -- Independent tables
