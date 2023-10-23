@@ -10,8 +10,9 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 function set_server_connection() {
-	const input_server_ip = document.getElementById("server_ip").value;
-	const input_api_token = document.getElementById("api_token").value;
+	console.log("called set_server_connection()");
+	const input_server_ip = document.getElementById("server_ip").value.trim();
+	const input_api_token = document.getElementById("api_token").value.trim();
 
 	// warning if the input box is empty
 	if (!is_valid_ipv4(input_server_ip))
@@ -49,6 +50,7 @@ function set_server_connection() {
 }
 
 function is_valid_ipv4(ip) {
+	console.log("called is_valid_ipv4()")
 	const ipv4_pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
 	return ipv4_pattern.test(ip);
 }

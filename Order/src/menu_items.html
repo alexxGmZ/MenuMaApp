@@ -34,7 +34,7 @@
 	<h1 class="font-bold underline">Menu Items</h1>
 	<!-- display menu items in a table -->
 	<div>
-		<table id="">
+		<table id="menu_items_table">
 			<tbody id="menu_items">
 				<!-- display items using the display_menu_items() function -->
 			</tbody>
@@ -44,26 +44,31 @@
 	<br>
 
 	<h1 class="font-bold underline">Items Picked</h1>
+	<!-- display items clicked or picked in the menu -->
 	<div>
 		<table id="items_picked_table">
 			<thead>
 				<tr>
+					<th>ID</th>
 					<th>Item</th>
 					<th>Quantity</th>
 					<th>Price</th>
 				</tr>
 			</thead>
 			<tbody id="items_picked">
+
 			</tbody>
 		</table>
 		<br>
-		<button id="order_button">Order</button>
+		<button id="order_reset_button">Reset</button>
+		<button id="order_send_button">Order</button>
 	</div>
 
 	<!-- <script src="./js/global.js" type="module"></script> -->
 	<script src="./js/api_menu_items.js" type="module"></script>
-	<script src="./js/network_status.js" type="module"></script>
+	<!-- <script src="./js/network_status.js" type="module"></script> -->
 	<script src="./js/pull_to_refresh.js" type="module"></script>
+	<script src="./js/order_items.js" type="module"></script>
 </body>
 
 </html>
