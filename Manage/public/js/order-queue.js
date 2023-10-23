@@ -197,6 +197,26 @@ function order_done() {
 							})
 						}
 
+						// Update revenue everytime if the order is served
+						if(orderQueueResult.length > 0) {
+							const orderRow = orderQueueResult[0];
+							console.log("Item Order is: " + orderRow.order_id);
+
+							const update_revenue_query = `UPDATE menu_items AS m
+							JOIN items_ordered AS i_o ON m.item_id = i_o.item_id
+							SET m.revenue_generated = m.revenue_generated + i_o.quantity_times_price,
+								m.quantity_sold = m.quantity_sold + i_o.quantity
+							WHERE i_o.order_id = "${orderRow.order_id}"`;
+							connection.query(update_revenue_query, error => {
+								if(error) {
+									console.log(error);
+								} else {
+									console.log("The revenue has been updated!");
+								}
+							});
+
+						}
+
 						document.getElementById("order_num_cancel").value = order;
 						// This will be the delete function after order is done or cancelled
 						const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order}"`;
