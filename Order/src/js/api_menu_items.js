@@ -1,8 +1,10 @@
 import { CapacitorHttp } from '@capacitor/core';
 console.log("Server IP: ", sessionStorage.getItem("server_IP"));
+console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 
 // const server_url = "http://192.168.254.115";
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
+const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 let menu_items_data = [];
 
@@ -10,7 +12,7 @@ let menu_items_data = [];
 function get_request_menu_items() {
 	return new Promise((resolve, reject) => {
 		const request_promise = CapacitorHttp.get({
-			url: `${server_url}:${server_port}/menu_items`,
+			url: `${server_url}:${server_port}/menu_items?api_token=${server_token}`,
 		})
 			.then(response => {
 				console.log("Response Status: " + response.status);

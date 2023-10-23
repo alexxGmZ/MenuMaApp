@@ -1,4 +1,4 @@
-import { W as WebPlugin } from "./network_status.8a4c6ee1.js";
+import { W as WebPlugin } from "./network_status.c934821c.js";
 function translatedConnection() {
   const connection = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection;
   let result = "unknown";

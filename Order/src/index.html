@@ -1,3 +1,6 @@
+<!--
+	NOTE: Establish connection to the Manage Application Server
+-->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -27,14 +30,19 @@
 	<br>
 
 	<div>
-		<h1 class="font-bold underline">Server LAN IP:</h1>
+		<label for="server_ip" class="font-bold">Server LAN IP:</label>
 		<input type="text" id="server_ip" class="">
+		<br>
+
+		<label for="api_token" class="font-bold">Token:</label>
+		<input type="text" id="api_token" class="">
+		<br>
 		<button id="connect_button">Connect</button>
 	</div>
 
 	<br>
 
-	<script src="./js/get_server_ip.js" type="module"></script>
+	<script src="./js/connect_to_server.js" type="module"></script>
 	<script src="./js/network_status.js" type="module"></script>
 </body>
 
