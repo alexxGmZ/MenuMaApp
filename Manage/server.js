@@ -65,8 +65,7 @@ function extractIPv4(ip) {
 }
 
 // for the Order application to display menu items
-app.get("/menu_items",
-	authenticate_api_connection,
+app.get("/menu_items", authenticate_api_connection,
 	(request, response) => {
 		const query = "SELECT * from manage_db.menu_items";
 		connection.query(query, function(err, result) {
@@ -85,7 +84,8 @@ app.get("/menu_items",
 	}
 );
 
-app.get("/", (request, response) => {
+app.get("/", authenticate_api_connection,
+	(request, response) => {
 	const server_ip = Object.values(os.networkInterfaces())
 		.flat()
 		.filter((iface) => iface.family === 'IPv4' && !iface.internal)
@@ -233,6 +233,12 @@ app.get("/orders",
 				response.status(200).send(nestedData);
 			});
 		});
+	}
+);
+
+app.get("/send_orders", authenticate_api_connection,
+	(request, response) => {
+
 	}
 );
 

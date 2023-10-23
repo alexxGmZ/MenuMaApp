@@ -1,12 +1,14 @@
-import { C as CapacitorHttp } from "./network_status.8a4c6ee1.js";
+import { C as CapacitorHttp } from "./network_status.c934821c.js";
 console.log("Server IP: ", sessionStorage.getItem("server_IP"));
+console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
+const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 let menu_items_data = [];
 function get_request_menu_items() {
   return new Promise((resolve, reject) => {
     CapacitorHttp.get({
-      url: `${server_url}:${server_port}/menu_items`
+      url: `${server_url}:${server_port}/menu_items?api_token=${server_token}`
     }).then((response) => {
       console.log("Response Status: " + response.status);
       menu_items_data = response.data;

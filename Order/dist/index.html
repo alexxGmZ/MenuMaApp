@@ -1,3 +1,6 @@
+<!--
+	NOTE: Establish connection to the Manage Application Server
+-->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -14,8 +17,8 @@
 
 	
 	
-  <script type="module" crossorigin src="/assets/index.cad4f7e9.js"></script>
-  <link rel="modulepreload" href="/assets/network_status.8a4c6ee1.js">
+  <script type="module" crossorigin src="/assets/index.6f9947ec.js"></script>
+  <link rel="modulepreload" href="/assets/network_status.c934821c.js">
   <link rel="stylesheet" href="/assets/network_status.c924ec1c.css">
 </head>
 
@@ -30,8 +33,13 @@
 	<br>
 
 	<div>
-		<h1 class="font-bold underline">Server LAN IP:</h1>
+		<label for="server_ip" class="font-bold">Server LAN IP:</label>
 		<input type="text" id="server_ip" class="">
+		<br>
+
+		<label for="api_token" class="font-bold">Token:</label>
+		<input type="text" id="api_token" class="">
+		<br>
 		<button id="connect_button">Connect</button>
 	</div>
 
