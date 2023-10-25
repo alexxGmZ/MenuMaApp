@@ -30,7 +30,7 @@
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 		<div class="px-3 py-3 lg:px-5 lg:pl-3">
 			<div class="flex items-center justify-between">
-				<a href="#">Create</a>
+				<button onclick="dialog_open('create_canvas_dialog')">Create</button>
 				<a href="#">Open</a>
 				<a href="#">Save</a>
 				<a href="#">Import</a>
@@ -50,6 +50,35 @@
 			</div>
 		</div>
 	</nav>
+
+	<!-- create canvas dialog -->
+	<dialog id="create_canvas_dialog" class="rounded-lg">
+		<h1 class="font-bold">Generate Canvas</h1>
+		<br>
+
+		<h2>Resolution Presets</h2>
+		<button onclick="generate_canvas('mobile')">Mobile 720 x 1280</button>
+		<br>
+
+		<button onclick="generate_canvas('tablet')">Tablet 800 x 1280</button>
+		<br>
+		<br>
+
+		<h2>Custom Resolution</h2>
+		<label for="custom_canvas_height">Height:</label>
+		<input type="text" id="custom_canvas_height">
+		<br>
+
+		<label for="custom_canvas_width">Width:</label>
+		<input type="text" id="custom_canvas_width">
+		<br>
+
+		<center>
+			<button onclick="generate_canvas('custom')">Use Custom Resolution</button>
+			<br><br>
+			<button onclick="dialog_close('create_canvas_dialog')">Cancel</button>
+		</center>
+	</dialog>
 
 	<aside id="left_sidebar"
 		class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
@@ -102,9 +131,7 @@
 		</div>
 	</aside>
 
-	<div class="p-4 sm:ml-64">
-		<canvas id="canvas_area" class="border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-14 sm:order-1 sm:ml-0 sm:mr-4">
-		</canvas>
+	<div class="p-4 sm:ml-64" id="canvas_area">
 	</div>
 
 	<!-- statusline -->
