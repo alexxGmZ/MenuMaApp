@@ -135,6 +135,25 @@ function list_registered_employees() {
 	});
 }
 
+function refresh_employee_table() {
+	console.log("called refresh_employee_table");
+
+	// close all active dialogs with active-dialog class
+	// NOTE: will execute if dialog_open() is executed
+	const activeDialogs = document.querySelectorAll(".active-dialog");
+	activeDialogs.forEach((dialog) => {
+		dialog.close();
+		dialog.classList.remove("active-dialog");
+	});
+
+	// empty the registered_devices table body
+	const table_body = document.getElementById("registered_employees");
+	table_body.innerHTML = "";
+
+	// repopulate the registered_devices table body
+	list_registered_employees();
+}
+
 function sort_registered_employees(table, column, sortOrder) {
 	console.log(`called sort_registered_employees(${table}, ${column}, ${sortOrder})`);
 
@@ -290,6 +309,9 @@ function dialog_open(element_id) {
 	console.log(`called dialog_open(${element_id})`);
 	const fav_dialog = document.getElementById(element_id)
 
+	// add active-dialog class in all current active dialogs
+	fav_dialog.classList.add("active-dialog");
+
 	// any element id specific statements
 	if(element_id == "remove_employee_success_dialog") {
 		rowClick();
@@ -311,7 +333,8 @@ function dialog_open(element_id) {
 function dialog_close(element_id) {
 	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
+
+	// remove the active-dialog class when the dialog is closed
+	fav_dialog.classList.remove("active-dialog");
 	fav_dialog.close();
 }
-
-

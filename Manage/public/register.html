@@ -45,7 +45,8 @@
 	</nav>
 
 	<!-- MAIN TABLE -->
-	<h1 class="font-bold pl-20">Registered Employees</h1><br>
+	<h1 class="font-bold pl-20">Registered Employees</h1>
+	<button onclick="refresh_employee_table()" class="pl-20">Refresh</button>
 	<div class="px-20">
 		<table id="employee_table" class="w-full">
 			<thead class="text-zinc-950 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
@@ -65,7 +66,6 @@
 			</tbody>
 		</table>
 	</div>
-	<!-- END OF MAIN -->
 
 	<!-- UPDATE MODAL -->
 	<dialog id="update_employee_dialog" class="rounded-lg drop-shadow-lg mx-auto">
@@ -98,7 +98,17 @@
 		</div>
 	</dialog>
 
-	<!-- ADD NEW EMPLOYEE MODAL -->
+	<!-- UPDATE EMPLOYEE SUCCESS -->
+	<dialog id="update_employee_successs_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+		<span id="update_employee_placeholder">Employee NAME</span>
+		<span> is successfully updated.</span><br><br>
+		<button onclick="refresh_employee_table()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+
+	<!-- ADD NEW EMPLOYEE DIALOG -->
 	<dialog id="add_employee_dialog" class="rounded-lg drop-shadow-lg mx-auto">
 		<p class="flex justify-center">Add new employee</p>
 		<input type="hidden" id="id" name="id" placeholder="Employee ID" /><br>
@@ -139,7 +149,7 @@
 	<dialog id="add_employee_successs_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="add_employee_placeholder">EMPLOYEE NAME</span>
 		<span> is successfully added.</span><br><br>
-		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="refresh_employee_table()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
@@ -162,18 +172,9 @@
 
 	<!-- REMOMVE SUCCESS Modal -->
 	<dialog id="remove_employee_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<span id="removed_employee_placeholder">EMPLOYEE NAME</span>
+		<span id="removed_employee_placeholder" class="font-bold"></span>
 		<span> is successfully removed.</span><br><br>
-		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			OK
-		</button>
-	</dialog>
-
-	<!-- UPDATE EMPLOYEE SUCCESS -->
-	<dialog id="update_employee_successs_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<span id="update_employee_placeholder">Employee NAME</span>
-		<span> is successfully updated.</span><br><br>
-		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="refresh_employee_table()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
