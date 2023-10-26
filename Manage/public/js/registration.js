@@ -35,6 +35,7 @@ mysql.check_connection();
 
 
 function register_employee() {
+	console.log("called register_employee()");
 	// variables from register.html
 	var name = document.getElementById("name").value.trim();
 	// cancel if input box is empty
@@ -85,6 +86,7 @@ function register_employee() {
 }
 
 function list_registered_employees() {
+	console.log("called list_registered_employees()");
 	connection.query("SELECT * FROM registered_employees", function(err, result, fields) {
 		if (err) throw err;
 		console.log(result);
@@ -134,7 +136,7 @@ function list_registered_employees() {
 }
 
 function sort_registered_employees(table, column, sortOrder) {
-	console.log("called sort_registered_employees()");
+	console.log(`called sort_registered_employees(${table}, ${column}, ${sortOrder})`);
 
 	const tbody = table.querySelector("tbody");
 	const rows = Array.from(tbody.querySelectorAll("tr"));
@@ -156,6 +158,7 @@ function sort_registered_employees(table, column, sortOrder) {
 
 // TABLE CLICK FUNCTION //
 function rowClick() {
+	console.log("called rowClick()");
 	let design_privilege = document.getElementById("design_priv_2");
 	let inventory_privilege = document.getElementById("inventory_priv_2");
 	let report_privilege = document.getElementById("report_priv_2");
@@ -207,6 +210,7 @@ function rowClick() {
 
 // UPDATE EMPLOYEE FUNCTION
 function update_employee() {
+	console.log("called update_employee()");
 	// hidden item input for id
 	var id = document.getElementById("id").value;
 
@@ -245,6 +249,7 @@ function update_employee() {
 
 // DELETE EMPLOYEE FUNCTION
 function delete_employee() {
+	console.log("called delete_employee()");
 	var table = document.getElementById("employee_table");
 	var rows = table.getElementsByTagName("tr");
 	for (let i = 0; i < rows.length; i++) {
@@ -282,6 +287,7 @@ function delete_employee() {
 
 // open modal dialog based on element id
 function dialog_open(element_id) {
+	console.log(`called dialog_open(${element_id})`);
 	const fav_dialog = document.getElementById(element_id)
 
 	// any element id specific statements
@@ -303,6 +309,7 @@ function dialog_open(element_id) {
 
 // close the modal
 function dialog_close(element_id) {
+	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.close();
 }

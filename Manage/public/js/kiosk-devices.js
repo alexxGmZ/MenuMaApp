@@ -288,7 +288,7 @@ function update_device() {
 }
 
 function sort_registered_devices(table, column, sortOrder) {
-	console.log("called sort_registered_devices()");
+	console.log(`called sort_registered_devices(${table}, ${column}, ${sortOrder})`);
 
 	const tbody = table.querySelector("tbody");
 	const rows = Array.from(tbody.querySelectorAll("tr"));
@@ -321,7 +321,7 @@ document.getElementById("update_device_gen_token_button").addEventListener(
 );
 
 function dialog_open(element_id) {
-	console.log("called dialog_open()")
+	console.log(`called dialog_open(${element_id})`)
 	const fav_dialog = document.getElementById(element_id);
 
 	// add active-dialog class in all current active dialogs
@@ -363,8 +363,11 @@ function dialog_open(element_id) {
 }
 
 function dialog_close(element_id) {
-	console.log("called dialog_close()")
+	console.log(`called dialog_close(${element_id})`)
 	const fav_dialog = document.getElementById(element_id);
+
+	// remove the active-dialog class when the dialog is closed
+	fav_dialog.classList.remove("active-dialog");
 	fav_dialog.close();
 }
 
@@ -406,7 +409,7 @@ function row_click() {
 }
 
 function generate_api_token(device_ip, timestamp) {
-	console.log("called generate_api_token()");
+	console.log(`called generate_api_token(${device_ip}, ${timestamp})`);
 	const salt = device_ip + timestamp;
 	const hash = crypto.createHash("sha256").update(salt).digest("hex");
 	const api_token = hash.slice(0, 10);
@@ -429,11 +432,13 @@ function get_current_timestamp() {
 }
 
 function is_valid_ipv4(ip) {
+	console.log(`called is_valid_ipv4(${ip})`)
 	const ipv4_pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
 	return ipv4_pattern.test(ip);
 }
 
 function is_valid_mac_address(mac) {
+	console.log(`called is_valid_mac_address(${mac})`)
 	const mac_pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 	return mac_pattern.test(mac);
 }

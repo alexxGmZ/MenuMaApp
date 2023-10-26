@@ -130,7 +130,7 @@ function add_item_message() {
 }
 
 function sort_menu_items(table, column, sortOrder) {
-	console.log("called sort_menu_items()");
+	console.log(`called sort_menu_items(${table}, ${column}, ${sortOrder})`);
 
 	const tbody = table.querySelector("tbody");
 	const rows = Array.from(tbody.querySelectorAll("tr"));
@@ -325,7 +325,7 @@ function search_via_id() {
 
 // open modal dialog based on element id
 function dialog_open(element_id) {
-	console.log("called dialog_open()");
+	console.log(`called dialog_open(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 
 	// add active-dialog class in all current active dialogs
@@ -353,8 +353,11 @@ function dialog_open(element_id) {
 
 // close modal dialog based on element id
 function dialog_close(element_id) {
-	console.log("called dialog_close()");
+	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
+
+	// remove the active-dialog class when the dialog is closed
+	fav_dialog.classList.remove("active-dialog");
 	fav_dialog.close();
 }
 

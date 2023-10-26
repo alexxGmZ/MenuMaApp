@@ -13,6 +13,7 @@ mysql.check_connection();
 var global_order_num = "";
 
 function display_orders() {
+	console.log("called display_orders()");
 	fetch('http://localhost:8080/orders')
 		.then(res => {
 			return res.json();
@@ -31,7 +32,7 @@ function display_orders() {
 				//console.log(removed_comma);
 
 				const markup = `
-					<tr class="mx-auto bg-sky-300 rounded-lg grid grid-cols-1 gap-2 w-60 rounded-lg">
+					<tr class="mx-auto bg-sky-300 rounded-lg grid grid-cols-1 gap-2 w-60">
 						<td class="text-center font-bold rounded-t-lg pt-2 pb-2">${orders.queue_number}</td>
 						<td class="text-center bg-slate-50 rounded-lg whitespace-pre mx-2 h-24">${removed_comma}</td>
 						<td class="text-center px-2 italic">${orders.customer_name}</td>
@@ -58,6 +59,7 @@ function display_orders() {
 
 // Get data from table
 function row_click() {
+	console.log("called row_click()");
 	// find the clicked row
 	var table = document.getElementById("order_table");
 	var rows = table.getElementsByTagName("tr");
@@ -93,14 +95,15 @@ function row_click() {
 
 // Open Dialog
 function dialog_open(element_id) {
+	console.log(`called dialog_open(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 
 	// any element id specific statements
-	if(element_id == "cancel_order_success_dialog") {
+	if (element_id == "cancel_order_success_dialog") {
 		document.getElementById("cancel_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
 	}
-	
-	if(element_id == "done_order_success_dialog") {
+
+	if (element_id == "done_order_success_dialog") {
 		document.getElementById("done_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
 	}
 
@@ -109,11 +112,13 @@ function dialog_open(element_id) {
 
 // Close Dialog
 function dialog_close(element_id) {
+	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.close();
 }
 
 function order_done() {
+	console.log("called order_done()");
 	// find the clicked row
 	var table = document.getElementById("order_table");
 	var rows = table.getElementsByTagName("tr");
@@ -131,7 +136,7 @@ function order_done() {
 				// Queries for getting data from order queue and items ordered tables specific for orders / row click
 				const items_ordered_data = `SELECT * FROM manage_db.items_ordered WHERE queue_number = "${order}"`;
 				const order_queue_data = `SELECT * FROM manage_db.order_queue WHERE queue_number = "${order}"`;
-				
+
 				// get all data from items ordered table
 				connection.query(items_ordered_data, function(err, items_ordered_data_result) {
 					if (err) throw err;
@@ -173,7 +178,7 @@ function order_done() {
 
 						// Get Specific data when clicked for items ordered
 						console.log("Here are the orders per row:")
-						for (itemRow of items_ordered_data_result) {
+						for (let itemRow of items_ordered_data_result) {
 							// console.log("Items ordered id: " + itemRow.items_ordered_id);
 							// console.log("Item id: " + itemRow.item_id);
 							// console.log("Item Name: " + itemRow.item_name);
@@ -196,7 +201,7 @@ function order_done() {
 						}
 
 						// Update revenue everytime if the order is served
-						if(orderQueueResult.length > 0) {
+						if (orderQueueResult.length > 0) {
 							const orderRow = orderQueueResult[0];
 							console.log("Item Order is: " + orderRow.order_id);
 
@@ -206,7 +211,7 @@ function order_done() {
 								m.quantity_sold = m.quantity_sold + i_o.quantity
 							WHERE i_o.order_id = "${orderRow.order_id}"`;
 							connection.query(update_revenue_query, error => {
-								if(error) {
+								if (error) {
 									console.log(error);
 								} else {
 									console.log("The revenue has been updated!");
@@ -225,9 +230,9 @@ function order_done() {
 								console.log(error);
 							} else {
 								console.log("Removed Success from items_ordered");
-					
+
 								connection.query(ordered_num_query, error => {
-									if(error) {
+									if (error) {
 										console.log(error);
 									} else {
 										console.log("Removed success from order_queue")
@@ -237,8 +242,8 @@ function order_done() {
 							}
 						});
 
-						
-						
+
+
 					})
 
 
@@ -251,7 +256,8 @@ function order_done() {
 }
 
 function order_cancel() {
-// START SA ITEMS ORDERED BAGO ORDER QUEUE ang pag DELETE
+	console.log("called order_cancel()");
+	// START SA ITEMS ORDERED BAGO ORDER QUEUE ang pag DELETE
 
 	var order = document.getElementById("order_num_cancel").value;
 	console.log("The order num is : " + order)
@@ -286,7 +292,7 @@ function order_cancel() {
 				var status = "Cancelled";
 
 				console.log("Here are the order queue: \n" + order_num + "\n" + order_id + "\n" + customer_names + "\n" + overall_price + "\n" + orderRow.transaction_date + "\n" + kiosks + "\n" + status);
-				
+
 				// Insertion Query
 				const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
 				// function of insert data into order_queue_history
@@ -301,7 +307,7 @@ function order_cancel() {
 			}
 
 			console.log("Here are the orders per row:")
-			for (itemRow of items_ordered_data_result) {
+			for (let itemRow of items_ordered_data_result) {
 				// console.log("Items ordered id: " + itemRow.items_ordered_id);
 				// console.log("Item id: " + itemRow.item_id);
 				// console.log("Item Name: " + itemRow.item_name);
@@ -332,9 +338,9 @@ function order_cancel() {
 					console.log(error);
 				} else {
 					console.log("Removed Success from items_ordered");
-		
+
 					connection.query(ordered_num_query, error => {
-						if(error) {
+						if (error) {
 							console.log(error);
 						} else {
 							console.log("Removed success from order_queue")
@@ -347,5 +353,4 @@ function order_cancel() {
 		})
 
 	})
-
 }

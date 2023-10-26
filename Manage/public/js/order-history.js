@@ -12,6 +12,7 @@ mysql.check_connection();
 
 // SHOW ITEMS ORDERED HISTORY
 function display_order_history() {
+	console.log("called display_order_history()");
 	connection.connect(function(err) {
 		if (err) throw err;
 
@@ -22,7 +23,7 @@ function display_order_history() {
 		//get all history from table "items_ordered_history"
 		connection.query(items_ordered_history_query, function(err, items_history_result) {
 			if (err) throw err;
-			
+
 			// get all history from table "ordered_queue_history"
 			connection.query(ordered_queue_history_query, function(err, orders_history_result) {
 				if (err) throw err;
@@ -46,7 +47,7 @@ function display_order_history() {
 				});
 
 				console.log(nestedData);
-				
+
 				// For each loop
 				nestedData.forEach((order_history, index) => {
 
@@ -96,7 +97,7 @@ function display_order_history() {
 					document.querySelector("#order_history_list").insertAdjacentHTML('beforeend', markup);
 
 				})
-				
+
 
 				// for(let row of orders_history_result) {
 
@@ -108,11 +109,12 @@ function display_order_history() {
 			})
 
 		});
-		
+
 	})
 }
 
 function row_click() {
+	console.log("called row_click()");
 	// Find the clicked Row
 	var table = document.getElementById("order_history_table");
 	var rows = table.getElementsByTagName("tr");
@@ -132,7 +134,7 @@ function row_click() {
 
 				var items_ordered = row.getElementsByTagName("td")[3];
 				var items = items_ordered.innerHTML;
-				
+
 				var total_price = row.getElementsByTagName("td")[4];
 				var prices = total_price.innerHTML;
 
@@ -152,16 +154,14 @@ function row_click() {
 				document.getElementById('history_price').value = prices;
 				document.getElementById('history_date').value = t_date;
 				document.getElementById('history_status').innerHTML = status;
-
-
 			};
 		};
 		currentRow.onclick = clickHandle(currentRow);
 	}
-	
 }
 
 function remove_history() {
+	console.log("called remove_history()");
 
 	var history_id = document.getElementById('history_id').value;
 	console.log(history_id);
@@ -186,14 +186,11 @@ function remove_history() {
 			})
 		}
 	})
-
-	
-
-
 }
 
 // open modal dialog based on element id
 function dialog_open(element_id) {
+	console.log(`called dialog_open(${element_id})`);
     const fav_dialog = document.getElementById(element_id);
 
 	if (element_id == "history_remove_success_dialog") {
@@ -205,6 +202,7 @@ function dialog_open(element_id) {
 
 // close modal dialog based on element id
 function dialog_close(element_id) {
+	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.close();
 }
