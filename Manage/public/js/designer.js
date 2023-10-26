@@ -1,7 +1,7 @@
 // mysql stuff
 const mysql = require(__dirname + "/js/modules/mysql.js");
-const connection = mysql.connection;
 mysql.check_connection();
+const connection = mysql.connection;
 
 // fabric.js stuff
 const fabric = require("fabric").fabric;
@@ -84,10 +84,10 @@ function generate_canvas(size) {
 	canvas_resolution_element.textContent = `Canvas Resolution: ${canvas_height}x${canvas_width}`;
 
 	// Append the canvas element to the container div
-	const placeholder = document.querySelector("#canvas_area");
-	placeholder.innerHTML = "";
-	placeholder.appendChild(canvas_resolution_element);
-	placeholder.appendChild(canvas_element);
+	const canvas_placeholder = document.querySelector("#canvas_area");
+	canvas_placeholder.innerHTML = "";
+	canvas_placeholder.appendChild(canvas_resolution_element);
+	canvas_placeholder.appendChild(canvas_element);
 
 	// Create the Fabric.js canvas
 	canvas = new fabric.Canvas("canvas");
@@ -98,7 +98,7 @@ function generate_canvas(size) {
 }
 
 function sidebar_generate_rectangle() {
-	console.log("called sidebar_generate_rectangle()")
+	console.log("called sidebar_generate_rectangle()");
 	const rect = new fabric.Rect({
 		left: 100,
 		top: 100,
@@ -113,7 +113,7 @@ function sidebar_generate_rectangle() {
 }
 
 function sidebar_generate_circle() {
-	console.log("called sidebar_generate_circle()")
+	console.log("called sidebar_generate_circle()");
 	const circle = new fabric.Circle({
 		radius: 20,
 		left: 100,
@@ -127,7 +127,12 @@ function sidebar_generate_circle() {
 }
 
 function sidebar_display_item_cards() {
-	console.log("called sidebar_display_item_cards()")
+	console.log("called sidebar_display_item_cards()");
+
+}
+
+function generate_item_card() {
+	console.log("called generate_item_card");
 
 }
 
