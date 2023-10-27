@@ -41,7 +41,7 @@
 						<a href="kiosk-devices.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
 					</li>
 					<li class="">
-						<a href="order-history.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
+						<a href="#" onclick="dialog_open('order_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
 					</li>
 					<li class="">
 						<a href="#" onclick="dialog_open('designer_login_dialog')" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer</a>
@@ -207,7 +207,7 @@
 		<input type="text" name="employee_username" id="employee_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<label for="employee_password" class="pl-1">Password:</label>
-		<input type="text" name="employee_password" id="employee_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<input type="password" name="employee_password" id="employee_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
 			<button onclick="dialog_close('employee_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -222,6 +222,34 @@
 	<!-- Login dialog (employee prvivilege) -->
 	<dialog id="employee_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You don't have a employee privilage!</h1>
+		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+	<!-- Login dialog for order_history -->
+	<dialog id="order_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+		<h1 class="text-center">Please login to access the order history and stats</h1><br>
+
+		<label for="order_username" class="pl-1">Username:</label>
+		<input type="text" name="order_username" id="order_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+
+		<label for="order_password" class="pl-1">Password:</label>
+		<input type="password" name="order_password" id="order_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+
+		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
+			<button onclick="dialog_close('order_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+				CANCEL
+			</button>
+			<button onclick="order_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+				LOGIN
+			</button>
+		</div>
+	</dialog>
+
+	<!-- Login dialog (order history and stats prvivilege) -->
+	<dialog id="order_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
+		<h1>You don't have a order history/stats privilage!</h1>
 		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>

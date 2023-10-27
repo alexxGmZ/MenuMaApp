@@ -509,3 +509,53 @@ function employee_login() {
 	});
 
 }
+
+function order_login() {
+	console.log("You pressed order login")
+
+	var username_login = document.getElementById("order_username").value;
+	// console.log("The username is: " + username_login);
+
+	var password_login = document.getElementById("order_password").value;
+	// console.log("The password is: " + password_login);
+
+	// Hashed password for comparing
+	const hash_password_order = crypto.createHash('sha256').update(password_login).digest('hex');
+	// console.log("Hashed is: " + hash_password_order);
+
+	const users = `SELECT name, password_hash, view_reports_priv FROM registered_employees WHERE name = "${username_login}"`;
+	connection.query(users, function(err, users_data_result) {
+		if (err) throw err;
+
+		const usersDataResult = users_data_result;
+		console.log(usersDataResult)
+
+		// Error function if the username didnt exists
+		if(usersDataResult.length === 0 ) {
+			dialog_open('designer_login_dialog_userfail');
+		}
+
+		if(usersDataResult.length > 0) {
+			const user_row = usersDataResult[0];
+			const username = user_row.name;
+			const password = user_row.password_hash;
+			const order_priv = user_row.view_reports_priv;
+			const converted_hash_password = Buffer.from(password).toString('utf8');
+
+			if (converted_hash_password === hash_password_order) {
+
+				if (order_priv === 1) {
+					location.replace("order-history.html")
+				} else {
+					dialog_open('order_login_dialog_privilage');
+				}
+
+			} else {
+				dialog_open('designer_login_dialog_passwordfail');
+			}
+
+		}
+
+	})
+
+}
