@@ -8,35 +8,7 @@ const fabric = require("fabric").fabric;
 let canvas;
 
 document.addEventListener("DOMContentLoaded", function() {
-	// Initial zoom level
-	// let zoom = 1;
-
-	// Adjust the zoom sensitivity for smoother zooming
-	// const zoom_sensitivity = 0.001; // Increase this value for less sensitivity
-
-	// function update_canvas_dimension() {
-	// 	canvas.setWidth(canvas_origial_width * zoom);
-	// 	canvas.setHeight(canvas_origial_height * zoom);
-	// 	canvas.renderAll();
-	// }
-
-	// Zoom
-	// canvas.on('mouse:wheel', function(opt) {
-	// 	const delta = opt.e.deltaY;
-	// 	zoom = zoom * (1 + delta * zoom_sensitivity);
-	//
-	// 	// Limit zoom to a reasonable range
-	// 	if (zoom > 20) zoom = 20;
-	// 	if (zoom < 0.01) zoom = 0.01;
-	//
-	// 	const pointer = canvas.getPointer(opt.e);
-	// 	canvas.zoomToPoint({ x: pointer.x, y: pointer.y }, zoom);
-	// 	update_canvas_dimension();
-	//
-	// 	opt.e.preventDefault();
-	// 	opt.e.stopPropagation();
-	// });
-
+	item_card_row_click();
 	// Constant stroke width
 	// canvas.on('object:scaling', function(options) {
 	// 	const target = options.target;
@@ -209,16 +181,39 @@ function sidebar_display_item_cards() {
 				<tr class="">
 					<td data-column="item_id" class="">${row.item_id}</td>
 					<td data-column="item_name" class="">${row.item_name}</td>
-					<td data-column="item_description" class="">${row.item_desc}</td>
-					<td><img src="${image_src}" alt="Foods Image" width="300"></td>
+					<td class="hidden"><img src="${image_src}" alt="Foods Image" width="300"></td>
 					<td data-column="item_price" class="">${row.item_price}</td>
-					<td data-column="item_quantity_sold" class="">${row.quantity_sold}</td>
-					<td data-column="item_revenue" class="">₱${row.revenue_generated}</td>
+					<td data-column="item_quantity_sold" class="hidden">${row.quantity_sold}</td>
+					<td data-column="item_revenue" class="hidden">₱${row.revenue_generated}</td>
 				</tr>
 			`;
 		}
 		placeholder.innerHTML = out;
 	});
+}
+
+function item_card_row_click() {
+	console.log("called item_card_row_click()");
+
+	const table = document.getElementById("item_card_table");
+
+	if (table) {
+		table.addEventListener("click", (event) => {
+			console.log("table row is clicked");
+			const clickedRow = event.target.closest("tr");
+
+			if (clickedRow) {
+				const cells = clickedRow.querySelectorAll("td");
+				// console.log(cells);
+				const item_id = cells[0].textContent;
+				const item_name = cells[1].textContent;
+				const item_price = cells[3].textContent;
+				console.log("Item ID: " + item_id);
+				console.log("Item Name: " + item_name);
+				console.log("Item Price: ₱" + item_price);
+			}
+		});
+	}
 }
 
 function generate_item_card() {
