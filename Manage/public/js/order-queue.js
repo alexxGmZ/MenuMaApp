@@ -358,7 +358,7 @@ function order_cancel() {
 }
 
 function designer_login() {
-	console.log("You pressed the login")
+	console.log("You pressed the login for designer")
 
 	var username_login = document.getElementById("login_username").value;
 	// console.log("The username is: " + username_login);
@@ -390,7 +390,7 @@ function designer_login() {
 			const design_privilege = user_row.design_priv;
 			const converted_hash_password = Buffer.from(password).toString('utf8');
 
-			console.log("The username is: " + username);
+			// console.log("The username is: " + username);
 			if (converted_hash_password === hash_password_login) {
 				
 				if(design_privilege === 1) {
@@ -407,5 +407,55 @@ function designer_login() {
 
 	});
 
+}
+
+function inventory_login() {
+	console.log("You pressed the login for inventory")
+
+	var username_login = document.getElementById("inventory_username").value;
+	// console.log("The username is: " + username_login);
+
+	var password_login = document.getElementById("inventory_password").value;
+	// console.log("The password is: " + password_login);
+
+	// Hashed password for comparing
+	const hash_password_inventory = crypto.createHash('sha256').update(password_login).digest('hex');
+	// console.log("Hashed is: " + hash_password_inventory);
+
+	const users = `SELECT name, password_hash, inventory_priv FROM registered_employees WHERE name = "${username_login}"`;
+	connection.query(users, function(err, users_data_result) {
+		if (err) throw err;
+
+		const usersDataResult = users_data_result;
+		console.log(usersDataResult)
+
+		// Error function if the username didnt exists
+		if(usersDataResult.length === 0 ) {
+			dialog_open('designer_login_dialog_userfail');
+		}
+
+		// Get specific data base on the username
+		if (usersDataResult.length > 0) {
+			const user_row = usersDataResult[0];
+			const username = user_row.name;
+			const password = user_row.password_hash;
+			const inventory_priv = user_row.inventory_priv;
+			const converted_hash_password = Buffer.from(password).toString('utf8');
+
+			if (converted_hash_password === hash_password_inventory) {
+
+				if (inventory_priv === 1) {
+					location.replace("inventory.html")
+				} else {
+					dialog_open('inventory_login_dialog_privilage');
+				}
+
+			} else {
+				dialog_open('designer_login_dialog_passwordfail');
+			}
+
+		}
+
+	});
 
 }

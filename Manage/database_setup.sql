@@ -8,6 +8,7 @@ CREATE TABLE registered_employees(
    design_priv INT DEFAULT 0,
    inventory_priv INT DEFAULT 0,
    view_reports_priv INT DEFAULT 0,
+   manage_employee_priv INT DEFAULT 0,
    PRIMARY KEY(employee_id)
 );
 
@@ -15,9 +16,9 @@ CREATE TABLE registered_employees(
 -- name: admin
 -- password: password
 INSERT INTO registered_employees
-   (employee_id, name, `password_hash`, design_priv, inventory_priv, view_reports_priv)
+   (employee_id, name, `password_hash`, design_priv, inventory_priv, view_reports_priv, manage_employee_priv)
 VALUES
-   (1, "admin", SHA2("password", 256), 1, 1, 1);
+   (1, "admin", SHA2("password", 256), 1, 1, 1, 1);
 
 CREATE TABLE menu_items(
    item_id INT AUTO_INCREMENT,
