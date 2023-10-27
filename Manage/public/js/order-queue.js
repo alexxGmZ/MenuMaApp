@@ -375,6 +375,12 @@ function designer_login() {
 		if (err) throw err;
 
 		const usersDataResult = users_data_result;
+		console.log(usersDataResult)
+
+		// Error function if the username didnt exists
+		if(usersDataResult.length === 0 ) {
+			dialog_open('designer_login_dialog_userfail');
+		}
 
 		//Get Specific data base on the username
 		if(usersDataResult.length > 0) {
@@ -385,22 +391,16 @@ function designer_login() {
 			const converted_hash_password = Buffer.from(password).toString('utf8');
 
 			console.log("The username is: " + username);
-			// if (converted_hash_password === hash_password_login) {
+			if (converted_hash_password === hash_password_login) {
 				
-			// 	if(design_privilege === 1) {
-			// 		console.log("You can access the design page!")
-			// 	} else {
-			// 		console.log("You dont have a design privilage!")
-			// 	}
+				if(design_privilege === 1) {
+					location.replace("designer.html")
+				} else {
+					dialog_open('designer_login_dialog_privilage');
+				}
 
-			// } else {
-			// 	console.log("Not same password!")
-			// }
-
-			if (username === username_login) {
-				console.log("Success to login")
 			} else {
-				dialog_open('designer_login_dialog_userfail');
+				dialog_open('designer_login_dialog_passwordfail');
 			}
 			
 		}
