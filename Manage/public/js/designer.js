@@ -81,7 +81,7 @@ function generate_canvas(size) {
 	const canvas_resolution_element = document.createElement("p");
 	canvas_resolution_element.id = "canvas_resolution";
 	canvas_resolution_element.className = "mt-14";
-	canvas_resolution_element.textContent = `Canvas Resolution: ${canvas_height}x${canvas_width}`;
+	canvas_resolution_element.textContent = `Canvas Resolution: ${canvas_width}x${canvas_height}`;
 
 	// Append the canvas element to the container div
 	const canvas_placeholder = document.querySelector("#canvas_area");
@@ -95,6 +95,62 @@ function generate_canvas(size) {
 	// Now you can work with the Fabric.js canvas as needed
 
 	dialog_close('create_canvas_dialog');
+}
+
+function save_canvas_to_json() {
+	console.log("called save_canvas_to_json()");
+	console.log(canvas);
+
+	// function will not work if canvas is empty or not generated yet
+	if (!canvas) return;
+
+	const jsoned_canvas = JSON.stringify(canvas, null, 2);
+	console.log(jsoned_canvas);
+
+	// Create a Blob with the JSON data
+	const blob = new Blob([jsoned_canvas], { type: 'application/json' });
+
+	// Create a URL for the Blob
+	const url = URL.createObjectURL(blob);
+
+	// Create an anchor element to trigger the download
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = 'canvas.json'; // Set the filename here
+
+	// Simulate a click on the anchor to trigger the download
+	a.click();
+
+	// Clean up by revoking the URL
+	URL.revokeObjectURL(url);
+}
+
+function save_canvas_to_svg() {
+	console.log("called save_canvas_to_svg()");
+	console.log(canvas);
+
+	// function will not work if canvas is empty or not generated yet
+	if (!canvas) return;
+
+	// Get the SVG data from the canvas
+	const svged_canvas = canvas.toSVG();
+
+	// Create a Blob with the SVG data
+	const blob = new Blob([svged_canvas], { type: 'image/svg+xml' });
+
+	// Create a URL for the Blob
+	const url = URL.createObjectURL(blob);
+
+	// Create an anchor element to trigger the download
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = 'canvas.svg'; // Set the filename here
+
+	// Simulate a click on the anchor to trigger the download
+	a.click();
+
+	// Clean up by revoking the URL
+	URL.revokeObjectURL(url);
 }
 
 function sidebar_generate_rectangle() {
@@ -126,9 +182,43 @@ function sidebar_generate_circle() {
 	canvas.add(circle);
 }
 
+function sidebar_generate_line() {
+	console.log("called sidebar_generate_line()");
+	const line = new fabric.Line([10, 10, 100, 100], {
+		fill: "black",          // Line color
+		stroke: "black",        // Line color
+		strokeWidth: 2,       // Line width
+	});
+	canvas.add(line);
+}
+
 function sidebar_display_item_cards() {
 	console.log("called sidebar_display_item_cards()");
 
+	//Select all foods and return the result object:
+	connection.query("SELECT * FROM manage_db.menu_items", function(err, result) {
+		if (err) throw err;
+
+		let placeholder = document.querySelector("#item_card_list");
+		let out = "";
+
+		for (let row of result) {
+			// to read the blob data type
+			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
+			out += `
+				<tr class="">
+					<td data-column="item_id" class="">${row.item_id}</td>
+					<td data-column="item_name" class="">${row.item_name}</td>
+					<td data-column="item_description" class="">${row.item_desc}</td>
+					<td><img src="${image_src}" alt="Foods Image" width="300"></td>
+					<td data-column="item_price" class="">${row.item_price}</td>
+					<td data-column="item_quantity_sold" class="">${row.quantity_sold}</td>
+					<td data-column="item_revenue" class="">₱${row.revenue_generated}</td>
+				</tr>
+			`;
+		}
+		placeholder.innerHTML = out;
+	});
 }
 
 function generate_item_card() {

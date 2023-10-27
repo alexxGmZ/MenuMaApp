@@ -1,18 +1,4 @@
-<!--
-	This is for Designer Mode.
-	It enables food service establishments to design their own kiosk UI
-
-	Intended functions:
-		* drag and drop design functionality
-		* customizable in terms of:
-			* color
-			* layout
-			* text
-		* card-based presets, Google "card based ui" to understand further
-
-	Refer to the designed prototype "Laptop Designer" or "Designer".
-	NOTE: The design or layout may change depending on the status of the project.
--->
+<a href="#">
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,8 +18,8 @@
 			<div class="flex items-center justify-between">
 				<button onclick="dialog_open('create_canvas_dialog')">Create</button>
 				<a href="#">Open</a>
-				<a href="#">Save</a>
-				<a href="#">Import</a>
+				<button onclick="save_canvas_to_json()">Save to JSON</button>
+				<button onclick="save_canvas_to_svg()">Save to SVG</button>
 
 				<a href="#">Undo</a>
 				<a href="#">Redo</a>
@@ -57,10 +43,10 @@
 		<br>
 
 		<h2>Resolution Presets</h2>
-		<button onclick="generate_canvas('mobile')">Mobile 720 x 1280</button>
+		<button onclick="generate_canvas('mobile')">Mobile 1280 x 720</button>
 		<br>
 
-		<button onclick="generate_canvas('tablet')">Tablet 800 x 1280</button>
+		<button onclick="generate_canvas('tablet')">Tablet 1280 x 800</button>
 		<br>
 		<br>
 
@@ -110,13 +96,13 @@
 					</button>
 				</li>
 				<li>
-					<button
+					<button onclick="sidebar_generate_line()"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Line</span>
 					</button>
 				</li>
 				<li>
-					<button
+					<button onclick="sidebar_display_item_cards()"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Menu Items Cards</span>
 					</button>
@@ -131,13 +117,18 @@
 		</div>
 	</aside>
 
-	<div class="p-4 sm:ml-64" id="canvas_area">
+	<div id="canvas_area" class="p-4 sm:ml-64">
 	</div>
 
 	<!-- statusline -->
 	<!-- <div class="fixed bottom-0 left-0 z-50 w-full h-7 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
 		<h1>Statusline</h1>
 	</div> -->
+
+	<table id="item_card_table " class="p-4 sm:ml-64 mt-6">
+		<tbody id="item_card_list">
+		</tbody>
+	</table>
 
 </body>
 
