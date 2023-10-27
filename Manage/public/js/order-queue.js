@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	display_orders();
 });
 
+const crypto = require("crypto");
+
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js");
 // create database connection
@@ -353,4 +355,57 @@ function order_cancel() {
 		})
 
 	})
+}
+
+function designer_login() {
+	console.log("You pressed the login")
+
+	var username_login = document.getElementById("login_username").value;
+	// console.log("The username is: " + username_login);
+
+	var password_login = document.getElementById("login_password").value;
+	// console.log("The Password is: " + password_login);
+
+	//Hashed password for comparing
+	const hash_password_login = crypto.createHash('sha256').update(password_login).digest('hex');
+	// console.log("The currentpassword is: " + hash_password_login)
+
+	const users = `SELECT name, password_hash, design_priv FROM registered_employees WHERE name = "${username_login}"`;
+	connection.query(users, function(err, users_data_result) {
+		if (err) throw err;
+
+		const usersDataResult = users_data_result;
+
+		//Get Specific data base on the username
+		if(usersDataResult.length > 0) {
+			const user_row = usersDataResult[0];
+			const username = user_row.name;
+			const password = user_row.password_hash;
+			const design_privilege = user_row.design_priv;
+			const converted_hash_password = Buffer.from(password).toString('utf8');
+
+			console.log("The username is: " + username);
+			// if (converted_hash_password === hash_password_login) {
+				
+			// 	if(design_privilege === 1) {
+			// 		console.log("You can access the design page!")
+			// 	} else {
+			// 		console.log("You dont have a design privilage!")
+			// 	}
+
+			// } else {
+			// 	console.log("Not same password!")
+			// }
+
+			if (username === username_login) {
+				console.log("Success to login")
+			} else {
+				dialog_open('designer_login_dialog_userfail');
+			}
+			
+		}
+
+	});
+
+
 }
