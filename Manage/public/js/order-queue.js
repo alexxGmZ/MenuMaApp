@@ -392,7 +392,7 @@ function designer_login() {
 
 			// console.log("The username is: " + username);
 			if (converted_hash_password === hash_password_login) {
-				
+
 				if(design_privilege === 1) {
 					location.replace("designer.html")
 				} else {
@@ -402,7 +402,7 @@ function designer_login() {
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
-			
+
 		}
 
 	});
@@ -495,7 +495,7 @@ function employee_login() {
 			if (converted_hash_password === hash_password_employee) {
 
 				if (employee_priv === 1) {
-					location.replace("register.html")
+					location.replace("registration.html")
 				} else {
 					dialog_open('employee_login_dialog_privilage');
 				}
