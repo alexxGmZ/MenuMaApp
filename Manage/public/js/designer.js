@@ -218,7 +218,6 @@ function item_card_row_click() {
 
 function generate_item_card() {
 	console.log("called generate_item_card");
-
 }
 
 function dialog_open(element_id) {
