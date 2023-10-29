@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	display_orders();
+	daily_order_stats();
 });
 
 const crypto = require("crypto");
@@ -176,6 +177,33 @@ function order_done() {
 									console.log("Successfully Added! (Order Queue)")
 								}
 							});
+
+							// this will be the order_stats function
+							//Gets the date today
+							const currentDate = new Date();
+							let current_year = currentDate.getFullYear();
+							let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
+							let current_day = String(currentDate.getDate()).padStart(2, '0');
+							let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
+							console.log("Current date is: " + current_formatted_date);
+
+							const order_taken_count = 1;
+							const order_done_count = 1;
+
+							const update_order_stats = `UPDATE order_stats AS o_s
+							JOIN order_queue AS o_q ON o_s.transaction_date = o_q.transaction_date
+							SET o_s.total_orders_taken = o_s.total_orders_taken + ${order_taken_count},
+								o_s.total_orders_done = o_s.total_orders_done + ${order_done_count},
+								o_s.total_earnings = o_s.total_earnings + ${orderRow.total_price}
+							WHERE o_s.transaction_date = "${current_formatted_date}"`;
+							connection.query(update_order_stats, error => {
+								if (error) {
+									console.log(error);
+								} else {
+									console.log("Order Stat done success");
+								}
+							})
+
 						}
 
 						// Get Specific data when clicked for items ordered
@@ -306,6 +334,34 @@ function order_cancel() {
 					}
 				});
 
+
+				// this will be the order_stats function
+				//Gets the date today
+				const currentDate = new Date();
+				let current_year = currentDate.getFullYear();
+				let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
+				let current_day = String(currentDate.getDate()).padStart(2, '0');
+				let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
+				console.log("Current date is: " + current_formatted_date);
+
+				const order_taken_count = 1;
+				const order_cancelled_count = 1;
+
+				// SQL query to get the dates in table
+				const update_order_stats = `UPDATE order_stats AS o_s
+				JOIN order_queue AS o_q ON o_s.transaction_date = o_q.transaction_date
+				SET o_s.total_orders_taken = o_s.total_orders_taken + ${order_taken_count},
+					o_s.total_orders_canceled = o_s.total_orders_canceled + ${order_cancelled_count}
+				WHERE o_s.transaction_date = "${current_formatted_date}";`;
+				connection.query(update_order_stats, error => {
+					if (error) {
+						console.log(error);
+					} else {
+						console.log("Order Stat cancel success");
+					}
+				});
+
+
 			}
 
 			console.log("Here are the orders per row:")
@@ -375,7 +431,7 @@ function designer_login() {
 		if (err) throw err;
 
 		const usersDataResult = users_data_result;
-		console.log(usersDataResult)
+		console.log(usersDataResult);
 
 		// Error function if the username didnt exists
 		if(usersDataResult.length === 0 ) {
@@ -553,6 +609,60 @@ function order_login() {
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
+
+		}
+
+	})
+
+}
+
+function daily_order_stats() {
+	console.log("called daily_order_stats()");
+
+	//Gets the date today
+	const currentDate = new Date();
+	let current_year = currentDate.getFullYear();
+	let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
+	let current_day = String(currentDate.getDate()).padStart(2, '0');
+	let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
+	console.log("Current date is: " + current_formatted_date);
+
+	// SQL query to get the dates in table
+	const get_date_data = `SELECT transaction_date FROM order_stats WHERE transaction_date = "${current_formatted_date}"`;
+	connection.query(get_date_data, function(err, order_stats_data_result) {
+		if (err) throw err;
+
+		const orderStatsResult = order_stats_data_result;
+		console.log(orderStatsResult);
+
+		// IF current date didnt exist execute this:
+		if (orderStatsResult.length === 0) {
+			console.log("No date found");
+
+			const insert_current_date = `INSERT INTO order_stats (transaction_Date, total_orders_taken, total_orders_done, total_orders_canceled, total_earnings) VALUES (?, ?, ?, ?, ?)`;
+			connection.query(insert_current_date, [current_formatted_date, 0, 0, 0, 0], (err, insert_result) => {
+				if (err) {
+					console.log(err)
+				} else {
+					console.log("The Date has been successfully added!")
+				}
+			})
+
+		}
+
+
+		// IF current date exists, execute this instead:
+		if (orderStatsResult.length > 0) {
+			const orderStatsRow = orderStatsResult[0];
+			let sqlDate = orderStatsRow.transaction_date;
+
+			let year = sqlDate.getFullYear();
+			let month = String(sqlDate.getMonth() + 1).padStart(2, '0');
+			let day = String(sqlDate.getDate()).padStart(2, '0');
+
+			let formattedDate = `${year}-${month}-${day}`;
+
+			console.log("Sql date is: " + formattedDate);
 
 		}
 
