@@ -15,7 +15,8 @@
 		<div class="px-3 py-3 lg:px-5 lg:pl-3">
 			<div class="flex items-center justify-between">
 				<button onclick="dialog_open('create_canvas_dialog')">Create</button>
-				<a href="#">Open</a>
+				<input type="file" id="input_canvas_json" style="display: none;" accept=".json">
+				<button onclick="load_canvas_from_json()">Open</button>
 				<button onclick="save_canvas_to_json()">Save</button>
 				<button onclick="save_canvas_to_svg()">Export to SVG</button>
 

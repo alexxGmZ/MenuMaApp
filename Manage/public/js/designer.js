@@ -6,6 +6,8 @@ const connection = mysql.connection;
 // fabric.js stuff
 const fabric = require("fabric").fabric;
 let canvas;
+let canvas_height = 0;
+let canvas_width = 0;
 
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
@@ -19,8 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function generate_canvas(size) {
 	console.log(`called generate_canvas(${size})`);
-	let canvas_height = 0;
-	let canvas_width = 0;
 
 	if (size === "custom") {
 		const input_custom_canvas_height = document.getElementById("custom_canvas_height").value;
@@ -70,14 +70,20 @@ function generate_canvas(size) {
 }
 
 function save_canvas_to_json() {
-	console.log("called save_canvas_to_json()");
-	console.log(canvas);
-
-	// function will not work if canvas is empty or not generated yet
 	if (!canvas) return;
 
-	const jsoned_canvas = JSON.stringify(canvas, null, 2);
-	console.log(jsoned_canvas);
+	console.log("called save_canvas_to_json()");
+
+	// Create an object to store canvas data and resolution
+	const canvas_data = {
+		canvas_objects: canvas.toObject(),
+		canvas_height: canvas_height,
+		canvas_width: canvas_width,
+	};
+
+	// Serialize the object to JSON
+	const jsoned_canvas = JSON.stringify(canvas_data, null, 2);
+	// console.log(jsoned_canvas);
 
 	// Create a Blob with the JSON data
 	const blob = new Blob([jsoned_canvas], { type: 'application/json' });
@@ -98,11 +104,10 @@ function save_canvas_to_json() {
 }
 
 function save_canvas_to_svg() {
-	console.log("called save_canvas_to_svg()");
-	console.log(canvas);
-
 	// function will not work if canvas is empty or not generated yet
 	if (!canvas) return;
+
+	console.log("called save_canvas_to_svg()");
 
 	// Get the SVG data from the canvas
 	const svged_canvas = canvas.toSVG();
@@ -123,6 +128,61 @@ function save_canvas_to_svg() {
 
 	// Clean up by revoking the URL
 	URL.revokeObjectURL(url);
+}
+
+function load_canvas_from_json() {
+	console.log("called load_canvas_from_json()");
+	const input_canvas = document.getElementById("input_canvas_json");
+
+	// Trigger the file input dialog
+	input_canvas.click();
+
+	// Handle the selected file
+	input_canvas.addEventListener("change", function(event) {
+		const selectedFile = event.target.files[0];
+		if (selectedFile) {
+			// Read the selected JSON file
+			const reader = new FileReader();
+
+			reader.onload = function(event) {
+				const json_data = event.target.result;
+				// load_canvas(jsonData);
+
+				const parsed_json = JSON.parse(json_data);
+				canvas_height = parsed_json.canvas_height;
+				canvas_width = parsed_json.canvas_width;
+				// console.log(parsed_json);
+
+				// Create a new canvas element
+				const canvas_element = document.createElement("canvas");
+				canvas_element.id = "canvas";
+				canvas_element.className = "border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
+				canvas_element.width = canvas_width
+				canvas_element.height = canvas_height
+
+				const canvas_resolution_element = document.createElement("p");
+				canvas_resolution_element.id = "canvas_resolution";
+				canvas_resolution_element.className = "mt-14";
+				canvas_resolution_element.textContent = `Canvas Resolution: ${parsed_json.canvas_width}x${parsed_json.canvas_height}`;
+
+				// Append the canvas element to the container div
+				const canvas_placeholder = document.querySelector("#canvas_area");
+				canvas_placeholder.innerHTML = "";
+				canvas_placeholder.appendChild(canvas_resolution_element);
+				canvas_placeholder.appendChild(canvas_element);
+
+				// Load the canvas from the JSON data
+				canvas = new fabric.Canvas("canvas");
+				canvas.loadFromJSON(parsed_json.canvas_objects, function() {
+					// Callback function executed after the canvas is loaded
+					console.log("Canvas loaded from JSON.");
+					// canvas.renderAll(); // Render the canvas
+				});
+			};
+
+			reader.readAsText(selectedFile);
+		}
+	});
 }
 
 function sidebar_generate_rectangle() {
