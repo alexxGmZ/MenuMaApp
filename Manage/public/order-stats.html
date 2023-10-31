@@ -1,0 +1,108 @@
+<!--
+	This is for Order Stats Viewing Mode.
+	It facilitates order revenue every date.
+	Intended functions:
+		* manage order revenues
+
+	Refer to the designed prototype "Laptop Queue" or "Queue".
+	NOTE: The design or layout may change depending on the status of the project.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Queue Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./styles/styles.css" rel="stylesheet">
+    <script src="./js/order-stats.js"></script>
+</head>
+
+<body class="px-3 py-3">
+
+    <!--NAV BAR-->
+    <nav class="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+        <div class="max-w-screen-xl mx-auto p-4">
+            <div class="justify-between hidden w-full md:flex md:w-auto md:order-1">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+                    <li>
+						<a href="order-history.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO ORDER HISTORY</a>
+					</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br><br><br>
+
+    <center><h1 class="font-extrabold pb-3">SHOWING ORDER STATS</h1></center>
+    <div>
+        <table id="order_stats_table" onclick="" class="text-left w-full mx-auto shadow-md table-fixed">
+            <thead class="text-zinc-950 uppercase font-bold">
+                <tr>
+                    <th>TRANSACTION DATE</th>
+					<th class="text-center">ORDERS TAKEN</th>
+					<th class="text-center">ORDERS SERVED</th>
+					<th class="text-center">ORDERS CANCELED</th>
+					<th class="text-center">TOTAL EARNINGS</th>
+                    <th class="text-center">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody id="order_stats_list">
+                <!--OUTPUT OF HISTORY from order-stats.js-->
+            </tbody>
+        </table>
+        <span class="d-flex justify-content-center float-right">
+            Total Earnings: <input type="text" placeholder="Number" id="total_earning_placeholder" class="rounded-lg" disabled />
+        </span>
+    </div>
+
+    <!-- Dialog for deleting the stats -->
+    <dialog id="order_stats_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+        <p class="text-center">Confirm to remove this stats?</p>
+        <br>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <p class="pl-1 pb-1">Transaction Date:</p>
+                <input type="text" id="transaction_date_placeholder" name="transaction_date_placeholder" placeholder="Transaction Date" class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled/>
+
+                <p class="pl-1 pb-1 pt-1">Orders Taken:</p>
+                <input type="text" id="total_orders_taken_placeholder" name="total_orders_taken_placeholder" placeholder="Orders Taken" class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled/>
+
+                <p class="pl-1 pb-1 pt-1">Orders Served:</p>
+                <input type="text" id="total_orders_done_placeholder" name="total_orders_done_placeholder" placeholder="Orders Served" class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled/>
+            </div>
+            <div>
+                <p class="pl-1 pb-1">Orders Canceled:</p>
+                <input type="text" id="total_orders_canceled_placeholder" name="total_orders_canceled_placeholder" placeholder="Orders Canceled" class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled/>
+
+                <p class="pl-1 pb-1">Earnings:</p>
+                <input type="text" id="earnings_placeholder" name="earnings_placeholder" placeholder="Earnings" class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled/><br>
+                <p class="text-center">Confirm to delete it?</p>
+                <center>
+                <button onclick="dialog_close('order_stats_dialog')" class="font-bold rounded-lg mt-2 py-2 px-2 bg-gray-300 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+                    <span class="mx-2"> NO </span>
+                </button>
+                <button onclick="remove_stats()" class="font-bold rounded-lg mt-2 py-2 px-2 hover:bg-green-500 bg-gray-300 hover:text-zinc-50 hover:drop-shadow-lg">
+                    <span class="mx-2"> YES </span>
+                </button>
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Dialog for success remove -->
+    <dialog id="order_stats_dialog_remove" class="rounded-lg drop-shadow-lg mx-auto">
+        <span class="text-center">The selected transaction date: </span>
+        <span id="transaction_date_remove_placeholder" class="font-bold">Transaction Date placeholder</span><br>
+        <center><span class=""> has been removed successfully!</span><br></center>
+        <center>
+        <button onclick="location.reload()" class="font-bold rounded-lg mt-2 py-2 px-2 hover:bg-green-500 bg-gray-300 hover:text-zinc-50 hover:drop-shadow-lg">
+            <span class="mx-2"> OK </span>
+        </button>
+        </center>
+    </dialog>
+
+</body>
+</html>
