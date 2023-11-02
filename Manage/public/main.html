@@ -41,12 +41,12 @@
 						<a href="#" onclick="dialog_open('devices_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="dialog_open('order_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
+						<a href="#" onclick="dialog_open('order_stats_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
 					</li>
 					<li class="">
 						<a href="#" onclick="dialog_open('designer_login_dialog')" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer</a>
 					</li>
-					
+
 				</ul>
 			</div>
 		</div>
@@ -62,16 +62,14 @@
 	<div class="pt-4">
 		<table id="order_table" class="justify-center mx-auto table-fixed md:table-fixed" onclick="row_click()">
 			<tbody id="order-list" class="grid grid-cols-3 gap-4 place-content-center">
-				
+
 				<!-- call the display_orders() function -->
-				
+
 			</tbody>
 		</table>
 	</div>
 
 	<br><br>
-
-	<a href="./practice.html">Practice</a>
 
 	<!-- Cancel Order Dialog -->
 	<dialog id="cancel_order_dialog" class="rounded-lg drop-shadow-lg bg-red-200 mx-auto">
@@ -80,7 +78,7 @@
 			<div>
 				<p class="text-center font-bold">Order #</p>
 				<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
-				
+
 				<p class="text-center font-bold">Food ordered</p>
 				<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md h-24" disabled></textarea>
 
@@ -129,7 +127,7 @@
 	<!-- Login dialog for Designer -->
 	<dialog id="designer_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
 		<h1 class="text-center">Please login to access the designer</h1><br>
-		
+
 		<label for="login_username" class="pl-1">Username:</label>
 		<input type="text" name="login_username" id="login_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
@@ -163,17 +161,9 @@
 		</button>
 	</dialog>
 
-	<!-- Login dialog error (design privilage) -->
-	<dialog id="designer_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<h1>You don't have a designer privilage!</h1>
-		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			OK
-		</button>
-	</dialog>
-
 	<!-- Login dialog for inventory -->
 	<dialog id="inventory_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center">Please login to access the inventory</h1><br>
+		<h1 class="text-center font-bold">Menu Inventory Management</h1><br>
 
 		<label for="inventory_username" class="pl-1">Username:</label>
 		<input type="text" name="inventory_username" id="inventory_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
@@ -191,17 +181,9 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog error (inventory privilage) -->
-	<dialog id="inventory_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<h1>You don't have a inventory privilage!</h1>
-		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			OK
-		</button>
-	</dialog>
-
 	<!-- Login dialog for employee -->
 	<dialog id="employee_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center">Please login to access the employee</h1><br>
+		<h1 class="text-center font-bold">Employee/User Management</h1><br>
 
 		<label for="employee_username" class="pl-1">Username:</label>
 		<input type="text" name="employee_username" id="employee_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
@@ -219,17 +201,9 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog error (employee prvivilege) -->
-	<dialog id="employee_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<h1>You don't have a employee privilage!</h1>
-		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			OK
-		</button>
-	</dialog>
-
 	<!-- Login dialog for order_history -->
-	<dialog id="order_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center">Please login to access the order history and stats</h1><br>
+	<dialog id="order_stats_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+		<h1 class="text-center">Order History and Statistics</h1><br>
 
 		<label for="order_username" class="pl-1">Username:</label>
 		<input type="text" name="order_username" id="order_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
@@ -238,7 +212,7 @@
 		<input type="password" name="order_password" id="order_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('order_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="dialog_close('order_stats_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				CANCEL
 			</button>
 			<button onclick="order_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -247,18 +221,10 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog error (order history and stats prvivilege) -->
-	<dialog id="order_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<h1>You don't have a order history/stats privilage!</h1>
-		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-			OK
-		</button>
-	</dialog>
-
 	<!-- Login dialog for manage_devices -->
 	<dialog id="devices_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center">Please login to access the kiosk devices</h1><br>
-		
+		<h1 class="text-center font-bold">Manage Kiosk Devices</h1><br>
+
 		<label for="devices_username" class="pl-1">Username:</label>
 		<input type="text" name="devices_username" id="devices_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
@@ -275,13 +241,16 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog error (amange_devices) -->
-	<dialog id="devices_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
-		<h1>You don't have a manage devices privilage!</h1>
-		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
+		<button onclick="dialog_close('lack_access_privilege_dialog')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
 
+	<!--
+	<a href="./practice.html">Practice</a>
+	-->
 </body>
 </html>

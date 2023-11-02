@@ -22,14 +22,14 @@ function display_orders() {
 			return res.json();
 		})
 		.then(data => {
-			console.log(data)
+			// console.log(data)
 			data.forEach(orders => {
 
 				const food_items = orders.items_ordered.map((item) => {
 					return `${item.quantity} ${item.item_name}\n`;
 				})
 
-				console.log(food_items);
+				// console.log(food_items);
 
 				const removed_comma = food_items.join('');
 				//console.log(removed_comma);
@@ -83,7 +83,7 @@ function row_click() {
 				var ordered_total_price = row.getElementsByTagName("td")[3];
 				var total_price = ordered_total_price.innerHTML;
 
-				console.log("These are the orders: \n" + order + "\n" + " " + items + " " + customers + " " + total_price);
+				// console.log("These are the orders: \n" + order + "\n" + " " + items + " " + customers + " " + total_price);
 
 				//for cancel item
 				document.getElementById("order_num_cancel").value = order;
@@ -100,6 +100,7 @@ function row_click() {
 function dialog_open(element_id) {
 	console.log(`called dialog_open(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
+	fav_dialog.classList.add("active-dialog");
 
 	// any element id specific statements
 	if (element_id == "cancel_order_success_dialog") {
@@ -117,6 +118,7 @@ function dialog_open(element_id) {
 function dialog_close(element_id) {
 	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
+	fav_dialog.classList.remove("active-dialog");
 	fav_dialog.close();
 }
 
@@ -247,7 +249,6 @@ function order_done() {
 									console.log("The revenue has been updated!");
 								}
 							});
-
 						}
 
 						document.getElementById("order_num_cancel").value = order;
@@ -271,14 +272,8 @@ function order_done() {
 								});
 							}
 						});
-
-
-
 					})
-
-
 				})
-
 			};
 		};
 		currentRow.onclick = clickHandle(currentRow);
@@ -360,8 +355,6 @@ function order_cancel() {
 						console.log("Order Stat cancel success");
 					}
 				});
-
-
 			}
 
 			console.log("Here are the orders per row:")
@@ -407,14 +400,12 @@ function order_cancel() {
 					});
 				}
 			});
-
 		})
-
 	})
 }
 
 function designer_login() {
-	console.log("You pressed the login for designer")
+	console.log("called designer_login()");
 
 	var username_login = document.getElementById("login_username").value;
 	// console.log("The username is: " + username_login);
@@ -434,12 +425,12 @@ function designer_login() {
 		console.log(usersDataResult);
 
 		// Error function if the username didnt exists
-		if(usersDataResult.length === 0 ) {
+		if (usersDataResult.length === 0) {
 			dialog_open('designer_login_dialog_userfail');
 		}
 
 		//Get Specific data base on the username
-		if(usersDataResult.length > 0) {
+		if (usersDataResult.length > 0) {
 			const user_row = usersDataResult[0];
 			const username = user_row.name;
 			const password = user_row.password_hash;
@@ -449,24 +440,21 @@ function designer_login() {
 			// console.log("The username is: " + username);
 			if (converted_hash_password === hash_password_login) {
 
-				if(design_privilege === 1) {
+				if (design_privilege === 1) {
 					location.replace("designer.html")
 				} else {
-					dialog_open('designer_login_dialog_privilage');
+					dialog_open('lack_access_privilege_dialog');
 				}
 
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
-
 		}
-
 	});
-
 }
 
 function inventory_login() {
-	console.log("You pressed the login for inventory")
+	console.log("called inventory_login()");
 
 	var username_login = document.getElementById("inventory_username").value;
 	// console.log("The username is: " + username_login);
@@ -486,7 +474,7 @@ function inventory_login() {
 		console.log(usersDataResult)
 
 		// Error function if the username didnt exists
-		if(usersDataResult.length === 0 ) {
+		if (usersDataResult.length === 0) {
 			dialog_open('designer_login_dialog_userfail');
 		}
 
@@ -503,21 +491,18 @@ function inventory_login() {
 				if (inventory_priv === 1) {
 					location.replace("inventory.html")
 				} else {
-					dialog_open('inventory_login_dialog_privilage');
+					dialog_open('lack_access_privilege_dialog');
 				}
 
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
-
 		}
-
 	});
-
 }
 
 function employee_login() {
-	console.log("You pressed the login for employee")
+	console.log("called employee_login()");
 
 	var username_login = document.getElementById("employee_username").value;
 	// console.log("The username is: " + username_login);
@@ -537,11 +522,11 @@ function employee_login() {
 		console.log(usersDataResult)
 
 		// Error function if the username didnt exists
-		if(usersDataResult.length === 0 ) {
+		if (usersDataResult.length === 0) {
 			dialog_open('designer_login_dialog_userfail');
 		}
 
-		if(usersDataResult.length > 0) {
+		if (usersDataResult.length > 0) {
 			const user_row = usersDataResult[0];
 			const username = user_row.name;
 			const password = user_row.password_hash;
@@ -553,21 +538,18 @@ function employee_login() {
 				if (employee_priv === 1) {
 					location.replace("registration.html")
 				} else {
-					dialog_open('employee_login_dialog_privilage');
+					dialog_open('lack_access_privilege_dialog');
 				}
 
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
-
 		}
-
 	});
-
 }
 
 function order_login() {
-	console.log("You pressed order login")
+	console.log("called order_login()");
 
 	var username_login = document.getElementById("order_username").value;
 	// console.log("The username is: " + username_login);
@@ -587,11 +569,11 @@ function order_login() {
 		console.log(usersDataResult)
 
 		// Error function if the username didnt exists
-		if(usersDataResult.length === 0 ) {
+		if (usersDataResult.length === 0) {
 			dialog_open('designer_login_dialog_userfail');
 		}
 
-		if(usersDataResult.length > 0) {
+		if (usersDataResult.length > 0) {
 			const user_row = usersDataResult[0];
 			const username = user_row.name;
 			const password = user_row.password_hash;
@@ -603,21 +585,18 @@ function order_login() {
 				if (order_priv === 1) {
 					location.replace("order-history.html")
 				} else {
-					dialog_open('order_login_dialog_privilage');
+					dialog_open('lack_access_privilege_dialog');
 				}
 
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
-
 		}
-
 	})
-
 }
 
 function manage_devices_login() {
-	console.log("You pressed manage_devices_login()")
+	console.log("called manage_devices_login()")
 
 	var username_login = document.getElementById("devices_username").value;
 	// console.log("The username is: " + username_login);
@@ -637,7 +616,7 @@ function manage_devices_login() {
 		console.log(usersDataResult)
 
 		// Error function if the username didn't exists
-		if(usersDataResult.length === 0 ) {
+		if (usersDataResult.length === 0) {
 			dialog_open('designer_login_dialog_userfail');
 		}
 
@@ -653,17 +632,14 @@ function manage_devices_login() {
 				if (manage_devices_priv === 1) {
 					location.replace("kiosk-devices.html");
 				} else {
-					dialog_open('devices_login_dialog_privilage');
+					dialog_open('lack_access_privilege_dialog');
 				}
-				
+
 			} else {
 				dialog_open('designer_login_dialog_passwordfail');
 			}
-
 		}
-
 	})
-
 }
 
 function daily_order_stats() {
@@ -683,7 +659,7 @@ function daily_order_stats() {
 		if (err) throw err;
 
 		const orderStatsResult = order_stats_data_result;
-		console.log(orderStatsResult);
+		// console.log(orderStatsResult);
 
 		// IF current date didnt exist execute this:
 		if (orderStatsResult.length === 0) {
@@ -697,10 +673,7 @@ function daily_order_stats() {
 					console.log("The Date has been successfully added!")
 				}
 			})
-
 		}
-
-
 		// IF current date exists, execute this instead:
 		if (orderStatsResult.length > 0) {
 			const orderStatsRow = orderStatsResult[0];
@@ -711,11 +684,7 @@ function daily_order_stats() {
 			let day = String(sqlDate.getDate()).padStart(2, '0');
 
 			let formattedDate = `${year}-${month}-${day}`;
-
-			console.log("Sql date is: " + formattedDate);
-
+			// console.log("Sql date is: " + formattedDate);
 		}
-
 	})
-
 }
