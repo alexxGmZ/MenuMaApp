@@ -172,10 +172,10 @@
 
 	<!-- list all available devices in the LAN -->
 	<h1 class="font-bold">Available Devices</h1>
-	<button onclick="list_available_devices()">Scan Network for Devices</button>
+	<button onclick="list_available_devices()" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-500 hover:text-zinc-50 hover:drop-shadow-lg">Scan Network for Devices</button>
 	<br><br>
 
-	<table>
+	<table class="text-left w-full mx-auto shadow-md table-fixed text-center">
 		<thead>
 			<tr>
 				<th>Device Name</th>
@@ -206,17 +206,18 @@
 		<span id="update_device_api_token"></span>
 		<br>
 
-		<button id="update_device_gen_token_button">Generate New Token</button>
+		<center>
+		<button id="update_device_gen_token_button" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg">Generate New Token</button>
 		<br>
+		</center>
 
 		<label for="update_device_mac_address">MAC Address: </label>
-		<input type="text" id="update_device_mac_address">
+		<input type="text" id="update_device_mac_address" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm">
 		<br>
 
 		<center>
-			<button onclick="dialog_close('update_device_dialog')">Cancel</button>
-			<br>
-			<button onclick="update_device()">Yes</button>
+			<button onclick="dialog_close('update_device_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg mr-2">Cancel</button>
+			<button onclick="update_device()" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg ml-2">Update</button>
 		</center>
 	</dialog>
 
@@ -251,9 +252,8 @@
 		<br>
 
 		<center>
-			<button onclick="dialog_close('delete_device_dialog')">Cancel</button>
-			<br>
-			<button onclick="delete_device()">Yes</button>
+			<button onclick="dialog_close('delete_device_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg mr-2">Cancel</button>
+			<button onclick="delete_device()" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg mr-2 w-14">Yes</button>
 		</center>
 	</dialog>
 

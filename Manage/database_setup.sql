@@ -9,6 +9,7 @@ CREATE TABLE registered_employees(
    inventory_priv INT DEFAULT 0,
    view_reports_priv INT DEFAULT 0,
    manage_employee_priv INT DEFAULT 0,
+   manage_devices_priv INT DEFAULT 0,
    PRIMARY KEY(employee_id)
 );
 
