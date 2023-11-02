@@ -429,18 +429,19 @@ function login_dialog_open(redirect_site) {
 function login() {
 	console.log("called login()");
 	const redirect_site = document.getElementById("login_redirect_site").textContent;
-	console.log("redirect_site: " + redirect_site);
 
 	const login_username = document.getElementById("login_username").value.trim();
 	const login_password = document.getElementById("login_password").value;
 	const login_password_hash = crypto.createHash('sha256').update(login_password).digest('hex');
 
-	let feature_privilege;
-	if (redirect_site === "inventory.html") feature_privilege = "inventory_priv";
-	if (redirect_site === "registration.html") feature_privilege = "manage_employee_priv";
-	if (redirect_site === "kiosk-devices.html") feature_privilege = "manage_devices_priv";
-	if (redirect_site === "order-history.html") feature_privilege = "view_reports_priv";
-	if (redirect_site === "designer.html") feature_privilege = "design_priv";
+	const feature_privilege_map = {
+		"inventory.html": "inventory_priv",
+		"registration.html": "manage_employee_priv",
+		"kiosk-devices.html": "manage_devices_priv",
+		"order-history.html": "view_reports_priv",
+		"designer.html": "design_priv",
+	}
+	let feature_privilege = feature_privilege_map[redirect_site];
 
 	const query = `SELECT name, password_hash, ${feature_privilege} FROM registered_employees WHERE name = "${login_username}"`;
 	connection.query(query, (error, result) => {
@@ -461,7 +462,7 @@ function login() {
 
 			if (converted_hash_password === login_password_hash) {
 				if (feature_priv_status === 1) {
-					location.replace(redirect_site);
+					// location.replace(redirect_site);
 					// console.log("Redirected to: " + redirect_site);
 				} else {
 					dialog_open('lack_access_privilege_dialog');
