@@ -404,242 +404,74 @@ function order_cancel() {
 	})
 }
 
-function designer_login() {
-	console.log("called designer_login()");
+function login_dialog_open(redirect_site) {
+	console.log(`called login_dialog_open(${redirect_site})`)
 
-	var username_login = document.getElementById("login_username").value;
-	// console.log("The username is: " + username_login);
+	const fav_dialog = document.getElementById("login_dialog");
+	fav_dialog.classList.add("active-dialog");
 
-	var password_login = document.getElementById("login_password").value;
-	// console.log("The Password is: " + password_login);
+	document.getElementById("login_redirect_site").textContent = redirect_site;
 
-	//Hashed password for comparing
-	const hash_password_login = crypto.createHash('sha256').update(password_login).digest('hex');
-	// console.log("The currentpassword is: " + hash_password_login)
+	if (redirect_site === "inventory.html")
+		document.getElementById("login_dialog_header").innerHTML = "Manage Menu Inventory";
+	if (redirect_site === "registration.html")
+		document.getElementById("login_dialog_header").innerHTML = "Manage Users/Employee";
+	if (redirect_site === "kiosk-devices.html")
+		document.getElementById("login_dialog_header").innerHTML = "Manage Kiosk Devices";
+	if (redirect_site === "order-history.html")
+		document.getElementById("login_dialog_header").innerHTML = "Order History and Statistics";
+	if (redirect_site === "designer.html")
+		document.getElementById("login_dialog_header").innerHTML = "Menu/Kiosk Designer";
 
-	const users = `SELECT name, password_hash, design_priv FROM registered_employees WHERE name = "${username_login}"`;
-	connection.query(users, function(err, users_data_result) {
-		if (err) throw err;
-
-		const usersDataResult = users_data_result;
-		console.log(usersDataResult);
-
-		// Error function if the username didnt exists
-		if (usersDataResult.length === 0) {
-			dialog_open('designer_login_dialog_userfail');
-		}
-
-		//Get Specific data base on the username
-		if (usersDataResult.length > 0) {
-			const user_row = usersDataResult[0];
-			const username = user_row.name;
-			const password = user_row.password_hash;
-			const design_privilege = user_row.design_priv;
-			const converted_hash_password = Buffer.from(password).toString('utf8');
-
-			// console.log("The username is: " + username);
-			if (converted_hash_password === hash_password_login) {
-
-				if (design_privilege === 1) {
-					location.replace("designer.html")
-				} else {
-					dialog_open('lack_access_privilege_dialog');
-				}
-
-			} else {
-				dialog_open('designer_login_dialog_passwordfail');
-			}
-		}
-	});
+	fav_dialog.showModal();
 }
 
-function inventory_login() {
-	console.log("called inventory_login()");
+function login() {
+	console.log("called login()");
+	const redirect_site = document.getElementById("login_redirect_site").textContent;
+	console.log("redirect_site: " + redirect_site);
 
-	var username_login = document.getElementById("inventory_username").value;
-	// console.log("The username is: " + username_login);
+	const login_username = document.getElementById("login_username").value.trim();
+	const login_password = document.getElementById("login_password").value;
+	const login_password_hash = crypto.createHash('sha256').update(login_password).digest('hex');
 
-	var password_login = document.getElementById("inventory_password").value;
-	// console.log("The password is: " + password_login);
+	let feature_privilege;
+	if (redirect_site === "inventory.html") feature_privilege = "inventory_priv";
+	if (redirect_site === "registration.html") feature_privilege = "manage_employee_priv";
+	if (redirect_site === "kiosk-devices.html") feature_privilege = "manage_devices_priv";
+	if (redirect_site === "order-history.html") feature_privilege = "view_reports_priv";
+	if (redirect_site === "designer.html") feature_privilege = "design_priv";
 
-	// Hashed password for comparing
-	const hash_password_inventory = crypto.createHash('sha256').update(password_login).digest('hex');
-	// console.log("Hashed is: " + hash_password_inventory);
+	const query = `SELECT name, password_hash, ${feature_privilege} FROM registered_employees WHERE name = "${login_username}"`;
+	connection.query(query, (error, result) => {
+		if (error) throw error;
 
-	const users = `SELECT name, password_hash, inventory_priv FROM registered_employees WHERE name = "${username_login}"`;
-	connection.query(users, function(err, users_data_result) {
-		if (err) throw err;
-
-		const usersDataResult = users_data_result;
-		console.log(usersDataResult)
-
-		// Error function if the username didnt exists
-		if (usersDataResult.length === 0) {
-			dialog_open('designer_login_dialog_userfail');
-		}
-
-		// Get specific data base on the username
-		if (usersDataResult.length > 0) {
-			const user_row = usersDataResult[0];
-			const username = user_row.name;
-			const password = user_row.password_hash;
-			const inventory_priv = user_row.inventory_priv;
-			const converted_hash_password = Buffer.from(password).toString('utf8');
-
-			if (converted_hash_password === hash_password_inventory) {
-
-				if (inventory_priv === 1) {
-					location.replace("inventory.html")
-				} else {
-					dialog_open('lack_access_privilege_dialog');
-				}
-
-			} else {
-				dialog_open('designer_login_dialog_passwordfail');
-			}
-		}
-	});
-}
-
-function employee_login() {
-	console.log("called employee_login()");
-
-	var username_login = document.getElementById("employee_username").value;
-	// console.log("The username is: " + username_login);
-
-	var password_login = document.getElementById("employee_password").value;
-	// console.log("The password is: " + password_login);
-
-	// Hashed password for comparing
-	const hash_password_employee = crypto.createHash('sha256').update(password_login).digest('hex');
-	// console.log("Hashed is: " + hash_password_inventory);
-
-	const users = `SELECT name, password_hash, manage_employee_priv FROM registered_employees WHERE name = "${username_login}"`;
-	connection.query(users, function(err, users_data_result) {
-		if (err) throw err;
-
-		const usersDataResult = users_data_result;
-		console.log(usersDataResult)
-
-		// Error function if the username didnt exists
-		if (usersDataResult.length === 0) {
-			dialog_open('designer_login_dialog_userfail');
-		}
-
-		if (usersDataResult.length > 0) {
-			const user_row = usersDataResult[0];
-			const username = user_row.name;
-			const password = user_row.password_hash;
-			const employee_priv = user_row.manage_employee_priv;
-			const converted_hash_password = Buffer.from(password).toString('utf8');
-
-			if (converted_hash_password === hash_password_employee) {
-
-				if (employee_priv === 1) {
-					location.replace("registration.html")
-				} else {
-					dialog_open('lack_access_privilege_dialog');
-				}
-
-			} else {
-				dialog_open('designer_login_dialog_passwordfail');
-			}
-		}
-	});
-}
-
-function order_login() {
-	console.log("called order_login()");
-
-	var username_login = document.getElementById("order_username").value;
-	// console.log("The username is: " + username_login);
-
-	var password_login = document.getElementById("order_password").value;
-	// console.log("The password is: " + password_login);
-
-	// Hashed password for comparing
-	const hash_password_order = crypto.createHash('sha256').update(password_login).digest('hex');
-	// console.log("Hashed is: " + hash_password_order);
-
-	const users = `SELECT name, password_hash, view_reports_priv FROM registered_employees WHERE name = "${username_login}"`;
-	connection.query(users, function(err, users_data_result) {
-		if (err) throw err;
-
-		const usersDataResult = users_data_result;
-		console.log(usersDataResult)
-
-		// Error function if the username didnt exists
-		if (usersDataResult.length === 0) {
-			dialog_open('designer_login_dialog_userfail');
-		}
-
-		if (usersDataResult.length > 0) {
-			const user_row = usersDataResult[0];
-			const username = user_row.name;
-			const password = user_row.password_hash;
-			const order_priv = user_row.view_reports_priv;
-			const converted_hash_password = Buffer.from(password).toString('utf8');
-
-			if (converted_hash_password === hash_password_order) {
-
-				if (order_priv === 1) {
-					location.replace("order-history.html")
-				} else {
-					dialog_open('lack_access_privilege_dialog');
-				}
-
-			} else {
-				dialog_open('designer_login_dialog_passwordfail');
-			}
-		}
-	})
-}
-
-function manage_devices_login() {
-	console.log("called manage_devices_login()")
-
-	var username_login = document.getElementById("devices_username").value;
-	// console.log("The username is: " + username_login);
-
-	var password_login = document.getElementById("devices_password").value;
-	// console.log("The password is: " + password_login);
-
-	// Hashed password for comparing
-	const hash_password_order = crypto.createHash('sha256').update(password_login).digest('hex');
-	// console.log("Hashed is: " + hash_password_order);
-
-	const users = `SELECT name, password_hash, manage_devices_priv FROM registered_employees WHERE name = "${username_login}"`;
-	connection.query(users, function(err, users_data_result) {
-		if (err) throw err;
-
-		const usersDataResult = users_data_result;
-		console.log(usersDataResult)
+		const user_data = result;
 
 		// Error function if the username didn't exists
-		if (usersDataResult.length === 0) {
-			dialog_open('designer_login_dialog_userfail');
+		if (user_data.length === 0) {
+			dialog_open('login_invalid_username_dialog');
 		}
 
-		if (usersDataResult.length > 0) {
-			const user_row = usersDataResult[0];
-			const username = user_row.name;
+		if (user_data.length > 0) {
+			const user_row = user_data[0];
 			const password = user_row.password_hash;
-			const manage_devices_priv = user_row.manage_devices_priv;
 			const converted_hash_password = Buffer.from(password).toString('utf8');
+			const feature_priv_status = user_row[feature_privilege];
 
-			if (converted_hash_password === hash_password_order) {
-
-				if (manage_devices_priv === 1) {
-					location.replace("kiosk-devices.html");
+			if (converted_hash_password === login_password_hash) {
+				if (feature_priv_status === 1) {
+					location.replace(redirect_site);
+					// console.log("Redirected to: " + redirect_site);
 				} else {
 					dialog_open('lack_access_privilege_dialog');
 				}
 
 			} else {
-				dialog_open('designer_login_dialog_passwordfail');
+				dialog_open('login_invalid_password_dialog');
 			}
 		}
-	})
+	});
 }
 
 function daily_order_stats() {

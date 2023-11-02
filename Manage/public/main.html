@@ -32,19 +32,19 @@
 				</button>
 				<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
 					<li class="">
-						<a href="#" onclick="dialog_open('inventory_login_dialog')" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Inventory</a>
+						<a href="#" onclick="login_dialog_open('inventory.html')" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Inventory</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="dialog_open('employee_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Employee</a>
+						<a href="#" onclick="login_dialog_open('registration.html')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Employee</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="dialog_open('devices_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
+						<a href="#" onclick="login_dialog_open('kiosk-devices.html')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="dialog_open('order_stats_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
+						<a href="#" onclick="login_dialog_open('order-history.html')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="dialog_open('designer_login_dialog')" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer</a>
+						<a href="#" onclick="login_dialog_open('designer.html')" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer</a>
 					</li>
 
 				</ul>
@@ -124,121 +124,41 @@
 		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
 	</dialog>
 
-	<!-- Login dialog for Designer -->
-	<dialog id="designer_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center">Please login to access the designer</h1><br>
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+		<p id="login_redirect_site" class="hidden"></p>
+		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
 		<label for="login_username" class="pl-1">Username:</label>
-		<input type="text" name="login_username" id="login_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<input type="text" id="login_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<label for="login_password" class="pl-1">Password:</label>
-		<input type="password" name="login_password" id="login_password" placeholder="Enter Password" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm">
+		<input type="password" id="login_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('designer_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="dialog_close('login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				CANCEL
 			</button>
-			<button onclick="designer_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				LOGIN
 			</button>
 		</div>
-
 	</dialog>
 
-	<!-- Login dialog (username doesnt match) -->
-	<dialog id="designer_login_dialog_userfail" class="rounded-lg drop-shadow-lg mx-auto text-center">
+	<!-- invalid login username dialog -->
+	<dialog id="login_invalid_username_dialog">
 		<h1>This username doesn't exists!</h1>
-		<button onclick="dialog_close('designer_login_dialog_userfail')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('login_invalid_username_dialog')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
 
-	<!-- Login dialog (password doesnt match) -->
-	<dialog id="designer_login_dialog_passwordfail" class="rounded-lg drop-shadow-lg mx-auto text-center">
+	<!-- invalid login password dialog -->
+	<dialog id="login_invalid_password_dialog">
 		<h1>Password doesn't matched!</h1>
-		<button onclick="dialog_close('designer_login_dialog_passwordfail')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('login_invalid_password_dialog')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
-	</dialog>
-
-	<!-- Login dialog for inventory -->
-	<dialog id="inventory_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center font-bold">Menu Inventory Management</h1><br>
-
-		<label for="inventory_username" class="pl-1">Username:</label>
-		<input type="text" name="inventory_username" id="inventory_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<label for="inventory_password" class="pl-1">Password</label>
-		<input type="password" name="inventory_password" id="inventory_password" placeholder="Enter Password" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('inventory_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				CANCEL
-			</button>
-			<button onclick="inventory_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				LOGIN
-			</button>
-		</div>
-	</dialog>
-
-	<!-- Login dialog for employee -->
-	<dialog id="employee_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center font-bold">Employee/User Management</h1><br>
-
-		<label for="employee_username" class="pl-1">Username:</label>
-		<input type="text" name="employee_username" id="employee_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<label for="employee_password" class="pl-1">Password:</label>
-		<input type="password" name="employee_password" id="employee_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('employee_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				CANCEL
-			</button>
-			<button onclick="employee_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				LOGIN
-			</button>
-		</div>
-	</dialog>
-
-	<!-- Login dialog for order_history -->
-	<dialog id="order_stats_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center">Order History and Statistics</h1><br>
-
-		<label for="order_username" class="pl-1">Username:</label>
-		<input type="text" name="order_username" id="order_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<label for="order_password" class="pl-1">Password:</label>
-		<input type="password" name="order_password" id="order_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('order_stats_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				CANCEL
-			</button>
-			<button onclick="order_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				LOGIN
-			</button>
-		</div>
-	</dialog>
-
-	<!-- Login dialog for manage_devices -->
-	<dialog id="devices_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
-		<h1 class="text-center font-bold">Manage Kiosk Devices</h1><br>
-
-		<label for="devices_username" class="pl-1">Username:</label>
-		<input type="text" name="devices_username" id="devices_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<label for="devices_password" class="pl-1">Password:</label>
-		<input type="password" name="devices_password" id="devices_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
-
-		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('devices_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				CANCEL
-			</button>
-			<button onclick="manage_devices_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				LOGIN
-			</button>
-		</div>
 	</dialog>
 
 	<!-- when the user lacks access privilege -->
