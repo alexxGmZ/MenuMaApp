@@ -6,6 +6,8 @@ mysql.check_connection();
 // call connection variable
 const connection = mysql.connection;
 
+const fs = require("fs");
+
 // express
 const express = require("express");
 const cors = require("cors");
@@ -86,13 +88,13 @@ app.get("/menu_items", authenticate_api_connection,
 
 app.get("/", authenticate_api_connection,
 	(request, response) => {
-	const server_ip = Object.values(os.networkInterfaces())
-		.flat()
-		.filter((iface) => iface.family === 'IPv4' && !iface.internal)
-		.map((iface) => iface.address)[0];
-	response.send(`Connected To MenuMaApp Manage Server: ${server_ip}`);
-	request_message_format("GET", "/", request.ip);
-});
+		const server_ip = Object.values(os.networkInterfaces())
+			.flat()
+			.filter((iface) => iface.family === 'IPv4' && !iface.internal)
+			.map((iface) => iface.address)[0];
+		response.send(`Connected To MenuMaApp Manage Server: ${server_ip}`);
+		request_message_format("GET", "/", request.ip);
+	});
 
 // for adding inventory items to database
 app.post("/upload_item", upload.single("foodimg"), (req, res) => {
@@ -242,9 +244,25 @@ app.get("/send_orders", authenticate_api_connection,
 	}
 );
 
-app.get("/designer",
+app.get("/menu_design", authenticate_api_connection,
 	(request, response) => {
+		const design_file = "./current_design.json";
+		fs.readFile(design_file, "utf8", (err, data) => {
+			if (err) {
+				console.log(`Error reading ${design_file}`);
+				return response.status(500).json({ error: 'Internal Server Error' });
+			}
 
+			try {
+				const json_data = JSON.parse(data);
+				response.status(200).json(json_data);
+				request_message_format("GET", "menu_design", request.ip);
+			}
+			catch (parse_error) {
+				console.error('Error parsing JSON:', parse_error);
+				response.status(500).json({ error: 'Internal Server Error' });
+			}
+		})
 	}
 );
 
