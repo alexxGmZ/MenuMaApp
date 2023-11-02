@@ -616,6 +616,56 @@ function order_login() {
 
 }
 
+function manage_devices_login() {
+	console.log("You pressed manage_devices_login()")
+
+	var username_login = document.getElementById("devices_username").value;
+	// console.log("The username is: " + username_login);
+
+	var password_login = document.getElementById("devices_password").value;
+	// console.log("The password is: " + password_login);
+
+	// Hashed password for comparing
+	const hash_password_order = crypto.createHash('sha256').update(password_login).digest('hex');
+	// console.log("Hashed is: " + hash_password_order);
+
+	const users = `SELECT name, password_hash, manage_devices_priv FROM registered_employees WHERE name = "${username_login}"`;
+	connection.query(users, function(err, users_data_result) {
+		if (err) throw err;
+
+		const usersDataResult = users_data_result;
+		console.log(usersDataResult)
+
+		// Error function if the username didn't exists
+		if(usersDataResult.length === 0 ) {
+			dialog_open('designer_login_dialog_userfail');
+		}
+
+		if (usersDataResult.length > 0) {
+			const user_row = usersDataResult[0];
+			const username = user_row.name;
+			const password = user_row.password_hash;
+			const manage_devices_priv = user_row.manage_devices_priv;
+			const converted_hash_password = Buffer.from(password).toString('utf8');
+
+			if (converted_hash_password === hash_password_order) {
+
+				if (manage_devices_priv === 1) {
+					location.replace("kiosk-devices.html");
+				} else {
+					dialog_open('devices_login_dialog_privilage');
+				}
+				
+			} else {
+				dialog_open('designer_login_dialog_passwordfail');
+			}
+
+		}
+
+	})
+
+}
+
 function daily_order_stats() {
 	console.log("called daily_order_stats()");
 

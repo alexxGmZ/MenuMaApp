@@ -69,16 +69,20 @@ function register_employee() {
 	if (document.querySelector("#employee_priv").checked == true)
 		employee_priv = 1;
 
+	var devices_priv = 0
+	if (document.querySelector("#devices_priv").checked == true)
+		devices_priv = 1;
+
 
 	// debug purposes
 	console.log(name);
 	console.log(password);
 	console.log(hash_password);
-	console.log(design_priv, inventory_priv, report_priv, employee_priv);
+	console.log(design_priv, inventory_priv, report_priv, employee_priv, devices_priv);
 
 	// insert registered user
-	const query = "INSERT INTO registered_employees (name, password_hash, design_priv, inventory_priv, view_reports_priv, manage_employee_priv) VALUES (?, ?, ?, ?, ?, ?);";
-	connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv, employee_priv], (error, results) => {
+	const query = "INSERT INTO registered_employees (name, password_hash, design_priv, inventory_priv, view_reports_priv, manage_employee_priv, manage_devices_priv) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	connection.query(query, [name, hash_password, design_priv, inventory_priv, report_priv, employee_priv, devices_priv], (error, results) => {
 		if (error) {
 			alert(error);
 			results.status(500).send('Error insert!!!!!')
@@ -119,6 +123,11 @@ function list_registered_employees() {
 				row.manage_employee_priv = "Yes"
 			else
 				row.manage_employee_priv = "No";
+
+			if (row.manage_devices_priv == 1)
+			row.manage_devices_priv = "Yes"
+			else
+				row.manage_devices_priv = "No";
 			
 
 			out += `
@@ -129,6 +138,7 @@ function list_registered_employees() {
 					<td data-column="employee_inventory_priv" class="text-center">${row.inventory_priv}</td>
 					<td data-column="employee_reports_priv" class="text-center">${row.view_reports_priv}</td>
 					<td data-column="employee_manage_priv" class="text-center">${row.manage_employee_priv}</td>
+					<td data-column="employee_devices_priv" class="text-center">${row.manage_devices_priv}</td>
 					<td class="text-center">
 						<span class="action-btn">
 							<button class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_employee_dialog')">
@@ -192,7 +202,8 @@ function rowClick() {
 	let design_privilege = document.getElementById("design_priv_2");
 	let inventory_privilege = document.getElementById("inventory_priv_2");
 	let report_privilege = document.getElementById("report_priv_2");
-	let employee_privilege = document.getElementById("employee_priv_2")
+	let employee_privilege = document.getElementById("employee_priv_2");
+	let devices_privilege = document.getElementById("devices_priv_2");
 
 	var table = document.getElementById("employee_table");
 	var rows = table.getElementsByTagName("tr");
@@ -220,6 +231,9 @@ function rowClick() {
 					var employee_priv = row.getElementsByTagName("td")[5];
 					var employees = employee_priv.innerHTML;
 
+					var devices_priv = row.getElementsByTagName("td")[6];
+					var devices = devices_priv.innerHTML;
+
 					if (design == "Yes")
 						design_privilege.checked = true;
 					else
@@ -238,6 +252,10 @@ function rowClick() {
 						employee_privilege.checked = true;
 					else
 						employee_privilege.checked = false;
+					if (devices == "Yes")
+						devices_privilege.checked = true;
+					else
+						devices_privilege.checked = false;
 				};
 			};
 
@@ -276,7 +294,11 @@ function update_employee() {
 	if (document.querySelector("#employee_priv_2").checked == true)
 		employee_priv = 1;
 
-	const query = `UPDATE registered_employees SET name = "${name}", design_priv = "${design_priv}", inventory_priv = "${inventory_priv}", view_reports_priv = "${report_priv}", manage_employee_priv = "${employee_priv}" WHERE employee_id = "${id}"`;
+	var devices_priv = 0;
+	if (document.querySelector("#devices_priv_2").checked == true)
+		devices_priv = 1;
+
+	const query = `UPDATE registered_employees SET name = "${name}", design_priv = "${design_priv}", inventory_priv = "${inventory_priv}", view_reports_priv = "${report_priv}", manage_employee_priv = "${employee_priv}", manage_devices_priv = "${devices_priv}" WHERE employee_id = "${id}"`;
 	connection.query(query, error => {
 		if (error) {
 			alert("Some fields are empty");

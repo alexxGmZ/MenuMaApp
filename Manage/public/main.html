@@ -38,7 +38,7 @@
 						<a href="#" onclick="dialog_open('employee_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Employee</a>
 					</li>
 					<li class="">
-						<a href="kiosk-devices.html" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
+						<a href="#" onclick="dialog_open('devices_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
 					</li>
 					<li class="">
 						<a href="#" onclick="dialog_open('order_login_dialog')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
@@ -163,7 +163,7 @@
 		</button>
 	</dialog>
 
-	<!-- Login dialog (design privilage) -->
+	<!-- Login dialog error (design privilage) -->
 	<dialog id="designer_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You don't have a designer privilage!</h1>
 		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -191,7 +191,7 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog (inventory privilage) -->
+	<!-- Login dialog error (inventory privilage) -->
 	<dialog id="inventory_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You don't have a inventory privilage!</h1>
 		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -219,7 +219,7 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog (employee prvivilege) -->
+	<!-- Login dialog error (employee prvivilege) -->
 	<dialog id="employee_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You don't have a employee privilage!</h1>
 		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -247,9 +247,37 @@
 		</div>
 	</dialog>
 
-	<!-- Login dialog (order history and stats prvivilege) -->
+	<!-- Login dialog error (order history and stats prvivilege) -->
 	<dialog id="order_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You don't have a order history/stats privilage!</h1>
+		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+	<!-- Login dialog for manage_devices -->
+	<dialog id="devices_login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+		<h1 class="text-center">Please login to access the kiosk devices</h1><br>
+		
+		<label for="devices_username" class="pl-1">Username:</label>
+		<input type="text" name="devices_username" id="devices_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+
+		<label for="devices_password" class="pl-1">Password:</label>
+		<input type="password" name="devices_password" id="devices_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+
+		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
+			<button onclick="dialog_close('devices_login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+				CANCEL
+			</button>
+			<button onclick="manage_devices_login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+				LOGIN
+			</button>
+		</div>
+	</dialog>
+
+	<!-- Login dialog error (amange_devices) -->
+	<dialog id="devices_login_dialog_privilage" class="rounded-lg drop-shadow-lg mx-auto text-center">
+		<h1>You don't have a manage devices privilage!</h1>
 		<button onclick="location.reload()" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
