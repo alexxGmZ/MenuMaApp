@@ -762,6 +762,10 @@ video {
   width: 1rem;
 }
 
+.w-56 {
+  width: 14rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -776,6 +780,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-52 {
+  width: 13rem;
 }
 
 .max-w-screen-xl {
@@ -1477,6 +1485,10 @@ video {
 
   .sm\:mr-4 {
     margin-right: 1rem;
+  }
+
+  .sm\:ml-56 {
+    margin-left: 14rem;
   }
 
   .sm\:translate-x-0 {

@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 // mysql stuff
 const mysql = require(__dirname + "/js/modules/mysql.js");
 mysql.check_connection();
@@ -6,6 +8,7 @@ const connection = mysql.connection;
 // fabric.js stuff
 const fabric = require("fabric").fabric;
 let canvas;
+let canvas_filename = "untitled";
 let canvas_height = 0;
 let canvas_width = 0;
 
@@ -94,7 +97,7 @@ function save_canvas_to_json() {
 	// Create an anchor element to trigger the download
 	const a = document.createElement('a');
 	a.href = url;
-	a.download = 'canvas.json'; // Set the filename here
+	a.download = `${canvas_filename}.json`; // Set the filename here
 
 	// Simulate a click on the anchor to trigger the download
 	a.click();
@@ -121,7 +124,7 @@ function save_canvas_to_svg() {
 	// Create an anchor element to trigger the download
 	const a = document.createElement('a');
 	a.href = url;
-	a.download = 'canvas.svg'; // Set the filename here
+	a.download = `${canvas_filename}.svg`; // Set the filename here
 
 	// Simulate a click on the anchor to trigger the download
 	a.click();
@@ -146,12 +149,12 @@ function load_canvas_from_json() {
 
 			reader.onload = function(event) {
 				const json_data = event.target.result;
-				// load_canvas(jsonData);
 
 				const parsed_json = JSON.parse(json_data);
+				canvas_filename = selectedFile.name;
+				canvas_filename = canvas_filename.replace(/\.[^/.]+$/, "");
 				canvas_height = parsed_json.canvas_height;
 				canvas_width = parsed_json.canvas_width;
-				// console.log(parsed_json);
 
 				// Create a new canvas element
 				const canvas_element = document.createElement("canvas");
@@ -185,7 +188,26 @@ function load_canvas_from_json() {
 	});
 }
 
+function sync_design_to_order() {
+	if (!canvas) return;
+	console.log("called sync_design_to_order()");
+	console.log(canvas);
+	console.log("Directory: " + __dirname);
+
+	const canvas_data = {
+		canvas_objects: canvas.toObject(),
+		canvas_height: canvas_height,
+		canvas_width: canvas_width,
+	};
+
+	const jsoned_canvas_data = JSON.stringify(canvas_data, null, 2);
+	const filepath = __dirname + "/../current_design.json";
+
+	fs.writeFileSync(filepath, jsoned_canvas_data);
+}
+
 function sidebar_generate_rectangle() {
+	if (!canvas) return;
 	console.log("called sidebar_generate_rectangle()");
 	const rect = new fabric.Rect({
 		left: 100,
@@ -201,6 +223,7 @@ function sidebar_generate_rectangle() {
 }
 
 function sidebar_generate_circle() {
+	if (!canvas) return;
 	console.log("called sidebar_generate_circle()");
 	const circle = new fabric.Circle({
 		radius: 20,
@@ -215,6 +238,7 @@ function sidebar_generate_circle() {
 }
 
 function sidebar_generate_line() {
+	if (!canvas) return;
 	console.log("called sidebar_generate_line()");
 	const line = new fabric.Line([10, 10, 100, 100], {
 		fill: "black",          // Line color
