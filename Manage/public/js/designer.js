@@ -14,6 +14,7 @@ let canvas_width = 0;
 
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
+	load_current_synced_design();
 	// Constant stroke width
 	// canvas.on('object:scaling', function(options) {
 	// 	const target = options.target;
@@ -188,6 +189,52 @@ function load_canvas_from_json() {
 	});
 }
 
+function load_current_synced_design() {
+	console.log("called load_current_synced_design()");
+	const current_design_file = __dirname + "/../current_design.json";
+	fs.readFile(current_design_file, "utf8", (err, data) => {
+		if (err) {
+			alert(err);
+		}
+
+		try {
+			const parsed_data = JSON.parse(data);
+			// console.log(parsed_data);
+			canvas_height = parsed_data.canvas_height;
+			canvas_width = parsed_data.canvas_width;
+
+			// Create a new canvas element
+			const canvas_element = document.createElement("canvas");
+			canvas_element.id = "canvas";
+			canvas_element.className = "border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
+			canvas_element.width = canvas_width
+			canvas_element.height = canvas_height
+
+			const canvas_resolution_element = document.createElement("p");
+			canvas_resolution_element.id = "canvas_resolution";
+			canvas_resolution_element.className = "mt-14";
+			canvas_resolution_element.textContent = `Canvas Resolution: ${parsed_data.canvas_width}x${parsed_data.canvas_height}`;
+
+			// Append the canvas element to the container div
+			const canvas_placeholder = document.querySelector("#canvas_area");
+			canvas_placeholder.innerHTML = "";
+			canvas_placeholder.appendChild(canvas_resolution_element);
+			canvas_placeholder.appendChild(canvas_element);
+
+			// Load the canvas from the JSON data
+			canvas = new fabric.Canvas("canvas");
+			canvas.loadFromJSON(parsed_data.canvas_objects, function() {
+				// Callback function executed after the canvas is loaded
+				console.log("Canvas loaded from JSON.");
+				canvas.renderAll(); // Render the canvas
+			});
+		}
+		catch (parse_error) {
+			console.error('Error parsing JSON:', parse_error);
+		}
+	});
+}
+
 function sync_design_to_order() {
 	if (!canvas) return;
 	console.log("called sync_design_to_order()");
@@ -295,13 +342,15 @@ function item_card_row_click() {
 				console.log("Item ID: " + item_id);
 				console.log("Item Name: " + item_name);
 				console.log("Item Price: ₱" + item_price);
+
+				generate_item_card(item_id);
 			}
 		});
 	}
 }
 
-function generate_item_card() {
-	console.log("called generate_item_card");
+function generate_item_card(item_id) {
+	console.log(`called generate_item_card(${item_id})`);
 }
 
 function dialog_open(element_id) {
