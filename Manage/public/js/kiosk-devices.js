@@ -80,7 +80,7 @@ async function list_available_devices() {
 
 	for (let row of devices) {
 		out += `
-			<tr>
+			<tr class="border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 				<td>${row.deviceName}</td>
 				<td>${row.ip}</td>
 			</tr>
@@ -103,7 +103,7 @@ function list_registered_devices() {
 		for (let row of result) {
 			var formatted_timestamp = new Date(row.timestamp_column).toLocaleString();
 			out += `
-				<tr>
+				<tr class="border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td data-column="ip_address">${row.ip_address}</td>
 					<td data-column="device_name">${row.device_name}</td>
 					<td data-column="api_token">${row.api_token}</td>
@@ -111,10 +111,10 @@ function list_registered_devices() {
 					<td data-column="timestamp_column">${formatted_timestamp}</td>
 					<td>
 						<span class="">
-							<button class="" onclick="dialog_open('update_device_dialog')">
+							<button class="rounded-lg bg-sky-500 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_device_dialog')">
 								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 							</button>
-							<button class="" onclick="dialog_open('delete_device_dialog')">
+							<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('delete_device_dialog')">
 								<img src="assets/svg/trash.svg" class="">
 							</button>
 						</span>
