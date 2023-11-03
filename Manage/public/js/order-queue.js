@@ -462,14 +462,18 @@ function login() {
 
 			if (converted_hash_password === login_password_hash) {
 				if (feature_priv_status === 1) {
-					// location.replace(redirect_site);
-					// console.log("Redirected to: " + redirect_site);
-				} else {
-					dialog_open('lack_access_privilege_dialog');
+					location.replace(redirect_site);
 				}
-
-			} else {
+				else {
+					dialog_open('lack_access_privilege_dialog');
+					// clear password input box
+					document.getElementById("login_password").value = ""
+				}
+			}
+			else {
 				dialog_open('login_invalid_password_dialog');
+				// clear password input box
+				document.getElementById("login_password").value = ""
 			}
 		}
 	});
