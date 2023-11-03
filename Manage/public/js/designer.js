@@ -15,15 +15,9 @@ let canvas_width = 0;
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
 	load_current_synced_design();
-	// Constant stroke width
-	// canvas.on('object:scaling', function(options) {
-	// 	const target = options.target;
-	// 	target.set('strokeWidth', 2 / target.scaleX);
-	// 	target.setCoords();
-	// });
 });
 
-function generate_canvas(size) {
+function create_canvas(size) {
 	console.log(`called generate_canvas(${size})`);
 
 	if (size === "custom") {
@@ -67,8 +61,6 @@ function generate_canvas(size) {
 
 	// Create the Fabric.js canvas
 	canvas = new fabric.Canvas("canvas");
-
-	// Now you can work with the Fabric.js canvas as needed
 
 	dialog_close('create_canvas_dialog');
 }
@@ -180,7 +172,7 @@ function load_canvas_from_json() {
 				canvas.loadFromJSON(parsed_json.canvas_objects, function() {
 					// Callback function executed after the canvas is loaded
 					console.log("Canvas loaded from JSON.");
-					// canvas.renderAll(); // Render the canvas
+					canvas.renderAll(); // Render the canvas
 				});
 			};
 
@@ -199,7 +191,6 @@ function load_current_synced_design() {
 
 		try {
 			const parsed_data = JSON.parse(data);
-			// console.log(parsed_data);
 			canvas_height = parsed_data.canvas_height;
 			canvas_width = parsed_data.canvas_width;
 
@@ -312,10 +303,9 @@ function sidebar_display_item_cards() {
 				<tr class="">
 					<td data-column="item_id" class="">${row.item_id}</td>
 					<td data-column="item_name" class="">${row.item_name}</td>
+					<td data-column="item_desc" class="hidden">${row.item_desc}</td>
 					<td class="hidden"><img src="${image_src}" alt="Foods Image" width="300"></td>
 					<td data-column="item_price" class="">${row.item_price}</td>
-					<td data-column="item_quantity_sold" class="hidden">${row.quantity_sold}</td>
-					<td data-column="item_revenue" class="hidden">₱${row.revenue_generated}</td>
 				</tr>
 			`;
 		}
@@ -338,19 +328,42 @@ function item_card_row_click() {
 				// console.log(cells);
 				const item_id = cells[0].textContent;
 				const item_name = cells[1].textContent;
-				const item_price = cells[3].textContent;
-				console.log("Item ID: " + item_id);
-				console.log("Item Name: " + item_name);
-				console.log("Item Price: ₱" + item_price);
+				const item_desc = cells[2].textContent;
+				const item_image = cells[3].querySelector("img").src;
+				const item_price = cells[4].textContent;
 
-				generate_item_card(item_id);
+				generate_item_card(item_id, item_name, item_desc, item_image, item_price);
 			}
 		});
 	}
 }
 
-function generate_item_card(item_id) {
-	console.log(`called generate_item_card(${item_id})`);
+function generate_item_card(item_id, item_name, item_desc, item_image, item_price) {
+	if (!canvas) return;
+	console.log(`called generate_item_card(${item_id}, ${item_name}, ${item_desc}, ${item_image.slice(0, 30) + "..."}, ${item_price})`);
+
+	const item_card_name = new fabric.Text(item_name, {
+		fontSize: 20,
+	});
+
+	const item_card_desc = new fabric.Text(item_desc, {
+		fontSize: 20
+	});
+
+	const item_card_price = new fabric.Text(item_price, {
+		fontSize: 20
+	});
+
+	const item_card = new fabric.Group(
+		[item_card_name, item_card_desc, item_card_price],
+		{
+			customItemId: item_id,
+		}
+	);
+
+	console.log(item_card);
+
+	canvas.add(item_card);
 }
 
 function dialog_open(element_id) {
