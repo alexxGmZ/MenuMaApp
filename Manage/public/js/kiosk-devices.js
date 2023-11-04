@@ -1,21 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 	list_available_devices();
 	list_registered_devices();
-
-	// Add click event listeners to table headers for sorting
-	const sortOrders = {};
-	const headers = document.querySelectorAll("#registered_devices_table th[data-column]");
-
-	headers.forEach((header) => {
-		const column = header.getAttribute("data-column");
-		sortOrders[column] = "asc"; // Set the initial sort order to ascending
-
-		header.addEventListener("click", () => {
-			// Toggle sort order on each click
-			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
-			sort_registered_devices(document.getElementById("registered_devices_table"), column, sortOrders[column]);
-		});
-	});
+	toggle_sort_devices_table();
 });
 
 console.log("Directory: " + __dirname);
@@ -34,6 +20,7 @@ mysql.check_connection()
 const connection = mysql.connection;
 
 async function list_available_devices() {
+	// NOTE: make the networkPrefix more dynamic
 	const networkPrefix = "192.168.254.";
 	const startIP = 1;
 	const endIP = 255;
@@ -126,6 +113,24 @@ function list_registered_devices() {
 		// display output in document/kiosk-devices.html
 		placeholder.innerHTML = out;
 	})
+}
+
+function toggle_sort_devices_table() {
+	console.log("called toggle_sort_devices_table()");
+	// Add click event listeners to table headers for sorting
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#registered_devices_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_registered_devices(document.getElementById("registered_devices_table"), column, sortOrders[column]);
+		});
+	});
 }
 
 function refresh_registered_devices_table() {
