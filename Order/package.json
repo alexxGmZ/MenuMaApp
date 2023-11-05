@@ -17,7 +17,8 @@
     "@capacitor/camera": "latest",
     "@capacitor/core": "latest",
     "@capacitor/network": "^5.0.6",
-    "@capacitor/splash-screen": "latest"
+    "@capacitor/splash-screen": "latest",
+    "fabric": "^5.3.0"
   },
   "devDependencies": {
     "@capacitor/android": "^5.3.0",
