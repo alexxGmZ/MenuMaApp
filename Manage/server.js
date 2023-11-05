@@ -97,25 +97,25 @@ app.get("/", authenticate_api_connection,
 	});
 
 // for adding inventory items to database
-app.post("/upload_item", upload.single("foodimg"), (req, res) => {
+app.post("/upload_item", upload.single("image"), (req, res) => {
 	if (!req.file) {
 		return res.json({ success: false });
 	}
 
-	const { fooditem, fooddesc, foodprice } = req.body;
+	const { name, description, price } = req.body;
 	const body = JSON.stringify(req.body, null, 2);
 	console.log(body);
 	console.log(req.file.buffer);
 
 	// Insert the image into the database
 	connection.query("INSERT INTO manage_db.menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?)",
-		[fooditem, fooddesc, req.file.buffer, foodprice], (err) => {
+		[name, description, req.file.buffer, price], (err) => {
 			if (err) {
 				console.error("Error inserting data into MySQL:", err);
 				return res.json({ success: false });
 			}
-			// return res.json({ success: true });
 			request_message_format("POST", "upload_item", req.ip);
+			return res.json({ success: true });
 		}
 	);
 });
@@ -125,7 +125,7 @@ app.post("/update_item", upload.single("image"), (req, res) => {
 	// Extract data from the request body
 	const { id, name, description, price } = req.body;
 	const body = JSON.stringify(req.body, null, 2);
-	console.log(body);
+	// console.log(body);
 
 	var sql_query = "";
 	var sql_parameters = [];
@@ -134,7 +134,7 @@ app.post("/update_item", upload.single("image"), (req, res) => {
 	if (req.file) {
 		sql_query = "UPDATE manage_db.menu_items SET item_name = ?, item_desc = ?, item_price = ?, item_image = ? WHERE item_id = ?";
 		sql_parameters = [name, description, price, req.file.buffer, id];
-		console.log(req.file.buffer);
+		// console.log(req.file.buffer);
 	}
 	else {
 		sql_query = "UPDATE manage_db.menu_items SET item_name = ?, item_desc = ?, item_price = ? WHERE item_id = ?";

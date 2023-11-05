@@ -93,40 +93,114 @@ function refresh_menu_items() {
 function add_item() {
 	console.log("called add_item()");
 
-	const food_form = document.getElementById("add_item_form");
+	const item_name = document.getElementById("add_item_name").value.trim();
+	const item_desc = document.getElementById("add_item_desc").value.trim();
+	const item_img = document.getElementById("add_item_img").files[0];
+	const item_price = document.getElementById("add_item_price").value.trim();
+
+	// validate required inputs
+	if (!item_name || !item_price || !item_img)
+		return dialog_open("add_item_error_dialog");
+
+	let form_data = new FormData();
+	form_data.append("name", item_name);
+	form_data.append("description", item_desc);
+	form_data.append("image", item_img);
+	form_data.append("price", item_price);
+
 	fetch("http://localhost:8080/upload_item", {
 		method: "POST",
-		body: new FormData(food_form)
+		body: form_data
 	})
 		.then((response) => response.json())
 		.then((data) => {
 			console.log(data);
 			if (data.success) {
-				food_form.reset();
+				dialog_open("add_item_success_dialog");
+				document.getElementById("item_name_placeholder").innerHTML = document.getElementById("add_item_name").value;
+
+				// clear the inputs
+				document.getElementById("add_item_name").value = "";
+				document.getElementById("add_item_desc").value = "";
+				document.getElementById("add_item_img").value = "";
+				document.getElementById("add_item_price").value = "";
 			}
+			else
+				dialog_open("add_item_error_dialog");
 		})
 		.catch((error) => {
 			console.log("Error: ", error);
 		})
 }
 
-// For success dialog message after adding
-function add_item_message() {
-	console.log("called add_item_message()");
+// update an existing menu item
+function update_item() {
+	console.log("called update_item()");
 
-	if (document.getElementById("fooditem").value.length == 0)
-		return dialog_open("add_item_error_dialog");
+	// values from row_click() function
+	var item_id = document.getElementById("update_item_id").value;
+	var item_name = document.getElementById("update_item_name").value;
+	var item_desc = document.getElementById("update_item_desc").value;
+	var item_new_img = document.getElementById("update_new_image");
+	var item_price = document.getElementById("update_item_price").value;
 
-	if (document.getElementById("fooddesc").value.length == 0)
-		return dialog_open("add_item_error_dialog");
+	// check if a new image is selected
+	var item_image = ""
+	if (item_new_img.files.length > 0) {
+		item_image = item_new_img.files[0];
+	}
 
-	if (document.getElementById("foodimg").files.length == 0)
-		return dialog_open("add_item_error_dialog");
+	// console.log(item_id);
+	// console.log(item_name);
+	// console.log(item_desc);
+	// console.log(item_image);
+	// console.log(item_price);
 
-	if (document.getElementById("foodprice").value.length == 0)
-		return dialog_open("add_item_error_dialog");
+	const form_data = new FormData();
+	form_data.append("id", item_id);
+	form_data.append("name", item_name);
+	form_data.append("description", item_desc);
+	form_data.append("image", item_image);
+	form_data.append("price", item_price);
 
-	dialog_open("add_item_success_dialog");
+	// establish connection to server.js
+	fetch("http://localhost:8080/update_item", {
+		method: "POST",
+		body: form_data,
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data);
+			if (data.success) {
+				console.log(data.message);
+				// dialog_close("update_item_dialog");
+				dialog_open("update_item_success_dialog");
+			} else {
+				// Error occurred while updating
+				console.error("Error:", data.error);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+}
+
+// delete an item based on the item id
+function delete_item() {
+	console.log("called delete_item()");
+
+	var id = document.getElementById("remove_item_id").value;
+
+	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
+	connection.query(query, error => {
+		if (error) {
+			alert("Error!")
+			console.log(error)
+		}
+		else {
+			dialog_open("remove_item_success_dialog");
+		}
+	});
 }
 
 function sort_menu_items(table, column, sortOrder) {
@@ -200,82 +274,6 @@ function row_click() {
 	}
 }
 
-// update an existing menu item
-function update_item() {
-	console.log("called update_item()");
-
-	// values from row_click() function
-	var item_id = document.getElementById("update_item_id").value;
-	var item_name = document.getElementById("update_item_name").value;
-	var item_desc = document.getElementById("update_item_desc").value;
-	var item_new_img = document.getElementById("update_new_image");
-	var item_price = document.getElementById("update_item_price").value;
-
-	// check if a new image is selected
-	var item_image = ""
-	if (item_new_img.files.length > 0) {
-		item_image = item_new_img.files[0];
-	}
-
-	console.log(item_id);
-	console.log(item_name);
-	console.log(item_desc);
-	console.log(item_image);
-	console.log(item_price);
-
-	const form_data = new FormData();
-	form_data.append("id", item_id);
-	form_data.append("name", item_name);
-	form_data.append("description", item_desc);
-	form_data.append("image", item_image);
-	form_data.append("price", item_price);
-
-	// preview the contents for form_data
-	// for (const pair of form_data.entries()) {
-	// 	console.log(`${pair[0]}: ${pair[1]}`);
-	// }
-
-	// establish connection to server.js
-	fetch("http://localhost:8080/update_item", {
-		method: "POST",
-		body: form_data,
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			console.log(data);
-			if (data.success) {
-				// Item updated successfully
-				console.log("Item updated successfully:", data.message);
-				// dialog_close("update_item_dialog");
-				dialog_open("update_item_success_dialog");
-			} else {
-				// Error occurred while updating
-				console.error("Error updating item:", data.error);
-			}
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-}
-
-// delete an item based on the item id
-function delete_item() {
-	console.log("called delete_item()");
-
-	var id = document.getElementById("remove_item_id").value;
-
-	const query = `DELETE FROM menu_items WHERE item_id = "${id}"`;
-	connection.query(query, error => {
-		if (error) {
-			alert("Error!")
-			console.log(error)
-		}
-		else {
-			dialog_open("remove_item_success_dialog");
-		}
-	});
-}
-
 // search an item via id
 function search_via_id() {
 	console.log("called search_via_id()");
@@ -332,9 +330,6 @@ function dialog_open(element_id) {
 	fav_dialog.classList.add("active-dialog");
 
 	// any element id specific statements
-	if (element_id == "add_item_success_dialog") {
-		document.getElementById("item_name_placeholder").innerHTML = document.getElementById("fooditem").value;
-	}
 	if (element_id == "update_item_dialog") {
 		row_click();
 	}
