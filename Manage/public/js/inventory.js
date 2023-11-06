@@ -175,6 +175,7 @@ function update_item() {
 				console.log(data.message);
 				// dialog_close("update_item_dialog");
 				dialog_open("update_item_success_dialog");
+				document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("update_item_name").value;
 			} else {
 				// Error occurred while updating
 				console.error("Error:", data.error);
@@ -199,6 +200,7 @@ function delete_item() {
 		}
 		else {
 			dialog_open("remove_item_success_dialog");
+			document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("remove_item_name").innerHTML;
 		}
 	});
 }
@@ -333,12 +335,7 @@ function dialog_open(element_id) {
 	if (element_id == "update_item_dialog") {
 		row_click();
 	}
-	if (element_id == "update_item_success_dialog") {
-		document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("update_item_name").value;
-	}
-	if (element_id == "remove_item_success_dialog") {
-		document.getElementById("removed_item_placeholder").innerHTML = document.getElementById("remove_item_name").innerHTML;
-	}
+
 	if (element_id == "remove_item_dialog") {
 		row_click();
 	}
