@@ -12,6 +12,11 @@ const connection = mysql.connection;
 // check database connection
 mysql.check_connection();
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
+
 //----- Show Foods Function -----//
 // Start Query Here
 function display_menu_items() {
@@ -40,10 +45,10 @@ function display_menu_items() {
 						<td data-column="item_revenue" class="text-center font-bold">₱${row.revenue_generated}</td>
 						<td>
 							<span class="action-btn">
-							<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
+							<button onclick="dialog_open('update_item_dialog'); row_click()" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
 								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 							</button>
-							<button onclick="dialog_open('remove_item_dialog')" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
+							<button onclick="dialog_open('remove_item_dialog'); row_click()" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
 								<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
 							</button>
 							</span>
@@ -159,7 +164,6 @@ function update_item() {
 			console.log(data);
 			if (data.success) {
 				console.log(data.message);
-				// dialog_close("update_item_dialog");
 				dialog_open("update_item_success_dialog");
 				document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("update_item_name").value;
 			} else {
@@ -309,10 +313,10 @@ function search_via_id() {
 					<td class="text-center">${row.revenue_generated}</td>
 					<td>
 						<span class="action-btn">
-						<button onclick="dialog_open('update_item_dialog')" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="dialog_open('update_item_dialog'); row_click()" class="rounded-lg bg-sky-400 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
 							<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 						</button>
-						<button onclick="dialog_open('remove_item_dialog')" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="dialog_open('remove_item_dialog'); row_click()" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
 							<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
 						</button>
 						</span>
@@ -324,35 +328,5 @@ function search_via_id() {
 		});
 		dialog_close('search_item_dialog');
 	}
-}
-
-// open modal dialog based on element id
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-
-	// add active-dialog class in all current active dialogs
-	fav_dialog.classList.add("active-dialog");
-
-	// any element id specific statements
-	if (element_id == "update_item_dialog") {
-		row_click();
-	}
-
-	if (element_id == "remove_item_dialog") {
-		row_click();
-	}
-
-	fav_dialog.showModal();
-}
-
-// close modal dialog based on element id
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-
-	// remove the active-dialog class when the dialog is closed
-	fav_dialog.classList.remove("active-dialog");
-	fav_dialog.close();
 }
 

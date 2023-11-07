@@ -12,6 +12,11 @@ const connection = mysql.connection;
 // check database connection
 mysql.check_connection();
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
+
 // Global Data
 var global_order_num = "";
 
@@ -96,32 +101,6 @@ function row_click() {
 	}
 }
 
-// Open Dialog
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.classList.add("active-dialog");
-
-	// any element id specific statements
-	if (element_id == "cancel_order_success_dialog") {
-		document.getElementById("cancel_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
-	}
-
-	if (element_id == "done_order_success_dialog") {
-		document.getElementById("done_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
-	}
-
-	fav_dialog.showModal();
-}
-
-// Close Dialog
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.classList.remove("active-dialog");
-	fav_dialog.close();
-}
-
 function order_done() {
 	console.log("called order_done()");
 	// find the clicked row
@@ -173,11 +152,8 @@ function order_done() {
 							const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
 							// function of insert data into order_queue_history
 							connection.query(insert_order_queue_query, [order_id, order_num, orderRow.transaction_date, customer_names, overall_price, kiosks, status], (error, results) => {
-								if (error) {
-									console.log(error);
-								} else {
-									console.log("Successfully Added! (Order Queue)")
-								}
+								if (error) console.log(error);
+								else console.log("Successfully Added! (Order Queue)")
 							});
 
 							// this will be the order_stats function
@@ -199,11 +175,8 @@ function order_done() {
 								o_s.total_earnings = o_s.total_earnings + ${orderRow.total_price}
 							WHERE o_s.transaction_date = "${current_formatted_date}"`;
 							connection.query(update_order_stats, error => {
-								if (error) {
-									console.log(error);
-								} else {
-									console.log("Order Stat done success");
-								}
+								if (error) console.log(error);
+								else console.log("Order Stat done success");
 							})
 
 						}
@@ -224,11 +197,8 @@ function order_done() {
 							const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 							// functio nto insert data into items_ordered_history
 							connection.query(insert_items_ordered_query, [itemRow.items_ordered_id, itemRow.order_id, itemRow.item_id, itemRow.item_name, itemRow.item_price, itemRow.quantity, itemRow.quantity_times_price, itemRow.queue_number], (error, results) => {
-								if (error) {
-									console.log(error)
-								} else {
-									console.log("Successfully Added! (Items Ordered)")
-								}
+								if (error) console.log(error)
+								else console.log("Successfully Added! (Items Ordered)")
 							})
 						}
 
@@ -243,11 +213,8 @@ function order_done() {
 								m.quantity_sold = m.quantity_sold + i_o.quantity
 							WHERE i_o.order_id = "${orderRow.order_id}"`;
 							connection.query(update_revenue_query, error => {
-								if (error) {
-									console.log(error);
-								} else {
-									console.log("The revenue has been updated!");
-								}
+								if (error) console.log(error);
+								else console.log("The revenue has been updated!");
 							});
 						}
 
@@ -257,17 +224,17 @@ function order_done() {
 						const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order}"`;
 
 						connection.query(items_ordered_query, error => {
-							if (error) {
-								console.log(error);
-							} else {
+							if (error) console.log(error);
+							else {
 								console.log("Removed Success from items_ordered");
 
 								connection.query(ordered_num_query, error => {
-									if (error) {
-										console.log(error);
-									} else {
+									if (error) console.log(error);
+
+									else {
 										console.log("Removed success from order_queue")
 										dialog_open('done_order_success_dialog');
+										document.getElementById("done_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
 									}
 								});
 							}
@@ -396,6 +363,7 @@ function order_cancel() {
 						} else {
 							console.log("Removed success from order_queue")
 							dialog_open('cancel_order_success_dialog');
+							document.getElementById("cancel_order_num_placeholder").innerHTML = document.getElementById("order_num_cancel").value;
 						}
 					});
 				}

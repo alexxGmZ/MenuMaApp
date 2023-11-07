@@ -5,6 +5,11 @@ const mysql = require(__dirname + "/js/modules/mysql.js");
 mysql.check_connection();
 const connection = mysql.connection;
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
+
 // fabric.js stuff
 const fabric = require("fabric").fabric;
 let canvas;
@@ -362,21 +367,6 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	);
 
 	console.log(item_card);
-
 	canvas.add(item_card);
 }
 
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`);
-
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.classList.add("active-dialog");
-	fav_dialog.showModal();
-}
-
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.classList.remove("active-dialog");
-	fav_dialog.close();
-}

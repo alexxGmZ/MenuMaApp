@@ -10,6 +10,11 @@ const connection = mysql.connection;
 // check database connection
 mysql.check_connection();
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
+
 // SHOW ORDER STATS
 function display_order_stats() {
 	console.log("called display_order_stats()");
@@ -77,6 +82,7 @@ function remove_stats() {
 		} else {
 			console.log("Removed Success from order_queue_history");
 			dialog_open('order_stats_dialog_remove');
+			document.getElementById("transaction_date_remove_placeholder").innerHTML = document.getElementById('transaction_date_placeholder').value;
 		}
 	})
 }
@@ -138,21 +144,3 @@ function row_click() {
 
 }
 
-// Open Modal Functions
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-
-	if (element_id === "order_stats_dialog_remove") {
-		document.getElementById("transaction_date_remove_placeholder").innerHTML = document.getElementById('transaction_date_placeholder').value;
-	}
-
-	fav_dialog.showModal();
-}
-
-// Close Modal Function
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.close();
-}

@@ -19,6 +19,11 @@ const mysql = require(__dirname + "/js/modules/mysql.js")
 mysql.check_connection()
 const connection = mysql.connection;
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
+
 async function list_available_devices() {
 	// NOTE: make the networkPrefix more dynamic
 	const networkPrefix = "192.168.254.";
@@ -98,10 +103,10 @@ function list_registered_devices() {
 					<td data-column="timestamp_column">${formatted_timestamp}</td>
 					<td>
 						<span class="">
-							<button class="rounded-lg bg-sky-500 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_device_dialog')">
+							<button class="rounded-lg bg-sky-500 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_device_dialog'); row_click()">
 								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 							</button>
-							<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('delete_device_dialog')">
+							<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('delete_device_dialog'); row_click()">
 								<img src="assets/svg/trash.svg" class="">
 							</button>
 						</span>
@@ -139,13 +144,17 @@ function register_device() {
 
 	// validate ip address
 	const device_ip = document.getElementById("device_ip").value.trim();
-	if (!is_valid_ipv4(device_ip))
+	if (!is_valid_ipv4(device_ip)) {
+		document.getElementById("invalid_ip").innerHTML = document.getElementById("device_ip").value;
 		return dialog_open("invalid_ipv4_dialog");
+	}
 
 	// validate mac address
 	const device_mac_address = document.getElementById("device_mac_address").value.trim();
-	if (device_mac_address !== null && device_mac_address !== "" && !is_valid_mac_address(device_mac_address))
+	if (device_mac_address !== null && device_mac_address !== "" && !is_valid_mac_address(device_mac_address)) {
+		document.getElementById("invalid_mac_address").innerHTML = document.getElementById("device_mac_address").value;
 		return dialog_open("invalid_mac_address_dialog");
+	}
 
 	const device_name = document.getElementById("device_name").value.trim();
 
@@ -158,6 +167,7 @@ function register_device() {
 				const existing_ip_record_count = ipResults[0].count;
 				if (existing_ip_record_count > 0) {
 					dialog_open("ipv4_already_exist_dialog");
+					document.getElementById("existing_ip").innerHTML = document.getElementById("device_ip").value;
 				}
 				else {
 					// Check if MAC address is blank or null
@@ -171,12 +181,16 @@ function register_device() {
 							(insertError) => {
 								if (insertError) alert(insertError);
 								else {
-									console.log("IP: " + device_ip);
-									console.log("Name: " + device_name);
-									console.log("Mac: " + device_mac_address);
-									console.log("Token: " + api_token);
-									console.log("Timestamp: " + get_current_timestamp());
+									// console.log("IP: " + device_ip);
+									// console.log("Name: " + device_name);
+									// console.log("Mac: " + device_mac_address);
+									// console.log("Token: " + api_token);
+									// console.log("Timestamp: " + get_current_timestamp());
+
 									dialog_open("device_register_success_dialog");
+									document.getElementById("success_device_ip").innerHTML = device_ip;
+									document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
+									document.getElementById("success_device_mac").innerHTML = document.getElementById("device_mac_address").value;
 								}
 							}
 						);
@@ -192,6 +206,7 @@ function register_device() {
 									const existing_record_count = results[0].count;
 									if (existing_record_count > 0) {
 										dialog_open("mac_address_already_exist_dialog");
+										document.getElementById("existing_mac_address").innerHTML = document.getElementById("device_mac_address").value;
 									}
 									else {
 										// Insert the new record if neither IP nor MAC address exists
@@ -203,12 +218,16 @@ function register_device() {
 											(insertError) => {
 												if (insertError) alert(insertError);
 												else {
-													console.log("IP: " + device_ip);
-													console.log("Name: " + device_name);
-													console.log("Mac: " + device_mac_address);
-													console.log("Token: " + api_token);
-													console.log("Timestamp: " + get_current_timestamp());
+													// console.log("IP: " + device_ip);
+													// console.log("Name: " + device_name);
+													// console.log("Mac: " + device_mac_address);
+													// console.log("Token: " + api_token);
+													// console.log("Timestamp: " + get_current_timestamp());
+
 													dialog_open("device_register_success_dialog");
+													document.getElementById("success_device_ip").innerHTML = device_ip;
+													document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
+													document.getElementById("success_device_mac").innerHTML = document.getElementById("device_mac_address").value;
 												}
 											}
 										);
@@ -235,7 +254,8 @@ function delete_device() {
 		}
 		else {
 			dialog_open('delete_device_success_dialog');
-			console.log(ip + " deleted");
+			document.getElementById("delete_device_success_ip").innerHTML = ip;
+			// console.log(ip + " deleted");
 		}
 	});
 }
@@ -252,11 +272,11 @@ function update_device() {
 	const api_token = document.getElementById("update_device_api_token").innerHTML;
 	const timestamp = get_current_timestamp();
 
-	console.log("IP: " + ip);
-	console.log("MAC: " + mac_address);
-	console.log("Name: " + device_name);
-	console.log("Token: " + api_token);
-	console.log("Timestamp: " + timestamp);
+	// console.log("IP: " + ip);
+	// console.log("MAC: " + mac_address);
+	// console.log("Name: " + device_name);
+	// console.log("Token: " + api_token);
+	// console.log("Timestamp: " + timestamp);
 
 	connection.query(
 		"UPDATE api_connected_devices SET device_name = ?, api_token = ?, mac_address = ?, timestamp_column = ? WHERE ip_address = ?",
@@ -268,7 +288,8 @@ function update_device() {
 			}
 			else {
 				dialog_open("update_device_success_dialog");
-				console.log(ip + " updated");
+				document.getElementById("update_device_success_ip").innerHTML = ip;
+				// console.log(ip + " updated");
 			}
 		}
 	);
@@ -325,57 +346,6 @@ document.getElementById("update_device_gen_token_button").addEventListener(
 	}
 );
 
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`)
-	const fav_dialog = document.getElementById(element_id);
-
-	// add active-dialog class in all current active dialogs
-	fav_dialog.classList.add("active-dialog");
-
-	// any dialog element id specific statements
-	if (element_id == "device_register_success_dialog") {
-		const device_ip = document.getElementById("device_ip").value;
-		document.getElementById("success_device_ip").innerHTML = device_ip;
-		document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
-		document.getElementById("success_device_mac").innerHTML = document.getElementById("device_mac_address").value;
-	}
-
-	if (element_id == "ipv4_already_exist_dialog")
-		document.getElementById("existing_ip").innerHTML = document.getElementById("device_ip").value;
-
-	if (element_id == "mac_address_already_exist_dialog")
-		document.getElementById("existing_mac_address").innerHTML = document.getElementById("device_mac_address").value;
-
-	if (element_id == "invalid_ipv4_dialog")
-		document.getElementById("invalid_ip").innerHTML = document.getElementById("device_ip").value;
-
-	if (element_id == "invalid_mac_address_dialog")
-		document.getElementById("invalid_mac_address").innerHTML = document.getElementById("device_mac_address").value;
-
-	if (element_id == "delete_device_dialog")
-		row_click();
-
-	if (element_id == "delete_device_success_dialog")
-		document.getElementById("delete_device_success_ip").innerHTML = document.getElementById("delete_device_ip").innerHTML;
-
-	if (element_id == "update_device_dialog")
-		row_click();
-
-	if (element_id == "update_device_success_dialog")
-		document.getElementById("update_device_success_ip").innerHTML = document.getElementById("update_device_ip").innerHTML;
-
-	fav_dialog.showModal();
-}
-
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`)
-	const fav_dialog = document.getElementById(element_id);
-
-	// remove the active-dialog class when the dialog is closed
-	fav_dialog.classList.remove("active-dialog");
-	fav_dialog.close();
-}
-
 function row_click() {
 	console.log("called row_click()");
 
@@ -391,10 +361,10 @@ function row_click() {
 				var api_token = row.getElementsByTagName("td")[2].innerHTML;
 				var mac_address = row.getElementsByTagName("td")[3].innerHTML;
 
-				console.log(device_ip);
-				console.log(device_name);
-				console.log(api_token);
-				console.log(mac_address);
+				// console.log(device_ip);
+				// console.log(device_name);
+				// console.log(api_token);
+				// console.log(mac_address);
 
 				// for deleting device
 				document.getElementById("delete_device_ip").innerHTML = device_ip;

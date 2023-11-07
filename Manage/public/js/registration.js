@@ -12,13 +12,15 @@ const crypto = require("crypto");
 //
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js");
-
 // create database connection
 const connection = mysql.connection;
-
 // check database connection
 mysql.check_connection();
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
 
 function register_employee() {
 	console.log("called register_employee()");
@@ -75,6 +77,7 @@ function register_employee() {
 		}
 		else {
 			dialog_open("add_employee_successs_dialog");
+			document.getElementById("add_employee_placeholder").innerHTML = document.getElementById("name").value;
 		}
 	});
 }
@@ -83,7 +86,7 @@ function list_registered_employees() {
 	console.log("called list_registered_employees()");
 	connection.query("SELECT * FROM registered_employees", function(err, result, fields) {
 		if (err) throw err;
-		console.log(result);
+		// console.log(result);
 
 		let placeholder = document.querySelector("#registered_employees");
 		let out = "";
@@ -127,10 +130,10 @@ function list_registered_employees() {
 					<td data-column="employee_devices_priv" class="text-center">${row.manage_devices_priv}</td>
 					<td class="text-center">
 						<span class="action-btn">
-							<button class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_employee_dialog')">
+							<button onclick="dialog_open('update_employee_dialog'); rowClick()" class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
 								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 							</button>
-							<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg" onclick="delete_employee()">
+							<button onclick="delete_employee()" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
 								<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
 							</button>
 						</span>
@@ -309,6 +312,7 @@ function update_employee() {
 		}
 		else {
 			dialog_open('update_employee_successs_dialog');
+			document.getElementById("update_employee_placeholder").innerHTML = document.getElementById("name_2").value;
 		}
 	});
 }
@@ -342,6 +346,7 @@ function delete_employee() {
 						}
 						else {
 							dialog_open('remove_employee_success_dialog');
+							rowClick();
 						}
 					})
 				};
@@ -351,38 +356,3 @@ function delete_employee() {
 	}
 }
 // END OF UPDATE EMPLOYEE FUNCTION //
-
-// open modal dialog based on element id
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`);
-	const fav_dialog = document.getElementById(element_id)
-
-	// add active-dialog class in all current active dialogs
-	fav_dialog.classList.add("active-dialog");
-
-	// any element id specific statements
-	if (element_id == "remove_employee_success_dialog") {
-		rowClick();
-	}
-	if (element_id == "update_employee_dialog") {
-		rowClick();
-	}
-	if (element_id == "add_employee_successs_dialog") {
-		document.getElementById("add_employee_placeholder").innerHTML = document.getElementById("name").value;
-	}
-	if (element_id == "update_employee_successs_dialog") {
-		document.getElementById("update_employee_placeholder").innerHTML = document.getElementById("name_2").value;
-	}
-
-	fav_dialog.showModal();
-}
-
-// close the modal
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-
-	// remove the active-dialog class when the dialog is closed
-	fav_dialog.classList.remove("active-dialog");
-	fav_dialog.close();
-}

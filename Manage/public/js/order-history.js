@@ -10,6 +10,11 @@ const connection = mysql.connection;
 // check database connection
 mysql.check_connection();
 
+// dialog module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+const dialog_open = dialog.dialog_open;
+const dialog_close = dialog.dialog_close;
+
 // SHOW ITEMS ORDERED HISTORY
 function display_order_history() {
 	console.log("called display_order_history()");
@@ -63,7 +68,7 @@ function display_order_history() {
 					// console.log("Transaction Date: " + order_history.transaction_date);
 					// console.log("Status: " + order_history.order_status);
 
-					var formattedDate = new Date (order_history.transaction_date).toLocaleString();
+					var formattedDate = new Date(order_history.transaction_date).toLocaleString();
 
 					// Design purposes for served or cancelled
 					let statusClass = '';
@@ -76,7 +81,7 @@ function display_order_history() {
 					//Design purposes for changing color background per row
 					const rowColors = index % 2 === 0 ? 'bg-white' : 'bg-zinc-50';
 
-					const markup =`
+					const markup = `
 						<tr class="bg-white border-b dark:border-gray-700 border-r border-l ${rowColors}">
 							<td class="px-2">${order_history.order_id}</td>
 							<td class="px-2">Order #${order_history.queue_number}</td>
@@ -119,7 +124,7 @@ function row_click() {
 	var table = document.getElementById("order_history_table");
 	var rows = table.getElementsByTagName("tr");
 
-	for (let i = 0;  i < rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var currentRow = table.rows[i];
 		var clickHandle = function(row) {
 			return function() {
@@ -182,27 +187,10 @@ function remove_history() {
 				} else {
 					console.log("Removed Success from items_ordered-history");
 					dialog_open('history_remove_success_dialog');
+					document.getElementById("history_id_remove_placeholder").innerHTML = document.getElementById('history_id').value;
 				}
 			})
 		}
 	})
 }
 
-// open modal dialog based on element id
-function dialog_open(element_id) {
-	console.log(`called dialog_open(${element_id})`);
-    const fav_dialog = document.getElementById(element_id);
-
-	if (element_id == "history_remove_success_dialog") {
-		document.getElementById("history_id_remove_placeholder").innerHTML = document.getElementById('history_id').value;
-	}
-
-    fav_dialog.showModal();
-}
-
-// close modal dialog based on element id
-function dialog_close(element_id) {
-	console.log(`called dialog_close(${element_id})`);
-	const fav_dialog = document.getElementById(element_id);
-	fav_dialog.close();
-}
