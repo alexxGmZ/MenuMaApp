@@ -1,20 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	list_registered_employees();
-
-	// sort table columns when column name is clicked
-	const sortOrders = {};
-	const headers = document.querySelectorAll("#employee_table th[data-column]");
-
-	headers.forEach((header) => {
-		const column = header.getAttribute("data-column");
-		sortOrders[column] = "asc"; // Set the initial sort order to ascending
-
-		header.addEventListener("click", () => {
-			// Toggle sort order on each click
-			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
-			sort_registered_employees(document.getElementById("employee_table"), column, sortOrders[column]);
-		});
-	});
+	toggle_sort_employee_table();
 });
 
 console.log("Directory: " + __dirname);
@@ -125,10 +111,10 @@ function list_registered_employees() {
 				row.manage_employee_priv = "No";
 
 			if (row.manage_devices_priv == 1)
-			row.manage_devices_priv = "Yes"
+				row.manage_devices_priv = "Yes"
 			else
 				row.manage_devices_priv = "No";
-			
+
 
 			out += `
 				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
@@ -173,6 +159,23 @@ function refresh_employee_table() {
 
 	// repopulate the registered_devices table body
 	list_registered_employees();
+}
+
+function toggle_sort_employee_table() {
+	// sort table columns when column name is clicked
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#employee_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_registered_employees(document.getElementById("employee_table"), column, sortOrders[column]);
+		});
+	});
 }
 
 function sort_registered_employees(table, column, sortOrder) {
@@ -358,16 +361,16 @@ function dialog_open(element_id) {
 	fav_dialog.classList.add("active-dialog");
 
 	// any element id specific statements
-	if(element_id == "remove_employee_success_dialog") {
+	if (element_id == "remove_employee_success_dialog") {
 		rowClick();
 	}
-	if(element_id == "update_employee_dialog") {
+	if (element_id == "update_employee_dialog") {
 		rowClick();
 	}
-	if(element_id == "add_employee_successs_dialog") {
+	if (element_id == "add_employee_successs_dialog") {
 		document.getElementById("add_employee_placeholder").innerHTML = document.getElementById("name").value;
 	}
-	if(element_id == "update_employee_successs_dialog") {
+	if (element_id == "update_employee_successs_dialog") {
 		document.getElementById("update_employee_placeholder").innerHTML = document.getElementById("name_2").value;
 	}
 

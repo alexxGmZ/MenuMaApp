@@ -115,24 +115,6 @@ function list_registered_devices() {
 	})
 }
 
-function toggle_sort_devices_table() {
-	console.log("called toggle_sort_devices_table()");
-	// Add click event listeners to table headers for sorting
-	const sortOrders = {};
-	const headers = document.querySelectorAll("#registered_devices_table th[data-column]");
-
-	headers.forEach((header) => {
-		const column = header.getAttribute("data-column");
-		sortOrders[column] = "asc"; // Set the initial sort order to ascending
-
-		header.addEventListener("click", () => {
-			// Toggle sort order on each click
-			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
-			sort_registered_devices(document.getElementById("registered_devices_table"), column, sortOrders[column]);
-		});
-	});
-}
-
 function refresh_registered_devices_table() {
 	console.log("called refresh_registered_devices_table()");
 
@@ -290,6 +272,24 @@ function update_device() {
 			}
 		}
 	);
+}
+
+function toggle_sort_devices_table() {
+	console.log("called toggle_sort_devices_table()");
+	// Add click event listeners to table headers for sorting
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#registered_devices_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_registered_devices(document.getElementById("registered_devices_table"), column, sortOrders[column]);
+		});
+	});
 }
 
 function sort_registered_devices(table, column, sortOrder) {

@@ -1,20 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	display_menu_items();
-
-	// sort by column
-	const sortOrders = {};
-	const headers = document.querySelectorAll("#menu_items_table th[data-column]");
-
-	headers.forEach((header) => {
-		const column = header.getAttribute("data-column");
-		sortOrders[column] = "asc"; // Set the initial sort order to ascending
-
-		header.addEventListener("click", () => {
-			// Toggle sort order on each click
-			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
-			sort_menu_items(document.getElementById("menu_items_table"), column, sortOrders[column]);
-		});
-	});
+	toggle_sort_items_table();
 });
 
 const fs = require('fs');
@@ -223,6 +209,23 @@ function sort_menu_items(table, column, sortOrder) {
 
 	rows.forEach((row) => {
 		tbody.appendChild(row);
+	});
+}
+
+function toggle_sort_items_table() {
+	// sort by column
+	const sortOrders = {};
+	const headers = document.querySelectorAll("#menu_items_table th[data-column]");
+
+	headers.forEach((header) => {
+		const column = header.getAttribute("data-column");
+		sortOrders[column] = "asc"; // Set the initial sort order to ascending
+
+		header.addEventListener("click", () => {
+			// Toggle sort order on each click
+			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
+			sort_menu_items(document.getElementById("menu_items_table"), column, sortOrders[column]);
+		});
 	});
 }
 
