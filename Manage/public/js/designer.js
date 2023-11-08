@@ -280,6 +280,15 @@ function sidebar_generate_circle() {
 	canvas.add(circle);
 }
 
+function sidebar_generate_text() {
+	if (!canvas) return;
+	console.log("called sidebar_generate_text()");
+	const text = new fabric.IText("text", {
+		fontSize: 20
+	});
+	canvas.add(text);
+}
+
 function sidebar_generate_line() {
 	if (!canvas) return;
 	console.log("called sidebar_generate_line()");
@@ -347,26 +356,30 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	if (!canvas) return;
 	console.log(`called generate_item_card(${item_id}, ${item_name}, ${item_desc}, ${item_image.slice(0, 30) + "..."}, ${item_price})`);
 
-	const item_card_name = new fabric.Text(item_name, {
+	const name = new fabric.IText(item_name, {
 		fontSize: 20,
+		object_id: `${item_id}_${generate_random_num()}`
 	});
 
-	const item_card_desc = new fabric.Text(item_desc, {
-		fontSize: 20
+	const description = new fabric.IText(item_desc, {
+		fontSize: 18,
+		object_id: `${item_id}_${generate_random_num()}`
 	});
 
-	const item_card_price = new fabric.Text(item_price, {
-		fontSize: 20
-	});
+	const price = new fabric.IText(item_price, {
+		fontSize: 19,
+		object_id: `${item_id}_${generate_random_num()}`
+	})
 
-	const item_card = new fabric.Group(
-		[item_card_name, item_card_desc, item_card_price],
-		{
-			customItemId: item_id,
-		}
-	);
+	console.log(name.object_id);
+	console.log(description.object_id);
+	console.log(price.object_id);
 
-	console.log(item_card);
-	canvas.add(item_card);
+	canvas.add(name);
+	canvas.add(description);
+	canvas.add(price);
 }
 
+function generate_random_num() {
+	return `${Math.floor(Math.random() * 10000)}_${Date.now()}`;
+}
