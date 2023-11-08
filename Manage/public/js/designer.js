@@ -12,10 +12,15 @@ const dialog_close = dialog.dialog_close;
 
 // fabric.js stuff
 const fabric = require("fabric").fabric;
+
+// default canvas variable values
 let canvas;
 let canvas_filename = "untitled";
 let canvas_height = 0;
 let canvas_width = 0;
+const canvas_element_id = "canvas"
+// using tailwind css classes
+const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4"
 
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
@@ -23,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function create_canvas(size) {
-	console.log(`called generate_canvas(${size})`);
+	console.log(`called create_canvas(${size})`);
 
 	if (size === "custom") {
 		const input_custom_canvas_height = document.getElementById("custom_canvas_height").value;
@@ -43,16 +48,81 @@ function create_canvas(size) {
 		canvas_width = 1280;
 	}
 
-	console.log(`canvas size: ${canvas_height}x${canvas_width}`);
+	generate_canvas_area(canvas_height, canvas_width);
+	dialog_close('create_canvas_dialog');
+}
 
-	// Create a new canvas element and set its attributes
+function load_canvas_from_json() {
+	console.log("called load_canvas_from_json()");
+	const input_canvas = document.getElementById("input_canvas_json");
+
+	// Trigger the file input dialog
+	input_canvas.click();
+
+	// Handle the selected file
+	input_canvas.addEventListener("change", function(event) {
+		const selectedFile = event.target.files[0];
+		if (selectedFile) {
+			// Read the selected JSON file
+			const reader = new FileReader();
+
+			reader.onload = function(event) {
+				const json_data = event.target.result;
+				const parsed_json = JSON.parse(json_data);
+				canvas_filename = selectedFile.name;
+				canvas_filename = canvas_filename.replace(/\.[^/.]+$/, "");
+				canvas_height = parsed_json.canvas_height;
+				canvas_width = parsed_json.canvas_width;
+
+				generate_canvas_area(canvas_height, canvas_width);
+				if (canvas) {
+					canvas.loadFromJSON(parsed_json.canvas_objects, function() {
+						// Callback function executed after the canvas is loaded
+						console.log("Canvas loaded from JSON.");
+						canvas.renderAll(); // Render the canvas
+					});
+				}
+			};
+
+			reader.readAsText(selectedFile);
+		}
+	});
+}
+
+function load_current_synced_design() {
+	console.log("called load_current_synced_design()");
+	const current_design_file = __dirname + "/../current_design.json";
+	fs.readFile(current_design_file, "utf8", (err, data) => {
+		if (err) alert(err);
+
+		try {
+			const parsed_data = JSON.parse(data);
+			canvas_height = parsed_data.canvas_height;
+			canvas_width = parsed_data.canvas_width;
+
+			generate_canvas_area(canvas_height, canvas_width);
+			if (canvas) {
+				canvas.loadFromJSON(parsed_data.canvas_objects, function() {
+					// Callback function executed after the canvas is loaded
+					// console.log("Canvas loaded from JSON.");
+					canvas.renderAll(); // Render the canvas
+				});
+			}
+		}
+		catch (parse_error) {
+			console.error('Error parsing JSON:', parse_error);
+		}
+	});
+}
+
+function generate_canvas_area(canvas_height, canvas_width) {
+	// Create a new canvas element
 	const canvas_element = document.createElement("canvas");
-	canvas_element.id = "canvas";
-	canvas_element.className = "border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
-	canvas_element.height = canvas_height;
-	canvas_element.width = canvas_width;
+	canvas_element.id = canvas_element_id;
+	canvas_element.className = canvas_css_classes;
+	canvas_element.width = canvas_width
+	canvas_element.height = canvas_height
 
-	// Create an <h1> element to display the resolution
 	const canvas_resolution_element = document.createElement("p");
 	canvas_resolution_element.id = "canvas_resolution";
 	canvas_resolution_element.className = "mt-14";
@@ -64,10 +134,7 @@ function create_canvas(size) {
 	canvas_placeholder.appendChild(canvas_resolution_element);
 	canvas_placeholder.appendChild(canvas_element);
 
-	// Create the Fabric.js canvas
 	canvas = new fabric.Canvas("canvas");
-
-	dialog_close('create_canvas_dialog');
 }
 
 function save_canvas_to_json() {
@@ -107,11 +174,11 @@ function save_canvas_to_json() {
 function save_canvas_to_svg() {
 	// function will not work if canvas is empty or not generated yet
 	if (!canvas) return;
-
 	console.log("called save_canvas_to_svg()");
 
 	// Get the SVG data from the canvas
 	const svged_canvas = canvas.toSVG();
+	console.log(svged_canvas);
 
 	// Create a Blob with the SVG data
 	const blob = new Blob([svged_canvas], { type: 'image/svg+xml' });
@@ -131,107 +198,7 @@ function save_canvas_to_svg() {
 	URL.revokeObjectURL(url);
 }
 
-function load_canvas_from_json() {
-	console.log("called load_canvas_from_json()");
-	const input_canvas = document.getElementById("input_canvas_json");
-
-	// Trigger the file input dialog
-	input_canvas.click();
-
-	// Handle the selected file
-	input_canvas.addEventListener("change", function(event) {
-		const selectedFile = event.target.files[0];
-		if (selectedFile) {
-			// Read the selected JSON file
-			const reader = new FileReader();
-
-			reader.onload = function(event) {
-				const json_data = event.target.result;
-
-				const parsed_json = JSON.parse(json_data);
-				canvas_filename = selectedFile.name;
-				canvas_filename = canvas_filename.replace(/\.[^/.]+$/, "");
-				canvas_height = parsed_json.canvas_height;
-				canvas_width = parsed_json.canvas_width;
-
-				// Create a new canvas element
-				const canvas_element = document.createElement("canvas");
-				canvas_element.id = "canvas";
-				canvas_element.className = "border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
-				canvas_element.width = canvas_width
-				canvas_element.height = canvas_height
-
-				const canvas_resolution_element = document.createElement("p");
-				canvas_resolution_element.id = "canvas_resolution";
-				canvas_resolution_element.className = "mt-14";
-				canvas_resolution_element.textContent = `Canvas Resolution: ${parsed_json.canvas_width}x${parsed_json.canvas_height}`;
-
-				// Append the canvas element to the container div
-				const canvas_placeholder = document.querySelector("#canvas_area");
-				canvas_placeholder.innerHTML = "";
-				canvas_placeholder.appendChild(canvas_resolution_element);
-				canvas_placeholder.appendChild(canvas_element);
-
-				// Load the canvas from the JSON data
-				canvas = new fabric.Canvas("canvas");
-				canvas.loadFromJSON(parsed_json.canvas_objects, function() {
-					// Callback function executed after the canvas is loaded
-					console.log("Canvas loaded from JSON.");
-					canvas.renderAll(); // Render the canvas
-				});
-			};
-
-			reader.readAsText(selectedFile);
-		}
-	});
-}
-
-function load_current_synced_design() {
-	console.log("called load_current_synced_design()");
-	const current_design_file = __dirname + "/../current_design.json";
-	fs.readFile(current_design_file, "utf8", (err, data) => {
-		if (err) {
-			alert(err);
-		}
-
-		try {
-			const parsed_data = JSON.parse(data);
-			canvas_height = parsed_data.canvas_height;
-			canvas_width = parsed_data.canvas_width;
-
-			// Create a new canvas element
-			const canvas_element = document.createElement("canvas");
-			canvas_element.id = "canvas";
-			canvas_element.className = "border-gray-200 border-4 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
-			canvas_element.width = canvas_width
-			canvas_element.height = canvas_height
-
-			const canvas_resolution_element = document.createElement("p");
-			canvas_resolution_element.id = "canvas_resolution";
-			canvas_resolution_element.className = "mt-14";
-			canvas_resolution_element.textContent = `Canvas Resolution: ${parsed_data.canvas_width}x${parsed_data.canvas_height}`;
-
-			// Append the canvas element to the container div
-			const canvas_placeholder = document.querySelector("#canvas_area");
-			canvas_placeholder.innerHTML = "";
-			canvas_placeholder.appendChild(canvas_resolution_element);
-			canvas_placeholder.appendChild(canvas_element);
-
-			// Load the canvas from the JSON data
-			canvas = new fabric.Canvas("canvas");
-			canvas.loadFromJSON(parsed_data.canvas_objects, function() {
-				// Callback function executed after the canvas is loaded
-				console.log("Canvas loaded from JSON.");
-				canvas.renderAll(); // Render the canvas
-			});
-		}
-		catch (parse_error) {
-			console.error('Error parsing JSON:', parse_error);
-		}
-	});
-}
-
-function sync_design_to_order() {
+function sidebar_sync_design_to_order() {
 	if (!canvas) return;
 	console.log("called sync_design_to_order()");
 	console.log(canvas);
@@ -366,6 +333,12 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 		object_id: `${item_id}_${generate_random_num()}`
 	});
 
+	const image = new fabric.Image.fromURL(item_image, (img) => {
+		img.scale(0.5);
+		canvas.add(img);
+		// canvas.renderAll();
+	})
+
 	const price = new fabric.IText(item_price, {
 		fontSize: 19,
 		object_id: `${item_id}_${generate_random_num()}`
@@ -375,9 +348,9 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	console.log(description.object_id);
 	console.log(price.object_id);
 
-	canvas.add(name);
-	canvas.add(description);
-	canvas.add(price);
+	// canvas.add(name);
+	// canvas.add(description);
+	// canvas.add(price);
 }
 
 function generate_random_num() {
