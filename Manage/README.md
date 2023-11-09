@@ -24,6 +24,7 @@
     - [MySql Database Setup](#mysql-database-setup)
   - [Custom Modules](#custom-modules)
     - [mysql.js](#mysqljs)
+    - [dialog.js](#dialogjs)
 <!--toc:end-->
 
 <br>
