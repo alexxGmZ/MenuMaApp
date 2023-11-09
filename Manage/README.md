@@ -188,3 +188,39 @@ connection.query(
 For more information, read the [mysql2 package documentation](https://www.npmjs.com/package/mysql2?activeTab=readme).
 
 <br>
+
+### dialog.js
+
+The [dialog.js](./public/js/modules/dialog.js) opens and closes html dialogs using their
+corresponding element id that are inside the current html page.
+
+**Arguments:**
+
+* element_id (string)
+
+**How to use:**
+
+Create a dialog element.
+
+```html
+<!-- file.html -->
+<dialog id="dialog_id">
+   <h1>This is a dialog</h1>
+</dialog>
+<script src="file.js"></script
+```
+
+```javascript
+// file.js
+
+// call the module
+const dialog = require(__dirname + "/js/modules/dialog.js");
+
+// opens the dialog
+const dialog_open = dialog.dialog_open;
+dialog_open("dialog_id");
+
+// closes the dialog
+const dialog_close = dialog.dialog_close;
+dialog_close("dialog_id");
+```
