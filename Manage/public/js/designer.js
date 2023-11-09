@@ -21,6 +21,7 @@ let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4"
+let canvas_bg_color = "white"
 
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
@@ -97,7 +98,7 @@ function load_current_synced_design(callback) {
 	console.log("called load_current_synced_design()");
 	const current_design_file = __dirname + "/../current_design.json";
 	fs.readFile(current_design_file, "utf8", (err, data) => {
-		if (err) alert(err);
+		if (err) dialog_open("create_canvas_dialog");
 
 		try {
 			const parsed_data = JSON.parse(data);
@@ -139,7 +140,9 @@ function generate_canvas_area(canvas_height, canvas_width) {
 	canvas_placeholder.appendChild(canvas_resolution_element);
 	canvas_placeholder.appendChild(canvas_element);
 
-	canvas = new fabric.Canvas("canvas");
+	canvas = new fabric.Canvas("canvas", {
+		backgroundColor: canvas_bg_color
+	});
 }
 
 function save_canvas_to_json() {
