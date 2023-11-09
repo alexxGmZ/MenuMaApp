@@ -24,8 +24,11 @@ const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray
 
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
-	load_current_synced_design();
+	load_current_synced_design(function() {
+		get_selected_objects();
+	});
 });
+
 
 function create_canvas(size) {
 	console.log(`called create_canvas(${size})`);
@@ -52,7 +55,7 @@ function create_canvas(size) {
 	dialog_close('create_canvas_dialog');
 }
 
-function load_canvas_from_json() {
+function load_canvas_from_json(callback) {
 	console.log("called load_canvas_from_json()");
 	const input_canvas = document.getElementById("input_canvas_json");
 
@@ -80,6 +83,7 @@ function load_canvas_from_json() {
 						// Callback function executed after the canvas is loaded
 						console.log("Canvas loaded from JSON.");
 						canvas.renderAll(); // Render the canvas
+						if (typeof callback === "function") get_selected_objects();
 					});
 				}
 			};
@@ -89,7 +93,7 @@ function load_canvas_from_json() {
 	});
 }
 
-function load_current_synced_design() {
+function load_current_synced_design(callback) {
 	console.log("called load_current_synced_design()");
 	const current_design_file = __dirname + "/../current_design.json";
 	fs.readFile(current_design_file, "utf8", (err, data) => {
@@ -106,6 +110,7 @@ function load_current_synced_design() {
 					// Callback function executed after the canvas is loaded
 					// console.log("Canvas loaded from JSON.");
 					canvas.renderAll(); // Render the canvas
+					if (typeof callback === "function") callback();
 				});
 			}
 		}
@@ -351,6 +356,25 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	// canvas.add(name);
 	// canvas.add(description);
 	// canvas.add(price);
+}
+
+function get_selected_objects() {
+	if (!canvas) return;
+	console.log("called get_selected_objects()");
+
+	canvas.on('mouse:up', function(event) {
+		const selected_objects = canvas.getActiveObjects();
+
+		if (selected_objects.length > 0) {
+			// Objects were selected
+			console.log('Selected object/s:', selected_objects);
+		}
+		// else {
+		// 	// No object was selected (canvas was clicked)
+		// 	console.log('Clicked on the canvas');
+		// }
+		return selected_objects;
+	});
 }
 
 function generate_random_num() {
