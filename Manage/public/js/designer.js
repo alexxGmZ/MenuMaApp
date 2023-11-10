@@ -25,9 +25,7 @@ let canvas_bg_color = "white"
 
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
-	load_current_synced_design(function() {
-		get_selected_objects();
-	});
+	load_current_synced_design();
 });
 
 
@@ -52,7 +50,9 @@ function create_canvas(size) {
 		canvas_width = 1280;
 	}
 
-	generate_canvas_area(canvas_height, canvas_width);
+	generate_canvas_area(canvas_height, canvas_width, function() {
+		get_selected_objects();
+	});
 	dialog_close('create_canvas_dialog');
 }
 
@@ -78,13 +78,14 @@ function load_canvas_from_json(callback) {
 				canvas_height = parsed_json.canvas_height;
 				canvas_width = parsed_json.canvas_width;
 
-				generate_canvas_area(canvas_height, canvas_width);
+				generate_canvas_area(canvas_height, canvas_width, function() {
+					get_selected_objects();
+				});
 				if (canvas) {
 					canvas.loadFromJSON(parsed_json.canvas_objects, function() {
 						// Callback function executed after the canvas is loaded
-						console.log("Canvas loaded from JSON.");
+						// console.log("Canvas loaded from JSON.");
 						canvas.renderAll(); // Render the canvas
-						if (typeof callback === "function") get_selected_objects();
 					});
 				}
 			};
@@ -94,7 +95,7 @@ function load_canvas_from_json(callback) {
 	});
 }
 
-function load_current_synced_design(callback) {
+function load_current_synced_design() {
 	console.log("called load_current_synced_design()");
 	const current_design_file = __dirname + "/../current_design.json";
 	fs.readFile(current_design_file, "utf8", (err, data) => {
@@ -105,13 +106,14 @@ function load_current_synced_design(callback) {
 			canvas_height = parsed_data.canvas_height;
 			canvas_width = parsed_data.canvas_width;
 
-			generate_canvas_area(canvas_height, canvas_width);
+			generate_canvas_area(canvas_height, canvas_width, function() {
+				get_selected_objects();
+			});
 			if (canvas) {
 				canvas.loadFromJSON(parsed_data.canvas_objects, function() {
 					// Callback function executed after the canvas is loaded
 					// console.log("Canvas loaded from JSON.");
 					canvas.renderAll(); // Render the canvas
-					if (typeof callback === "function") callback();
 				});
 			}
 		}
@@ -121,7 +123,8 @@ function load_current_synced_design(callback) {
 	});
 }
 
-function generate_canvas_area(canvas_height, canvas_width) {
+function generate_canvas_area(canvas_height, canvas_width, callback) {
+	console.log("called generate_canvas_area()");
 	// Create a new canvas element
 	const canvas_element = document.createElement("canvas");
 	canvas_element.id = canvas_element_id;
@@ -129,6 +132,7 @@ function generate_canvas_area(canvas_height, canvas_width) {
 	canvas_element.width = canvas_width
 	canvas_element.height = canvas_height
 
+	// Display canvas resolution element
 	const canvas_resolution_element = document.createElement("p");
 	canvas_resolution_element.id = "canvas_resolution";
 	canvas_resolution_element.className = "mt-14";
@@ -143,12 +147,22 @@ function generate_canvas_area(canvas_height, canvas_width) {
 	canvas = new fabric.Canvas("canvas", {
 		backgroundColor: canvas_bg_color
 	});
+
+	if (typeof callback === "function") callback();
 }
 
 function save_canvas_to_json() {
 	if (!canvas) return;
 
 	console.log("called save_canvas_to_json()");
+
+	// NOTE: custom toObject function for fabric.js
+	// from: https://github.com/fabricjs/fabric.js/wiki/How-to-set-additional-properties-in-all-fabric.Objects
+	const originalToObject = fabric.Object.prototype.toObject;
+	const myAdditional = ["object_id"];
+	fabric.Object.prototype.toObject = function(additionalProperties) {
+		return originalToObject.call(this, myAdditional.concat(additionalProperties));
+	}
 
 	// Create an object to store canvas data and resolution
 	const canvas_data = {
@@ -209,8 +223,14 @@ function save_canvas_to_svg() {
 function sidebar_sync_design_to_order() {
 	if (!canvas) return;
 	console.log("called sync_design_to_order()");
-	console.log(canvas);
-	console.log("Directory: " + __dirname);
+
+	// NOTE: custom toObject function for fabric.js
+	// from: https://github.com/fabricjs/fabric.js/wiki/How-to-set-additional-properties-in-all-fabric.Objects
+	const originalToObject = fabric.Object.prototype.toObject;
+	const myAdditional = ["object_id"];
+	fabric.Object.prototype.toObject = function(additionalProperties) {
+		return originalToObject.call(this, myAdditional.concat(additionalProperties));
+	}
 
 	const canvas_data = {
 		canvas_objects: canvas.toObject(),
@@ -333,32 +353,34 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 
 	const name = new fabric.IText(item_name, {
 		fontSize: 20,
-		object_id: `${item_id}_${generate_random_num()}`
+		object_id: `${item_id}_name_${generate_random_num()}`
 	});
 
 	const description = new fabric.IText(item_desc, {
 		fontSize: 18,
-		object_id: `${item_id}_${generate_random_num()}`
+		object_id: `${item_id}_desc_${generate_random_num()}`
 	});
 
 	const image = new fabric.Image.fromURL(item_image, (img) => {
 		img.scale(0.5);
+		img.object_id = `${item_id}_img_${generate_random_num()}`;
+		console.log("img.object_id " + img.object_id);
 		canvas.add(img);
 		// canvas.renderAll();
 	})
 
 	const price = new fabric.IText(item_price, {
 		fontSize: 19,
-		object_id: `${item_id}_${generate_random_num()}`
+		object_id: `${item_id}_price_${generate_random_num()}`
 	})
 
-	console.log(name.object_id);
-	console.log(description.object_id);
-	console.log(price.object_id);
+	console.log("name.object_id " + name.object_id);
+	console.log("description.object_id " + description.object_id);
+	console.log("price.object_id " + price.object_id);
 
-	// canvas.add(name);
-	// canvas.add(description);
-	// canvas.add(price);
+	canvas.add(name);
+	canvas.add(description);
+	canvas.add(price);
 }
 
 function get_selected_objects() {
@@ -370,7 +392,10 @@ function get_selected_objects() {
 
 		if (selected_objects.length > 0) {
 			// Objects were selected
-			console.log('Selected object/s:', selected_objects);
+			// console.log('Selected object/s:', selected_objects);
+			selected_objects.forEach(object => {
+				console.log(`Selected object - Type: ${object.type}, Object ID: ${object.object_id}`);
+			})
 		}
 		// else {
 		// 	// No object was selected (canvas was clicked)
