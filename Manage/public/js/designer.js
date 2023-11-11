@@ -12,6 +12,13 @@ const dialog_close = dialog.dialog_close;
 
 // fabric.js stuff
 const fabric = require("fabric").fabric;
+// NOTE: custom toObject function for fabric.js
+// from: https://github.com/fabricjs/fabric.js/wiki/How-to-set-additional-properties-in-all-fabric.Objects
+const originalToObject = fabric.Object.prototype.toObject;
+const myAdditional = ["object_id"];
+fabric.Object.prototype.toObject = function(additionalProperties) {
+	return originalToObject.call(this, myAdditional.concat(additionalProperties));
+}
 
 // default canvas variable values
 let canvas;
@@ -148,21 +155,14 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 		backgroundColor: canvas_bg_color
 	});
 
-	if (typeof callback === "function") callback();
+	if (canvas) {
+		if (typeof callback === "function") callback();
+	}
 }
 
 function save_canvas_to_json() {
 	if (!canvas) return;
-
 	console.log("called save_canvas_to_json()");
-
-	// NOTE: custom toObject function for fabric.js
-	// from: https://github.com/fabricjs/fabric.js/wiki/How-to-set-additional-properties-in-all-fabric.Objects
-	const originalToObject = fabric.Object.prototype.toObject;
-	const myAdditional = ["object_id"];
-	fabric.Object.prototype.toObject = function(additionalProperties) {
-		return originalToObject.call(this, myAdditional.concat(additionalProperties));
-	}
 
 	// Create an object to store canvas data and resolution
 	const canvas_data = {
@@ -223,14 +223,6 @@ function save_canvas_to_svg() {
 function sidebar_sync_design_to_order() {
 	if (!canvas) return;
 	console.log("called sync_design_to_order()");
-
-	// NOTE: custom toObject function for fabric.js
-	// from: https://github.com/fabricjs/fabric.js/wiki/How-to-set-additional-properties-in-all-fabric.Objects
-	const originalToObject = fabric.Object.prototype.toObject;
-	const myAdditional = ["object_id"];
-	fabric.Object.prototype.toObject = function(additionalProperties) {
-		return originalToObject.call(this, myAdditional.concat(additionalProperties));
-	}
 
 	const canvas_data = {
 		canvas_objects: canvas.toObject(),
