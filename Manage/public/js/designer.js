@@ -63,7 +63,7 @@ function create_canvas(size) {
 	dialog_close('create_canvas_dialog');
 }
 
-function load_canvas_from_json(callback) {
+function load_canvas_from_json() {
 	console.log("called load_canvas_from_json()");
 	const input_canvas = document.getElementById("input_canvas_json");
 
