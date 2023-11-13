@@ -41,6 +41,12 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("keydown", function(event) {
 	if (event.key === "Delete")
 		delete_selected_objects();
+
+	if (event.ctrlKey && event.key.toLowerCase() === "c")
+		copy_selected_objects();
+
+	if (event.ctrlKey && event.key.toLowerCase() === "v")
+		paste_copied_objects();
 });
 
 function create_canvas(size) {
@@ -396,11 +402,6 @@ function get_selected_objects() {
 				console.log(`Selected object - Type: ${object.type}, Object ID: ${object.object_id}`);
 			})
 		}
-		// else {
-		// 	// No object was selected (canvas was clicked)
-		// 	console.log('Clicked on the canvas');
-		// }
-		return selected_objects;
 	});
 }
 
@@ -418,6 +419,37 @@ function delete_selected_objects() {
 
 		// Clear the selection
 		canvas.discardActiveObject();
+		canvas.requestRenderAll();
+	}
+}
+
+let copied_objects = [];
+function copy_selected_objects() {
+	if (!canvas) return;
+	console.log("called copy_selected_objects()");
+
+	const selected_objects = canvas.getActiveObjects();
+	copied_objects = [];
+
+	selected_objects.forEach(object => {
+		const cloned_object = fabric.util.object.clone(object);
+		cloned_object.set({
+			left: object.left + 10, // Offset to prevent pasted objects from overlapping
+			top: object.top + 10,
+		});
+		copied_objects.push(cloned_object);
+	})
+}
+
+function paste_copied_objects() {
+	if (!canvas) return;
+	console.log("called paste_copied_objects()");
+
+	if (copied_objects.length > 0) {
+		copied_objects.forEach(object => {
+			canvas.add(object);
+			canvas.setActiveObject(object);
+		})
 		canvas.requestRenderAll();
 	}
 }
