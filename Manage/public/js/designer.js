@@ -45,6 +45,9 @@ document.addEventListener("keydown", function(event) {
 	if (event.ctrlKey && event.key.toLowerCase() === "c")
 		copy_selected_objects();
 
+	if (event.ctrlKey && event.key.toLowerCase() === "x")
+		cut_selected_objects();
+
 	if (event.ctrlKey && event.key.toLowerCase() === "v")
 		paste_copied_objects();
 });
@@ -441,6 +444,26 @@ function copy_selected_objects() {
 			// Log the single copied object
 			console.log(`Copied object - Type: ${cloned.type}, Object ID: ${cloned.object_id}`);
 		}
+	});
+}
+
+function cut_selected_objects() {
+	if (!canvas) return;
+	console.log("called cut_selected_objects()");
+	canvas.getActiveObject().clone(function(cloned) {
+		_clipboard = cloned;
+		if (cloned.type === 'activeSelection') {
+			// Iterate through each object in the active selection
+			cloned.forEachObject(function(obj) {
+				console.log(`Cutted object - Type: ${obj.type}, Object ID: ${obj.object_id}`);
+			});
+		}
+		else {
+			// Log the single cutted object
+			console.log(`Cutted object - Type: ${cloned.type}, Object ID: ${cloned.object_id}`);
+		}
+		//remove after cloned to clipboard
+		canvas.remove(canvas.getActiveObject());
 	});
 }
 
