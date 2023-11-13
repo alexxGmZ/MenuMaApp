@@ -30,11 +30,18 @@ const canvas_element_id = "canvas"
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4"
 let canvas_bg_color = "white"
 
+//
+// EVENTS
+//
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
 	load_current_synced_design();
 });
 
+document.addEventListener("keydown", function(event) {
+	if (event.key === "Delete")
+		delete_selected_objects();
+});
 
 function create_canvas(size) {
 	console.log(`called create_canvas(${size})`);
@@ -395,6 +402,24 @@ function get_selected_objects() {
 		// }
 		return selected_objects;
 	});
+}
+
+function delete_selected_objects() {
+	if (!canvas) return;
+	console.log("called delete_selected_objects()");
+
+	const selected_objects = canvas.getActiveObjects();
+	if (selected_objects.length > 0) {
+		// Remove selected objects from the canvas
+		selected_objects.forEach(obj => {
+			canvas.remove(obj);
+			console.log(`Deleted object - Type: ${obj.type}, Object ID: ${obj.object_id}`);
+		});
+
+		// Clear the selection
+		canvas.discardActiveObject();
+		canvas.requestRenderAll();
+	}
 }
 
 function generate_random_num() {
