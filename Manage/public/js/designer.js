@@ -236,6 +236,40 @@ function save_canvas_to_svg() {
 	URL.revokeObjectURL(url);
 }
 
+function save_canvas_to_jpeg() {
+	if (!canvas) return;
+
+	// Convert canvas to data URL with JPEG format
+	const dataURL = canvas.toDataURL({
+		format: 'jpeg',
+	});
+
+	// Create a link element
+	const link = document.createElement('a');
+	link.href = dataURL;
+	link.download = `${canvas_filename}.jpg`;
+
+	// Trigger a click on the link to start the download
+	link.click();
+}
+
+function save_canvas_to_png() {
+	if (!canvas) return;
+
+	// Convert canvas to data URL with JPEG format
+	const dataURL = canvas.toDataURL({
+		format: 'png',
+	});
+
+	// Create a link element
+	const link = document.createElement('a');
+	link.href = dataURL;
+	link.download = `${canvas_filename}.png`;
+
+	// Trigger a click on the link to start the download
+	link.click();
+}
+
 function sidebar_sync_design_to_order() {
 	if (!canvas) return;
 	console.log("called sync_design_to_order()");
