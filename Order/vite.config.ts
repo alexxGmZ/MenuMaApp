@@ -10,6 +10,7 @@ export default defineConfig({
 			input: {
 				index: "./src/index.html",
 				menu: "./src/menu_items.html",
+				practice: "./src/practice.html",
 			}
 		}
 	},
