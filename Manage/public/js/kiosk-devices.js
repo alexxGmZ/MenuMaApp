@@ -11,9 +11,6 @@ const ping = require("ping");
 const dns = require("dns");
 const crypto = require("crypto");
 
-//
-// Mysql Database
-//
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js")
 mysql.check_connection()
@@ -25,18 +22,19 @@ const dialog_open = dialog.dialog_open;
 const dialog_close = dialog.dialog_close;
 
 async function list_available_devices() {
+	console.log("called list_available_devices()");
+	console.log('Scanning network...');
+
 	// NOTE: make the networkPrefix more dynamic
-	const networkPrefix = "192.168.254.";
+	const network_prefix = await get_network_prefix() + ".";
 	const startIP = 1;
 	const endIP = 255;
 	let devices = [];
 
-	console.log('Scanning network...');
-
 	const promises = [];
 
 	for (let i = startIP; i <= endIP; i++) {
-		const host = networkPrefix + i;
+		const host = network_prefix + i;
 		const promise = ping.promise.probe(host);
 		promises.push(promise);
 	}
@@ -45,7 +43,7 @@ async function list_available_devices() {
 
 	for (let i = 0; i < results.length; i++) {
 		if (results[i].alive) {
-			const ip = networkPrefix + (i + startIP);
+			const ip = network_prefix + (i + startIP);
 
 			const deviceNamePromise = new Promise((resolve, reject) => {
 				dns.reverse(ip, (err, hostnames) => {
@@ -84,7 +82,40 @@ async function list_available_devices() {
 	console.log('Network Scan completed.');
 }
 
+function get_local_ip_address() {
+	console.log("called get_local_ip_address()");
+	return new Promise((resolve, reject) => {
+		const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+		const pc = new RTCPeerConnection({ iceServers: [] });
+
+		pc.createDataChannel("");
+
+		pc.createOffer()
+			.then(offer => pc.setLocalDescription(offer))
+			.catch(error => reject(error));
+
+		pc.onicecandidate = (event) => {
+			if (event.candidate) {
+				const ip_regex = /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/;
+				const ip_address = ip_regex.exec(event.candidate.candidate)[0];
+				resolve(ip_address);
+				pc.onicecandidate = null;
+				pc.close();
+			}
+		};
+	});
+}
+
+async function get_network_prefix() {
+	console.log("called get_network_prefix()");
+	const local_ip_address = await get_local_ip_address();
+	const ip_parts = local_ip_address.split('.');
+	const network_prefix = ip_parts.slice(0, 3).join('.');
+	return network_prefix;
+}
+
 function list_registered_devices() {
+	console.log("called list_registered_devices()");
 	connection.query("SELECT * FROM api_connected_devices ORDER BY timestamp_column DESC", (err, result) => {
 		if (err) throw err;
 		// console.log(result);
