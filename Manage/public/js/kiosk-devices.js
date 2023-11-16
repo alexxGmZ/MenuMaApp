@@ -25,7 +25,6 @@ async function list_available_devices() {
 	console.log("called list_available_devices()");
 	console.log('Scanning network...');
 
-	// NOTE: make the networkPrefix more dynamic
 	const network_prefix = await get_network_prefix() + ".";
 	const startIP = 1;
 	const endIP = 255;
