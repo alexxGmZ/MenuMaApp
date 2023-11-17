@@ -1,3 +1,25 @@
+//
+// EVENTS
+//
+document.addEventListener("DOMContentLoaded", function() {
+	item_card_row_click();
+	load_current_synced_design();
+});
+
+document.addEventListener("keydown", function(event) {
+	if (event.key === "Delete")
+		delete_selected_objects();
+
+	if (event.ctrlKey && event.key.toLowerCase() === "c")
+		copy_selected_objects();
+
+	if (event.ctrlKey && event.key.toLowerCase() === "x")
+		cut_selected_objects();
+
+	if (event.ctrlKey && event.key.toLowerCase() === "v")
+		paste_copied_objects();
+});
+
 const fs = require("fs");
 
 // mysql stuff
@@ -29,28 +51,6 @@ const canvas_element_id = "canvas"
 // using tailwind css classes
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4"
 let canvas_bg_color = "white"
-
-//
-// EVENTS
-//
-document.addEventListener("DOMContentLoaded", function() {
-	item_card_row_click();
-	load_current_synced_design();
-});
-
-document.addEventListener("keydown", function(event) {
-	if (event.key === "Delete")
-		delete_selected_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "c")
-		copy_selected_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "x")
-		cut_selected_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "v")
-		paste_copied_objects();
-});
 
 function create_canvas(size) {
 	console.log(`called create_canvas(${size})`);
@@ -283,7 +283,10 @@ function sidebar_sync_design_to_order() {
 	const jsoned_canvas_data = JSON.stringify(canvas_data, null, 2);
 	const filepath = __dirname + "/../current_design.json";
 
-	fs.writeFileSync(filepath, jsoned_canvas_data);
+	fs.writeFile(filepath, jsoned_canvas_data, (error) => {
+		if (error) alert (error);
+		else dialog_close("sync_design_dialog");
+	})
 }
 
 function sidebar_generate_rectangle() {

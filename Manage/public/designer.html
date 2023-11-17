@@ -72,9 +72,9 @@
 		<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
 			<ul class="space-y-2 font-medium">
 				<li>
-					<button onclick="sidebar_sync_design_to_order()"
+					<button onclick="dialog_open('sync_design_dialog')"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="ml-3">Sync to Order</span>
+						<span class="ml-3">Sync</span>
 					</button>
 				</li>
 				<li>
@@ -130,6 +130,23 @@
 		<tbody id="item_card_list">
 		</tbody>
 	</table>
+
+	<dialog id="sync_design_dialog" class="rounded-lg mx-auto drop-shadow-lg">
+		<p>Sync to connected Kiosk Devices?</p>
+		<br>
+
+		<p>
+			<b>WARNING:</b>
+			Make sure that all kiosk devices are not being currently used for operation.
+			It is to prevent misconfiguration during ongoing customer transaction.
+			You can save the design instead.
+		</p>
+		<br>
+
+		<button onclick="sidebar_sync_design_to_order()" class="rounded-lg">Yes</button>
+		<br>
+		<button onclick="dialog_close('sync_design_dialog')">Cancel</button>
+	</dialog>
 
 	<script src="./js/designer.js"></script>
 </body>
