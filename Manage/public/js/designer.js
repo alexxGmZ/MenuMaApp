@@ -18,6 +18,9 @@ document.addEventListener("keydown", function(event) {
 
 	if (event.ctrlKey && event.key.toLowerCase() === "v")
 		paste_copied_objects();
+
+	if (event.ctrlKey && event.key.toLowerCase() === "s")
+		save_canvas_to_json();
 });
 
 const fs = require("fs");
