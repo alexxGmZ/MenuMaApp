@@ -12,7 +12,7 @@ let canvas;
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
 
 function get_menu_design() {
-	console.log("called get_menu_design");
+	console.log("called get_menu_design()");
 	return new Promise((resolve, reject) => {
 		const request_promise = CapacitorHttp.get({
 			url: `${server_url}:${server_port}/menu_design?api_token=${server_token}`,
@@ -22,18 +22,9 @@ function get_menu_design() {
 				const json_data = response.data;
 				console.log(json_data);
 
-				const canvas_element = document.createElement("canvas");
-				canvas_element.id = "canvas";
-				canvas_element.className = canvas_css_classes;
-				canvas_element.width = json_data.canvas_width;
-				canvas_element.height = json_data.canvas_height;
-
-				// Append the canvas element to the container div
-				const canvas_placeholder = document.querySelector("#canvas_area");
-				canvas_placeholder.innerHTML = "";
-				canvas_placeholder.appendChild(canvas_element);
-
-				canvas = new fabric.Canvas("canvas");
+				generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function () {
+					get_selected_objects();
+				});
 				if (canvas) {
 					canvas.loadFromJSON(json_data.canvas_objects, function() {
 						// Callback function executed after the canvas is loaded
@@ -41,6 +32,7 @@ function get_menu_design() {
 						canvas.renderAll(); // Render the canvas
 					});
 				}
+
 				resolve();
 			})
 			.catch((error) => {
@@ -48,6 +40,43 @@ function get_menu_design() {
 				reject(error);
 			});
 	})
+}
+
+function generate_canvas_area(canvas_height, canvas_width, callback) {
+	console.log("called generate_canvas_area()");
+	const canvas_element = document.createElement("canvas");
+	canvas_element.id = "canvas";
+	canvas_element.className = canvas_css_classes;
+	canvas_element.width = canvas_width;
+	canvas_element.height = canvas_height;
+
+	// Append the canvas element to the container div
+	const canvas_placeholder = document.querySelector("#canvas_area");
+	canvas_placeholder.innerHTML = "";
+	canvas_placeholder.appendChild(canvas_element);
+
+	canvas = new fabric.Canvas("canvas");
+
+	if (canvas) {
+		if (typeof callback === "function") callback();
+	}
+}
+
+function get_selected_objects() {
+	if (!canvas) return;
+	console.log("called get_selected_objects()");
+
+	canvas.on('mouse:up', function(event) {
+		const selected_objects = canvas.getActiveObjects();
+
+		if (selected_objects.length > 0) {
+			// Objects were selected
+			// console.log('Selected object/s:', selected_objects);
+			selected_objects.forEach(object => {
+				console.log(`Selected object - Type: ${object.type}, Object ID: ${object.object_id}`);
+			})
+		}
+	});
 }
 
 get_menu_design();

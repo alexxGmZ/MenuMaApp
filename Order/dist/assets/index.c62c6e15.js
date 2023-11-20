@@ -42,39 +42,6 @@ const p = function polyfill() {
 p();
 var style = "";
 var pull_to_refresh = "";
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
   const defaultPlatformMap = /* @__PURE__ */ new Map();
@@ -552,19 +519,4 @@ class CapacitorHttpPluginWeb extends WebPlugin {
 const CapacitorHttp = registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
-const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.ee616cb2.js"), true ? [] : void 0).then((m) => new m.NetworkWeb())
-});
-Network.addListener("networkStatusChange", (status) => {
-  console.log("Network status changed", status);
-});
-const logCurrentNetworkStatus = async () => {
-  const json_container = document.getElementById("connection_type");
-  const status = await Network.getStatus();
-  console.log("Network connection status:", status.connected);
-  console.log("Network connection type:", status.connectionType);
-  json_container.textContent = `Status: ${status.connected}
-Type: ${status.connectionType}`;
-};
-logCurrentNetworkStatus();
-export { CapacitorHttp as C, WebPlugin as W };
+export { CapacitorHttp as C, WebPlugin as W, registerPlugin as r };
