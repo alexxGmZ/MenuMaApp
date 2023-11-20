@@ -4,6 +4,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
 	load_current_synced_design();
+	create_canvas_color_picker();
 });
 
 document.addEventListener("keydown", function(event) {
@@ -45,6 +46,8 @@ fabric.Object.prototype.toObject = function(additionalProperties) {
 	return originalToObject.call(this, myAdditional.concat(additionalProperties));
 }
 
+const iro = require("@jaames/iro");
+
 // default canvas variable values
 let canvas;
 let canvas_filename = "untitled";
@@ -80,6 +83,60 @@ function create_canvas(size) {
 		get_selected_objects();
 	});
 	dialog_close('create_canvas_dialog');
+}
+
+function create_canvas_color_picker() {
+	console.log("create_canvas_color_picker()");
+	var color_picker = new iro.ColorPicker("#color_picker", {
+		// Set the size of the color picker
+		width: 300,
+		// Set the initial color to pure red
+		color: "rgb(255, 255, 255)"
+	});
+
+	var red;
+	var green;
+	var blue;
+
+	color_picker.on('color:init', function(color) {
+		// Convert the initial color to RGBA
+		red = color.rgb.r;
+		green = color.rgb.g;
+		blue = color.rgb.b;
+		// updateColorPicker();
+		document.getElementById("rgb_r").value = red;
+		document.getElementById("rgb_g").value = green;
+		document.getElementById("rgb_b").value = blue;
+	});
+
+	color_picker.on('color:change', function(color) {
+		// log the current color as a HEX string
+		red = color.rgb.r;
+		green = color.rgb.g;
+		blue = color.rgb.b;
+		// updateColorPicker();
+		document.getElementById("rgb_r").value = red;
+		document.getElementById("rgb_g").value = green;
+		document.getElementById("rgb_b").value = blue;
+	});
+
+	function updateColorPicker() {
+		var newColor = `rgb(${red}, ${green}, ${blue})`;
+		color_picker.color.set(newColor);
+	}
+
+	document.getElementById("rgb_r").addEventListener("input", function() {
+		red = this.value;
+		updateColorPicker();
+	})
+	document.getElementById("rgb_g").addEventListener("input", function() {
+		green = this.value;
+		updateColorPicker();
+	})
+	document.getElementById("rgb_b").addEventListener("input", function() {
+		blue = this.value;
+		updateColorPicker();
+	})
 }
 
 function load_canvas_from_json() {
@@ -287,7 +344,7 @@ function sidebar_sync_design_to_order() {
 	const filepath = __dirname + "/../current_design.json";
 
 	fs.writeFile(filepath, jsoned_canvas_data, (error) => {
-		if (error) alert (error);
+		if (error) alert(error);
 		else dialog_close("sync_design_dialog");
 	})
 }
@@ -543,3 +600,4 @@ function paste_copied_objects() {
 function generate_random_num() {
 	return `${Math.floor(Math.random() * 10000)}_${Date.now()}`;
 }
+
