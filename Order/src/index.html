@@ -20,12 +20,22 @@
 </head>
 
 <body>
+	<div class="pull-to-refresh">
+		<img class="animate-spin h-16 w-16" src="./assets/svg/spinner-loading-dots-svgrepo-com.svg" alt="">
+	</div>
+
 	<nav>
 		<h1 class="text-center text-xl">MenuMaApp Order</h1>
 	</nav>
 
 	<h1 class="font-bold underline">Connection</h1>
 	<pre id="connection_type"></pre>
+
+	<br>
+
+	<h1 class="font-bold">Screen Resolution:</h1>
+	<p>Width: <b id="screen_width" class="font-bold"></b></p>
+	<p>Height: <b id="screen_height" class="font-bold"></b></p>
 
 	<br>
 
@@ -44,6 +54,8 @@
 
 	<script src="./js/connect_to_server.js" type="module"></script>
 	<script src="./js/network_status.js" type="module"></script>
+	<script src="./js/get_screen_resolution.js" type="module"></script>
+	<script src="./js/pull_to_refresh.js" type="module"></script>
 </body>
 
 </html>

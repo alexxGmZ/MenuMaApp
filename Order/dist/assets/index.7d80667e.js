@@ -41,7 +41,6 @@ const p = function polyfill() {
 };
 p();
 var style = "";
-var pull_to_refresh = "";
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
   const defaultPlatformMap = /* @__PURE__ */ new Map();

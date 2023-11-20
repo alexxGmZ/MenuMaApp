@@ -9,7 +9,7 @@ const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 
 let canvas;
-const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
+const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700";
 
 function get_menu_design() {
 	console.log("called get_menu_design()");
@@ -22,7 +22,7 @@ function get_menu_design() {
 				const json_data = response.data;
 				console.log(json_data);
 
-				generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function () {
+				generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function() {
 					get_selected_objects();
 				});
 				if (canvas) {
@@ -44,6 +44,7 @@ function get_menu_design() {
 
 function generate_canvas_area(canvas_height, canvas_width, callback) {
 	console.log("called generate_canvas_area()");
+
 	const canvas_element = document.createElement("canvas");
 	canvas_element.id = "canvas";
 	canvas_element.className = canvas_css_classes;
@@ -56,6 +57,9 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	canvas_placeholder.appendChild(canvas_element);
 
 	canvas = new fabric.Canvas("canvas");
+
+	var scale = Math.min(window.innerWidth / canvas_width, window.innerHeight / canvas_height);
+	canvas.setZoom(scale);
 
 	if (canvas) {
 		if (typeof callback === "function") callback();

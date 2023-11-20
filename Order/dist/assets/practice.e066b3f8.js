@@ -1,4 +1,4 @@
-import { C as CapacitorHttp } from "./index.c62c6e15.js";
+import { C as CapacitorHttp } from "./index.7d80667e.js";
 function getAugmentedNamespace(n) {
   if (n.__esModule)
     return n;
@@ -15952,7 +15952,7 @@ const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 let canvas;
-const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4";
+const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700";
 function get_menu_design() {
   console.log("called get_menu_design()");
   return new Promise((resolve, reject) => {
@@ -15987,6 +15987,8 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
   canvas_placeholder.innerHTML = "";
   canvas_placeholder.appendChild(canvas_element);
   canvas = new fabric.fabric.Canvas("canvas");
+  var scale = Math.min(window.innerWidth / canvas_width, window.innerHeight / canvas_height);
+  canvas.setZoom(scale);
   if (canvas) {
     if (typeof callback === "function")
       callback();

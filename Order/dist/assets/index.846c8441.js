@@ -1,4 +1,5 @@
-import { r as registerPlugin } from "./index.c62c6e15.js";
+import { r as registerPlugin } from "./index.7d80667e.js";
+import "./pull_to_refresh.be92edd2.js";
 window.addEventListener("DOMContentLoaded", () => {
   const connect_button = document.getElementById("connect_button");
   if (connect_button) {
@@ -76,7 +77,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.421238c1.js"), true ? ["assets/web.421238c1.js","assets/index.c62c6e15.js","assets/index.6298883d.css"] : void 0).then((m) => new m.NetworkWeb())
+  web: () => __vitePreload(() => import("./web.e2719596.js"), true ? ["assets/web.e2719596.js","assets/index.7d80667e.js","assets/index.7771d47d.css"] : void 0).then((m) => new m.NetworkWeb())
 });
 Network.addListener("networkStatusChange", (status) => {
   console.log("Network status changed", status);
@@ -90,3 +91,12 @@ const logCurrentNetworkStatus = async () => {
 Type: ${status.connectionType}`;
 };
 logCurrentNetworkStatus();
+var screenWidth = window.screen.width;
+var screenHeight = window.screen.height;
+var devicePixelRatio = window.devicePixelRatio || 1;
+var actualScreenWidth = screenWidth * devicePixelRatio;
+var actualScreenHeight = screenHeight * devicePixelRatio;
+console.log("Screen Width: " + actualScreenWidth);
+console.log("Screen Height: " + actualScreenHeight);
+document.getElementById("screen_width").textContent = actualScreenWidth;
+document.getElementById("screen_height").textContent = actualScreenHeight;

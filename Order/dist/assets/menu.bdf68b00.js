@@ -1,4 +1,5 @@
-import { C as CapacitorHttp } from "./index.c62c6e15.js";
+import { C as CapacitorHttp } from "./index.7d80667e.js";
+import "./pull_to_refresh.be92edd2.js";
 console.log("Server IP: ", sessionStorage.getItem("server_IP"));
 console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
@@ -43,25 +44,6 @@ get_request_menu_items().then(() => {
   display_menu_items();
 }).catch((error) => {
   console.log(error);
-});
-const pullToRefresh = document.querySelector(".pull-to-refresh");
-let touchstartY = 0;
-document.addEventListener("touchstart", (e) => {
-  touchstartY = e.touches[0].clientY;
-});
-document.addEventListener("touchmove", (e) => {
-  const touchY = e.touches[0].clientY;
-  const touchDiff = touchY - touchstartY;
-  if (touchDiff > 0 && window.scrollY === 0) {
-    pullToRefresh.classList.add("visible");
-    e.preventDefault();
-  }
-});
-document.addEventListener("touchend", (e) => {
-  if (pullToRefresh.classList.contains("visible")) {
-    pullToRefresh.classList.remove("visible");
-    location.reload();
-  }
 });
 window.addEventListener("DOMContentLoaded", () => {
   const order_send_button = document.getElementById("order_send_button");
