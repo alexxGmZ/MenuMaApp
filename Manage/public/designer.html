@@ -40,22 +40,28 @@
 
 	</link>
 	<dialog id="create_canvas_dialog" class="rounded-lg">
-		<h1 class="font-bold">Generate Canvas</h1>
+		<h1 class="font-bold text-center">Generate Canvas</h1>
 		<br>
 
-		<h2>Background Color:</h2>
-		<div class="flex">
-			<p>rgb:</p>
-			<input id="rgb_r" value="255" class="w-8">
-			<input id="rgb_g" value="255" class="w-8">
-			<input id="rgb_b" value="255" class="w-8">
+		<div class="flex flex-row">
+			<div class="mr-10 mt-12">
+				<h2 class="font-bold">Background Color:</h2>
+				<label for="rgb_r">Red:</label>
+				<input id="rgb_r" value="255" class="w-8">
+				<br>
+				<label for="rgb_g">Green:</label>
+				<input id="rgb_g" value="255" class="w-8">
+				<br>
+				<label for="rgb_b">Blue:</label>
+				<input id="rgb_b" value="255" class="w-8">
+				<br>
+			</div>
+			<div id="color_picker">
+			</div>
 		</div>
-		<div id="color_picker">
-		</div>
-		<br>
 		<br>
 
-		<h2>Resolution Presets</h2>
+		<h2 class="font-bold">Resolution Presets</h2>
 		<button onclick="create_canvas('mobile')">Mobile 1280 x 720</button>
 		<br>
 
@@ -63,7 +69,7 @@
 		<br>
 		<br>
 
-		<h2>Custom Resolution</h2>
+		<h2 class="font-bold">Custom Resolution</h2>
 		<label for="custom_canvas_height">Height:</label>
 		<input type="text" id="custom_canvas_height">
 		<br>
@@ -71,10 +77,10 @@
 		<label for="custom_canvas_width">Width:</label>
 		<input type="text" id="custom_canvas_width">
 		<br>
+		<button onclick="create_canvas('custom')">Use Custom Resolution</button>
+		<br><br>
 
 		<center>
-			<button onclick="create_canvas('custom')">Use Custom Resolution</button>
-			<br><br>
 			<button onclick="dialog_close('create_canvas_dialog')">Cancel</button>
 		</center>
 	</dialog>

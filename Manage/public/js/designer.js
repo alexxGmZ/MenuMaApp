@@ -41,7 +41,7 @@ const fabric = require("fabric").fabric;
 // NOTE: custom toObject function for fabric.js
 // from: https://github.com/fabricjs/fabric.js/wiki/How-to-set-additional-properties-in-all-fabric.Objects
 const originalToObject = fabric.Object.prototype.toObject;
-const myAdditional = ["object_id"];
+const myAdditional = ["group_id", "object_id"];
 fabric.Object.prototype.toObject = function(additionalProperties) {
 	return originalToObject.call(this, myAdditional.concat(additionalProperties));
 }
@@ -56,10 +56,16 @@ let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4"
-let canvas_bg_color = "white"
+let canvas_bg_color = "rgb(255, 255, 255)"
 
 function create_canvas(size) {
 	console.log(`called create_canvas(${size})`);
+
+	const red = document.getElementById("rgb_r").value;
+	const green = document.getElementById("rgb_g").value;
+	const blue = document.getElementById("rgb_b").value;
+	canvas_bg_color = `rgb(${red}, ${green}, ${blue})`;
+	console.log(canvas_bg_color);
 
 	if (size === "custom") {
 		const input_custom_canvas_height = document.getElementById("custom_canvas_height").value;
@@ -81,17 +87,20 @@ function create_canvas(size) {
 
 	generate_canvas_area(canvas_height, canvas_width, function() {
 		get_selected_objects();
+		dialog_close('create_canvas_dialog');
 	});
-	dialog_close('create_canvas_dialog');
 }
 
 function create_canvas_color_picker() {
 	console.log("create_canvas_color_picker()");
 	var color_picker = new iro.ColorPicker("#color_picker", {
 		// Set the size of the color picker
-		width: 300,
+		width: 250,
 		// Set the initial color to pure red
-		color: "rgb(255, 255, 255)"
+		color: "rgb(255, 255, 255)",
+		layoutDirection: "horizontal",
+		borderWidth: 2,
+		borderColor: "#000000"
 	});
 
 	var red;
@@ -458,30 +467,35 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 
 	const name = new fabric.IText(item_name, {
 		fontSize: 20,
-		object_id: `${item_id}_name_${generate_random_num()}`
+		group_id: item_id,
+		object_id: `${item_id}_name`
 	});
 
 	const description = new fabric.IText(item_desc, {
 		fontSize: 18,
-		object_id: `${item_id}_desc_${generate_random_num()}`
+		group_id: item_id,
+		object_id: `${item_id}_desc`
 	});
 
 	const image = new fabric.Image.fromURL(item_image, (img) => {
 		img.scale(0.5);
-		img.object_id = `${item_id}_img_${generate_random_num()}`;
-		console.log("img.object_id " + img.object_id);
+		img.group_id = item_id,
+		img.object_id = `${item_id}_img`;
+		console.log("img.object_id: " + img.object_id);
 		canvas.add(img);
 		// canvas.renderAll();
-	})
+	});
 
 	const price = new fabric.IText(item_price, {
 		fontSize: 19,
-		object_id: `${item_id}_price_${generate_random_num()}`
-	})
+		group_id: item_id,
+		object_id: `${item_id}_price`
+	});
 
-	console.log("name.object_id " + name.object_id);
-	console.log("description.object_id " + description.object_id);
-	console.log("price.object_id " + price.object_id);
+	console.log(`group_id: ${item_id}`)
+	console.log(`name.object_id: ${name.object_id}`)
+	console.log(`description.object_id: ${description.object_id}`)
+	console.log(`price.object_id: ${price.object_id}`)
 
 	canvas.add(name);
 	canvas.add(description);
@@ -596,8 +610,3 @@ function paste_copied_objects() {
 		canvas.requestRenderAll();
 	});
 }
-
-function generate_random_num() {
-	return `${Math.floor(Math.random() * 10000)}_${Date.now()}`;
-}
-
