@@ -14,18 +14,18 @@
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 		<div class="px-3 py-3 lg:px-5 lg:pl-3">
 			<div class="flex items-center justify-between">
-				<button onclick="dialog_open('create_canvas_dialog')">Create</button>
+				<button onclick="dialog_open('create_canvas_dialog')" title="Create new design">Create</button>
 				<input type="file" id="input_canvas_json" class="hidden" accept=".json">
-				<button onclick="load_canvas_from_json()">Open</button>
-				<button onclick="save_canvas_to_json()">Save</button>
-				<button onclick="save_canvas_to_jpeg()">Export to JPEG</button>
-				<button onclick="save_canvas_to_png()">Export to PNG</button>
+				<button onclick="load_canvas_from_json()" title="Open an existing design">Open</button>
+				<button onclick="save_canvas_to_json()" title="Save design">Save</button>
+				<button onclick="save_canvas_to_jpeg()" title="Export design to JPEG format">Export to JPEG</button>
+				<button onclick="save_canvas_to_png()" title="Export design to PNG format">Export to PNG</button>
 
 				<button onclick="">Undo</button>
 				<a href="#">Redo</a>
-				<button onclick="copy_selected_objects()">Copy</button>
-				<button onclick="cut_selected_objects()">Cut</button>
-				<button onclick="paste_copied_objects()">Paste</button>
+				<button onclick="copy_selected_objects()" title="Copy selected object/s">Copy</button>
+				<button onclick="cut_selected_objects()" title="Cut selected object/s">Cut</button>
+				<button onclick="paste_copied_objects()" title="Paste copied/cutted object/s">Paste</button>
 
 				<a href="#">Preview: PC</a>
 				<a href="#">Preview: Mobile</a>
@@ -89,7 +89,7 @@
 		<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
 			<ul class="space-y-2 font-medium">
 				<li>
-					<button onclick="dialog_open('sync_design_dialog')"
+					<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="ml-3">Sync</span>
 					</button>
@@ -101,31 +101,31 @@
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_rectangle()"
+					<button onclick="sidebar_generate_rectangle()" title="Generate rectangle"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Rectangle</span>
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_circle()"
+					<button onclick="sidebar_generate_circle()" title="Generate circle"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Circle</span>
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_text()"
+					<button onclick="sidebar_generate_text()" title="Generate a text box"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Text</span>
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_line()"
+					<button onclick="sidebar_generate_line()" title="Generate a line"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Line</span>
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_display_item_cards()"
+					<button onclick="sidebar_display_item_cards()" title="Generate item card from items in the inventory"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<span class="flex-1 ml-3 whitespace-nowrap">Menu Items Cards</span>
 					</button>
