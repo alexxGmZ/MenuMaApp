@@ -84,63 +84,57 @@
 	</dialog>
 
 	<aside id="left_sidebar"
-		class="fixed top-0 left-0 z-40 w-52 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+		class="fixed top-0 left-0 z-40 w-18 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 		aria-label="Sidebar">
 		<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
 			<ul class="space-y-2 font-medium">
 				<li>
 					<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="ml-3">Sync</span>
+						<img src="./assets/svg/designer/sync-solid-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="ml-3">Presets</span>
+						<img src="assets/svg/designer/template-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="sidebar_generate_rectangle()" title="Generate rectangle"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="flex-1 ml-3 whitespace-nowrap">Rectangle</span>
+						<img src="assets/svg/designer/rectangle-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="sidebar_generate_circle()" title="Generate circle"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="flex-1 ml-3 whitespace-nowrap">Circle</span>
+						<img src="assets/svg/designer/circle-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="sidebar_generate_text()" title="Generate a text box"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="flex-1 ml-3 whitespace-nowrap">Text</span>
+						<img src="assets/svg/designer/text-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="sidebar_generate_line()" title="Generate a line"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="flex-1 ml-3 whitespace-nowrap">Line</span>
+						<img src="assets/svg/designer/line-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="sidebar_display_item_cards()" title="Generate item card from items in the inventory"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="flex-1 ml-3 whitespace-nowrap">Menu Items Cards</span>
-					</button>
-				</li>
-				<li>
-					<button
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<span class="flex-1 ml-3 whitespace-nowrap">Color Picker</span>
+						<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 			</ul>
 		</div>
 	</aside>
 
-	<div id="canvas_area" class="p-4 sm:ml-56">
+	<div id="canvas_area" class="p-4 sm:ml-14">
 	</div>
 
 	<table id="item_card_table" class="p-4 sm:ml-64 mt-6">
