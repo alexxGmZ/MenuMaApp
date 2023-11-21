@@ -134,14 +134,6 @@
 		</div>
 	</aside>
 
-	<div id="canvas_area" class="p-4 sm:ml-14">
-	</div>
-
-	<table id="item_card_table" class="p-4 sm:ml-64 mt-6">
-		<tbody id="item_card_list">
-		</tbody>
-	</table>
-
 	<dialog id="sync_design_dialog" class="rounded-lg mx-auto drop-shadow-lg">
 		<p>Sync to connected Kiosk Devices?</p>
 		<br>
@@ -159,14 +151,27 @@
 		<button onclick="dialog_close('sync_design_dialog')">Cancel</button>
 	</dialog>
 
-	<div id="contextMenu" class="rounded-md hidden absolute bg-white p-1 z-50 drop-shadow-lg">
+	<div id="canvas_area" class="p-4 sm:ml-14">
+	</div>
+
+	<table id="item_card_table" class="p-4 sm:ml-64 mt-6">
+		<tbody id="item_card_list">
+		</tbody>
+	</table>
+
+	<div id="context_menu" class="rounded-md hidden absolute bg-white p-1 z-50 drop-shadow-lg">
 		<ul class="list-none m-0 p-0">
-			<li id="contextMenuOption1" class="p-1 ">Option 1</li>
-			<li id="contextMenuOption2" class="p-1 ">Option 2</li>
-		</ul>
+			<li class="p-1">
+				<button onclick="context_menu_option1()">Option 1</button>
+			</li>
+			<li class="p-1">
+				<button onclick="context_menu_option2()">Option 2</button>
+			</li>
+		</button>
 	</div>
 
 	<script src="./js/designer.js"></script>
+	<script src="./js/designer/global_events.js"></script>
 </body>
 
 </html>

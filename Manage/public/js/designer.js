@@ -1,29 +1,3 @@
-//
-// EVENTS
-//
-document.addEventListener("DOMContentLoaded", function() {
-	item_card_row_click();
-	load_current_synced_design();
-	create_canvas_color_picker();
-});
-
-document.addEventListener("keydown", function(event) {
-	if (event.key === "Delete")
-		delete_selected_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "c")
-		copy_selected_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "x")
-		cut_selected_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "v")
-		paste_copied_objects();
-
-	if (event.ctrlKey && event.key.toLowerCase() === "s")
-		save_canvas_to_json();
-});
-
 const fs = require("fs");
 
 // mysql stuff
@@ -103,9 +77,7 @@ function create_canvas_color_picker() {
 		borderColor: "#000000"
 	});
 
-	var red;
-	var green;
-	var blue;
+	var red, green, blue;
 
 	color_picker.on('color:init', function(color) {
 		// Convert the initial color to RGBA
@@ -507,57 +479,56 @@ function get_selected_objects() {
 	if (!canvas) return;
 	console.log("called get_selected_objects()");
 
-	const contextMenu = document.getElementById('contextMenu');
+	const context_menu = document.getElementById('context_menu');
 	canvas.on('mouse:up', function(event, options) {
 		console.log("canvas mouse:up event");
 		const selected_objects = canvas.getActiveObjects();
 
-		if (selected_objects.length > 0) {
-			// Objects were selected
-			// console.log('Selected object/s:', selected_objects);
+		// hide context menu of no object/s are selected
+		if (selected_objects.length == 0) {
+			context_menu.style.display = "none";
+		}
+		else {
 			selected_objects.forEach(object => {
-				console.log(`Selected object - Type: ${object.type}, Object ID: ${object.object_id}`);
+				console.log(`Left clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
 			})
 
+			// right click
 			if (event.button === 3) {
-				if (selected_objects.length > 0) {
-					selected_objects.forEach(object => {
-						console.log(`Right clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
-					});
-					// Objects were selected
-					const { x, y } = canvas.getPointer(event.e);
+				selected_objects.forEach(object => {
+					console.log(`Right clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
+				});
 
-					// Show context menu at the cursor position
-					contextMenu.style.display = 'block';
-					contextMenu.style.left = (x + 100) + 'px';
-					contextMenu.style.top = (y + 100) + 'px';
+				// mouse or pointer position
+				const { x, y } = canvas.getPointer(event.e);
 
-					// Handle context menu options
-					handle_context_menu_options(selected_objects);
-				}
+				// display context menu based on the mouse pointer position
+				context_menu.style.display = 'block';
+				context_menu.style.left = (x + 100) + 'px';
+				context_menu.style.top = (y + 100) + 'px';
 			}
-			else contextMenu.style.display = "none";
+			// else context_menu.style.display = "none";
 		}
-		else contextMenu.style.display = "none";
 	});
+
+	canvas.on("mouse:down", function() {
+		// hide context menu when the mouse is pressed down
+		context_menu.style.display = "none";
+	})
 }
 
-function handle_context_menu_options(target) {
-	console.log("called handle_context_menu_options()");
-	// You can customize this function based on the selected object (target)
-	const contextMenuOption1 = document.getElementById('contextMenuOption1');
-	const contextMenuOption2 = document.getElementById('contextMenuOption2');
+function context_menu_option1() {
+	if (!canvas) return;
+	console.log("called context_menu_option1()");
+	const selected_objects = canvas.getActiveObjects();
+	console.log(selected_objects);
+}
 
-	// Attach click event listeners to context menu options
-	contextMenuOption1.addEventListener('click', function() {
-		console.log('Context Menu Option 1 clicked for object:', target);
-		// Implement your action here
-	});
-
-	contextMenuOption2.addEventListener('click', function() {
-		console.log('Context Menu Option 2 clicked for object:', target);
-		// Implement your action here
-	});
+function context_menu_option2() {
+	if (!canvas) return;
+	console.log("called context_menu_option2()");
+	const selected_objects = canvas.getActiveObjects();
+	console.log(selected_objects);
 }
 
 function delete_selected_objects() {
