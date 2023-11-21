@@ -86,56 +86,58 @@
 	<aside id="left_sidebar"
 		class="fixed top-0 left-0 z-40 w-52 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 		aria-label="Sidebar">
-		<ul class="space-y-2 font-medium">
-			<li>
-				<button onclick="dialog_open('sync_design_dialog')"
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="ml-3">Sync</span>
-				</button>
-			</li>
-			<li>
-				<button
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="ml-3">Presets</span>
-				</button>
-			</li>
-			<li>
-				<button onclick="sidebar_generate_rectangle()"
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="flex-1 ml-3 whitespace-nowrap">Rectangle</span>
-				</button>
-			</li>
-			<li>
-				<button onclick="sidebar_generate_circle()"
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="flex-1 ml-3 whitespace-nowrap">Circle</span>
-				</button>
-			</li>
-			<li>
-				<button onclick="sidebar_generate_text()"
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="flex-1 ml-3 whitespace-nowrap">Text</span>
-				</button>
-			</li>
-			<li>
-				<button onclick="sidebar_generate_line()"
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="flex-1 ml-3 whitespace-nowrap">Line</span>
-				</button>
-			</li>
-			<li>
-				<button onclick="sidebar_display_item_cards()"
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="flex-1 ml-3 whitespace-nowrap">Menu Items Cards</span>
-				</button>
-			</li>
-			<li>
-				<button
-					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-					<span class="flex-1 ml-3 whitespace-nowrap">Color Picker</span>
-				</button>
-			</li>
-		</ul>
+		<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+			<ul class="space-y-2 font-medium">
+				<li>
+					<button onclick="dialog_open('sync_design_dialog')"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="ml-3">Sync</span>
+					</button>
+				</li>
+				<li>
+					<button
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="ml-3">Presets</span>
+					</button>
+				</li>
+				<li>
+					<button onclick="sidebar_generate_rectangle()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Rectangle</span>
+					</button>
+				</li>
+				<li>
+					<button onclick="sidebar_generate_circle()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Circle</span>
+					</button>
+				</li>
+				<li>
+					<button onclick="sidebar_generate_text()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Text</span>
+					</button>
+				</li>
+				<li>
+					<button onclick="sidebar_generate_line()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Line</span>
+					</button>
+				</li>
+				<li>
+					<button onclick="sidebar_display_item_cards()"
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Menu Items Cards</span>
+					</button>
+				</li>
+				<li>
+					<button
+						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						<span class="flex-1 ml-3 whitespace-nowrap">Color Picker</span>
+					</button>
+				</li>
+			</ul>
+		</div>
 	</aside>
 
 	<div id="canvas_area" class="p-4 sm:ml-56">
@@ -163,9 +165,10 @@
 		<button onclick="dialog_close('sync_design_dialog')">Cancel</button>
 	</dialog>
 
-	<div id="contextMenu" class="rounded-lg hidden absolute bg-white p-2" <ul class="list-none m-0 p-0">
-		<li id="contextMenuOption1" class="p-1 ">Option 1</li>
-		<li id="contextMenuOption2" class="p-1 ">Option 2</li>
+	<div id="contextMenu" class="rounded-md hidden absolute bg-white p-1 z-50 drop-shadow-lg">
+		<ul class="list-none m-0 p-0">
+			<li id="contextMenuOption1" class="p-1 ">Option 1</li>
+			<li id="contextMenuOption2" class="p-1 ">Option 2</li>
 		</ul>
 	</div>
 
