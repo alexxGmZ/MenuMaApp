@@ -237,7 +237,8 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	canvas_placeholder.appendChild(canvas_element);
 
 	canvas = new fabric.Canvas("canvas", {
-		backgroundColor: canvas_bg_color
+		backgroundColor: canvas_bg_color,
+		fireRightClick: true,
 	});
 
 	if (canvas) {
@@ -478,15 +479,15 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	});
 
 	const image = new fabric.Image.fromURL(item_image, (img) => {
-		img.scale(0.5);
+		img.scale(0.3);
 		img.group_id = item_id,
-		img.object_id = `${item_id}_img`;
+			img.object_id = `${item_id}_img`;
 		console.log("img.object_id: " + img.object_id);
 		canvas.add(img);
 		// canvas.renderAll();
 	});
 
-	const price = new fabric.IText(item_price, {
+	const price = new fabric.Text(item_price, {
 		fontSize: 19,
 		group_id: item_id,
 		object_id: `${item_id}_price`
@@ -506,7 +507,9 @@ function get_selected_objects() {
 	if (!canvas) return;
 	console.log("called get_selected_objects()");
 
-	canvas.on('mouse:up', function(event) {
+	const contextMenu = document.getElementById('contextMenu');
+	canvas.on('mouse:up', function(event, options) {
+		console.log("canvas mouse:up event");
 		const selected_objects = canvas.getActiveObjects();
 
 		if (selected_objects.length > 0) {
@@ -515,7 +518,45 @@ function get_selected_objects() {
 			selected_objects.forEach(object => {
 				console.log(`Selected object - Type: ${object.type}, Object ID: ${object.object_id}`);
 			})
+
+			if (event.button === 3) {
+				if (selected_objects.length > 0) {
+					selected_objects.forEach(object => {
+						console.log(`Right clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
+					});
+					// Objects were selected
+					const { x, y } = canvas.getPointer(event.e);
+
+					// Show context menu at the cursor position
+					contextMenu.style.display = 'block';
+					contextMenu.style.left = (x + 100) + 'px';
+					contextMenu.style.top = (y + 100) + 'px';
+
+					// Handle context menu options
+					handle_context_menu_options(selected_objects);
+				}
+			}
+			else contextMenu.style.display = "none";
 		}
+		else contextMenu.style.display = "none";
+	});
+}
+
+function handle_context_menu_options(target) {
+	console.log("called handle_context_menu_options()");
+	// You can customize this function based on the selected object (target)
+	const contextMenuOption1 = document.getElementById('contextMenuOption1');
+	const contextMenuOption2 = document.getElementById('contextMenuOption2');
+
+	// Attach click event listeners to context menu options
+	contextMenuOption1.addEventListener('click', function() {
+		console.log('Context Menu Option 1 clicked for object:', target);
+		// Implement your action here
+	});
+
+	contextMenuOption2.addEventListener('click', function() {
+		console.log('Context Menu Option 2 clicked for object:', target);
+		// Implement your action here
 	});
 }
 
@@ -610,3 +651,4 @@ function paste_copied_objects() {
 		canvas.requestRenderAll();
 	});
 }
+

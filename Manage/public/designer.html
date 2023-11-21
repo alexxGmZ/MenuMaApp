@@ -11,7 +11,6 @@
 
 <body class="">
 	<!-- top navbar	 -->
-
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 		<div class="px-3 py-3 lg:px-5 lg:pl-3">
 			<div class="flex items-center justify-between">
@@ -38,7 +37,6 @@
 		</div>
 	</nav>
 
-	</link>
 	<dialog id="create_canvas_dialog" class="rounded-lg">
 		<h1 class="font-bold text-center">Generate Canvas</h1>
 		<br>
@@ -88,7 +86,6 @@
 	<aside id="left_sidebar"
 		class="fixed top-0 left-0 z-40 w-52 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 		aria-label="Sidebar">
-		</input>
 		<ul class="space-y-2 font-medium">
 			<li>
 				<button onclick="dialog_open('sync_design_dialog')"
@@ -139,7 +136,6 @@
 				</button>
 			</li>
 		</ul>
-		</div>
 	</aside>
 
 	<div id="canvas_area" class="p-4 sm:ml-56">
@@ -166,6 +162,12 @@
 		<br>
 		<button onclick="dialog_close('sync_design_dialog')">Cancel</button>
 	</dialog>
+
+	<div id="contextMenu" class="rounded-lg hidden absolute bg-white p-2" <ul class="list-none m-0 p-0">
+		<li id="contextMenuOption1" class="p-1 ">Option 1</li>
+		<li id="contextMenuOption2" class="p-1 ">Option 2</li>
+		</ul>
+	</div>
 
 	<script src="./js/designer.js"></script>
 </body>
