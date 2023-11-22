@@ -29,7 +29,7 @@ let canvas_height = 0;
 let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
-const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-6 sm:order-1 sm:ml-0 sm:mr-4"
+const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-2 sm:order-1 sm:ml-0 sm:mr-4"
 let canvas_bg_color = "rgb(255, 255, 255)"
 
 function create_canvas(size) {
@@ -199,7 +199,7 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	// Display canvas resolution element
 	const canvas_resolution_element = document.createElement("p");
 	canvas_resolution_element.id = "canvas_resolution";
-	canvas_resolution_element.className = "mt-14";
+	canvas_resolution_element.className = "mt-10";
 	canvas_resolution_element.textContent = `Canvas Resolution: ${canvas_width}x${canvas_height}`;
 
 	// Append the canvas element to the container div
