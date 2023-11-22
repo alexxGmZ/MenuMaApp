@@ -12,27 +12,62 @@
 <body class="">
 	<!-- top navbar	 -->
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-		<div class="px-3 py-3 lg:px-5 lg:pl-3">
-			<div class="flex items-center justify-between">
-				<button onclick="dialog_open('create_canvas_dialog')" title="Create new design">Create</button>
-				<input type="file" id="input_canvas_json" class="hidden" accept=".json">
-				<button onclick="load_canvas_from_json()" title="Open an existing design">Open</button>
-				<button onclick="save_canvas_to_json()" title="Save design">Save</button>
-				<button onclick="save_canvas_to_jpeg()" title="Export design to JPEG format">Export to JPEG</button>
-				<button onclick="save_canvas_to_png()" title="Export design to PNG format">Export to PNG</button>
+		<div class="px-3 py-2 lg:px-5 lg:pl-3">
+			<div class="flex">
+				<div class="flex flex-row mr-4">
+					<button onclick="dialog_open('create_canvas_dialog')" title="Create new design"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/create-note-svgrepo-com.svg" width="20px">
+					</button>
+					<input type="file" id="input_canvas_json" class="hidden" accept=".json">
+					<button onclick="load_canvas_from_json()" title="Open an existing design"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/open-folder-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="save_canvas_to_json()" title="Save design"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/save-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="save_canvas_to_jpeg()" title="Export design to JPEG format"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/file-jpg-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="save_canvas_to_png()" title="Export design to PNG format"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/file-png-svgrepo-com.svg" width="20px">
+					</button>
+				</div>
 
-				<button onclick="">Undo</button>
-				<a href="#">Redo</a>
-				<button onclick="copy_selected_objects()" title="Copy selected object/s">Copy</button>
-				<button onclick="cut_selected_objects()" title="Cut selected object/s">Cut</button>
-				<button onclick="paste_copied_objects()" title="Paste copied/cutted object/s">Paste</button>
+				<div class="flex flex-row">
+					<button onclick="" title="Undo" class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/undo-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="" title="Redo" style="transform: scaleX(-1);"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/undo-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="copy_selected_objects()" title="Copy selected object/s"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/copy-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="cut_selected_objects()" title="Cut selected object/s"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/cut-svgrepo-com.svg" width="20px">
+					</button>
+					<button onclick="paste_copied_objects()" title="Paste copied/cutted object/s"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/paste-svgrepo-com.svg" width="20px">
+					</button>
+				</div>
 
-				<a href="#">Preview: PC</a>
-				<a href="#">Preview: Mobile</a>
-				<a href="#">Preview: Tablet</a>
-
-				<a href="inventory.html">Inventory</a>
-				<a href="main.html">Order Queue</a>
+				<div class="flex flex-row ml-auto">
+					<a href="inventory.html" title="Inventory Management" class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+						<img src="assets/svg/designer/list-ul-alt-svgrepo-com.svg" width="20px">
+					</a>
+					<a href="main.html" title="Order Queue" class="p-1 hover:bg-gray-100 rounded-lg">
+						<img src="assets/svg/designer/queue-svgrepo-com.svg" width="20px">
+					</a>
+				</div>
 			</div>
 		</div>
 	</nav>
@@ -67,7 +102,7 @@
 		<br>
 		<br>
 
-		<h2 class="font-bold">Custom Resolution</h2>
+		<h2>Custom Resolution</h2>
 		<label for="custom_canvas_height">Height:</label>
 		<input type="text" id="custom_canvas_height">
 		<br>
@@ -167,7 +202,7 @@
 			<li class="p-1">
 				<button onclick="context_menu_option2()">Option 2</button>
 			</li>
-		</button>
+		</ul>
 	</div>
 
 	<script src="./js/designer.js"></script>
