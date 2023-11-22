@@ -121,7 +121,7 @@
 	<aside id="left_sidebar"
 		class="fixed top-0 left-0 z-40 w-18 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 		aria-label="Sidebar">
-		<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+		<div class="h-full px-2 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
 			<ul class="space-y-2 font-medium">
 				<li>
 					<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
@@ -205,8 +205,19 @@
 		</ul>
 	</div>
 
-	<script src="./js/designer.js"></script>
+	<div class="flex flex-row bottom-0 overflow-hidden fixed border-t w-full bg-white z-50 py-1 px-2 justify-end">
+		<button id="canvas_scaler_minus" class="mr-1">
+			<img src="assets/svg/designer/minus-circle-1442-svgrepo-com.svg" width="10px" alt="">
+		</button>
+		<input id="canvas_scaler" type="range" min="-3" max="3" step="0.5" class="mr-1">
+		<button id="canvas_scaler_plus">
+			<img src="assets/svg/designer/plus-circle-1441-svgrepo-com.svg" width="10px" alt="">
+		</button>
+	</div>
+
+	<script src="./js/designer/designer.js"></script>
 	<script src="./js/designer/global_events.js"></script>
+	<script src="./js/designer/cut_copy_paste.js"></script>
 </body>
 
 </html>
