@@ -61,9 +61,9 @@
 				</div>
 
 				<div class="flex flex-row ml-auto">
-					<a href="inventory.html" title="Inventory Management" class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+					<button onclick="login_dialog_open('inventory.html')" title="Inventory Management" class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
 						<img src="assets/svg/designer/list-ul-alt-svgrepo-com.svg" width="20px">
-					</a>
+					</button>
 					<a href="main.html" title="Order Queue" class="p-1 hover:bg-gray-100 rounded-lg">
 						<img src="assets/svg/designer/queue-svgrepo-com.svg" width="20px">
 					</a>
@@ -72,6 +72,7 @@
 		</div>
 	</nav>
 
+	<!-- create canvas dialog -->
 	<dialog id="create_canvas_dialog" class="rounded-lg">
 		<h1 class="font-bold text-center">Generate Canvas</h1>
 		<br>
@@ -118,28 +119,63 @@
 		</center>
 	</dialog>
 
-	<dialog id="login_dialog">
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto w-1/4">
 		<p id="login_redirect_site" class="hidden"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
-		<label for="login_username" class="pl-1">Username:</label>
-		<input type="text" id="login_username" placeholder="Enter Username"
-			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<center>
+			<input type="text" id="login_username" placeholder=""
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-auto"><br>
+			<label for="login_username" class="">Username</label><br>
 
-		<label for="login_password" class="pl-1">Password:</label>
-		<input type="password" id="login_password" placeholder="Enter Username"
-			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+			<input type="password" id="login_password" placeholder=""
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-auto"><br>
+			<label for="login_password" class="">Password</label>
+		</center>
 
-		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('login_dialog')"
-				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				CANCEL
-			</button>
-			<button onclick="login()"
-				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				LOGIN
-			</button>
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
+			<center>
+				<button onclick="login()"
+					class="font-bold rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-32">
+					LOGIN
+				</button>
+
+				<br>
+
+				<button onclick="dialog_close('login_dialog')"
+					class="font-bold rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-32">
+					CANCEL
+				</button>
+			</center>
 		</div>
+	</dialog>
+
+	<!-- invalid login username dialog -->
+	<dialog id="login_invalid_username_dialog">
+		<h1>This username doesn't exists!</h1>
+		<button onclick="dialog_close('login_invalid_username_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+	<!-- invalid login password dialog -->
+	<dialog id="login_invalid_password_dialog">
+		<h1>Password doesn't matched!</h1>
+		<button onclick="dialog_close('login_invalid_password_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
+		<button onclick="dialog_close('lack_access_privilege_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
 	</dialog>
 
 	<aside id="left_sidebar"
@@ -264,6 +300,7 @@
 	<script src="./js/designer/designer.js"></script>
 	<script src="./js/designer/global_events.js"></script>
 	<script src="./js/designer/cut_copy_paste.js"></script>
+	<script src="./js/designer/login.js"></script>
 </body>
 
 </html>
