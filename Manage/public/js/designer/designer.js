@@ -24,6 +24,7 @@ const iro = require("@jaames/iro");
 
 // default canvas variable values
 let canvas;
+console.log("canvas", canvas)
 let canvas_filename = "untitled";
 let canvas_height = 0;
 let canvas_width = 0;
@@ -213,6 +214,7 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 
 	if (canvas) {
 		if (typeof callback === "function") callback();
+		canvas_scaler();
 	}
 }
 
@@ -559,8 +561,20 @@ function delete_selected_objects() {
 }
 
 function canvas_scaler() {
-	if (!canvas) return;
+	if (!canvas) {
+		// disable canvas scaler inputs
+		document.getElementById("canvas_scaler_minus").disabled = true;
+		document.getElementById("canvas_scale_range_input").disabled = true;
+		document.getElementById("canvas_scaler_plus").disabled = true;
+		return;
+	}
 	console.log("called canvas_scaler()");
+
+	// enable canvas scaler inputs
+	document.getElementById("canvas_scaler_minus").disabled = false;
+	document.getElementById("canvas_scale_range_input").disabled = false;
+	document.getElementById("canvas_scaler_plus").disabled = false;
+
 	const range_input = document.getElementById("canvas_scale_range_input");
 
 	const range_step = parseFloat(range_input.step);
