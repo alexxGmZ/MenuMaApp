@@ -125,23 +125,30 @@
 	</dialog>
 
 	<!-- login dialog -->
-	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto w-1/4">
 		<p id="login_redirect_site" class="hidden"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
-		<label for="login_username" class="pl-1">Username:</label>
-		<input type="text" id="login_username" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<center>
+		<input type="text" id="login_username" placeholder="" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-auto bg-zinc-100"><br>
+		<label for="login_username" class="">Username</label><br>
 
-		<label for="login_password" class="pl-1">Password:</label>
-		<input type="password" id="login_password" placeholder="Enter Username" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<input type="password" id="login_password" placeholder="" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-auto bg-zinc-100"><br>
+		<label for="login_password" class="">Password</label>
+		</center>
 
-		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('login_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
-				CANCEL
-			</button>
-			<button onclick="login()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
+			<center>
+			<button onclick="login()" class="font-bold rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-32">
 				LOGIN
 			</button>
+
+			<br>
+
+			<button onclick="dialog_close('login_dialog')" class="font-bold rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-32">
+				CANCEL
+			</button>
+			</center>
 		</div>
 	</dialog>
 
