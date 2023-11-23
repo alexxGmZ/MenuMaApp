@@ -144,14 +144,13 @@ function load_canvas_from_json() {
 
 				generate_canvas_area(canvas_height, canvas_width, function() {
 					get_selected_objects();
-				});
-				if (canvas) {
+
 					canvas.loadFromJSON(parsed_json.canvas_objects, function() {
 						// Callback function executed after the canvas is loaded
 						// console.log("Canvas loaded from JSON.");
 						canvas.renderAll(); // Render the canvas
 					});
-				}
+				});
 			};
 
 			reader.readAsText(selectedFile);
@@ -172,14 +171,13 @@ function load_current_synced_design() {
 
 			generate_canvas_area(canvas_height, canvas_width, function() {
 				get_selected_objects();
-			});
-			if (canvas) {
 				canvas.loadFromJSON(parsed_data.canvas_objects, function() {
 					// Callback function executed after the canvas is loaded
 					// console.log("Canvas loaded from JSON.");
 					canvas.renderAll(); // Render the canvas
 				});
-			}
+				dialog_close("load_current_synced_design_dialog");
+			});
 		}
 		catch (parse_error) {
 			console.error('Error parsing JSON:', parse_error);
