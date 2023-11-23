@@ -61,7 +61,8 @@
 				</div>
 
 				<div class="flex flex-row ml-auto">
-					<button onclick="login_dialog_open('inventory.html')" title="Inventory Management" class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
+					<button onclick="login_dialog_open('inventory.html')" title="Inventory Management"
+						class="p-1 hover:bg-gray-100 rounded-lg mr-0.5">
 						<img src="assets/svg/designer/list-ul-alt-svgrepo-com.svg" width="20px">
 					</button>
 					<a href="main.html" title="Order Queue" class="p-1 hover:bg-gray-100 rounded-lg">
@@ -226,7 +227,7 @@
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_display_item_cards()" title="Generate item card from items in the inventory"
+					<button onclick="dialog_open('generate_item_card_dialog'); sidebar_display_item_cards()" title="Generate item card from items in the inventory"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
 					</button>
@@ -267,13 +268,27 @@
 		</center>
 	</dialog>
 
-	<div id="canvas_area" class="p-4 sm:ml-14">
-	</div>
+	<dialog id="generate_item_card_dialog" class="rounded-lg mx-auto drop-shadow-lg">
+		<table id="item_card_table" class="">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody id="item_card_list">
+			</tbody>
+		</table>
+		<br>
 
-	<table id="item_card_table" class="p-4 sm:ml-64 mt-6">
-		<tbody id="item_card_list">
-		</tbody>
-	</table>
+		<center>
+			<button onclick="dialog_close('generate_item_card_dialog')">Cancel</button>
+		</center>
+	</dialog>
+
+	<div id="canvas_area" class="p-4 sm:ml-14 mb-7">
+	</div>
 
 	<div id="context_menu" class="rounded-md hidden absolute bg-white p-1 z-50 drop-shadow-lg">
 		<ul class="list-none m-0 p-0">
