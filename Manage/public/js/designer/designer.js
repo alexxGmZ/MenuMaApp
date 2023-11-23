@@ -202,7 +202,6 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 
 	// Append the canvas element to the container div
 	const canvas_placeholder = document.querySelector("#canvas_area");
-	canvas_placeholder.innerHTML = "";
 	canvas_placeholder.appendChild(canvas_resolution_element);
 	canvas_placeholder.appendChild(canvas_element);
 
@@ -550,3 +549,39 @@ function delete_selected_objects() {
 	}
 }
 
+function canvas_scaler() {
+	console.log("called canvas_scaler()");
+	const range_input = document.getElementById("canvas_scale_range_input");
+
+	const range_step = parseFloat(range_input.step);
+	const range_max = parseFloat(range_input.max);
+	const range_min = parseFloat(range_input.min)
+	var range_value = parseFloat(range_input.value);
+	document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+
+	// minus button is clicked
+	document.getElementById("canvas_scaler_minus").addEventListener("click", function() {
+		// stop the scale if range_min is reached
+		if (parseFloat(range_input.value) <= range_min) return;
+
+		range_input.value = parseFloat(range_input.value) - range_step;
+		console.log("range_input.value:", range_input.value);
+		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+	});
+
+	// plus button is clicked
+	document.getElementById("canvas_scaler_plus").addEventListener("click", function() {
+		// stop the scale if range_max is reached
+		if (parseFloat(range_input.value) >= range_max) return;
+
+		range_input.value = parseFloat(range_input.value) + range_step;
+		console.log("range_input.value:", range_input.value);
+		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+	});
+
+	// if the range input slider is used
+	range_input.addEventListener("input", function() {
+		console.log("range_input.value:", range_input.value);
+		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+	})
+}

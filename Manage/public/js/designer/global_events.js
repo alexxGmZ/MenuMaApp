@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	item_card_row_click();
 	load_current_synced_design();
 	create_canvas_color_picker();
+	canvas_scaler();
 });
 
 document.addEventListener("keydown", function(event) {
