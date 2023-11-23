@@ -1,5 +1,7 @@
-//NOTE:
-// "canvas" is located in designer.js
+// NOTE: undeclared variables are located in designer.js
+// canvas
+// pointer_x
+// pointer_y
 
 let _clipboard = null;
 function copy_selected_objects() {
@@ -48,18 +50,31 @@ function cut_selected_objects() {
 	});
 }
 
-function paste_copied_objects() {
-	if (!canvas) return;
-	console.log("called paste_copied_objects()");
+function paste_copied_objects(tool_used) {
+	if (!canvas || !_clipboard) return;
+	console.log(`called paste_copied_objects(${tool_used})`);
 
 	// clone again, so you can do multiple copies.
 	_clipboard.clone(function(clonedObj) {
 		canvas.discardActiveObject();
-		clonedObj.set({
-			left: clonedObj.left + 10,
-			top: clonedObj.top + 10,
-			evented: true,
-		});
+		// if mouse is used to paste then position objects in the mouse
+		if (tool_used === "mouse") {
+			clonedObj.set({
+				left: pointer_x,
+				top: pointer_y,
+				evented: true,
+			});
+		}
+
+		// else below the original object
+		else {
+			clonedObj.set({
+				left: clonedObj.left + 10,
+				top: clonedObj.top + 10,
+				evented: true,
+			});
+		}
+
 		if (clonedObj.type === 'activeSelection') {
 			// active selection needs a reference to the canvas.
 			clonedObj.canvas = canvas;
@@ -74,6 +89,7 @@ function paste_copied_objects() {
 			canvas.add(clonedObj);
 			console.log(`Pasted object - Type: ${clonedObj.type}, Object ID: ${clonedObj.object_id}`);
 		}
+
 		_clipboard.top += 10;
 		_clipboard.left += 10;
 		canvas.setActiveObject(clonedObj);

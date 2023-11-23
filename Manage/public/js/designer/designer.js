@@ -39,7 +39,7 @@ function create_canvas(size) {
 	const green = document.getElementById("rgb_g").value;
 	const blue = document.getElementById("rgb_b").value;
 	canvas_bg_color = `rgb(${red}, ${green}, ${blue})`;
-	console.log(canvas_bg_color);
+	// console.log(canvas_bg_color);
 
 	if (size === "custom") {
 		const input_custom_canvas_height = document.getElementById("custom_canvas_height").value;
@@ -473,6 +473,7 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	canvas.add(price);
 }
 
+let pointer_x, pointer_y;
 function get_selected_objects() {
 	if (!canvas) return;
 	console.log("called get_selected_objects()");
@@ -480,8 +481,12 @@ function get_selected_objects() {
 	canvas.on('mouse:up', function(event, options) {
 		console.log("canvas mouse:up event");
 		const selected_objects = canvas.getActiveObjects();
+		const { x, y } = canvas.getPointer();
+		pointer_x = x;
+		pointer_y = y;
+		console.log("mouse position: ", pointer_x, pointer_y);
 
-		// hide context menu of no object/s are selected
+		// if canvas is clicked
 		if (selected_objects.length == 0) {
 			// hide context menu when left-clicked in any place of canvas
 			if (event.button === 1) context_menu("hide");
@@ -489,13 +494,15 @@ function get_selected_objects() {
 			// show context menu when right-clicked in any place of canvas
 			if (event.button === 3) context_menu("show");
 		}
+
+		// if objects are clieked
 		else {
 			// log left-clicked objects
 			selected_objects.forEach(object => {
 				console.log(`Left clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
 			})
 
-			// right click
+			// show context menu on right click
 			if (event.button === 3) {
 				// log right-clicked objects
 				selected_objects.forEach(object => {
@@ -523,12 +530,13 @@ function context_menu(display_style) {
 		context_menu.style.display = "none";
 	else if (display_style === "show") {
 		// mouse or pointer position
-		const { x, y } = canvas.getPointer(event.e);
+		// const { x, y } = canvas.getPointer();
+		// console.log(x, y);
 
 		// display context menu based on the mouse pointer position
 		context_menu.style.display = 'block';
-		context_menu.style.left = (x + 100) + 'px';
-		context_menu.style.top = (y + 100) + 'px';
+		context_menu.style.left = (pointer_x + 100) + 'px';
+		context_menu.style.top = (pointer_y + 100) + 'px';
 	}
 }
 
@@ -551,13 +559,13 @@ function delete_selected_objects() {
 }
 
 function canvas_scaler() {
+	if (!canvas) return;
 	console.log("called canvas_scaler()");
 	const range_input = document.getElementById("canvas_scale_range_input");
 
 	const range_step = parseFloat(range_input.step);
 	const range_max = parseFloat(range_input.max);
 	const range_min = parseFloat(range_input.min)
-	var range_value = parseFloat(range_input.value);
 	document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
 
 	// minus button is clicked
@@ -566,7 +574,6 @@ function canvas_scaler() {
 		if (parseFloat(range_input.value) <= range_min) return;
 
 		range_input.value = parseFloat(range_input.value) - range_step;
-		console.log("range_input.value:", range_input.value);
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
 	});
 
@@ -576,13 +583,11 @@ function canvas_scaler() {
 		if (parseFloat(range_input.value) >= range_max) return;
 
 		range_input.value = parseFloat(range_input.value) + range_step;
-		console.log("range_input.value:", range_input.value);
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
 	});
 
 	// if the range input slider is used
 	range_input.addEventListener("input", function() {
-		console.log("range_input.value:", range_input.value);
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
 	})
 }
