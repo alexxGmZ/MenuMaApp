@@ -702,6 +702,10 @@ video {
   margin-top: 1rem;
 }
 
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1234,6 +1238,10 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
 }
 
 .text-left {
