@@ -26,16 +26,21 @@ Install the listed dependencies at the top. It is best to **follow the Capacitor
 Run ```npm install``` to install all the listed dependencies inside the ```./package.json```.
 
 ```json
-"dependencies": {
-   "@capacitor/android": "^5.1.1",
-   "@capacitor/camera": "latest",
-   "@capacitor/core": "latest",
-   "@capacitor/splash-screen": "latest"
-},
-"devDependencies": {
-   "@capacitor/cli": "latest",
-   "vite": "^2.9.13"
-},
+  "dependencies": {
+    "@capacitor/camera": "latest",
+    "@capacitor/core": "latest",
+    "@capacitor/network": "^5.0.6",
+    "@capacitor/splash-screen": "latest",
+    "fabric": "^5.3.0"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^5.3.0",
+    "@capacitor/cli": "latest",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
+    "vite": "^2.9.13"
+  },
 ```
 <br>
 
@@ -56,12 +61,28 @@ Opens the browser to preview the HTML pages.
 
 ```bash
 npm run build
+```
+```npm run build``` builds the code for android.
+> **NOTE:** always execute ```npm run build``` before executing ```npm run preview``` and
+```npm run android``` or else the changes will not be applied inside the android device.
+
+<br>
+
+```bash
 npm run preview
 ```
-```npm run build``` builds the code. ```npm run preview``` runs the built code in the
+ ```npm run preview``` runs the built code in the
 browser using vite, it simulates the android environment.
 
-> **NOTE:** always execute ```npm run build``` before executing ```npx cap run android``` or
-else the changes will not be applied inside the android device.
 
+<br>
+
+```bash
+npm run android
+```
+Uses the built code to run in a selected android device plugged-in your computer or through
+the Android Studio's slow android virtual machines.
+> **NOTE:** read the [capacitor.js documentation](https://capacitorjs.com/docs/getting-started/environment-setup#android-requirements)
+on how to setup android development evironment. If using an android hardware, turn on the
+developer settings. How? Go search in Google.
 
