@@ -292,11 +292,14 @@
 
 	<div id="context_menu" class="rounded-md hidden absolute bg-white p-1 z-50 drop-shadow-lg">
 		<ul class="list-none m-0 p-0">
-			<li class="p-1">
-				<button onclick="context_menu_option1()">Option 1</button>
+			<li class="px-1">
+				<button onclick="copy_selected_objects(); context_menu('hide')">Copy</button>
 			</li>
-			<li class="p-1">
-				<button onclick="context_menu_option2()">Option 2</button>
+			<li class="px-1">
+				<button onclick="cut_selected_objects(); context_menu('hide')">Cut</button>
+			</li>
+			<li class="px-1">
+				<button onclick="paste_copied_objects(); context_menu('hide')">Paste</button>
 			</li>
 		</ul>
 	</div>

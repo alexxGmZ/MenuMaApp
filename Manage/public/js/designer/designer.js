@@ -477,56 +477,59 @@ function get_selected_objects() {
 	if (!canvas) return;
 	console.log("called get_selected_objects()");
 
-	const context_menu = document.getElementById('context_menu');
 	canvas.on('mouse:up', function(event, options) {
 		console.log("canvas mouse:up event");
 		const selected_objects = canvas.getActiveObjects();
 
 		// hide context menu of no object/s are selected
 		if (selected_objects.length == 0) {
-			context_menu.style.display = "none";
+			// hide context menu when left-clicked in any place of canvas
+			if (event.button === 1) context_menu("hide");
+
+			// show context menu when right-clicked in any place of canvas
+			if (event.button === 3) context_menu("show");
 		}
 		else {
+			// log left-clicked objects
 			selected_objects.forEach(object => {
 				console.log(`Left clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
 			})
 
 			// right click
 			if (event.button === 3) {
+				// log right-clicked objects
 				selected_objects.forEach(object => {
 					console.log(`Right clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
 				});
 
-				// mouse or pointer position
-				const { x, y } = canvas.getPointer(event.e);
-
-				// display context menu based on the mouse pointer position
-				context_menu.style.display = 'block';
-				context_menu.style.left = (x + 100) + 'px';
-				context_menu.style.top = (y + 100) + 'px';
+				// show context menu on right-clicked objects
+				context_menu("show");
 			}
-			// else context_menu.style.display = "none";
 		}
 	});
 
 	canvas.on("mouse:down", function() {
+		console.log("canvas mouse:down event");
 		// hide context menu when the mouse is pressed down
-		context_menu.style.display = "none";
+		context_menu("hide");
 	})
 }
 
-function context_menu_option1() {
-	if (!canvas) return;
-	console.log("called context_menu_option1()");
-	const selected_objects = canvas.getActiveObjects();
-	console.log(selected_objects);
-}
+function context_menu(display_style) {
+	console.log(`called context_menu(${display_style})`)
+	const context_menu = document.getElementById('context_menu');
 
-function context_menu_option2() {
-	if (!canvas) return;
-	console.log("called context_menu_option2()");
-	const selected_objects = canvas.getActiveObjects();
-	console.log(selected_objects);
+	if (display_style === "hide")
+		context_menu.style.display = "none";
+	else if (display_style === "show") {
+		// mouse or pointer position
+		const { x, y } = canvas.getPointer(event.e);
+
+		// display context menu based on the mouse pointer position
+		context_menu.style.display = 'block';
+		context_menu.style.left = (x + 100) + 'px';
+		context_menu.style.top = (y + 100) + 'px';
+	}
 }
 
 function delete_selected_objects() {
