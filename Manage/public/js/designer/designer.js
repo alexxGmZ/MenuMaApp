@@ -438,6 +438,8 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	if (!canvas) return;
 	console.log(`called generate_item_card(${item_id}, ${item_name}, ${item_desc}, ${item_image.slice(0, 30) + "..."}, ${item_price})`);
 
+	item_id = parseInt(item_id);
+
 	const name = new fabric.IText(item_name, {
 		fontSize: 20,
 		group_id: item_id,
