@@ -202,6 +202,7 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 
 	// Append the canvas element to the container div
 	const canvas_placeholder = document.querySelector("#canvas_area");
+	canvas_placeholder.innerHTML = ""
 	canvas_placeholder.appendChild(canvas_resolution_element);
 	canvas_placeholder.appendChild(canvas_element);
 
