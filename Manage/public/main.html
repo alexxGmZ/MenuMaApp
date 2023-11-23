@@ -27,24 +27,43 @@
 			<div class="dropdown inline-block">
 				<button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center ml-3">
 					<span class="mr-1">Menu</span>
-					<svg class="fill-current h-4 w-4" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+					<svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+						<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
 					</svg>
 				</button>
 				<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
 					<li class="">
-						<a href="#" onclick="login_dialog_open('inventory.html')" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Inventory</a>
+						<a href="#" onclick="login_dialog_open('inventory.html')"
+							class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">
+							Inventory
+						</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="login_dialog_open('registration.html')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage Employee</a>
+						<a href="#" onclick="login_dialog_open('registration.html')"
+							class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage
+							Employee
+						</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="login_dialog_open('kiosk-devices.html')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Kiosk Devices</a>
+						<a href="#" onclick="login_dialog_open('kiosk-devices.html')"
+							class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950"
+							href="#">
+							Kiosk Devices
+						</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="login_dialog_open('order-history.html')" class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Order History</a>
+						<a href="#" onclick="login_dialog_open('order-history.html')"
+							class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950"
+							href="#">
+							Order History
+						</a>
 					</li>
 					<li class="">
-						<a href="#" onclick="login_dialog_open('designer.html')" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950" href="#">Designer</a>
+						<a href="#" onclick="login_dialog_open('designer.html')"
+							class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950"
+							href="#">
+							Designer
+						</a>
 					</li>
 
 				</ul>
@@ -56,7 +75,9 @@
 	<br>
 	<br>
 
-	<center><h1 class="font-extrabold">Order Queue Below</h1></center>
+	<center>
+		<h1 class="font-extrabold">Order Queue Below</h1>
+	</center>
 
 	<!--SHOW FOOD QUEUE ORDERS-->
 	<div class="pt-4">
@@ -77,27 +98,35 @@
 		<div class="grid grid-cols-2 gap-4 place-content-center">
 			<div>
 				<p class="text-center font-bold">Order #</p>
-				<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
+				<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number"
+					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled />
 
 				<p class="text-center font-bold">Food ordered</p>
-				<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md h-24" disabled></textarea>
+				<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered"
+					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md h-24" disabled>
+				</textarea>
 
 				<p class="text-center font-bold">Customer name</p>
-				<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel" placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
+				<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel"
+					placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md"
+					disabled />
 
 				<p class="text-center font-bold">Total Price</p>
-				<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled/>
+				<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price"
+					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled />
 			</div>
 			<div class="grid place-items-center">
 				<div>
 					<p class="text-center pb-3">Proceed anyways?</p>
 					<center>
-						<button onclick="dialog_close('cancel_order_dialog')" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+						<button onclick="dialog_close('cancel_order_dialog')"
+							class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 							<span class="mx-2"> NO </span>
 						</button>
 					</center>
 					<center>
-						<button onclick="order_cancel()" class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-red-500 bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+						<button onclick="order_cancel()"
+							class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-red-500 bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
 							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
 							<span class="mx-2"> YES </span>
 							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
@@ -113,7 +142,10 @@
 		<span>Order #</span>
 		<span id="cancel_order_num_placeholder">Order Number</span>
 		<span> is successfully canceled!</span><br>
-		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
+		<button onclick="location.reload()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
 	</dialog>
 
 	<!--Done Order Success Dialog-->
@@ -121,7 +153,10 @@
 		<span>Order #</span>
 		<span id="done_order_num_placeholder">Order Number</span>
 		<span> is successfully served!</span><br>
-		<button onclick="location.reload()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> OK </button>
+		<button onclick="location.reload()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
 	</dialog>
 
 	<!-- login dialog -->
@@ -130,24 +165,28 @@
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
 		<center>
-		<input type="text" id="login_username" placeholder="" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-auto bg-zinc-100"><br>
-		<label for="login_username" class="">Username</label><br>
+			<input type="text" id="login_username" placeholder=""
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-auto"><br>
+			<label for="login_username" class="">Username</label><br>
 
-		<input type="password" id="login_password" placeholder="" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-auto bg-zinc-100"><br>
-		<label for="login_password" class="">Password</label>
+			<input type="password" id="login_password" placeholder=""
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-auto"><br>
+			<label for="login_password" class="">Password</label>
 		</center>
 
 		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
 			<center>
-			<button onclick="login()" class="font-bold rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-32">
-				LOGIN
-			</button>
+				<button onclick="login()"
+					class="font-bold rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-32">
+					LOGIN
+				</button>
 
-			<br>
+				<br>
 
-			<button onclick="dialog_close('login_dialog')" class="font-bold rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-32">
-				CANCEL
-			</button>
+				<button onclick="dialog_close('login_dialog')"
+					class="font-bold rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-32">
+					CANCEL
+				</button>
 			</center>
 		</div>
 	</dialog>
@@ -155,7 +194,8 @@
 	<!-- invalid login username dialog -->
 	<dialog id="login_invalid_username_dialog">
 		<h1>This username doesn't exists!</h1>
-		<button onclick="dialog_close('login_invalid_username_dialog')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('login_invalid_username_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
@@ -163,7 +203,8 @@
 	<!-- invalid login password dialog -->
 	<dialog id="login_invalid_password_dialog">
 		<h1>Password doesn't matched!</h1>
-		<button onclick="dialog_close('login_invalid_password_dialog')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('login_invalid_password_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
@@ -171,7 +212,8 @@
 	<!-- when the user lacks access privilege -->
 	<dialog id="lack_access_privilege_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
-		<button onclick="dialog_close('lack_access_privilege_dialog')" class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('lack_access_privilege_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
@@ -180,4 +222,5 @@
 	<a href="./practice.html">Practice</a>
 	-->
 </body>
+
 </html>
