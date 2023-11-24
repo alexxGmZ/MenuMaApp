@@ -179,6 +179,7 @@
 		</button>
 	</dialog>
 
+	<!-- left sidebar -->
 	<aside id="left_sidebar"
 		class="fixed top-0 left-0 z-40 w-18 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 		aria-label="Sidebar">
@@ -227,7 +228,8 @@
 					</button>
 				</li>
 				<li>
-					<button onclick="dialog_open('generate_item_card_dialog'); display_item_cards()" title="Generate item card from items in the inventory"
+					<button onclick="dialog_open('generate_item_card_dialog'); display_item_cards()"
+						title="Generate item card from items in the inventory"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
 					</button>
@@ -236,6 +238,7 @@
 		</div>
 	</aside>
 
+	<!-- sync design dialog -->
 	<dialog id="sync_design_dialog" class="rounded-lg mx-auto drop-shadow-lg">
 		<p>Sync to connected Kiosk Devices?</p>
 
@@ -253,6 +256,7 @@
 		</center>
 	</dialog>
 
+	<!-- load current synced design dialog -->
 	<dialog id="load_current_synced_design_dialog" class="rounded-lg mx-auto drop-shadow-lg">
 		<p>Load current synced design?</p>
 
@@ -268,6 +272,7 @@
 		</center>
 	</dialog>
 
+	<!-- generate item card dialog -->
 	<dialog id="generate_item_card_dialog" class="rounded-lg mx-auto drop-shadow-lg">
 		<table id="item_card_table" class="">
 			<thead>
@@ -287,43 +292,72 @@
 		</center>
 	</dialog>
 
+	<!-- canvas area -->
 	<div id="canvas_area" class="p-4 sm:ml-14 mb-7">
 	</div>
 
+	<!-- context menu (right-click menu) -->
 	<div id="context_menu" class="rounded-sm text-sm hidden absolute bg-white p-1 z-50 drop-shadow-lg">
 		<ul class="list-none m-0 p-0">
-			<li class="px-1 flex">
+			<li id="context_menu_copy" class="px-1 flex">
 				<img src="assets/svg/designer/copy-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="copy_selected_objects()">Copy</button>
 			</li>
-			<li class="px-1 flex">
+			<li id="context_menu_cut" class="px-1 flex">
 				<img src="assets/svg/designer/cut-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="cut_selected_objects()">Cut</button>
 			</li>
-			<li class="px-1 flex">
+			<li id="context_menu_paste" class="px-1 flex">
 				<img src="assets/svg/designer/paste-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="paste_copied_objects('mouse')">Paste</button>
 			</li>
-			<li class="px-1 flex">
+			<li id="layer_bring_to_front" class="px-1 flex">
 				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="adjust_object_layer('bring_to_front')">Bring to front</button>
 			</li>
-			<li class="px-1 flex">
+			<li id="layer_bring_forward" class="px-1 flex">
 				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="adjust_object_layer('bring_forward')">Bring forward</button>
 			</li>
-			<li class="px-1 flex">
-				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="mr-2" style="transform: scaleY(-1)">
+			<li id="layer_send_backward" class="px-1 flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="mr-2"
+					style="transform: scaleY(-1)">
 				<button onclick="adjust_object_layer('send_backward')">Send backward</button>
 			</li>
-			<li class="px-1 flex">
-				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="mr-2" style="transform: scaleY(-1)">
+			<li id="layer_send_to_back" class="px-1 flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="mr-2"
+					style="transform: scaleY(-1)">
 				<button onclick="adjust_object_layer('send_to_back')">Send to back</button>
 			</li>
-			<li class="px-1 flex">
-				<button onclick="">Properties</button>
+			<li id="context_menu_properties" class="px-1 flex">
+				<button onclick="object_properties('show')">Properties</button>
 			</li>
 		</ul>
+	</div>
+
+	<div id="object_properties" class="hidden absolute z-50 bg-white rounded-md px-4 drop-shadow-lg">
+		<div id="object_properties_header" class="cursor-move font-bold text-center">
+			Object Properties
+		</div>
+		<label for="object_properties_object_type">Object type:</label>
+		<span id="object_properties_object_type">heehee</span>
+		<br>
+
+		<label for="object_properties_group_id">Group ID:</label>
+		<span id="object_properties_group_id">heehee</span>
+		<br>
+
+		<label for="object_properties_object_id">Object ID:</label>
+		<span id="object_properties_object_id">heehee</span>
+		<br>
+
+		<label for="object_properties_bg_color">Background Color:</label>
+		<span id="object_properties_bg_color"></span>
+		<br>
+
+		<center>
+			<button onclick="object_properties('hide')">Close</button>
+		</center>
 	</div>
 
 	<!-- bottom navbar -->
@@ -338,6 +372,7 @@
 		</button>
 	</div>
 
+	<!-- javascript modules -->
 	<script src="./js/designer/designer.js"></script>
 	<script src="./js/designer/global_events.js"></script>
 	<script src="./js/designer/cut_copy_paste.js"></script>
