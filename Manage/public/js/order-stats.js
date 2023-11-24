@@ -209,6 +209,9 @@ connection.query("SELECT * FROM order_stats", function(err, order_stats_result, 
 		title: {
 			text: 'SHOWING GRAPH OF TOTAL ORDERS TAKEN, SERVED & CANCELED'
 		},
+		subchart: {
+			show: true
+		},
 		size: {
 			height: 500
 		},
@@ -268,6 +271,9 @@ function total_earnings_chart() {
 			bindto: '#chart3', // <div id="chart3"></div>
 			title: {
 				text: 'SHOWING GRAPH OF TOTAL EARNINGS (DAILY)'
+			},
+			subchart: {
+				show: true
 			},
 			size: {
 				height: 500
