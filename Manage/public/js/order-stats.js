@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	display_order_stats();
 
 	//chart purposes
-	//load_chart();
+	//total_order_chart();
 
 });
 
@@ -149,8 +149,8 @@ function row_click() {
 }
 
 // chart to load total_order_taken
-function load_chart() {
-console.log("called load_chart()")
+function total_order_chart() {
+console.log("called total_order_chart()")
 // chart purposes
 // var chart = c3.generate({
 //     bindto: '#chart',
@@ -200,14 +200,17 @@ connection.query("SELECT * FROM order_stats", function(err, order_stats_result, 
 		// The chart data based on Mysql query
 		columns[0].push(formattedDate);			// x-axis name (the bottom text)
 		columns[1].push(row.total_orders_taken);	// data name (the blue dots data)
-		columns[2].push(row.total_orders_done);
-		columns[3].push(row.total_orders_canceled)
+		columns[2].push(row.total_orders_done);		// data name (the orange dots data)
+		columns[3].push(row.total_orders_canceled)	// data name (the green dots data)
 	});
 
 	const chart = c3.generate({
 		bindto: '#chart2', // <div id="chart2"></div>
+		title: {
+			text: 'SHOWING GRAPH OF TOTAL ORDERS TAKEN, SERVED & CANCELED'
+		},
 		size: {
-			height: 520
+			height: 500
 		},
 		data: {
 			x: 'x',
@@ -220,7 +223,11 @@ connection.query("SELECT * FROM order_stats", function(err, order_stats_result, 
 		},
 		axis: {
 			x: {
-				type:'category'
+				type:'category',
+				tick: {
+					rotate: 75,
+					multiline: false
+				}
 			},
 			y: {
 				label: {
@@ -233,23 +240,159 @@ connection.query("SELECT * FROM order_stats", function(err, order_stats_result, 
 
 })
 
+}
+
+// total earning chart everyday
+function total_earnings_chart() {
+	console.log("called total_earnings_chart()")
+
+	connection.query("SELECT * FROM order_stats", function(err, order_stats_result, fields) {
+		if (err) throw err;
+		console.log(order_stats_result)
+
+		const columns = [['x'], ['Total Earnings']];
+		order_stats_result.forEach(row => {
+			// Format the date
+			let sqlDate = row.transaction_date;
+			let year = sqlDate.getFullYear();
+			let month = String(sqlDate.getMonth() + 1).padStart(2, '0');
+			let day = String(sqlDate.getDate()).padStart(2, '0');
+			let formattedDate = `${year}-${month}-${day}`;
+
+			// The chart data based on Mysql query
+			columns[0].push(formattedDate);			// x-axis name (the bottom text)
+			columns[1].push(row.total_earnings);	// data name (the blue dots data)
+		});
+
+		const chart = c3.generate({
+			bindto: '#chart3', // <div id="chart3"></div>
+			title: {
+				text: 'SHOWING GRAPH OF TOTAL EARNINGS (DAILY)'
+			},
+			size: {
+				height: 500
+			},
+			data: {
+				x: 'x',
+				columns: columns,
+				types: {
+					'Total Earnings': 'spline'
+				}
+			},
+			axis: {
+				x: {
+					type:'category',
+					tick: {
+						rotate: 75,
+						multiline: false
+					}
+				},
+				y: {
+					label: {
+						text: 'Total Earnings',
+						position: 'outer-middle'
+					},
+					tick: {
+						format: function (d) {
+							return '₱' + d3.format(',')(d);
+						}
+					}
+				}
+			}
+		});
+
+	})
+
+}
+
+function total_earning_monthly_chart(){
+	console.log("called total_earning_monthly_chart()")
+
+	connection.query(`SELECT DATE_FORMAT(transaction_Date, '%Y-%m') AS month,
+						SUM(total_earnings) AS total_amount
+					FROM manage_db.order_stats
+					GROUP BY month
+					ORDER BY month`, function(err, order_stats_result, fields) {
+						if (err) throw err;
+						console.log(order_stats_result)
+
+						const columns = [['x'], ['Total Earnings']]
+						order_stats_result.forEach(row => {
+
+							// The chart data based on Mysql query
+							columns[0].push(row.month);			// x-axis name (the bottom text)
+							columns[1].push(row.total_amount);	// data name (the blue dots data)
+
+						});
+
+						const chart = c3.generate({
+							bindto: '#chart4', // <div id="chart3"></div>
+							title: {
+								text: 'SHOWING GRAPH OF TOTAL EARNINGS (MONTHLY)'
+							},
+							size: {
+								height: 500
+							},
+							data: {
+								x: 'x',
+								columns: columns,
+								types: {
+									'Total Earnings': 'spline'
+								}
+							},
+							axis: {
+								x: {
+									type:'category',
+									tick: {
+										rotate: 75,
+										multiline: false
+									}
+								},
+								y: {
+									label: {
+										text: 'Total Earnings',
+										position: 'outer-middle'
+									},
+									tick: {
+										format: function (d) {
+											return '₱' + d3.format(',')(d);
+										}
+									}
+								}
+							}
+						});
+
+					})
+	
+}
+
+// function for showing or hiding graph
+function show_graph_or_table() {
+	total_order_chart();
+	total_earnings_chart();
+	total_earning_monthly_chart();
 	//variables for hiding tables and chart
-	let element = document.getElementById("order_stats_table");
-	let element2 = document.getElementById("chart2");
+	let element = document.getElementById("order_stats_table"); //<table>
+	let element2 = document.getElementById("chart2"); //<div chart2>
+	let element3 = document.getElementById("chart3"); //<div chart3>
+	let element4 = document.getElementById("chart4"); //<div chart4>
 	let hidden = element.getAttribute("hidden");
 
 	// hides & show the table
 	if (hidden) {
 		element.removeAttribute("hidden");
 		element2.setAttribute("hidden", "hidden");
+		element3.setAttribute("hidden", "hidden");
+		element4.setAttribute("hidden", "hidden");
 		document.getElementById("load_chart_btn").innerHTML = "SHOW GRAPH";
 	} else {
 		element.setAttribute("hidden", "hidden");
 		element2.removeAttribute("hidden");
+		element3.removeAttribute("hidden");
+		element4.removeAttribute("hidden");
 		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
 	}
 
 	// NOTE: THE CHART IS DIV which <div id="chart#"></div>
 	// do note remove the div or elese chart will not load
-
 }
