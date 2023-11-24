@@ -180,7 +180,7 @@
 	</dialog>
 
 	<aside id="left_sidebar"
-		class="fixed top-0 left-0 z-40 w-18 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+		class="fixed top-0 left-0 z-40 w-18 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 		aria-label="Sidebar">
 		<div class="h-full px-2 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
 			<ul class="space-y-1">
@@ -190,7 +190,7 @@
 						<img src="./assets/svg/designer/sync-solid-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
-				<li>
+				<li class="pb-4">
 					<button onclick="dialog_open('load_current_synced_design_dialog')" title="Load current synced design"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="./assets/svg/designer/download-svgrepo-com.svg" width="20px" alt="">
@@ -203,31 +203,31 @@
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_rectangle()" title="Generate rectangle"
+					<button onclick="generate_rectangle()" title="Generate rectangle"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/rectangle-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_circle()" title="Generate circle"
+					<button onclick="generate_circle()" title="Generate circle"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/circle-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_text()" title="Generate a text box"
+					<button onclick="generate_text()" title="Generate a text box"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/text-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
-					<button onclick="sidebar_generate_line()" title="Generate a line"
+					<button onclick="generate_line()" title="Generate a line"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/line-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
-					<button onclick="dialog_open('generate_item_card_dialog'); sidebar_display_item_cards()" title="Generate item card from items in the inventory"
+					<button onclick="dialog_open('generate_item_card_dialog'); display_item_cards()" title="Generate item card from items in the inventory"
 						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 						<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
 					</button>
@@ -248,7 +248,7 @@
 		<br>
 
 		<center>
-			<button onclick="sidebar_sync_design_to_order()" class="rounded-lg mr-10">Sync</button>
+			<button onclick="sync_design_to_order()" class="rounded-lg mr-10">Sync</button>
 			<button onclick="dialog_close('sync_design_dialog')">Cancel</button>
 		</center>
 	</dialog>
@@ -319,6 +319,7 @@
 	<script src="./js/designer/designer.js"></script>
 	<script src="./js/designer/global_events.js"></script>
 	<script src="./js/designer/cut_copy_paste.js"></script>
+	<script src="./js/designer/left_sidebar.js"></script>
 	<script src="./js/designer/login.js"></script>
 </body>
 
