@@ -325,7 +325,7 @@ function get_selected_objects() {
 		const { x, y } = canvas.getPointer();
 		pointer_x = x;
 		pointer_y = y;
-		console.log("mouse position: ", pointer_x, pointer_y);
+		// console.log("mouse position: ", pointer_x, pointer_y);
 
 		// if canvas is clicked
 		if (selected_objects.length == 0) {
@@ -375,6 +375,21 @@ function context_menu(display_style) {
 		context_menu.style.left = (pointer_x + 80) + 'px';
 		context_menu.style.top = (pointer_y + 90) + 'px';
 	}
+}
+
+function adjust_object_layer(order) {
+	if (!canvas) return
+	console.log(`called adjust_object_layer(${order})`);
+	context_menu("hide");
+
+	const selected_objects = canvas.getActiveObjects();
+	selected_objects.forEach(object => {
+		if (order === "bring_to_front") canvas.bringToFront(object);
+		if (order === "bring_forward") canvas.bringForward(object);
+		if (order === "send_backward") canvas.sendBackwards(object);
+		if (order === "send_to_back") canvas.sendToBack(object);
+	});
+	canvas.requestRenderAll();
 }
 
 function delete_selected_objects() {

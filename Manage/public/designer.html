@@ -292,14 +292,36 @@
 
 	<div id="context_menu" class="rounded-sm text-sm hidden absolute bg-white p-1 z-50 drop-shadow-lg">
 		<ul class="list-none m-0 p-0">
-			<li class="px-1">
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/copy-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="copy_selected_objects()">Copy</button>
 			</li>
-			<li class="px-1">
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/cut-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="cut_selected_objects()">Cut</button>
 			</li>
-			<li class="px-1">
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/paste-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="paste_copied_objects('mouse')">Paste</button>
+			</li>
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="mr-2">
+				<button onclick="adjust_object_layer('bring_to_front')">Bring to front</button>
+			</li>
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="mr-2">
+				<button onclick="adjust_object_layer('bring_forward')">Bring forward</button>
+			</li>
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="mr-2" style="transform: scaleY(-1)">
+				<button onclick="adjust_object_layer('send_backward')">Send backward</button>
+			</li>
+			<li class="px-1 flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="mr-2" style="transform: scaleY(-1)">
+				<button onclick="adjust_object_layer('send_to_back')">Send to back</button>
+			</li>
+			<li class="px-1 flex">
+				<button onclick="">Properties</button>
 			</li>
 		</ul>
 	</div>
