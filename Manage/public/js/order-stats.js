@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
 	// put something if needed
 	display_order_stats();
+
+	//chart purposes
+	load_chart();
+
 });
 
 // call mysql database module
@@ -144,3 +148,38 @@ function row_click() {
 
 }
 
+function load_chart() {
+console.log("called load_chart()")
+// chart purposes
+var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      columns: [
+        ['Everyday_Earning', 52.75, 10.25, 57.25, 5.99, 0, 129.9, 26.9, 0, 0, 24.25, 35.67, 78.9, 0, 5.99, 0, 204.9, 0, 5.99, 12.58]
+      ],
+	  types: {
+		Everyday_Earning: 'area-spline'
+	  }
+    },
+	axis: {
+		y: {
+			label: {
+				text: 'Total Earnings',
+				position: 'outer-middle'
+			},
+			tick: {
+				format: function (d) {
+					return '₱' + d3.format(',')(d);
+				}
+			}
+		},
+		x: {
+			type: 'category',
+			categories: ['2023-10-31', '2023-11-02', '2023-11-03', '2023-11-03', '2023-11-03', '2023-11-03',],
+			label: {
+				position: 'outer-center'
+			}
+		}
+	}
+});
+}
