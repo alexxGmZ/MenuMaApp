@@ -237,7 +237,6 @@ connection.query("SELECT * FROM order_stats", function(err, order_stats_result, 
 	let element = document.getElementById("order_stats_table");
 	let element2 = document.getElementById("chart2");
 	let hidden = element.getAttribute("hidden");
-	let hidden2 = element.getAttribute("hidden");
 
 	// hides & show the table
 	if (hidden) {
@@ -246,14 +245,8 @@ connection.query("SELECT * FROM order_stats", function(err, order_stats_result, 
 		document.getElementById("load_chart_btn").innerHTML = "SHOW GRAPH";
 	} else {
 		element.setAttribute("hidden", "hidden");
-		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
-	}
-
-	// show & hides the chart
-	if (hidden2) {
-		element2.setAttribute("hidden", "hidden")
-	} else {
 		element2.removeAttribute("hidden");
+		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
 	}
 
 	// NOTE: THE CHART IS DIV which <div id="chart#"></div>
