@@ -70,8 +70,8 @@ function paste_copied_objects(tool_used) {
 		// if mouse is used to paste then position objects in the mouse
 		if (tool_used === "mouse") {
 			clonedObj.set({
-				left: pointer_x - 200,
-				top: pointer_y - 100,
+				left: pointer_x,
+				top: pointer_y,
 				evented: true,
 			});
 		}
