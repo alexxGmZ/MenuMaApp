@@ -20,6 +20,7 @@ fabric.Object.prototype.toObject = function(additionalProperties) {
 	return originalToObject.call(this, myAdditional.concat(additionalProperties));
 }
 
+// color picker library
 const iro = require("@jaames/iro");
 
 // default canvas variable values
@@ -533,14 +534,10 @@ function context_menu(display_style) {
 	if (display_style === "hide")
 		context_menu.style.display = "none";
 	else if (display_style === "show") {
-		// mouse or pointer position
-		// const { x, y } = canvas.getPointer();
-		// console.log(x, y);
-
 		// display context menu based on the mouse pointer position
 		context_menu.style.display = 'block';
-		context_menu.style.left = (pointer_x + 100) + 'px';
-		context_menu.style.top = (pointer_y + 100) + 'px';
+		context_menu.style.left = (pointer_x + 80) + 'px';
+		context_menu.style.top = (pointer_y + 90) + 'px';
 	}
 }
 

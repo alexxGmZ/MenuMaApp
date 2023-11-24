@@ -8,6 +8,9 @@ function copy_selected_objects() {
 	if (!canvas) return;
 	console.log("called copy_selected_objects()");
 
+	// hide context menu after clicking
+	context_menu("hide");
+
 	canvas.getActiveObject().clone(function(cloned) {
 		_clipboard = cloned;
 		// Log the copied object or objects
@@ -27,6 +30,10 @@ function copy_selected_objects() {
 function cut_selected_objects() {
 	if (!canvas) return;
 	console.log("called cut_selected_objects()");
+
+	// hide context menu after clicking
+	context_menu("hide");
+
 	canvas.getActiveObject().clone(function(cloned) {
 		_clipboard = cloned;
 		if (cloned.type === 'activeSelection') {
@@ -54,14 +61,17 @@ function paste_copied_objects(tool_used) {
 	if (!canvas || !_clipboard) return;
 	console.log(`called paste_copied_objects(${tool_used})`);
 
+	// hide context menu after clicking
+	context_menu("hide");
+
 	// clone again, so you can do multiple copies.
 	_clipboard.clone(function(clonedObj) {
 		canvas.discardActiveObject();
 		// if mouse is used to paste then position objects in the mouse
 		if (tool_used === "mouse") {
 			clonedObj.set({
-				left: pointer_x,
-				top: pointer_y,
+				left: pointer_x - 200,
+				top: pointer_y - 100,
 				evented: true,
 			});
 		}

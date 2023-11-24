@@ -121,31 +121,31 @@
 	</dialog>
 
 	<!-- login dialog -->
-	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto w-1/4">
+	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
 		<p id="login_redirect_site" class="hidden"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
 		<center>
 			<input type="text" id="login_username" placeholder=""
-				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-auto"><br>
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-2/3 text-center"><br>
 			<label for="login_username" class="">Username</label><br>
 
 			<input type="password" id="login_password" placeholder=""
-				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-auto"><br>
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-2/3 text-center"><br>
 			<label for="login_password" class="">Password</label>
 		</center>
 
 		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
 			<center>
 				<button onclick="login()"
-					class="font-bold rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-32">
+					class="rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
 					LOGIN
 				</button>
 
 				<br>
 
 				<button onclick="dialog_close('login_dialog')"
-					class="font-bold rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-32">
+					class="rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-1/2">
 					CANCEL
 				</button>
 			</center>
@@ -290,16 +290,16 @@
 	<div id="canvas_area" class="p-4 sm:ml-14 mb-7">
 	</div>
 
-	<div id="context_menu" class="rounded-md hidden absolute bg-white p-1 z-50 drop-shadow-lg">
+	<div id="context_menu" class="rounded-sm text-sm hidden absolute bg-white p-1 z-50 drop-shadow-lg">
 		<ul class="list-none m-0 p-0">
 			<li class="px-1">
-				<button onclick="copy_selected_objects(); context_menu('hide')">Copy</button>
+				<button onclick="copy_selected_objects()">Copy</button>
 			</li>
 			<li class="px-1">
-				<button onclick="cut_selected_objects(); context_menu('hide')">Cut</button>
+				<button onclick="cut_selected_objects()">Cut</button>
 			</li>
 			<li class="px-1">
-				<button onclick="paste_copied_objects('mouse'); context_menu('hide')">Paste</button>
+				<button onclick="paste_copied_objects('mouse')">Paste</button>
 			</li>
 		</ul>
 	</div>
