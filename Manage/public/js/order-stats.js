@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	display_order_stats();
 
 	//chart purposes
-	load_chart();
+	//load_chart();
 
 });
 
@@ -148,38 +148,115 @@ function row_click() {
 
 }
 
+// chart to load total_order_taken
 function load_chart() {
 console.log("called load_chart()")
 // chart purposes
-var chart = c3.generate({
-    bindto: '#chart',
-    data: {
-      columns: [
-        ['Everyday_Earning', 52.75, 10.25, 57.25, 5.99, 0, 129.9, 26.9, 0, 0, 24.25, 35.67, 78.9, 0, 5.99, 0, 204.9, 0, 5.99, 12.58]
-      ],
-	  types: {
-		Everyday_Earning: 'area-spline'
-	  }
-    },
-	axis: {
-		y: {
-			label: {
-				text: 'Total Earnings',
-				position: 'outer-middle'
-			},
-			tick: {
-				format: function (d) {
-					return '₱' + d3.format(',')(d);
-				}
+// var chart = c3.generate({
+//     bindto: '#chart',
+//     data: {
+//       columns: [
+//         ['Everyday_Earning', 52.75, 90, 175, 25.65, 46.10, 10]
+//       ],
+// 	  types: {
+// 		Everyday_Earning: 'area-spline'
+// 	  }
+//     },
+// 	axis: {
+// 		y: {
+// 			label: {
+// 				text: 'Total Earnings',
+// 				position: 'outer-middle'
+// 			},
+// 			tick: {
+// 				format: function (d) {
+// 					return '₱' + d3.format(',')(d);
+// 				}
+// 			}
+// 		},
+// 		x: {
+// 			type: 'category',
+// 			categories: ['2023-10-31', '2023-11-02', '2023-11-03', '2023-11-03', '2023-11-03', '2023-11-03',],
+// 			label: {
+// 				position: 'outer-center'
+// 			}
+// 		}
+// 	}
+// });
+
+connection.query("SELECT * FROM order_stats", function(err, order_stats_result, fields) {
+	if (err) throw err;
+	console.log(order_stats_result)
+
+	const columns = [['x'], ['Total Order Taken'], ['Total Order Done'], ['Total Order Canceled']];
+	order_stats_result.forEach(row => {
+		// Format the date
+		let sqlDate = row.transaction_date;
+		let year = sqlDate.getFullYear();
+		let month = String(sqlDate.getMonth() + 1).padStart(2, '0');
+		let day = String(sqlDate.getDate()).padStart(2, '0');
+		let formattedDate = `${year}-${month}-${day}`;
+
+		// The chart data based on Mysql query
+		columns[0].push(formattedDate);			// x-axis name (the bottom text)
+		columns[1].push(row.total_orders_taken);	// data name (the blue dots data)
+		columns[2].push(row.total_orders_done);
+		columns[3].push(row.total_orders_canceled)
+	});
+
+	const chart = c3.generate({
+		bindto: '#chart2', // <div id="chart2"></div>
+		size: {
+			height: 520
+		},
+		data: {
+			x: 'x',
+			columns: columns,
+			types: {
+				'Total Order Taken': 'spline',
+				'Total Order Done': 'spline',
+				'Total Order Canceled': 'spline'
 			}
 		},
-		x: {
-			type: 'category',
-			categories: ['2023-10-31', '2023-11-02', '2023-11-03', '2023-11-03', '2023-11-03', '2023-11-03',],
-			label: {
-				position: 'outer-center'
+		axis: {
+			x: {
+				type:'category'
+			},
+			y: {
+				label: {
+					text: 'Total Orders',
+					position: 'outer-middle'
+				}
 			}
 		}
+	});
+
+})
+
+	//variables for hiding tables and chart
+	let element = document.getElementById("order_stats_table");
+	let element2 = document.getElementById("chart2");
+	let hidden = element.getAttribute("hidden");
+	let hidden2 = element.getAttribute("hidden");
+
+	// hides & show the table
+	if (hidden) {
+		element.removeAttribute("hidden");
+		element2.setAttribute("hidden", "hidden");
+		document.getElementById("load_chart_btn").innerHTML = "SHOW GRAPH";
+	} else {
+		element.setAttribute("hidden", "hidden");
+		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
 	}
-});
+
+	// show & hides the chart
+	if (hidden2) {
+		element2.setAttribute("hidden", "hidden")
+	} else {
+		element2.removeAttribute("hidden");
+	}
+
+	// NOTE: THE CHART IS DIV which <div id="chart#"></div>
+	// do note remove the div or elese chart will not load
+
 }
