@@ -349,15 +349,38 @@
 
 		<label for="object_properties_object_id">Object ID:</label>
 		<span id="object_properties_object_id">heehee</span>
-		<br>
+		<br><br>
 
+		<div>
+			<div id="object_properties_text" class="hidden">
+				<span>Show text object properties here</span>
+			</div>
+
+			<div id="object_properties_img" class="hidden">
+				<span>Show image object properties here</span>
+			</div>
+
+			<div id="object_properties_rect" class="hidden">
+				<span>Show rectangle object properties here</span>
+			</div>
+
+			<div id="object_properties_circ" class="hidden">
+				<span>Show circle object properties here</span>
+			</div>
+
+			<div id="object_properties_line" class="hidden">
+				<span>Show line object properties here</span>
+			</div>
+		</div>
+
+		<br><br>
 		<center>
 			<button onclick="object_properties('hide')">Close</button>
 		</center>
 	</div>
 
 	<!-- bottom navbar -->
-	<div class="flex flex-row bottom-0 overflow-hidden fixed border-t w-full bg-white z-50 py-1 px-2 justify-end">
+	<div class="flex flex-row bottom-0 overflow-hidden fixed border-t w-full bg-white z-40 py-1 px-2 justify-end">
 		<p id="scale_multiplier_text" class="text-sm mr-1"></p>
 		<button id="canvas_scaler_minus" class="mr-1">
 			<img src="assets/svg/designer/minus-circle-1442-svgrepo-com.svg" width="10px" alt="">
