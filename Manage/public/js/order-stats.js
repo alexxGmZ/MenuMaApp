@@ -150,98 +150,98 @@ function row_click() {
 
 // chart to load total_order_taken
 function total_order_chart() {
-console.log("called total_order_chart()")
-// chart purposes
-// var chart = c3.generate({
-//     bindto: '#chart',
-//     data: {
-//       columns: [
-//         ['Everyday_Earning', 52.75, 90, 175, 25.65, 46.10, 10]
-//       ],
-// 	  types: {
-// 		Everyday_Earning: 'area-spline'
-// 	  }
-//     },
-// 	axis: {
-// 		y: {
-// 			label: {
-// 				text: 'Total Earnings',
-// 				position: 'outer-middle'
-// 			},
-// 			tick: {
-// 				format: function (d) {
-// 					return '₱' + d3.format(',')(d);
-// 				}
-// 			}
-// 		},
-// 		x: {
-// 			type: 'category',
-// 			categories: ['2023-10-31', '2023-11-02', '2023-11-03', '2023-11-03', '2023-11-03', '2023-11-03',],
-// 			label: {
-// 				position: 'outer-center'
-// 			}
-// 		}
-// 	}
-// });
+	console.log("called total_order_chart()")
+	// chart purposes
+	// var chart = c3.generate({
+	//     bindto: '#chart',
+	//     data: {
+	//       columns: [
+	//         ['Everyday_Earning', 52.75, 90, 175, 25.65, 46.10, 10]
+	//       ],
+	// 	  types: {
+	// 		Everyday_Earning: 'area-spline'
+	// 	  }
+	//     },
+	// 	axis: {
+	// 		y: {
+	// 			label: {
+	// 				text: 'Total Earnings',
+	// 				position: 'outer-middle'
+	// 			},
+	// 			tick: {
+	// 				format: function (d) {
+	// 					return '₱' + d3.format(',')(d);
+	// 				}
+	// 			}
+	// 		},
+	// 		x: {
+	// 			type: 'category',
+	// 			categories: ['2023-10-31', '2023-11-02', '2023-11-03', '2023-11-03', '2023-11-03', '2023-11-03',],
+	// 			label: {
+	// 				position: 'outer-center'
+	// 			}
+	// 		}
+	// 	}
+	// });
 
-connection.query("SELECT * FROM order_stats", function(err, order_stats_result, fields) {
-	if (err) throw err;
-	console.log(order_stats_result)
+	connection.query("SELECT * FROM order_stats", function(err, order_stats_result, fields) {
+		if (err) throw err;
+		console.log(order_stats_result)
 
-	const columns = [['x'], ['Total Order Taken'], ['Total Order Done'], ['Total Order Canceled']];
-	order_stats_result.forEach(row => {
-		// Format the date
-		let sqlDate = row.transaction_date;
-		let year = sqlDate.getFullYear();
-		let month = String(sqlDate.getMonth() + 1).padStart(2, '0');
-		let day = String(sqlDate.getDate()).padStart(2, '0');
-		let formattedDate = `${year}-${month}-${day}`;
+		const columns = [['x'], ['Total Order Taken'], ['Total Order Done'], ['Total Order Canceled']];
+		order_stats_result.forEach(row => {
+			// Format the date
+			let sqlDate = row.transaction_date;
+			let year = sqlDate.getFullYear();
+			let month = String(sqlDate.getMonth() + 1).padStart(2, '0');
+			let day = String(sqlDate.getDate()).padStart(2, '0');
+			let formattedDate = `${year}-${month}-${day}`;
 
-		// The chart data based on Mysql query
-		columns[0].push(formattedDate);			// x-axis name (the bottom text)
-		columns[1].push(row.total_orders_taken);	// data name (the blue dots data)
-		columns[2].push(row.total_orders_done);		// data name (the orange dots data)
-		columns[3].push(row.total_orders_canceled)	// data name (the green dots data)
-	});
+			// The chart data based on Mysql query
+			columns[0].push(formattedDate);			// x-axis name (the bottom text)
+			columns[1].push(row.total_orders_taken);	// data name (the blue dots data)
+			columns[2].push(row.total_orders_done);		// data name (the orange dots data)
+			columns[3].push(row.total_orders_canceled)	// data name (the green dots data)
+		});
 
-	const chart = c3.generate({
-		bindto: '#chart2', // <div id="chart2"></div>
-		title: {
-			text: 'SHOWING GRAPH OF TOTAL ORDERS TAKEN, SERVED & CANCELED'
-		},
-		subchart: {
-			show: true
-		},
-		size: {
-			height: 500
-		},
-		data: {
-			x: 'x',
-			columns: columns,
-			types: {
-				'Total Order Taken': 'spline',
-				'Total Order Done': 'spline',
-				'Total Order Canceled': 'spline'
-			}
-		},
-		axis: {
-			x: {
-				type:'category',
-				tick: {
-					rotate: 75,
-					multiline: false
+		const chart = c3.generate({
+			bindto: '#chart2', // <div id="chart2"></div>
+			title: {
+				text: 'TOTAL ORDERS TAKEN, SERVED & CANCELED'
+			},
+			subchart: {
+				show: true
+			},
+			size: {
+				height: 500
+			},
+			data: {
+				x: 'x',
+				columns: columns,
+				types: {
+					'Total Order Taken': 'spline',
+					'Total Order Done': 'spline',
+					'Total Order Canceled': 'spline'
 				}
 			},
-			y: {
-				label: {
-					text: 'Total Orders',
-					position: 'outer-middle'
+			axis: {
+				x: {
+					type: 'category',
+					tick: {
+						rotate: 75,
+						multiline: false
+					}
+				},
+				y: {
+					label: {
+						text: 'Total Orders',
+						position: 'outer-middle'
+					}
 				}
 			}
-		}
-	});
+		});
 
-})
+	})
 
 }
 
@@ -270,7 +270,7 @@ function total_earnings_chart() {
 		const chart = c3.generate({
 			bindto: '#chart3', // <div id="chart3"></div>
 			title: {
-				text: 'SHOWING GRAPH OF TOTAL EARNINGS (DAILY)'
+				text: 'TOTAL EARNINGS (DAILY)'
 			},
 			subchart: {
 				show: true
@@ -287,7 +287,7 @@ function total_earnings_chart() {
 			},
 			axis: {
 				x: {
-					type:'category',
+					type: 'category',
 					tick: {
 						rotate: 75,
 						multiline: false
@@ -299,7 +299,7 @@ function total_earnings_chart() {
 						position: 'outer-middle'
 					},
 					tick: {
-						format: function (d) {
+						format: function(d) {
 							return '₱' + d3.format(',')(d);
 						}
 					}
@@ -311,7 +311,7 @@ function total_earnings_chart() {
 
 }
 
-function total_earning_monthly_chart(){
+function total_earning_monthly_chart() {
 	console.log("called total_earning_monthly_chart()")
 
 	connection.query(`SELECT DATE_FORMAT(transaction_Date, '%Y-%m') AS month,
@@ -319,57 +319,57 @@ function total_earning_monthly_chart(){
 					FROM manage_db.order_stats
 					GROUP BY month
 					ORDER BY month`, function(err, order_stats_result, fields) {
-						if (err) throw err;
-						console.log(order_stats_result)
+		if (err) throw err;
+		console.log(order_stats_result)
 
-						const columns = [['x'], ['Total Earnings']]
-						order_stats_result.forEach(row => {
+		const columns = [['x'], ['Total Earnings']]
+		order_stats_result.forEach(row => {
 
-							// The chart data based on Mysql query
-							columns[0].push(row.month);			// x-axis name (the bottom text)
-							columns[1].push(row.total_amount);	// data name (the blue dots data)
+			// The chart data based on Mysql query
+			columns[0].push(row.month);			// x-axis name (the bottom text)
+			columns[1].push(row.total_amount);	// data name (the blue dots data)
 
-						});
+		});
 
-						const chart = c3.generate({
-							bindto: '#chart4', // <div id="chart3"></div>
-							title: {
-								text: 'SHOWING GRAPH OF TOTAL EARNINGS (MONTHLY)'
-							},
-							size: {
-								height: 500
-							},
-							data: {
-								x: 'x',
-								columns: columns,
-								types: {
-									'Total Earnings': 'spline'
-								}
-							},
-							axis: {
-								x: {
-									type:'category',
-									tick: {
-										rotate: 75,
-										multiline: false
-									}
-								},
-								y: {
-									label: {
-										text: 'Total Earnings',
-										position: 'outer-middle'
-									},
-									tick: {
-										format: function (d) {
-											return '₱' + d3.format(',')(d);
-										}
-									}
-								}
-							}
-						});
+		const chart = c3.generate({
+			bindto: '#chart4', // <div id="chart3"></div>
+			title: {
+				text: 'TOTAL EARNINGS (MONTHLY)'
+			},
+			size: {
+				height: 500
+			},
+			data: {
+				x: 'x',
+				columns: columns,
+				types: {
+					'Total Earnings': 'spline'
+				}
+			},
+			axis: {
+				x: {
+					type: 'category',
+					tick: {
+						rotate: 75,
+						multiline: false
+					}
+				},
+				y: {
+					label: {
+						text: 'Total Earnings',
+						position: 'outer-middle'
+					},
+					tick: {
+						format: function(d) {
+							return '₱' + d3.format(',')(d);
+						}
+					}
+				}
+			}
+		});
 
-					})
-	
+	})
+
 }
 
 // function for showing or hiding graph
