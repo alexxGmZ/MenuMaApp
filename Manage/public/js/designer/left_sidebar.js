@@ -1,3 +1,8 @@
+// mysql stuff
+const mysql = require(__dirname + "/js/modules/mysql.js");
+mysql.check_connection();
+const connection = mysql.connection;
+
 function sync_design_to_order() {
 	if (!canvas) return;
 	console.log("called sync_design_to_order()");

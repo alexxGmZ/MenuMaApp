@@ -73,8 +73,8 @@ function object_properties(display_style) {
 		document.getElementById("object_properties_line").style.display = "none";
 
 		const object_properties_map = {
-			"text": text_object_properties,
-			"i-text": text_object_properties,
+			"text": object_properties_text,
+			"i-text": object_properties_text,
 			"rect": rect_object_properties,
 			"circle": circ_object_properties,
 			"image": img_object_properties,
@@ -83,14 +83,20 @@ function object_properties(display_style) {
 
 		const selected_object_function = object_properties_map[object_type];
 
+		// use appropriate properties element to each individual object type
 		if (selected_object_function)
 			selected_object_function(selected_object);
 	}
 }
 
-function text_object_properties(object) {
-	console.log(`called text_object_properties()`);
-	document.getElementById("object_properties_text").style.display = "flex";
+function object_properties_text(object) {
+	console.log(`called object_properties_text(${object})`);
+	console.log(object);
+
+	document.getElementById("object_properties_text").style.display = "initial";
+	document.getElementById("text_font").value = object.fontFamily;
+	document.getElementById("text_font_size").value = object.fontSize;
+	document.getElementById("text_fill_color").value = object.fill;
 }
 
 function img_object_properties(object) {

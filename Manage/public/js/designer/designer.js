@@ -1,10 +1,5 @@
 const fs = require("fs");
 
-// mysql stuff
-const mysql = require(__dirname + "/js/modules/mysql.js");
-mysql.check_connection();
-const connection = mysql.connection;
-
 // dialog module
 const dialog = require(__dirname + "/js/modules/dialog.js");
 const dialog_open = dialog.dialog_open;
@@ -32,6 +27,7 @@ let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-2 sm:order-1 sm:ml-0 sm:mr-4"
+// default background color
 let canvas_bg_color = "rgb(255, 255, 255)"
 
 function create_canvas(size) {
