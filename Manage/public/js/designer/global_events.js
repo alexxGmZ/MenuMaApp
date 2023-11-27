@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	load_current_synced_design();
 	create_canvas_color_picker();
 	canvas_scaler();
+	supported_font_checker();
 });
 
 document.addEventListener("keydown", function(event) {

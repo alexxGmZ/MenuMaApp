@@ -147,8 +147,8 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 
 	const image = new fabric.Image.fromURL(item_image, (img) => {
 		img.scale(0.3);
-		img.group_id = item_id,
-			img.object_id = `${item_id}_img`;
+		img.group_id = item_id;
+		img.object_id = `${item_id}_img`;
 		console.log("img.object_id: " + img.object_id);
 		canvas.add(img);
 		// canvas.renderAll();

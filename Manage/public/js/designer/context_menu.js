@@ -38,13 +38,25 @@ function context_menu(display_style) {
 	}
 }
 
+let change_text_font_listener;
+let change_text_font_size_listener;
+
 function object_properties(display_style) {
 	if (!canvas) return;
 	console.log(`called object_properties(${display_style})`);
 	const properties_element = document.getElementById("object_properties");
+	const selected_object = canvas.getActiveObjects()[0];
 
-	if (display_style === "hide")
+	if (display_style === "hide") {
+		// remove event listeners when object properties window is hidden or closed
+		if (change_text_font_listener)
+			document.getElementById("text_font").removeEventListener("input", change_text_font_listener);
+		if (change_text_font_size_listener)
+			document.getElementById("text_font").removeEventListener("input", change_text_font_size_listener);
+
+		// hide object properties window
 		properties_element.style.display = "none";
+	}
 
 	else if (display_style === "show") {
 		context_menu("hide");
@@ -55,7 +67,6 @@ function object_properties(display_style) {
 		properties_element.style.top = (pointer_y + 90) + 'px';
 		properties_window_drag_event();
 
-		const selected_object = canvas.getActiveObjects()[0];
 		// console.log(selected_object);
 
 		const object_type = selected_object.type;
@@ -87,6 +98,8 @@ function object_properties(display_style) {
 		if (selected_object_function)
 			selected_object_function(selected_object);
 	}
+	else console.log("Use 'hide' or 'show' as arguments");
+
 }
 
 function object_properties_text(object) {
@@ -97,6 +110,25 @@ function object_properties_text(object) {
 	document.getElementById("text_font").value = object.fontFamily;
 	document.getElementById("text_font_size").value = object.fontSize;
 	document.getElementById("text_fill_color").value = object.fill;
+
+
+	if (change_text_font_listener)
+		document.getElementById("text_font").removeEventListener("input", change_text_font_listener);
+	if (change_text_font_size_listener)
+		document.getElementById("text_font_size").removeEventListener("input", change_text_font_size_listener);
+
+	change_text_font_listener = function() {
+		object.set({ fontFamily: this.value });
+		canvas.renderAll();
+	}
+
+	change_text_font_size_listener = function() {
+		object.set({ fontSize: this.value })
+		canvas.renderAll();
+	}
+
+	document.getElementById("text_font").addEventListener("input", change_text_font_listener);
+	document.getElementById("text_font_size").addEventListener("input", change_text_font_size_listener);
 }
 
 function img_object_properties(object) {
@@ -184,4 +216,27 @@ function properties_window_drag_event() {
 		document.onmousemove = null;
 	}
 
+}
+
+function supported_font_checker() {
+	const fontCheck = new Set([
+		// Windows 10
+		'Arial', 'Arial Black', 'Bahnschrift', 'Calibri', 'Cambria', 'Cambria Math', 'Candara', 'Comic Sans MS', 'Consolas', 'Constantia', 'Corbel', 'Courier New', 'Ebrima', 'Franklin Gothic Medium', 'Gabriola', 'Gadugi', 'Georgia', 'HoloLens MDL2 Assets', 'Impact', 'Ink Free', 'Javanese Text', 'Leelawadee UI', 'Lucida Console', 'Lucida Sans Unicode', 'Malgun Gothic', 'Marlett', 'Microsoft Himalaya', 'Microsoft JhengHei', 'Microsoft New Tai Lue', 'Microsoft PhagsPa', 'Microsoft Sans Serif', 'Microsoft Tai Le', 'Microsoft YaHei', 'Microsoft Yi Baiti', 'MingLiU-ExtB', 'Mongolian Baiti', 'MS Gothic', 'MV Boli', 'Myanmar Text', 'Nirmala UI', 'Palatino Linotype', 'Segoe MDL2 Assets', 'Segoe Print', 'Segoe Script', 'Segoe UI', 'Segoe UI Historic', 'Segoe UI Emoji', 'Segoe UI Symbol', 'SimSun', 'Sitka', 'Sylfaen', 'Symbol', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'Webdings', 'Wingdings', 'Yu Gothic',
+		// macOS
+		'American Typewriter', 'Andale Mono', 'Arial', 'Arial Black', 'Arial Narrow', 'Arial Rounded MT Bold', 'Arial Unicode MS', 'Avenir', 'Avenir Next', 'Avenir Next Condensed', 'Baskerville', 'Big Caslon', 'Bodoni 72', 'Bodoni 72 Oldstyle', 'Bodoni 72 Smallcaps', 'Bradley Hand', 'Brush Script MT', 'Chalkboard', 'Chalkboard SE', 'Chalkduster', 'Charter', 'Cochin', 'Comic Sans MS', 'Copperplate', 'Courier', 'Courier New', 'Didot', 'DIN Alternate', 'DIN Condensed', 'Futura', 'Geneva', 'Georgia', 'Gill Sans', 'Helvetica', 'Helvetica Neue', 'Herculanum', 'Hoefler Text', 'Impact', 'Lucida Grande', 'Luminari', 'Marker Felt', 'Menlo', 'Microsoft Sans Serif', 'Monaco', 'Noteworthy', 'Optima', 'Palatino', 'Papyrus', 'Phosphate', 'Rockwell', 'Savoye LET', 'SignPainter', 'Skia', 'Snell Roundhand', 'Tahoma', 'Times', 'Times New Roman', 'Trattatello', 'Trebuchet MS', 'Verdana', 'Zapfino',
+	].sort());
+
+	(async () => {
+		await document.fonts.ready;
+
+		const fontAvailable = new Set();
+
+		for (const font of fontCheck.values()) {
+			if (document.fonts.check(`12px "${font}"`)) {
+				fontAvailable.add(font);
+			}
+		}
+
+		console.log('Available Fonts:', [...fontAvailable.values()]);
+	})();
 }
