@@ -65,7 +65,7 @@ function create_canvas(size) {
 
 function create_canvas_color_picker() {
 	console.log("create_canvas_color_picker()");
-	var color_picker = new iro.ColorPicker("#color_picker", {
+	var color_picker = new iro.ColorPicker("#canvas_color_picker", {
 		// Set the size of the color picker
 		width: 250,
 		// Set the initial color to pure red

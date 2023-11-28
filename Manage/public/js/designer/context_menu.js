@@ -86,10 +86,6 @@ function context_menu(display_style) {
 	}
 }
 
-// text or itext object input event listeners
-let change_text_font_listener;
-let change_text_font_size_listener;
-
 function object_properties(display_style) {
 	if (!canvas) return;
 	console.log(`called object_properties(${display_style})`);
@@ -151,6 +147,11 @@ function object_properties(display_style) {
 
 }
 
+// text or itext object input event listeners
+let change_text_font_listener;
+let change_text_font_size_listener;
+let change_text_fill_listener;
+let text_fill_color_picker;
 function object_properties_text(object) {
 	console.log(`called object_properties_text(${object})`);
 	console.log(object);
@@ -158,26 +159,84 @@ function object_properties_text(object) {
 	document.getElementById("object_properties_text").style.display = "initial";
 	document.getElementById("text_font").value = object.fontFamily;
 	document.getElementById("text_font_size").value = object.fontSize;
-	document.getElementById("text_fill_color").value = object.fill;
 
 
 	if (change_text_font_listener)
 		document.getElementById("text_font").removeEventListener("input", change_text_font_listener);
-	if (change_text_font_size_listener)
-		document.getElementById("text_font_size").removeEventListener("input", change_text_font_size_listener);
-
 	change_text_font_listener = function() {
+		console.log("called change_text_font_listener()")
 		object.set({ fontFamily: this.value });
 		canvas.renderAll();
 	}
+	document.getElementById("text_font").addEventListener("input", change_text_font_listener);
 
+	if (change_text_font_size_listener)
+		document.getElementById("text_font_size").removeEventListener("input", change_text_font_size_listener);
 	change_text_font_size_listener = function() {
+		console.log("called change_text_font_size_listener()")
 		object.set({ fontSize: this.value })
 		canvas.renderAll();
 	}
-
-	document.getElementById("text_font").addEventListener("input", change_text_font_listener);
 	document.getElementById("text_font_size").addEventListener("input", change_text_font_size_listener);
+
+	var text_fill_rgb_values = object.fill.match(/\d+/g);
+	// console.log(text_fill_rgb_values);
+	document.getElementById("text_fill_color_r").value = text_fill_rgb_values[0]
+	document.getElementById("text_fill_color_g").value = text_fill_rgb_values[1]
+	document.getElementById("text_fill_color_b").value = text_fill_rgb_values[2]
+
+	// to prevent stacking up of color picker every time object properties is open
+	if (text_fill_color_picker) {
+		document.getElementById("text_fill_color_picker").innerHTML = "";
+	}
+
+	text_fill_color_picker = new iro.ColorPicker("#text_fill_color_picker", {
+		// Set the size of the color picker
+		width: 200,
+		// set initial color to object's original fill
+		color: object.fill,
+		layoutDirection: "horizontal",
+		borderWidth: 1,
+		borderColor: "#000000"
+	});
+
+	let red, green, blue;
+
+	text_fill_color_picker.on('color:change', function(color) {
+		red = color.rgb.r;
+		green = color.rgb.g;
+		blue = color.rgb.b;
+		document.getElementById("text_fill_color_r").value = red;
+		document.getElementById("text_fill_color_g").value = green;
+		document.getElementById("text_fill_color_b").value = blue;
+	})
+
+	function update_color_picker() {
+		var new_color = `rgb(${red}, ${green}, ${blue})`
+		text_fill_color_picker.color.set(new_color);
+	}
+
+	document.getElementById("text_fill_color_r").addEventListener("input", function() {
+		red = this.value;
+		update_color_picker();
+	})
+	document.getElementById("text_fill_color_g").addEventListener("input", function() {
+		green = this.value;
+		update_color_picker();
+	})
+	document.getElementById("text_fill_color_b").addEventListener("input", function() {
+		blue = this.value;
+		update_color_picker();
+	})
+
+	if (change_text_fill_listener)
+		document.getElementById("text_fill_change").removeEventListener("click", change_text_fill_listener);
+	change_text_fill_listener = function() {
+		console.log("called change_text_fill_listener()");
+		object.set({ fill: `rgb(${red}, ${green}, ${blue})` })
+		canvas.renderAll();
+	}
+	document.getElementById("text_fill_change").addEventListener("click", change_text_fill_listener);
 }
 
 function img_object_properties(object) {
