@@ -1,7 +1,55 @@
 // NOTE: undeclared variables are located in designer.js
 // canvas
-// pointer_x
-// pointer_y
+
+let pointer_x, pointer_y;
+function get_selected_objects() {
+	if (!canvas) return;
+	console.log("called get_selected_objects()");
+
+	canvas.on('mouse:up', function(event) {
+		console.log("canvas mouse:up event");
+		const selected_objects = canvas.getActiveObjects();
+		const { x, y } = canvas.getPointer();
+		pointer_x = x;
+		pointer_y = y;
+		// console.log("mouse position: ", pointer_x, pointer_y);
+
+		// if canvas is clicked
+		if (selected_objects.length == 0) {
+			// hide context menu when left-clicked in any place of canvas
+			if (event.button === 1) context_menu("hide");
+
+			// show context menu when right-clicked in any place of canvas
+			if (event.button === 3) context_menu("show");
+		}
+
+		// if objects are clieked
+		else {
+			// log left-clicked objects
+			selected_objects.forEach(object => {
+				console.log(`Left clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
+			})
+
+			// show context menu on right click
+			if (event.button === 3) {
+				// log right-clicked objects
+				selected_objects.forEach(object => {
+					console.log(`Right clicked object - Type: ${object.type}, Object ID: ${object.object_id}`);
+				});
+
+				// show context menu on right-clicked objects
+				context_menu("show");
+			}
+		}
+	});
+
+	canvas.on("mouse:down", function() {
+		console.log("canvas mouse:down event");
+		// hide context menu when the mouse is pressed down
+		context_menu("hide");
+	})
+}
+
 
 function context_menu(display_style) {
 	if (!canvas) return;
@@ -38,6 +86,7 @@ function context_menu(display_style) {
 	}
 }
 
+// text or itext object input event listeners
 let change_text_font_listener;
 let change_text_font_size_listener;
 
