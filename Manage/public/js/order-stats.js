@@ -212,6 +212,12 @@ function total_order_chart() {
 			subchart: {
 				show: true
 			},
+			legend: {
+				position: 'right'
+			},
+			zoom: {
+				enabled: true
+			},
 			size: {
 				height: 500
 			},
@@ -271,6 +277,12 @@ function total_earnings_chart() {
 			bindto: '#chart3', // <div id="chart3"></div>
 			title: {
 				text: 'TOTAL EARNINGS (DAILY)'
+			},
+			legend: {
+				position: 'right'
+			},
+			zoom: {
+				enabled: true
 			},
 			subchart: {
 				show: true
@@ -335,6 +347,15 @@ function total_earning_monthly_chart() {
 			bindto: '#chart4', // <div id="chart3"></div>
 			title: {
 				text: 'TOTAL EARNINGS (MONTHLY)'
+			},
+			legend: {
+				position: 'right'
+			},
+			zoom: {
+				enabled: true
+			},
+			subchart: {
+				show: true
 			},
 			size: {
 				height: 500
