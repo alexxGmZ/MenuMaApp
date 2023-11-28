@@ -50,7 +50,6 @@ function get_selected_objects() {
 	})
 }
 
-
 function context_menu(display_style) {
 	if (!canvas) return;
 	console.log(`called context_menu(${display_style})`)
@@ -67,6 +66,7 @@ function context_menu(display_style) {
 		const selected_objects = canvas.getActiveObjects();
 		// console.log("selected_objects.length:", selected_objects.length)
 
+		document.getElementById("context_menu_select_group").style.display = "none";
 		document.getElementById("layer_bring_to_front").style.display = "none";
 		document.getElementById("layer_bring_forward").style.display = "none";
 		document.getElementById("layer_send_backward").style.display = "none";
@@ -81,8 +81,32 @@ function context_menu(display_style) {
 		}
 
 		// show context menu properties if there's only one object selected
-		if (selected_objects.length == 1)
+		if (selected_objects.length == 1) {
+			document.getElementById("context_menu_select_group").style.display = "flex";
 			document.getElementById("context_menu_properties").style.display = "flex";
+		}
+	}
+}
+
+function get_selected_object_group() {
+	if (!canvas) return;
+	console.log("called get_selected_object_group()");
+	const selected_object = canvas.getActiveObject();
+	const canvas_objects = canvas.getObjects();
+
+	// Find objects with the same group_id
+	const similarObjects = canvas_objects.filter(obj => obj.group_id === selected_object.group_id);
+
+	if (similarObjects.length > 0) {
+		context_menu("hide");
+		// Clear the current selection
+		canvas.discardActiveObject();
+		canvas.requestRenderAll();
+
+		// Create an ActiveSelection and set it as active
+		var selection = new fabric.ActiveSelection(similarObjects, { canvas: canvas });
+		canvas.setActiveObject(selection);
+		canvas.requestRenderAll();
 	}
 }
 
@@ -241,6 +265,7 @@ function object_properties_text(object) {
 
 function img_object_properties(object) {
 	console.log(`called img_object_properties()`);
+	console.log(object);
 	document.getElementById("object_properties_img").style.display = "flex";
 
 }

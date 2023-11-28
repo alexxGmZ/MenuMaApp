@@ -311,6 +311,10 @@
 				<img src="assets/svg/designer/paste-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="paste_copied_objects('mouse')">Paste</button>
 			</li>
+			<li id="context_menu_select_group" class="px-1 flex">
+				<img src="assets/svg/designer/object-group-svgrepo-com.svg" width="12px" class="mr-2">
+				<button onclick="get_selected_object_group()">Select Group</button>
+			</li>
 			<li id="layer_bring_to_front" class="px-1 flex">
 				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="mr-2">
 				<button onclick="adjust_object_layer('bring_to_front')">Bring to front</button>
@@ -376,7 +380,7 @@
 				<input id="text_fill_color_g" class="border-slate-200 drop-shadow-md w-8">
 				<label for="text_fill_color_b">B:</label>
 				<input id="text_fill_color_b" class="border-slate-200 drop-shadow-md w-8">
-				<button id="text_fill_change" class="rounded-xl border border-slate-200 px-1">Change</button>
+				<button id="text_fill_change" class="rounded-xl border border-slate-200 px-1 hover:drop-shadow-lg">Change</button>
 				<br>
 				<br>
 
