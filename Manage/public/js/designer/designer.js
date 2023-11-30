@@ -216,6 +216,7 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	if (canvas) {
 		if (typeof callback === "function") callback();
 		canvas_scaler();
+		canvas_pointer_coordinates();
 		// object_properties("hide");
 	}
 }
@@ -324,7 +325,7 @@ function import_image() {
 	if (import_image_input_listener)
 		import_image_input.removeEventListener("change", import_image_input_listener);
 
-	import_image_input_listener = function (event) {
+	import_image_input_listener = function(event) {
 		const file = event.target.files[0];
 		// console.log("file:", file);
 
@@ -408,5 +409,16 @@ function canvas_scaler() {
 	// if the range input slider is used
 	range_input.addEventListener("input", function() {
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+	})
+}
+
+function canvas_pointer_coordinates() {
+	canvas.on("mouse:move", function(options) {
+		var pointer = canvas.getPointer(options.e);
+		var x = pointer.x.toFixed(3);
+		var y = pointer.y.toFixed(3);
+
+		document.getElementById("canvas_pointer_coordinates_x").textContent = x;
+		document.getElementById("canvas_pointer_coordinates_y").textContent = y;
 	})
 }
