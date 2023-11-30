@@ -311,6 +311,39 @@ function save_canvas_to_png() {
 	link.click();
 }
 
+var import_image_input_listener;
+function import_image() {
+	if (!canvas) return;
+	console.log("called import_image()");
+
+	const import_image_input = document.getElementById("canvas_import_image");
+
+	if (import_image_input_listener)
+		import_image_input.removeEventListener("change", import_image_input_listener);
+
+	import_image_input_listener = function (event) {
+		const file = event.target.files[0];
+		// console.log("file:", file);
+
+		const reader = new FileReader();
+		reader.onload = function(event) {
+			const image_data_url = event.target.result;
+
+			fabric.Image.fromURL(image_data_url, function(img) {
+				img.set({ left: 100, top: 100 });
+				canvas.add(img);
+				canvas.renderAll();
+			});
+		};
+
+		// Read the file as a data URL
+		reader.readAsDataURL(file);
+	}
+
+	import_image_input.click()
+	import_image_input.addEventListener("change", import_image_input_listener);
+}
+
 function delete_selected_objects() {
 	if (!canvas) return;
 	console.log("called delete_selected_objects()");
