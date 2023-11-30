@@ -9,8 +9,7 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				index: "./src/index.html",
-				menu: "./src/menu_items.html",
-				practice: "./src/practice.html",
+				order: "./src/order.html",
 			}
 		}
 	},

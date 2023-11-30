@@ -31,7 +31,7 @@ function set_server_connection() {
 					console.log(`Server at ${url} is reachable`);
 					sessionStorage.setItem("server_IP", input_server_ip);
 					sessionStorage.setItem("server_api_token", input_api_token);
-					window.location.href = "menu_items.html";
+					window.location.href = "order.html";
 				}
 				else {
 					console.log(`Server at ${url} is unreachable`);
