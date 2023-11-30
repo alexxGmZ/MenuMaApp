@@ -86,6 +86,18 @@ app.get("/menu_items", authenticate_api_connection,
 	}
 );
 
+// no image to make it fast
+app.get("/menu_items_lite", authenticate_api_connection,
+	(request, response) => {
+		const query = "SELECT item_id, item_name, item_price FROM manage_db.menu_items";
+		connection.query(query, function(err, result) {
+			if (err) throw err;
+			request_message_format("GET", "menu_items_lite", request.ip);
+			response.status(200).json(result);
+		})
+	}
+);
+
 app.get("/", authenticate_api_connection,
 	(request, response) => {
 		const server_ip = Object.values(os.networkInterfaces())
