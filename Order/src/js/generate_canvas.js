@@ -25,16 +25,24 @@ function get_menu_design() {
 				console.log(json_data);
 
 				generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function() {
+					canvas.loadFromJSON(json_data.canvas_objects, function() {
+						canvas.renderAll(); // Render the canvas
+						const canvas_objects = canvas.getObjects();
+						canvas_objects.forEach(object => {
+							// lock the objects
+							object.set({
+								lockMovementX: true,
+								lockMovementY: true,
+								editable: false,
+								resizable: false,
+								hasBorders: false,
+								hasControls: false
+							})
+						})
+					});
 					get_selected_objects();
 					get_menu_items();
 				});
-				if (canvas) {
-					canvas.loadFromJSON(json_data.canvas_objects, function() {
-						// Callback function executed after the canvas is loaded
-						// console.log("Canvas loaded from JSON.");
-						canvas.renderAll(); // Render the canvas
-					});
-				}
 
 				resolve();
 			})
@@ -58,7 +66,7 @@ function get_menu_items() {
 				// console.log("Response Status: " + response.status);
 				const json_data = response.data;
 				menu_items = json_data;
-				console.log(menu_items);
+				console.log("menu_items:", menu_items);
 				resolve();
 			})
 			.catch((error) => {
