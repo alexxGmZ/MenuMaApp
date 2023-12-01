@@ -12,9 +12,9 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.07e60555.js"></script>
-  <link rel="modulepreload" href="/assets/style.7f2dd081.js">
-  <link rel="stylesheet" href="/assets/style.d0b0e3b7.css">
+  <script type="module" crossorigin src="/assets/order.4859950a.js"></script>
+  <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
+  <link rel="stylesheet" href="/assets/statusbar.e33ee517.css">
 </head>
 
 <body>
@@ -49,6 +49,25 @@
 			<button id="" class="px-2 border border-slate-300 rounded-lg">Pick</button>
 		</center>
 	</dialog>
+
+	<aside id="sidebar"
+		class="fixed top-0 left-0 z-40">
+		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
+			<div class="py-2 pl-2">
+				<p>items ordered list</p>
+				<button id="" class="">Order</button>
+			</div>
+			<button id="toggle_sidebar_min" class="bg-slate-300">
+				<img src="/assets/expand-right-double-svgrepo-com.17f41a47.svg" width="20px" style="transform: scaleX(-1)">
+			</button>
+		</div>
+		<div id="minimal_sidebar" class="grid bg-slate-300 p-1 drop-shadow-lg">
+			<button id="toggle_sidebar_full" class="">
+				<img src="/assets/richtextnumberedlist-svgrepo-com.f7326586.svg" width="25px">
+			</button>
+		</div>
+	</aside>
+
 
 	
 </body>

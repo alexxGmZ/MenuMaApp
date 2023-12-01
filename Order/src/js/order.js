@@ -1,5 +1,8 @@
 import { CapacitorHttp } from '@capacitor/core';
 import { fabric } from "fabric";
+import { hideStatusBar } from './statusbar';
+import { keepAwake } from './keep_awake';
+
 console.log("Server IP: ", sessionStorage.getItem("server_IP"));
 console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 
@@ -9,16 +12,36 @@ const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 
 let canvas;
-const canvas_css_classes = "";
+const canvas_css_classes = "border-b";
 
 let menu_items;
 
 window.addEventListener("DOMContentLoaded", () => {
+	hideStatusBar();
+	keepAwake();
+
 	const cancel_order_quantity_dialog_button = document.getElementById("cancel_order_quantity_dialog");
 	if (cancel_order_quantity_dialog_button) {
 		cancel_order_quantity_dialog_button.addEventListener("click", function() {
 			dialog_close("item_order_quantity_dialog");
 			canvas.discardActiveObject();
+		})
+	}
+
+	const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
+	if (toggle_sidebar_full){
+		toggle_sidebar_full.addEventListener("click", function() {
+			document.getElementById("minimal_sidebar").classList.add("hidden");
+			document.getElementById("full_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("grid");
+		})
+	}
+
+	const toggle_sidebar_min = document.getElementById("toggle_sidebar_min");
+	if (toggle_sidebar_min) {
+		toggle_sidebar_min.addEventListener("click", function() {
+			document.getElementById("minimal_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("hidden");
 		})
 	}
 })
@@ -47,8 +70,8 @@ function get_menu_design() {
 								resizable: false,
 								hasBorders: false,
 								hasControls: false
-							})
-						})
+							});
+						});
 					});
 
 					// scale the canvas in the android screen
@@ -123,8 +146,8 @@ function get_selected_objects() {
 	console.log("called get_selected_objects()");
 
 	canvas.on('mouse:up', function(event) {
+		hideStatusBar();
 		const selected_object = canvas.getActiveObject();
-		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
 		item_quantity_dialog(selected_object);
 	});
 }
@@ -132,6 +155,7 @@ function get_selected_objects() {
 var item_quantity_input_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
+		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
 		dialog_open("item_order_quantity_dialog");
 		// update menu_items
 		get_menu_items();

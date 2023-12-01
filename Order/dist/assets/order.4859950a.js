@@ -1,481 +1,4 @@
-import "./style.7f2dd081.js";
-/*! Capacitor: https://capacitorjs.com/ - MIT License */
-const createCapacitorPlatforms = (win) => {
-  const defaultPlatformMap = /* @__PURE__ */ new Map();
-  defaultPlatformMap.set("web", { name: "web" });
-  const capPlatforms = win.CapacitorPlatforms || {
-    currentPlatform: { name: "web" },
-    platforms: defaultPlatformMap
-  };
-  const addPlatform = (name, platform) => {
-    capPlatforms.platforms.set(name, platform);
-  };
-  const setPlatform = (name) => {
-    if (capPlatforms.platforms.has(name)) {
-      capPlatforms.currentPlatform = capPlatforms.platforms.get(name);
-    }
-  };
-  capPlatforms.addPlatform = addPlatform;
-  capPlatforms.setPlatform = setPlatform;
-  return capPlatforms;
-};
-const initPlatforms = (win) => win.CapacitorPlatforms = createCapacitorPlatforms(win);
-const CapacitorPlatforms = /* @__PURE__ */ initPlatforms(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
-CapacitorPlatforms.addPlatform;
-CapacitorPlatforms.setPlatform;
-var ExceptionCode;
-(function(ExceptionCode2) {
-  ExceptionCode2["Unimplemented"] = "UNIMPLEMENTED";
-  ExceptionCode2["Unavailable"] = "UNAVAILABLE";
-})(ExceptionCode || (ExceptionCode = {}));
-class CapacitorException extends Error {
-  constructor(message, code, data) {
-    super(message);
-    this.message = message;
-    this.code = code;
-    this.data = data;
-  }
-}
-const getPlatformId = (win) => {
-  var _a, _b;
-  if (win === null || win === void 0 ? void 0 : win.androidBridge) {
-    return "android";
-  } else if ((_b = (_a = win === null || win === void 0 ? void 0 : win.webkit) === null || _a === void 0 ? void 0 : _a.messageHandlers) === null || _b === void 0 ? void 0 : _b.bridge) {
-    return "ios";
-  } else {
-    return "web";
-  }
-};
-const createCapacitor = (win) => {
-  var _a, _b, _c, _d, _e;
-  const capCustomPlatform = win.CapacitorCustomPlatform || null;
-  const cap = win.Capacitor || {};
-  const Plugins = cap.Plugins = cap.Plugins || {};
-  const capPlatforms = win.CapacitorPlatforms;
-  const defaultGetPlatform = () => {
-    return capCustomPlatform !== null ? capCustomPlatform.name : getPlatformId(win);
-  };
-  const getPlatform = ((_a = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _a === void 0 ? void 0 : _a.getPlatform) || defaultGetPlatform;
-  const defaultIsNativePlatform = () => getPlatform() !== "web";
-  const isNativePlatform = ((_b = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _b === void 0 ? void 0 : _b.isNativePlatform) || defaultIsNativePlatform;
-  const defaultIsPluginAvailable = (pluginName) => {
-    const plugin = registeredPlugins.get(pluginName);
-    if (plugin === null || plugin === void 0 ? void 0 : plugin.platforms.has(getPlatform())) {
-      return true;
-    }
-    if (getPluginHeader(pluginName)) {
-      return true;
-    }
-    return false;
-  };
-  const isPluginAvailable = ((_c = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _c === void 0 ? void 0 : _c.isPluginAvailable) || defaultIsPluginAvailable;
-  const defaultGetPluginHeader = (pluginName) => {
-    var _a2;
-    return (_a2 = cap.PluginHeaders) === null || _a2 === void 0 ? void 0 : _a2.find((h) => h.name === pluginName);
-  };
-  const getPluginHeader = ((_d = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _d === void 0 ? void 0 : _d.getPluginHeader) || defaultGetPluginHeader;
-  const handleError = (err) => win.console.error(err);
-  const pluginMethodNoop = (_target, prop, pluginName) => {
-    return Promise.reject(`${pluginName} does not have an implementation of "${prop}".`);
-  };
-  const registeredPlugins = /* @__PURE__ */ new Map();
-  const defaultRegisterPlugin = (pluginName, jsImplementations = {}) => {
-    const registeredPlugin = registeredPlugins.get(pluginName);
-    if (registeredPlugin) {
-      console.warn(`Capacitor plugin "${pluginName}" already registered. Cannot register plugins twice.`);
-      return registeredPlugin.proxy;
-    }
-    const platform = getPlatform();
-    const pluginHeader = getPluginHeader(pluginName);
-    let jsImplementation;
-    const loadPluginImplementation = async () => {
-      if (!jsImplementation && platform in jsImplementations) {
-        jsImplementation = typeof jsImplementations[platform] === "function" ? jsImplementation = await jsImplementations[platform]() : jsImplementation = jsImplementations[platform];
-      } else if (capCustomPlatform !== null && !jsImplementation && "web" in jsImplementations) {
-        jsImplementation = typeof jsImplementations["web"] === "function" ? jsImplementation = await jsImplementations["web"]() : jsImplementation = jsImplementations["web"];
-      }
-      return jsImplementation;
-    };
-    const createPluginMethod = (impl, prop) => {
-      var _a2, _b2;
-      if (pluginHeader) {
-        const methodHeader = pluginHeader === null || pluginHeader === void 0 ? void 0 : pluginHeader.methods.find((m) => prop === m.name);
-        if (methodHeader) {
-          if (methodHeader.rtype === "promise") {
-            return (options) => cap.nativePromise(pluginName, prop.toString(), options);
-          } else {
-            return (options, callback) => cap.nativeCallback(pluginName, prop.toString(), options, callback);
-          }
-        } else if (impl) {
-          return (_a2 = impl[prop]) === null || _a2 === void 0 ? void 0 : _a2.bind(impl);
-        }
-      } else if (impl) {
-        return (_b2 = impl[prop]) === null || _b2 === void 0 ? void 0 : _b2.bind(impl);
-      } else {
-        throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, ExceptionCode.Unimplemented);
-      }
-    };
-    const createPluginMethodWrapper = (prop) => {
-      let remove;
-      const wrapper = (...args) => {
-        const p = loadPluginImplementation().then((impl) => {
-          const fn = createPluginMethod(impl, prop);
-          if (fn) {
-            const p2 = fn(...args);
-            remove = p2 === null || p2 === void 0 ? void 0 : p2.remove;
-            return p2;
-          } else {
-            throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
-          }
-        });
-        if (prop === "addListener") {
-          p.remove = async () => remove();
-        }
-        return p;
-      };
-      wrapper.toString = () => `${prop.toString()}() { [capacitor code] }`;
-      Object.defineProperty(wrapper, "name", {
-        value: prop,
-        writable: false,
-        configurable: false
-      });
-      return wrapper;
-    };
-    const addListener = createPluginMethodWrapper("addListener");
-    const removeListener = createPluginMethodWrapper("removeListener");
-    const addListenerNative = (eventName, callback) => {
-      const call = addListener({ eventName }, callback);
-      const remove = async () => {
-        const callbackId = await call;
-        removeListener({
-          eventName,
-          callbackId
-        }, callback);
-      };
-      const p = new Promise((resolve) => call.then(() => resolve({ remove })));
-      p.remove = async () => {
-        console.warn(`Using addListener() without 'await' is deprecated.`);
-        await remove();
-      };
-      return p;
-    };
-    const proxy = new Proxy({}, {
-      get(_, prop) {
-        switch (prop) {
-          case "$$typeof":
-            return void 0;
-          case "toJSON":
-            return () => ({});
-          case "addListener":
-            return pluginHeader ? addListenerNative : addListener;
-          case "removeListener":
-            return removeListener;
-          default:
-            return createPluginMethodWrapper(prop);
-        }
-      }
-    });
-    Plugins[pluginName] = proxy;
-    registeredPlugins.set(pluginName, {
-      name: pluginName,
-      proxy,
-      platforms: /* @__PURE__ */ new Set([
-        ...Object.keys(jsImplementations),
-        ...pluginHeader ? [platform] : []
-      ])
-    });
-    return proxy;
-  };
-  const registerPlugin2 = ((_e = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _e === void 0 ? void 0 : _e.registerPlugin) || defaultRegisterPlugin;
-  if (!cap.convertFileSrc) {
-    cap.convertFileSrc = (filePath) => filePath;
-  }
-  cap.getPlatform = getPlatform;
-  cap.handleError = handleError;
-  cap.isNativePlatform = isNativePlatform;
-  cap.isPluginAvailable = isPluginAvailable;
-  cap.pluginMethodNoop = pluginMethodNoop;
-  cap.registerPlugin = registerPlugin2;
-  cap.Exception = CapacitorException;
-  cap.DEBUG = !!cap.DEBUG;
-  cap.isLoggingEnabled = !!cap.isLoggingEnabled;
-  cap.platform = cap.getPlatform();
-  cap.isNative = cap.isNativePlatform();
-  return cap;
-};
-const initCapacitorGlobal = (win) => win.Capacitor = createCapacitor(win);
-const Capacitor = /* @__PURE__ */ initCapacitorGlobal(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
-const registerPlugin = Capacitor.registerPlugin;
-Capacitor.Plugins;
-class WebPlugin {
-  constructor(config) {
-    this.listeners = {};
-    this.windowListeners = {};
-    if (config) {
-      console.warn(`Capacitor WebPlugin "${config.name}" config object was deprecated in v3 and will be removed in v4.`);
-      this.config = config;
-    }
-  }
-  addListener(eventName, listenerFunc) {
-    const listeners = this.listeners[eventName];
-    if (!listeners) {
-      this.listeners[eventName] = [];
-    }
-    this.listeners[eventName].push(listenerFunc);
-    const windowListener = this.windowListeners[eventName];
-    if (windowListener && !windowListener.registered) {
-      this.addWindowListener(windowListener);
-    }
-    const remove = async () => this.removeListener(eventName, listenerFunc);
-    const p = Promise.resolve({ remove });
-    Object.defineProperty(p, "remove", {
-      value: async () => {
-        console.warn(`Using addListener() without 'await' is deprecated.`);
-        await remove();
-      }
-    });
-    return p;
-  }
-  async removeAllListeners() {
-    this.listeners = {};
-    for (const listener in this.windowListeners) {
-      this.removeWindowListener(this.windowListeners[listener]);
-    }
-    this.windowListeners = {};
-  }
-  notifyListeners(eventName, data) {
-    const listeners = this.listeners[eventName];
-    if (listeners) {
-      listeners.forEach((listener) => listener(data));
-    }
-  }
-  hasListeners(eventName) {
-    return !!this.listeners[eventName].length;
-  }
-  registerWindowListener(windowEventName, pluginEventName) {
-    this.windowListeners[pluginEventName] = {
-      registered: false,
-      windowEventName,
-      pluginEventName,
-      handler: (event) => {
-        this.notifyListeners(pluginEventName, event);
-      }
-    };
-  }
-  unimplemented(msg = "not implemented") {
-    return new Capacitor.Exception(msg, ExceptionCode.Unimplemented);
-  }
-  unavailable(msg = "not available") {
-    return new Capacitor.Exception(msg, ExceptionCode.Unavailable);
-  }
-  async removeListener(eventName, listenerFunc) {
-    const listeners = this.listeners[eventName];
-    if (!listeners) {
-      return;
-    }
-    const index = listeners.indexOf(listenerFunc);
-    this.listeners[eventName].splice(index, 1);
-    if (!this.listeners[eventName].length) {
-      this.removeWindowListener(this.windowListeners[eventName]);
-    }
-  }
-  addWindowListener(handle) {
-    window.addEventListener(handle.windowEventName, handle.handler);
-    handle.registered = true;
-  }
-  removeWindowListener(handle) {
-    if (!handle) {
-      return;
-    }
-    window.removeEventListener(handle.windowEventName, handle.handler);
-    handle.registered = false;
-  }
-}
-const encode = (str) => encodeURIComponent(str).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
-const decode = (str) => str.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
-class CapacitorCookiesPluginWeb extends WebPlugin {
-  async getCookies() {
-    const cookies = document.cookie;
-    const cookieMap = {};
-    cookies.split(";").forEach((cookie) => {
-      if (cookie.length <= 0)
-        return;
-      let [key, value] = cookie.replace(/=/, "CAP_COOKIE").split("CAP_COOKIE");
-      key = decode(key).trim();
-      value = decode(value).trim();
-      cookieMap[key] = value;
-    });
-    return cookieMap;
-  }
-  async setCookie(options) {
-    try {
-      const encodedKey = encode(options.key);
-      const encodedValue = encode(options.value);
-      const expires = `; expires=${(options.expires || "").replace("expires=", "")}`;
-      const path = (options.path || "/").replace("path=", "");
-      const domain = options.url != null && options.url.length > 0 ? `domain=${options.url}` : "";
-      document.cookie = `${encodedKey}=${encodedValue || ""}${expires}; path=${path}; ${domain};`;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-  async deleteCookie(options) {
-    try {
-      document.cookie = `${options.key}=; Max-Age=0`;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-  async clearCookies() {
-    try {
-      const cookies = document.cookie.split(";") || [];
-      for (const cookie of cookies) {
-        document.cookie = cookie.replace(/^ +/, "").replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-  async clearAllCookies() {
-    try {
-      await this.clearCookies();
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-}
-registerPlugin("CapacitorCookies", {
-  web: () => new CapacitorCookiesPluginWeb()
-});
-const readBlobAsBase64 = async (blob) => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.onload = () => {
-    const base64String = reader.result;
-    resolve(base64String.indexOf(",") >= 0 ? base64String.split(",")[1] : base64String);
-  };
-  reader.onerror = (error) => reject(error);
-  reader.readAsDataURL(blob);
-});
-const normalizeHttpHeaders = (headers = {}) => {
-  const originalKeys = Object.keys(headers);
-  const loweredKeys = Object.keys(headers).map((k) => k.toLocaleLowerCase());
-  const normalized = loweredKeys.reduce((acc, key, index) => {
-    acc[key] = headers[originalKeys[index]];
-    return acc;
-  }, {});
-  return normalized;
-};
-const buildUrlParams = (params, shouldEncode = true) => {
-  if (!params)
-    return null;
-  const output = Object.entries(params).reduce((accumulator, entry) => {
-    const [key, value] = entry;
-    let encodedValue;
-    let item;
-    if (Array.isArray(value)) {
-      item = "";
-      value.forEach((str) => {
-        encodedValue = shouldEncode ? encodeURIComponent(str) : str;
-        item += `${key}=${encodedValue}&`;
-      });
-      item.slice(0, -1);
-    } else {
-      encodedValue = shouldEncode ? encodeURIComponent(value) : value;
-      item = `${key}=${encodedValue}`;
-    }
-    return `${accumulator}&${item}`;
-  }, "");
-  return output.substr(1);
-};
-const buildRequestInit = (options, extra = {}) => {
-  const output = Object.assign({ method: options.method || "GET", headers: options.headers }, extra);
-  const headers = normalizeHttpHeaders(options.headers);
-  const type = headers["content-type"] || "";
-  if (typeof options.data === "string") {
-    output.body = options.data;
-  } else if (type.includes("application/x-www-form-urlencoded")) {
-    const params = new URLSearchParams();
-    for (const [key, value] of Object.entries(options.data || {})) {
-      params.set(key, value);
-    }
-    output.body = params.toString();
-  } else if (type.includes("multipart/form-data")) {
-    const form = new FormData();
-    if (options.data instanceof FormData) {
-      options.data.forEach((value, key) => {
-        form.append(key, value);
-      });
-    } else {
-      for (const key of Object.keys(options.data)) {
-        form.append(key, options.data[key]);
-      }
-    }
-    output.body = form;
-    const headers2 = new Headers(output.headers);
-    headers2.delete("content-type");
-    output.headers = headers2;
-  } else if (type.includes("application/json") || typeof options.data === "object") {
-    output.body = JSON.stringify(options.data);
-  }
-  return output;
-};
-class CapacitorHttpPluginWeb extends WebPlugin {
-  async request(options) {
-    const requestInit = buildRequestInit(options, options.webFetchExtra);
-    const urlParams = buildUrlParams(options.params, options.shouldEncodeUrlParams);
-    const url = urlParams ? `${options.url}?${urlParams}` : options.url;
-    const response = await fetch(url, requestInit);
-    const contentType = response.headers.get("content-type") || "";
-    let { responseType = "text" } = response.ok ? options : {};
-    if (contentType.includes("application/json")) {
-      responseType = "json";
-    }
-    let data;
-    let blob;
-    switch (responseType) {
-      case "arraybuffer":
-      case "blob":
-        blob = await response.blob();
-        data = await readBlobAsBase64(blob);
-        break;
-      case "json":
-        data = await response.json();
-        break;
-      case "document":
-      case "text":
-      default:
-        data = await response.text();
-    }
-    const headers = {};
-    response.headers.forEach((value, key) => {
-      headers[key] = value;
-    });
-    return {
-      data,
-      headers,
-      status: response.status,
-      url: response.url
-    };
-  }
-  async get(options) {
-    return this.request(Object.assign(Object.assign({}, options), { method: "GET" }));
-  }
-  async post(options) {
-    return this.request(Object.assign(Object.assign({}, options), { method: "POST" }));
-  }
-  async put(options) {
-    return this.request(Object.assign(Object.assign({}, options), { method: "PUT" }));
-  }
-  async patch(options) {
-    return this.request(Object.assign(Object.assign({}, options), { method: "PATCH" }));
-  }
-  async delete(options) {
-    return this.request(Object.assign(Object.assign({}, options), { method: "DELETE" }));
-  }
-}
-const CapacitorHttp = registerPlugin("CapacitorHttp", {
-  web: () => new CapacitorHttpPluginWeb()
-});
+import { r as registerPlugin, h as hideStatusBar, C as CapacitorHttp } from "./statusbar.f6df8738.js";
 function getAugmentedNamespace(n) {
   if (n.__esModule)
     return n;
@@ -790,7 +313,7 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return this[property];
     }
   };
-  (function(global2) {
+  (function(global) {
     var sqrt = Math.sqrt, atan2 = Math.atan2, pow = Math.pow, PiBy180 = Math.PI / 180, PiBy2 = Math.PI / 2;
     fabric2.util = {
       cos: function(angle) {
@@ -1005,7 +528,7 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
         if (!namespace) {
           return fabric2;
         }
-        var parts = namespace.split("."), len = parts.length, i, obj = global2 || fabric2.window;
+        var parts = namespace.split("."), len = parts.length, i, obj = global || fabric2.window;
         for (i = 0; i < len; ++i) {
           obj = obj[parts[i]];
         }
@@ -2902,8 +2425,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       easeInOutBounce
     };
   })();
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, toFixed = fabric3.util.toFixed, parseUnit = fabric3.util.parseUnit, multiplyTransformMatrices = fabric3.util.multiplyTransformMatrices, svgValidTagNames = [
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, toFixed = fabric3.util.toFixed, parseUnit = fabric3.util.parseUnit, multiplyTransformMatrices = fabric3.util.multiplyTransformMatrices, svgValidTagNames = [
       "path",
       "circle",
       "polygon",
@@ -3711,8 +3234,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       }
     };
   })(fabric2.ElementsParser.prototype);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     if (fabric3.Point) {
       fabric3.warn("fabric.Point is already defined");
       return;
@@ -3841,8 +3364,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       }
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     if (fabric3.Intersection) {
       fabric3.warn("fabric.Intersection is already defined");
       return;
@@ -3918,8 +3441,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return result;
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     if (fabric3.Color) {
       fabric3.warn("fabric.Color is already defined.");
       return;
@@ -4292,8 +3815,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return oColor;
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), scaleMap = ["e", "se", "s", "sw", "w", "nw", "n", "ne", "e"], skewMap = ["ns", "nesw", "ew", "nwse"], controls = {}, LEFT = "left", TOP = "top", RIGHT = "right", BOTTOM = "bottom", CENTER = "center", opposite = {
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), scaleMap = ["e", "se", "s", "sw", "w", "nw", "n", "ne", "e"], skewMap = ["ns", "nesw", "ew", "nwse"], controls = {}, LEFT = "left", TOP = "top", RIGHT = "right", BOTTOM = "bottom", CENTER = "center", opposite = {
       top: BOTTOM,
       bottom: TOP,
       left: RIGHT,
@@ -4674,8 +4197,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     controls.getLocalPoint = getLocalPoint;
     fabric3.controlsUtils = controls;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), degreesToRadians = fabric3.util.degreesToRadians, controls = fabric3.controlsUtils;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), degreesToRadians = fabric3.util.degreesToRadians, controls = fabric3.controlsUtils;
     function renderCircleControl(ctx, left, top, styleOverride, fabricObject) {
       styleOverride = styleOverride || {};
       var xSize = this.sizeX || styleOverride.cornerSize || fabricObject.cornerSize, ySize = this.sizeY || styleOverride.cornerSize || fabricObject.cornerSize, transparentCorners = typeof styleOverride.transparentCorners !== "undefined" ? styleOverride.transparentCorners : fabricObject.transparentCorners, methodName = transparentCorners ? "stroke" : "fill", stroke = !transparentCorners && (styleOverride.cornerStrokeColor || fabricObject.cornerStrokeColor), myLeft = left, myTop = top, size;
@@ -4720,8 +4243,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     controls.renderCircleControl = renderCircleControl;
     controls.renderSquareControl = renderSquareControl;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     function Control(options) {
       for (var i in options) {
         this[i] = options[i];
@@ -5201,8 +4724,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       }
     });
   })();
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), toFixed = fabric3.util.toFixed;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), toFixed = fabric3.util.toFixed;
     if (fabric3.Shadow) {
       fabric3.warn("fabric.Shadow is already defined.");
       return;
@@ -7289,11 +6812,11 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
         this._onDrop = this._onDrop.bind(this);
         this.eventsBound = true;
       },
-      _onGesture: function(e, self2) {
-        this.__onTransformGesture && this.__onTransformGesture(e, self2);
+      _onGesture: function(e, self) {
+        this.__onTransformGesture && this.__onTransformGesture(e, self);
       },
-      _onDrag: function(e, self2) {
-        this.__onDrag && this.__onDrag(e, self2);
+      _onDrag: function(e, self) {
+        this.__onDrag && this.__onDrag(e, self);
       },
       _onMouseWheel: function(e) {
         this.__onMouseWheel(e);
@@ -7317,14 +6840,14 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
           this._hoveredTargets = [];
         }
       },
-      _onOrientationChange: function(e, self2) {
-        this.__onOrientationChange && this.__onOrientationChange(e, self2);
+      _onOrientationChange: function(e, self) {
+        this.__onOrientationChange && this.__onOrientationChange(e, self);
       },
-      _onShake: function(e, self2) {
-        this.__onShake && this.__onShake(e, self2);
+      _onShake: function(e, self) {
+        this.__onShake && this.__onShake(e, self);
       },
-      _onLongPress: function(e, self2) {
-        this.__onLongPress && this.__onLongPress(e, self2);
+      _onLongPress: function(e, self) {
+        this.__onLongPress && this.__onLongPress(e, self);
       },
       _onDragOver: function(e) {
         e.preventDefault();
@@ -8041,8 +7564,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       }
     }
   });
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, toFixed = fabric3.util.toFixed, capitalize = fabric3.util.string.capitalize, degreesToRadians = fabric3.util.degreesToRadians, objectCaching = !fabric3.isLikelyNode, ALIASING_LIMIT = 2;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, toFixed = fabric3.util.toFixed, capitalize = fabric3.util.string.capitalize, degreesToRadians = fabric3.util.degreesToRadians, objectCaching = !fabric3.isLikelyNode, ALIASING_LIMIT = 2;
     if (fabric3.Object) {
       return;
     }
@@ -9901,8 +9424,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       }
     }
   });
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, coordProps = { x1: 1, x2: 1, y1: 1, y2: 1 };
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, coordProps = { x1: 1, x2: 1, y1: 1, y2: 1 };
     if (fabric3.Line) {
       fabric3.warn("fabric.Line is already defined");
       return;
@@ -10057,8 +9580,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       };
     }
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), degreesToRadians = fabric3.util.degreesToRadians;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), degreesToRadians = fabric3.util.degreesToRadians;
     if (fabric3.Circle) {
       fabric3.warn("fabric.Circle is already defined.");
       return;
@@ -10145,8 +9668,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       fabric3.Object._fromObject("Circle", object, callback);
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     if (fabric3.Triangle) {
       fabric3.warn("fabric.Triangle is already defined");
       return;
@@ -10183,8 +9706,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return fabric3.Object._fromObject("Triangle", object, callback);
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), piBy2 = Math.PI * 2;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), piBy2 = Math.PI * 2;
     if (fabric3.Ellipse) {
       fabric3.warn("fabric.Ellipse is already defined.");
       return;
@@ -10261,8 +9784,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       fabric3.Object._fromObject("Ellipse", object, callback);
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend;
     if (fabric3.Rect) {
       fabric3.warn("fabric.Rect is already defined");
       return;
@@ -10342,8 +9865,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return fabric3.Object._fromObject("Rect", object, callback);
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, min = fabric3.util.array.min, max = fabric3.util.array.max, toFixed = fabric3.util.toFixed, projectStrokeOnPoints = fabric3.util.projectStrokeOnPoints;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, min = fabric3.util.array.min, max = fabric3.util.array.max, toFixed = fabric3.util.toFixed, projectStrokeOnPoints = fabric3.util.projectStrokeOnPoints;
     if (fabric3.Polyline) {
       fabric3.warn("fabric.Polyline is already defined");
       return;
@@ -10461,8 +9984,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return fabric3.Object._fromObject("Polyline", object, callback, "points");
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), projectStrokeOnPoints = fabric3.util.projectStrokeOnPoints;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), projectStrokeOnPoints = fabric3.util.projectStrokeOnPoints;
     if (fabric3.Polygon) {
       fabric3.warn("fabric.Polygon is already defined");
       return;
@@ -10486,8 +10009,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       fabric3.Object._fromObject("Polygon", object, callback, "points");
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), min = fabric3.util.array.min, max = fabric3.util.array.max, extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, toFixed = fabric3.util.toFixed;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), min = fabric3.util.array.min, max = fabric3.util.array.max, extend = fabric3.util.object.extend, clone = fabric3.util.object.clone, toFixed = fabric3.util.toFixed;
     if (fabric3.Path) {
       fabric3.warn("fabric.Path is already defined");
       return;
@@ -10705,8 +10228,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       callback(new fabric3.Path(parsedAttributes.d, extend(parsedAttributes, options)));
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), min = fabric3.util.array.min, max = fabric3.util.array.max;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), min = fabric3.util.array.min, max = fabric3.util.array.max;
     if (fabric3.Group) {
       return;
     }
@@ -11036,8 +10559,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       });
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     if (fabric3.ActiveSelection) {
       return;
     }
@@ -11116,12 +10639,12 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       });
     };
   })(exports);
-  (function(global2) {
+  (function(global) {
     var extend = fabric2.util.object.extend;
-    if (!global2.fabric) {
-      global2.fabric = {};
+    if (!global.fabric) {
+      global.fabric = {};
     }
-    if (global2.fabric.Image) {
+    if (global.fabric.Image) {
       fabric2.warn("fabric.Image is already defined.");
       return;
     }
@@ -11601,10 +11124,10 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       tileSize = tileSize || fabric2.WebglFilterBackend.prototype.tileSize;
       var canvas2 = document.createElement("canvas");
       var gl = canvas2.getContext("webgl") || canvas2.getContext("experimental-webgl");
-      var isSupported = false;
+      var isSupported2 = false;
       if (gl) {
         fabric2.maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-        isSupported = fabric2.maxTextureSize >= tileSize;
+        isSupported2 = fabric2.maxTextureSize >= tileSize;
         var precisions = ["highp", "mediump", "lowp"];
         for (var i = 0; i < 3; i++) {
           if (testPrecision(gl, precisions[i])) {
@@ -11613,8 +11136,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
           }
         }
       }
-      this.isSupported = isSupported;
-      return isSupported;
+      this.isSupported = isSupported2;
+      return isSupported2;
     };
     fabric2.WebglFilterBackend = WebglFilterBackend;
     function WebglFilterBackend(options) {
@@ -12069,8 +11592,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     callback && callback(filter);
     return filter;
   };
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.ColorMatrix = createClass(filters.BaseFilter, {
       type: "ColorMatrix",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nvarying vec2 vTexCoord;\nuniform mat4 uColorMatrix;\nuniform vec4 uConstants;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\ncolor *= uColorMatrix;\ncolor += uConstants;\ngl_FragColor = color;\n}",
@@ -12152,8 +11675,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.ColorMatrix.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Brightness = createClass(filters.BaseFilter, {
       type: "Brightness",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform float uBrightness;\nvarying vec2 vTexCoord;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\ncolor.rgb += uBrightness;\ngl_FragColor = color;\n}",
@@ -12181,8 +11704,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Brightness.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Convolute = createClass(filters.BaseFilter, {
       type: "Convolute",
       opaque: false,
@@ -12264,8 +11787,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Convolute.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Grayscale = createClass(filters.BaseFilter, {
       type: "Grayscale",
       fragmentSource: {
@@ -12313,8 +11836,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Grayscale.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Invert = createClass(filters.BaseFilter, {
       type: "Invert",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform int uInvert;\nvarying vec2 vTexCoord;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\nif (uInvert == 1) {\ngl_FragColor = vec4(1.0 - color.r,1.0 -color.g,1.0 -color.b,color.a);\n} else {\ngl_FragColor = color;\n}\n}",
@@ -12342,8 +11865,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Invert.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Noise = createClass(filters.BaseFilter, {
       type: "Noise",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform float uStepH;\nuniform float uNoise;\nuniform float uSeed;\nvarying vec2 vTexCoord;\nfloat rand(vec2 co, float seed, float vScale) {\nreturn fract(sin(dot(co.xy * vScale ,vec2(12.9898 , 78.233))) * 43758.5453 * (seed + 0.01) / 2.0);\n}\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\ncolor.rgb += (0.5 - rand(vTexCoord, uSeed, 0.1 / uStepH)) * uNoise;\ngl_FragColor = color;\n}",
@@ -12379,8 +11902,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Noise.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Pixelate = createClass(filters.BaseFilter, {
       type: "Pixelate",
       blocksize: 4,
@@ -12425,8 +11948,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Pixelate.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), extend = fabric3.util.object.extend, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), extend = fabric3.util.object.extend, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.RemoveColor = createClass(filters.BaseFilter, {
       type: "RemoveColor",
       color: "#FFFFFF",
@@ -12482,8 +12005,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.RemoveColor.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     var matrices = {
       Brownie: [
         0.5997,
@@ -12650,8 +12173,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       fabric3.Image.filters[key].fromObject = fabric3.Image.filters.BaseFilter.fromObject;
     }
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.BlendColor = createClass(filters.BaseFilter, {
       type: "BlendColor",
       color: "#F95C63",
@@ -12768,8 +12291,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.BlendColor.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.BlendImage = createClass(filters.BaseFilter, {
       type: "BlendImage",
       image: null,
@@ -12877,8 +12400,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       });
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), pow = Math.pow, floor = Math.floor, sqrt = Math.sqrt, abs = Math.abs, round = Math.round, sin = Math.sin, ceil = Math.ceil, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), pow = Math.pow, floor = Math.floor, sqrt = Math.sqrt, abs = Math.abs, round = Math.round, sin = Math.sin, ceil = Math.ceil, filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Resize = createClass(filters.BaseFilter, {
       type: "Resize",
       resizeType: "hermite",
@@ -13153,8 +12676,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Resize.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Contrast = createClass(filters.BaseFilter, {
       type: "Contrast",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform float uContrast;\nvarying vec2 vTexCoord;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\nfloat contrastF = 1.015 * (uContrast + 1.0) / (1.0 * (1.015 - uContrast));\ncolor.rgb = contrastF * (color.rgb - 0.5) + 0.5;\ngl_FragColor = color;\n}",
@@ -13182,8 +12705,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Contrast.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Saturation = createClass(filters.BaseFilter, {
       type: "Saturation",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform float uSaturation;\nvarying vec2 vTexCoord;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\nfloat rgMax = max(color.r, color.g);\nfloat rgbMax = max(rgMax, color.b);\ncolor.r += rgbMax != color.r ? (rgbMax - color.r) * uSaturation : 0.00;\ncolor.g += rgbMax != color.g ? (rgbMax - color.g) * uSaturation : 0.00;\ncolor.b += rgbMax != color.b ? (rgbMax - color.b) * uSaturation : 0.00;\ngl_FragColor = color;\n}",
@@ -13212,8 +12735,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Saturation.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Vibrance = createClass(filters.BaseFilter, {
       type: "Vibrance",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform float uVibrance;\nvarying vec2 vTexCoord;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\nfloat max = max(color.r, max(color.g, color.b));\nfloat avg = (color.r + color.g + color.b) / 3.0;\nfloat amt = (abs(max - avg) * 2.0) * uVibrance;\ncolor.r += max != color.r ? (max - color.r) * amt : 0.00;\ncolor.g += max != color.g ? (max - color.g) * amt : 0.00;\ncolor.b += max != color.b ? (max - color.b) * amt : 0.00;\ngl_FragColor = color;\n}",
@@ -13244,8 +12767,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Vibrance.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Blur = createClass(filters.BaseFilter, {
       type: "Blur",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform vec2 uDelta;\nvarying vec2 vTexCoord;\nconst float nSamples = 15.0;\nvec3 v3offset = vec3(12.9898, 78.233, 151.7182);\nfloat random(vec3 scale) {\nreturn fract(sin(dot(gl_FragCoord.xyz, scale)) * 43758.5453);\n}\nvoid main() {\nvec4 color = vec4(0.0);\nfloat total = 0.0;\nfloat offset = random(v3offset);\nfor (float t = -nSamples; t <= nSamples; t++) {\nfloat percent = (t + offset - 0.5) / nSamples;\nfloat weight = 1.0 - abs(percent);\ncolor += texture2D(uTexture, vTexCoord + uDelta * percent) * weight;\ntotal += weight;\n}\ngl_FragColor = color / total;\n}",
@@ -13342,8 +12865,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     filters.Blur.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Gamma = createClass(filters.BaseFilter, {
       type: "Gamma",
       fragmentSource: "precision highp float;\nuniform sampler2D uTexture;\nuniform vec3 uGamma;\nvarying vec2 vTexCoord;\nvoid main() {\nvec4 color = texture2D(uTexture, vTexCoord);\nvec3 correction = (1.0 / uGamma);\ncolor.r = pow(color.r, correction.r);\ncolor.g = pow(color.g, correction.g);\ncolor.b = pow(color.b, correction.b);\ngl_FragColor = color;\ngl_FragColor.rgb *= color.a;\n}",
@@ -13382,8 +12905,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.Gamma.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.Composed = createClass(filters.BaseFilter, {
       type: "Composed",
       subFilters: [],
@@ -13418,8 +12941,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       return instance;
     };
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), filters = fabric3.Image.filters, createClass = fabric3.util.createClass;
     filters.HueRotation = createClass(filters.ColorMatrix, {
       type: "HueRotation",
       rotation: 0,
@@ -13469,8 +12992,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     });
     fabric3.Image.filters.HueRotation.fromObject = fabric3.Image.filters.BaseFilter.fromObject;
   })(exports);
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {}), clone = fabric3.util.object.clone;
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {}), clone = fabric3.util.object.clone;
     if (fabric3.Text) {
       fabric3.warn("fabric.Text is already defined");
       return;
@@ -16116,8 +15639,8 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
       }
     });
   })();
-  (function(global2) {
-    var fabric3 = global2.fabric || (global2.fabric = {});
+  (function(global) {
+    var fabric3 = global.fabric || (global.fabric = {});
     fabric3.Textbox = fabric3.util.createClass(fabric3.IText, fabric3.Observable, {
       type: "textbox",
       minWidth: 20,
@@ -16423,20 +15946,82 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     }
   })();
 })(fabric);
+const scriptRel = "modulepreload";
+const seen = {};
+const base = "/";
+const __vitePreload = function preload(baseModule, deps) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  return Promise.all(deps.map((dep) => {
+    dep = `${base}${dep}`;
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
+const KeepAwake = registerPlugin("KeepAwake", {
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.e33ee517.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+});
+const isSupported = async () => {
+  const result = await KeepAwake.isSupported();
+  return result.isSupported;
+};
+const keepAwake = async () => {
+  if (isSupported) {
+    await KeepAwake.keepAwake();
+  }
+};
 console.log("Server IP: ", sessionStorage.getItem("server_IP"));
 console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 let canvas;
-const canvas_css_classes = "";
+const canvas_css_classes = "border-b";
 let menu_items;
 window.addEventListener("DOMContentLoaded", () => {
+  hideStatusBar();
+  keepAwake();
   const cancel_order_quantity_dialog_button = document.getElementById("cancel_order_quantity_dialog");
   if (cancel_order_quantity_dialog_button) {
     cancel_order_quantity_dialog_button.addEventListener("click", function() {
       dialog_close("item_order_quantity_dialog");
       canvas.discardActiveObject();
+    });
+  }
+  const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
+  if (toggle_sidebar_full) {
+    toggle_sidebar_full.addEventListener("click", function() {
+      document.getElementById("minimal_sidebar").classList.add("hidden");
+      document.getElementById("full_sidebar").classList.remove("hidden");
+      document.getElementById("full_sidebar").classList.add("grid");
+    });
+  }
+  const toggle_sidebar_min = document.getElementById("toggle_sidebar_min");
+  if (toggle_sidebar_min) {
+    toggle_sidebar_min.addEventListener("click", function() {
+      document.getElementById("minimal_sidebar").classList.remove("hidden");
+      document.getElementById("full_sidebar").classList.add("hidden");
     });
   }
 });
@@ -16510,40 +16095,44 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
       callback();
   }
 }
-var item_quantity_input_listener;
 function get_selected_objects() {
   if (!canvas)
     return;
   console.log("called get_selected_objects()");
   canvas.on("mouse:up", function(event) {
+    hideStatusBar();
     const selected_object = canvas.getActiveObject();
-    if (selected_object && selected_object.group_id) {
-      console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
-      dialog_open("item_order_quantity_dialog");
-      get_menu_items();
-      const object_group_id = selected_object.group_id;
-      menu_items.forEach((item) => {
-        if (item.item_id == object_group_id) {
-          const item_name_span = document.getElementById("item_name");
-          const item_price_span = document.getElementById("item_price");
-          const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
-          const item_quantity_select = document.getElementById("item_quantity");
-          item_name_span.textContent = item.item_name;
-          item_price_span.textContent = item.item_price;
-          item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value;
-          if (item_quantity_input_listener) {
-            item_quantity_select.removeEventListener("change", item_quantity_input_listener);
-            item_quantity_select.value = 1;
-            item_cost_by_quantity_span.textContent = item.item_price;
-          }
-          item_quantity_input_listener = function() {
-            item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value;
-          };
-          item_quantity_select.addEventListener("change", item_quantity_input_listener);
-        }
-      });
-    }
+    item_quantity_dialog(selected_object);
   });
+}
+var item_quantity_input_listener;
+function item_quantity_dialog(selected_object) {
+  if (selected_object && selected_object.group_id) {
+    console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
+    dialog_open("item_order_quantity_dialog");
+    get_menu_items();
+    const object_group_id = selected_object.group_id;
+    menu_items.forEach((item) => {
+      if (item.item_id == object_group_id) {
+        const item_name_span = document.getElementById("item_name");
+        const item_price_span = document.getElementById("item_price");
+        const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
+        const item_quantity_select = document.getElementById("item_quantity");
+        item_name_span.textContent = item.item_name;
+        item_price_span.textContent = item.item_price;
+        item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value;
+        if (item_quantity_input_listener) {
+          item_quantity_select.removeEventListener("change", item_quantity_input_listener);
+          item_quantity_select.value = 1;
+          item_cost_by_quantity_span.textContent = item.item_price;
+        }
+        item_quantity_input_listener = function() {
+          item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value;
+        };
+        item_quantity_select.addEventListener("change", item_quantity_input_listener);
+      }
+    });
+  }
 }
 function dialog_open(element_id) {
   console.log(`called dialog_open(${element_id})`);

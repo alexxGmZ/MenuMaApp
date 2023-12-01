@@ -1,4 +1,4 @@
-import "./style.7f2dd081.js";
+import "./statusbar.f6df8738.js";
 var pull_to_refresh = "";
 window.addEventListener("DOMContentLoaded", () => {
   const connect_button = document.getElementById("connect_button");
