@@ -1,5 +1,5 @@
-import { r as registerPlugin } from "./index.7d80667e.js";
-import "./pull_to_refresh.be92edd2.js";
+import "./style.7f2dd081.js";
+var pull_to_refresh = "";
 window.addEventListener("DOMContentLoaded", () => {
   const connect_button = document.getElementById("connect_button");
   if (connect_button) {
@@ -24,7 +24,7 @@ function set_server_connection() {
         console.log(`Server at ${url} is reachable`);
         sessionStorage.setItem("server_IP", input_server_ip);
         sessionStorage.setItem("server_api_token", input_api_token);
-        window.location.href = "menu_items.html";
+        window.location.href = "order.html";
       } else {
         console.log(`Server at ${url} is unreachable`);
         alert(`Connection Failed: ${input_server_ip} is unreachable`);
@@ -43,54 +43,6 @@ function is_valid_ipv4(ip) {
   const ipv4_pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
   return ipv4_pattern.test(ip);
 }
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
-const Network = registerPlugin("Network", {
-  web: () => __vitePreload(() => import("./web.e2719596.js"), true ? ["assets/web.e2719596.js","assets/index.7d80667e.js","assets/index.7771d47d.css"] : void 0).then((m) => new m.NetworkWeb())
-});
-Network.addListener("networkStatusChange", (status) => {
-  console.log("Network status changed", status);
-});
-const logCurrentNetworkStatus = async () => {
-  const json_container = document.getElementById("connection_type");
-  const status = await Network.getStatus();
-  console.log("Network connection status:", status.connected);
-  console.log("Network connection type:", status.connectionType);
-  json_container.textContent = `Status: ${status.connected}
-Type: ${status.connectionType}`;
-};
-logCurrentNetworkStatus();
 var screenWidth = window.screen.width;
 var screenHeight = window.screen.height;
 var devicePixelRatio = window.devicePixelRatio || 1;
@@ -100,3 +52,22 @@ console.log("Screen Width: " + actualScreenWidth);
 console.log("Screen Height: " + actualScreenHeight);
 document.getElementById("screen_width").textContent = actualScreenWidth;
 document.getElementById("screen_height").textContent = actualScreenHeight;
+const pullToRefresh = document.querySelector(".pull-to-refresh");
+let touchstartY = 0;
+document.addEventListener("touchstart", (e) => {
+  touchstartY = e.touches[0].clientY;
+});
+document.addEventListener("touchmove", (e) => {
+  const touchY = e.touches[0].clientY;
+  const touchDiff = touchY - touchstartY;
+  if (touchDiff > 0 && window.scrollY === 0) {
+    pullToRefresh.classList.add("visible");
+    e.preventDefault();
+  }
+});
+document.addEventListener("touchend", (e) => {
+  if (pullToRefresh.classList.contains("visible")) {
+    pullToRefresh.classList.remove("visible");
+    location.reload();
+  }
+});
