@@ -118,45 +118,49 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	}
 }
 
-var item_quantity_input_listener;
 function get_selected_objects() {
 	if (!canvas) return;
 	console.log("called get_selected_objects()");
 
 	canvas.on('mouse:up', function(event) {
 		const selected_object = canvas.getActiveObject();
-		if (selected_object && selected_object.group_id) {
-			console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
-			dialog_open("item_order_quantity_dialog");
-			// update menu_items
-			get_menu_items();
-
-			const object_group_id = selected_object.group_id;
-			menu_items.forEach(item => {
-				if (item.item_id == object_group_id) {
-					const item_name_span = document.getElementById("item_name");
-					const item_price_span = document.getElementById("item_price");
-					const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
-					const item_quantity_select = document.getElementById("item_quantity");
-
-					item_name_span.textContent = item.item_name;
-					item_price_span.textContent = item.item_price;
-					item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value
-
-					if (item_quantity_input_listener) {
-						item_quantity_select.removeEventListener("change", item_quantity_input_listener);
-						item_quantity_select.value = 1;
-						item_cost_by_quantity_span.textContent = item.item_price;
-					}
-					item_quantity_input_listener = function() {
-						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value
-					}
-					item_quantity_select.addEventListener("change", item_quantity_input_listener);
-
-				}
-			})
-		}
+		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
+		item_quantity_dialog(selected_object);
 	});
+}
+
+var item_quantity_input_listener;
+function item_quantity_dialog(selected_object) {
+	if (selected_object && selected_object.group_id) {
+		dialog_open("item_order_quantity_dialog");
+		// update menu_items
+		get_menu_items();
+
+		const object_group_id = selected_object.group_id;
+		menu_items.forEach(item => {
+			if (item.item_id == object_group_id) {
+				const item_name_span = document.getElementById("item_name");
+				const item_price_span = document.getElementById("item_price");
+				const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
+				const item_quantity_select = document.getElementById("item_quantity");
+
+				item_name_span.textContent = item.item_name;
+				item_price_span.textContent = item.item_price;
+				item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value
+
+				if (item_quantity_input_listener) {
+					item_quantity_select.removeEventListener("change", item_quantity_input_listener);
+					item_quantity_select.value = 1;
+					item_cost_by_quantity_span.textContent = item.item_price;
+				}
+				item_quantity_input_listener = function() {
+					item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value
+				}
+				item_quantity_select.addEventListener("change", item_quantity_input_listener);
+
+			}
+		})
+	}
 }
 
 function dialog_open(element_id) {
