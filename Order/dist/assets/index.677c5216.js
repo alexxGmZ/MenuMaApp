@@ -43,31 +43,40 @@ function is_valid_ipv4(ip) {
   const ipv4_pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
   return ipv4_pattern.test(ip);
 }
-var screenWidth = window.screen.width;
-var screenHeight = window.screen.height;
-var devicePixelRatio = window.devicePixelRatio || 1;
-var actualScreenWidth = screenWidth * devicePixelRatio;
-var actualScreenHeight = screenHeight * devicePixelRatio;
-console.log("Screen Width: " + actualScreenWidth);
-console.log("Screen Height: " + actualScreenHeight);
-document.getElementById("screen_width").textContent = actualScreenWidth;
-document.getElementById("screen_height").textContent = actualScreenHeight;
-const pullToRefresh = document.querySelector(".pull-to-refresh");
-let touchstartY = 0;
-document.addEventListener("touchstart", (e) => {
-  touchstartY = e.touches[0].clientY;
+window.addEventListener("DOMContentLoaded", function() {
+  toggle_info();
+  screen_resolution();
 });
-document.addEventListener("touchmove", (e) => {
-  const touchY = e.touches[0].clientY;
-  const touchDiff = touchY - touchstartY;
-  if (touchDiff > 0 && window.scrollY === 0) {
-    pullToRefresh.classList.add("visible");
-    e.preventDefault();
+function screen_resolution() {
+  var screenWidth = window.screen.width;
+  var screenHeight = window.screen.height;
+  var devicePixelRatio = window.devicePixelRatio || 1;
+  var actualScreenWidth = screenWidth * devicePixelRatio;
+  var actualScreenHeight = screenHeight * devicePixelRatio;
+  console.log("Screen Width: " + actualScreenWidth);
+  console.log("Screen Height: " + actualScreenHeight);
+  document.getElementById("screen_width").textContent = actualScreenWidth;
+  document.getElementById("screen_height").textContent = actualScreenHeight;
+}
+function toggle_info() {
+  const info_hidden_div = document.getElementById("info_hidden");
+  const info_show_div = document.getElementById("info_show");
+  const info_show_button = document.getElementById("info_show_button");
+  if (info_show_button) {
+    info_show_button.addEventListener("click", function() {
+      info_hidden_div.classList.add("hidden");
+      info_hidden_div.classList.remove("flex");
+      info_show_div.classList.remove("hidden");
+      info_show_div.classList.add("flex");
+    });
   }
-});
-document.addEventListener("touchend", (e) => {
-  if (pullToRefresh.classList.contains("visible")) {
-    pullToRefresh.classList.remove("visible");
-    location.reload();
+  const info_hide_button = document.getElementById("info_hide_button");
+  if (info_hide_button) {
+    info_hide_button.addEventListener("click", function() {
+      info_hidden_div.classList.remove("hidden");
+      info_hidden_div.classList.add("flex");
+      info_show_div.classList.add("hidden");
+      info_show_div.classList.remove("flex");
+    });
   }
-});
+}

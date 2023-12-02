@@ -171,6 +171,7 @@ function item_quantity_dialog(selected_object) {
 						item_cost_by_quantity_span.textContent = item.item_price;
 					}
 					item_quantity_input_listener = function() {
+						console.log("called item_quantity_input_listener()");
 						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
 						item_quantity_count.textContent = item_quantity_range.value;
 					}
@@ -183,6 +184,7 @@ function item_quantity_dialog(selected_object) {
 					}
 					item_quantity_minus_listener = function() {
 						if (parseInt(item_quantity_range.value) <= item_quantity_range_min) return;
+						console.log("called item_quantity_minus_listener()");
 						item_quantity_range.value = parseInt(item_quantity_range.value) - item_quantity_range_step;
 						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
 						item_quantity_count.textContent = item_quantity_range.value;
@@ -196,6 +198,7 @@ function item_quantity_dialog(selected_object) {
 					}
 					item_quantity_plus_listener = function() {
 						if (parseInt(item_quantity_range.value) >= item_quantity_range_max) return;
+						console.log("called item_quantity_plus_listener()");
 						item_quantity_range.value = parseInt(item_quantity_range.value) + item_quantity_range_step;
 						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
 						item_quantity_count.textContent = item_quantity_range.value;

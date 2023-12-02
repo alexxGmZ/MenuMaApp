@@ -19,39 +19,47 @@
 	<link rel="stylesheet" href="./css/pull_to_refresh.css" />
 </head>
 
-<body>
+<body class="pt-6">
+	<!--
 	<div class="pull-to-refresh">
 		<img class="animate-spin h-16 w-16" src="./assets/svg/spinner-loading-dots-svgrepo-com.svg" alt="">
 	</div>
+	-->
 
-	<nav>
-		<h1 class="text-center text-xl">MenuMaApp Order</h1>
-	</nav>
-
-	<br>
-
-	<h1 class="font-bold">Screen Resolution:</h1>
-	<p>Width: <b id="screen_width" class="font-bold"></b></p>
-	<p>Height: <b id="screen_height" class="font-bold"></b></p>
+	<h1 class="text-center font-bold text-2xl mb-3">MenuMaApp: Order</h1>
 
 	<br>
 
-	<div>
-		<label for="server_ip" class="font-bold">Server LAN IP:</label>
-		<input type="text" id="server_ip" class="">
-		<br>
-
-		<label for="api_token" class="font-bold">Token:</label>
-		<input type="text" id="api_token" class="">
-		<br>
-		<button id="connect_button">Connect</button>
+	<div class="border-2 rounded-lg drop-shadow-lg mx-auto max-w-xs py-5">
+		<center>
+			<h1 class="mb-3 font-bold text-xl">Connect To A Server</h1>
+			<input type="text" id="server_ip" placeholder="Server LAN IP" class="border text-center rounded-2xl mb-3 h-12">
+			<input type="text" id="api_token" placeholder="Token" class="border text-center rounded-2xl h-12 mb-5">
+			<br>
+			<button id="connect_button" class="border px-4 rounded-lg">Connect</button>
+		</center>
 	</div>
 
-	<br>
+	<div class="fixed bottom-0 ml-2 mb-2">
+		<div id="info_hidden" class="flex pt-2">
+			<button id="info_show_button">
+				<img src="assets/svg/info-square-svgrepo-com.svg" width="25px">
+			</button>
+		</div>
+		<div id="info_show" class="hidden">
+			<button id="info_hide_button" class="mr-3">
+				<img src="assets/svg/info-square-svgrepo-com(1).svg" width="25px">
+			</button>
+			<h1 class="font-bold mr-2">Resolution:</h1>
+			<p class="mr-2">W: <b id="screen_width" class="font-bold"></b></p>
+			<p>H: <b id="screen_height" class="font-bold"></b></p>
+		</div>
+	</div>
+
 
 	<script src="./js/connect_to_server.js" type="module"></script>
 	<script src="./js/get_screen_resolution.js" type="module"></script>
-	<script src="./js/pull_to_refresh.js" type="module"></script>
+	<!-- <script src="./js/pull_to_refresh.js" type="module"></script> -->
 	<script src="./js/statusbar.js" type="module"></script>
 </body>
 

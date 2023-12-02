@@ -15980,7 +15980,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.1c4d94f4.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.6a114c2e.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
@@ -16108,22 +16108,21 @@ function item_quantity_dialog(selected_object) {
         const item_quantity_plus = document.getElementById("item_quantity_plus");
         item_name_span.textContent = item.item_name;
         item_price_span.textContent = item.item_price;
-        item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+        item_cost_by_quantity_span.textContent = item.item_price;
         item_quantity_count.textContent = item_quantity_range.value;
         if (item_quantity_range) {
           if (item_quantity_input_listener) {
             item_quantity_range.removeEventListener("input", item_quantity_input_listener);
-            console.log("remove listener for item_quantity_range");
             item_quantity_count.textContent = 1;
             item_quantity_range.value = 1;
             item_cost_by_quantity_span.textContent = item.item_price;
           }
           item_quantity_input_listener = function() {
+            console.log("called item_quantity_input_listener()");
             item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
             item_quantity_count.textContent = item_quantity_range.value;
           };
           item_quantity_range.addEventListener("input", item_quantity_input_listener);
-          console.log("add listener for item_quantity_range");
         }
         if (item_quantity_minus) {
           if (item_quantity_minus_listener) {
@@ -16132,8 +16131,8 @@ function item_quantity_dialog(selected_object) {
           item_quantity_minus_listener = function() {
             if (parseInt(item_quantity_range.value) <= item_quantity_range_min)
               return;
+            console.log("called item_quantity_minus_listener()");
             item_quantity_range.value = parseInt(item_quantity_range.value) - item_quantity_range_step;
-            console.log(item_quantity_range.value);
             item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
             item_quantity_count.textContent = item_quantity_range.value;
           };
@@ -16146,8 +16145,8 @@ function item_quantity_dialog(selected_object) {
           item_quantity_plus_listener = function() {
             if (parseInt(item_quantity_range.value) >= item_quantity_range_max)
               return;
+            console.log("called item_quantity_plus_listener()");
             item_quantity_range.value = parseInt(item_quantity_range.value) + item_quantity_range_step;
-            console.log(item_quantity_range.value);
             item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
             item_quantity_count.textContent = item_quantity_range.value;
           };

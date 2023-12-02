@@ -1,13 +1,17 @@
 {
-  "appId": "com.menumaapp.order",
-  "appName": "MenuMaApp Order",
-  "webDir": "dist",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    },
-	 "CapacitorHTTP": {
-		"enabled": true
-	 }
-  }
+	"appId": "com.menumaapp.order",
+	"appName": "MenuMaApp Order",
+	"webDir": "dist",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		},
+		"CapacitorHTTP": {
+			"enabled": true
+		},
+		"Keyboard": {
+			"resize": "body",
+			"resizeOnFullScreen": true
+		}
+	}
 }
