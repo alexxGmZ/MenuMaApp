@@ -127,6 +127,7 @@ function get_selected_objects() {
 	canvas.on('mouse:up', function(event) {
 		hideStatusBar();
 		const selected_object = canvas.getActiveObject();
+		// open quantity dialog when an opbject with group_id property is touched
 		item_quantity_dialog(selected_object);
 	});
 }
@@ -159,15 +160,12 @@ function item_quantity_dialog(selected_object) {
 
 				item_name_span.textContent = item.item_name;
 				item_price_span.textContent = item.item_price;
-				item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+				item_cost_by_quantity_span.textContent = item.item_price;
 				item_quantity_count.textContent = item_quantity_range.value;
-
-
 
 				if (item_quantity_range) {
 					if (item_quantity_input_listener) {
 						item_quantity_range.removeEventListener("input", item_quantity_input_listener);
-						console.log("remove listener for item_quantity_range");
 						item_quantity_count.textContent = 1
 						item_quantity_range.value = 1;
 						item_cost_by_quantity_span.textContent = item.item_price;
@@ -177,7 +175,6 @@ function item_quantity_dialog(selected_object) {
 						item_quantity_count.textContent = item_quantity_range.value;
 					}
 					item_quantity_range.addEventListener("input", item_quantity_input_listener);
-					console.log("add listener for item_quantity_range");
 				}
 
 				if (item_quantity_minus) {
@@ -186,10 +183,7 @@ function item_quantity_dialog(selected_object) {
 					}
 					item_quantity_minus_listener = function() {
 						if (parseInt(item_quantity_range.value) <= item_quantity_range_min) return;
-
 						item_quantity_range.value = parseInt(item_quantity_range.value) - item_quantity_range_step;
-						console.log(item_quantity_range.value);
-
 						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
 						item_quantity_count.textContent = item_quantity_range.value;
 					}
@@ -202,11 +196,8 @@ function item_quantity_dialog(selected_object) {
 					}
 					item_quantity_plus_listener = function() {
 						if (parseInt(item_quantity_range.value) >= item_quantity_range_max) return;
-
 						item_quantity_range.value = parseInt(item_quantity_range.value) + item_quantity_range_step;
-						console.log(item_quantity_range.value);
 						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
-
 						item_quantity_count.textContent = item_quantity_range.value;
 					}
 					item_quantity_plus.addEventListener("click", item_quantity_plus_listener);
