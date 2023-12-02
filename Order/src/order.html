@@ -34,8 +34,17 @@
 		<label for="item_quantity">Quantity:</label>
 		<span id="item_quantity_count" class="font-bold"></span>
 		<br>
+		<br>
 
-		<input id="item_quantity_range" type="range" value="1" min="1" max="50" class="w-56">
+		<div class="flex">
+			<button id="item_quantity_minus" class="mr-3 p-1 drop-shadow-md border rounded-lg">
+				<img src="./assets/svg/minus-circle-1442-svgrepo-com.svg" width="10px" alt="">
+			</button>
+			<input id="item_quantity_range" type="range" value="1" min="1" max="30" step="1" class="w-56 mr-3">
+			<button id="item_quantity_plus" class="p-1 drop-shadow-md border rounded-lg">
+				<img src="./assets/svg/plus-circle-1441-svgrepo-com.svg" width="10px" alt="">
+			</button>
+		</div>
 		<br><br>
 
 		<center>
@@ -44,8 +53,7 @@
 		</center>
 	</dialog>
 
-	<aside id="sidebar"
-		class="fixed touch-none top-0 left-0 z-40">
+	<aside id="sidebar" class="fixed touch-none top-0 left-0 z-40">
 		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
 			<div class="py-2 pl-2">
 				<p>items ordered list</p>

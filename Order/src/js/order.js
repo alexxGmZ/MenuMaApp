@@ -16,6 +16,7 @@ const canvas_css_classes = "border-b";
 
 let menu_items;
 
+// forcse screen orientation to landscape
 window.screen.orientation.lock('landscape');
 window.addEventListener("DOMContentLoaded", () => {
 	hideStatusBar();
@@ -131,6 +132,8 @@ function get_selected_objects() {
 }
 
 var item_quantity_input_listener;
+var item_quantity_minus_listener;
+var item_quantity_plus_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
 		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
@@ -145,24 +148,69 @@ function item_quantity_dialog(selected_object) {
 				const item_price_span = document.getElementById("item_price");
 				const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
 				const item_quantity_count = document.getElementById("item_quantity_count");
+
 				const item_quantity_range = document.getElementById("item_quantity_range");
+				const item_quantity_range_min = parseInt(item_quantity_range.min);
+				const item_quantity_range_max = parseInt(item_quantity_range.max);
+				const item_quantity_range_step = parseInt(item_quantity_range.step);
+
+				const item_quantity_minus = document.getElementById("item_quantity_minus");
+				const item_quantity_plus = document.getElementById("item_quantity_plus");
 
 				item_name_span.textContent = item.item_name;
 				item_price_span.textContent = item.item_price;
 				item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
 				item_quantity_count.textContent = item_quantity_range.value;
 
-				if (item_quantity_input_listener) {
-					item_quantity_range.removeEventListener("input", item_quantity_input_listener);
-					item_quantity_count.textContent = 1
-					item_quantity_range.value = 1;
-					item_cost_by_quantity_span.textContent = item.item_price;
+
+
+				if (item_quantity_range) {
+					if (item_quantity_input_listener) {
+						item_quantity_range.removeEventListener("input", item_quantity_input_listener);
+						console.log("remove listener for item_quantity_range");
+						item_quantity_count.textContent = 1
+						item_quantity_range.value = 1;
+						item_cost_by_quantity_span.textContent = item.item_price;
+					}
+					item_quantity_input_listener = function() {
+						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+						item_quantity_count.textContent = item_quantity_range.value;
+					}
+					item_quantity_range.addEventListener("input", item_quantity_input_listener);
+					console.log("add listener for item_quantity_range");
 				}
-				item_quantity_input_listener = function() {
-					item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
-					item_quantity_count.textContent = item_quantity_range.value;
+
+				if (item_quantity_minus) {
+					if (item_quantity_minus_listener) {
+						item_quantity_minus.removeEventListener("click", item_quantity_minus_listener);
+					}
+					item_quantity_minus_listener = function() {
+						if (parseInt(item_quantity_range.value) <= item_quantity_range_min) return;
+
+						item_quantity_range.value = parseInt(item_quantity_range.value) - item_quantity_range_step;
+						console.log(item_quantity_range.value);
+
+						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+						item_quantity_count.textContent = item_quantity_range.value;
+					}
+					item_quantity_minus.addEventListener("click", item_quantity_minus_listener);
 				}
-				item_quantity_range.addEventListener("input", item_quantity_input_listener);
+
+				if (item_quantity_plus) {
+					if (item_quantity_plus_listener) {
+						item_quantity_plus.removeEventListener("click", item_quantity_plus_listener);
+					}
+					item_quantity_plus_listener = function() {
+						if (parseInt(item_quantity_range.value) >= item_quantity_range_max) return;
+
+						item_quantity_range.value = parseInt(item_quantity_range.value) + item_quantity_range_step;
+						console.log(item_quantity_range.value);
+						item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+
+						item_quantity_count.textContent = item_quantity_range.value;
+					}
+					item_quantity_plus.addEventListener("click", item_quantity_plus_listener);
+				}
 			}
 		})
 
