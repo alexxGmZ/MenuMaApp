@@ -14,11 +14,11 @@
 	<meta name="theme-color" content="#31d53d" />
 </head>
 
-<body>
+<body class="">
 	<div id="canvas_area" class="">
 	</div>
 
-	<dialog id="item_order_quantity_dialog" class="py-3 px-5 rounded-lg drop-shadow-lg">
+	<dialog id="item_order_quantity_dialog" class="hidden touch-none py-3 px-5 rounded-lg drop-shadow-lg">
 		<label for="item_name">Item:</label>
 		<span id="item_name" class="font-bold"></span>
 		<br>
@@ -32,13 +32,10 @@
 		<br>
 
 		<label for="item_quantity">Quantity:</label>
-		<select id="item_quantity">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-		</select>
+		<span id="item_quantity_count" class="font-bold"></span>
+		<br>
+
+		<input id="item_quantity_range" type="range" value="1" min="1" max="50" class="w-56">
 		<br><br>
 
 		<center>
@@ -48,7 +45,7 @@
 	</dialog>
 
 	<aside id="sidebar"
-		class="fixed top-0 left-0 z-40">
+		class="fixed touch-none top-0 left-0 z-40">
 		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
 			<div class="py-2 pl-2">
 				<p>items ordered list</p>

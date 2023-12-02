@@ -16,34 +16,12 @@ const canvas_css_classes = "border-b";
 
 let menu_items;
 
+window.screen.orientation.lock('landscape');
 window.addEventListener("DOMContentLoaded", () => {
 	hideStatusBar();
 	keepAwake();
+	toggle_sidebar();
 
-	const cancel_order_quantity_dialog_button = document.getElementById("cancel_order_quantity_dialog");
-	if (cancel_order_quantity_dialog_button) {
-		cancel_order_quantity_dialog_button.addEventListener("click", function() {
-			dialog_close("item_order_quantity_dialog");
-			canvas.discardActiveObject();
-		})
-	}
-
-	const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
-	if (toggle_sidebar_full){
-		toggle_sidebar_full.addEventListener("click", function() {
-			document.getElementById("minimal_sidebar").classList.add("hidden");
-			document.getElementById("full_sidebar").classList.remove("hidden");
-			document.getElementById("full_sidebar").classList.add("grid");
-		})
-	}
-
-	const toggle_sidebar_min = document.getElementById("toggle_sidebar_min");
-	if (toggle_sidebar_min) {
-		toggle_sidebar_min.addEventListener("click", function() {
-			document.getElementById("minimal_sidebar").classList.remove("hidden");
-			document.getElementById("full_sidebar").classList.add("hidden");
-		})
-	}
 })
 
 function get_menu_design() {
@@ -166,23 +144,54 @@ function item_quantity_dialog(selected_object) {
 				const item_name_span = document.getElementById("item_name");
 				const item_price_span = document.getElementById("item_price");
 				const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
-				const item_quantity_select = document.getElementById("item_quantity");
+				const item_quantity_count = document.getElementById("item_quantity_count");
+				const item_quantity_range = document.getElementById("item_quantity_range");
 
 				item_name_span.textContent = item.item_name;
 				item_price_span.textContent = item.item_price;
-				item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value
+				item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+				item_quantity_count.textContent = item_quantity_range.value;
 
 				if (item_quantity_input_listener) {
-					item_quantity_select.removeEventListener("change", item_quantity_input_listener);
-					item_quantity_select.value = 1;
+					item_quantity_range.removeEventListener("input", item_quantity_input_listener);
+					item_quantity_count.textContent = 1
+					item_quantity_range.value = 1;
 					item_cost_by_quantity_span.textContent = item.item_price;
 				}
 				item_quantity_input_listener = function() {
-					item_cost_by_quantity_span.textContent = item.item_price * item_quantity_select.value
+					item_cost_by_quantity_span.textContent = item.item_price * item_quantity_range.value;
+					item_quantity_count.textContent = item_quantity_range.value;
 				}
-				item_quantity_select.addEventListener("change", item_quantity_input_listener);
-
+				item_quantity_range.addEventListener("input", item_quantity_input_listener);
 			}
+		})
+
+		// cancel button
+		const cancel_order_quantity_dialog_button = document.getElementById("cancel_order_quantity_dialog");
+		if (cancel_order_quantity_dialog_button) {
+			cancel_order_quantity_dialog_button.addEventListener("click", function() {
+				dialog_close("item_order_quantity_dialog");
+				canvas.discardActiveObject();
+			})
+		}
+	}
+}
+
+function toggle_sidebar() {
+	const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
+	if (toggle_sidebar_full) {
+		toggle_sidebar_full.addEventListener("click", function() {
+			document.getElementById("minimal_sidebar").classList.add("hidden");
+			document.getElementById("full_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("grid");
+		})
+	}
+
+	const toggle_sidebar_min = document.getElementById("toggle_sidebar_min");
+	if (toggle_sidebar_min) {
+		toggle_sidebar_min.addEventListener("click", function() {
+			document.getElementById("minimal_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("hidden");
 		})
 	}
 }
@@ -191,6 +200,7 @@ function dialog_open(element_id) {
 	console.log(`called dialog_open(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.classList.add("active-dialog");
+	fav_dialog.classList.remove("hidden");
 	fav_dialog.showModal();
 }
 
@@ -198,6 +208,7 @@ function dialog_close(element_id) {
 	console.log(`called dialog_close(${element_id})`);
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.classList.remove("active-dialog");
+	fav_dialog.classList.add("hidden");
 	fav_dialog.close();
 }
 

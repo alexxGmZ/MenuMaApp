@@ -565,6 +565,9 @@ video {
 .w-16 {
   width: 4rem;
 }
+.w-56 {
+  width: 14rem;
+}
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
@@ -576,6 +579,9 @@ video {
 }
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+.touch-none {
+  touch-action: none;
 }
 .grid-cols-\[500px_auto\] {
   grid-template-columns: 500px auto;

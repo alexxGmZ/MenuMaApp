@@ -12,16 +12,16 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.4859950a.js"></script>
+  <script type="module" crossorigin src="/assets/order.a1da88e3.js"></script>
   <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
-  <link rel="stylesheet" href="/assets/statusbar.e33ee517.css">
+  <link rel="stylesheet" href="/assets/statusbar.64d4545d.css">
 </head>
 
-<body>
+<body class="">
 	<div id="canvas_area" class="">
 	</div>
 
-	<dialog id="item_order_quantity_dialog" class="py-3 px-5 rounded-lg drop-shadow-lg">
+	<dialog id="item_order_quantity_dialog" class="hidden touch-none py-3 px-5 rounded-lg drop-shadow-lg">
 		<label for="item_name">Item:</label>
 		<span id="item_name" class="font-bold"></span>
 		<br>
@@ -35,13 +35,10 @@
 		<br>
 
 		<label for="item_quantity">Quantity:</label>
-		<select id="item_quantity">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-		</select>
+		<span id="item_quantity_count" class="font-bold"></span>
+		<br>
+
+		<input id="item_quantity_range" type="range" value="1" min="1" max="50" class="w-56">
 		<br><br>
 
 		<center>
@@ -51,7 +48,7 @@
 	</dialog>
 
 	<aside id="sidebar"
-		class="fixed top-0 left-0 z-40">
+		class="fixed touch-none top-0 left-0 z-40">
 		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
 			<div class="py-2 pl-2">
 				<p>items ordered list</p>
