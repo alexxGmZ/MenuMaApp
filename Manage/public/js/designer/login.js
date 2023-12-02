@@ -5,6 +5,7 @@ function login_dialog_open(redirect_site) {
 
 	const fav_dialog = document.getElementById("login_dialog");
 	fav_dialog.classList.add("active-dialog");
+	fav_dialog.classList.remove("hidden");
 
 	document.getElementById("login_redirect_site").textContent = redirect_site;
 

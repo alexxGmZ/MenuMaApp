@@ -79,7 +79,7 @@
 	</nav>
 
 	<!-- create canvas dialog -->
-	<dialog id="create_canvas_dialog" class="rounded-lg">
+	<dialog id="create_canvas_dialog" class="hidden rounded-lg">
 		<h1 class="font-bold text-center">Generate Canvas</h1>
 		<br>
 
@@ -126,7 +126,7 @@
 	</dialog>
 
 	<!-- login dialog -->
-	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
+	<dialog id="login_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
 		<p id="login_redirect_site" class="hidden"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
@@ -158,7 +158,7 @@
 	</dialog>
 
 	<!-- invalid login username dialog -->
-	<dialog id="login_invalid_username_dialog">
+	<dialog id="login_invalid_username_dialog" class="hidden">
 		<h1>This username doesn't exists!</h1>
 		<button onclick="dialog_close('login_invalid_username_dialog')"
 			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -167,7 +167,7 @@
 	</dialog>
 
 	<!-- invalid login password dialog -->
-	<dialog id="login_invalid_password_dialog">
+	<dialog id="login_invalid_password_dialog" class="hidden">
 		<h1>Password doesn't matched!</h1>
 		<button onclick="dialog_close('login_invalid_password_dialog')"
 			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -176,7 +176,7 @@
 	</dialog>
 
 	<!-- when the user lacks access privilege -->
-	<dialog id="lack_access_privilege_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="lack_access_privilege_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
 		<button onclick="dialog_close('lack_access_privilege_dialog')"
 			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -244,7 +244,7 @@
 	</aside>
 
 	<!-- sync design dialog -->
-	<dialog id="sync_design_dialog" class="rounded-lg mx-auto drop-shadow-lg">
+	<dialog id="sync_design_dialog" class="hidden rounded-lg mx-auto drop-shadow-lg">
 		<p>Sync to connected Kiosk Devices?</p>
 
 		<p class="whitespace-pre-line">
@@ -262,7 +262,7 @@
 	</dialog>
 
 	<!-- load current synced design dialog -->
-	<dialog id="load_current_synced_design_dialog" class="rounded-lg mx-auto drop-shadow-lg">
+	<dialog id="load_current_synced_design_dialog" class="hidden rounded-lg mx-auto drop-shadow-lg">
 		<p>Load current synced design?</p>
 
 		<p class="whitespace-pre-line">
@@ -278,7 +278,7 @@
 	</dialog>
 
 	<!-- generate item card dialog -->
-	<dialog id="generate_item_card_dialog" class="rounded-lg mx-auto drop-shadow-lg">
+	<dialog id="generate_item_card_dialog" class="hidden rounded-lg mx-auto drop-shadow-lg">
 		<table id="item_card_table" class="">
 			<thead>
 				<tr>

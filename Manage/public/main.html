@@ -93,7 +93,7 @@
 	<br><br>
 
 	<!-- Cancel Order Dialog -->
-	<dialog id="cancel_order_dialog" class="rounded-lg drop-shadow-lg bg-red-200 mx-auto">
+	<dialog id="cancel_order_dialog" class="hidden rounded-lg drop-shadow-lg bg-red-200 mx-auto">
 		<p class="text-center">You are about to cancel a order!</p>
 		<div class="grid grid-cols-2 gap-4 place-content-center">
 			<div>
@@ -138,7 +138,7 @@
 	</dialog>
 
 	<!--Cancel Order Success Dialog-->
-	<dialog id="cancel_order_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="cancel_order_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span>Order #</span>
 		<span id="cancel_order_num_placeholder">Order Number</span>
 		<span> is successfully canceled!</span><br>
@@ -149,7 +149,7 @@
 	</dialog>
 
 	<!--Done Order Success Dialog-->
-	<dialog id="done_order_success_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="done_order_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span>Order #</span>
 		<span id="done_order_num_placeholder">Order Number</span>
 		<span> is successfully served!</span><br>
@@ -160,7 +160,7 @@
 	</dialog>
 
 	<!-- login dialog -->
-	<dialog id="login_dialog" class="rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
+	<dialog id="login_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
 		<p id="login_redirect_site" class="hidden"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
@@ -192,7 +192,7 @@
 	</dialog>
 
 	<!-- invalid login username dialog -->
-	<dialog id="login_invalid_username_dialog">
+	<dialog id="login_invalid_username_dialog" class="hidden">
 		<h1>This username doesn't exists!</h1>
 		<button onclick="dialog_close('login_invalid_username_dialog')"
 			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -201,7 +201,7 @@
 	</dialog>
 
 	<!-- invalid login password dialog -->
-	<dialog id="login_invalid_password_dialog">
+	<dialog id="login_invalid_password_dialog" class="hidden">
 		<h1>Password doesn't matched!</h1>
 		<button onclick="dialog_close('login_invalid_password_dialog')"
 			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
@@ -210,7 +210,7 @@
 	</dialog>
 
 	<!-- when the user lacks access privilege -->
-	<dialog id="lack_access_privilege_dialog" class="rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="lack_access_privilege_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
 		<button onclick="dialog_close('lack_access_privilege_dialog')"
 			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
