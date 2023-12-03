@@ -17,9 +17,9 @@ CREATE TABLE registered_employees(
 -- name: admin
 -- password: password
 INSERT INTO registered_employees
-   (employee_id, name, `password_hash`, design_priv, inventory_priv, view_reports_priv, manage_employee_priv)
+   (employee_id, name, `password_hash`, design_priv, inventory_priv, view_reports_priv, manage_employee_priv, manage_devices_priv)
 VALUES
-   (1, "admin", SHA2("password", 256), 1, 1, 1, 1);
+   (1, "admin", SHA2("password", 256), 1, 1, 1, 1, 1);
 
 CREATE TABLE menu_items(
    item_id INT AUTO_INCREMENT,
