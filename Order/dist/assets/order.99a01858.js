@@ -15980,7 +15980,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.6a114c2e.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.70f6abf2.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
@@ -15996,14 +15996,17 @@ console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
-let canvas;
+var canvas;
 const canvas_css_classes = "border-b";
-let menu_items;
+var menu_items;
+var picked_items = [];
 window.screen.orientation.lock("landscape");
 window.addEventListener("DOMContentLoaded", () => {
+  get_menu_design();
   hideStatusBar();
   keepAwake();
   toggle_sidebar();
+  display_items_picked();
 });
 function get_menu_design() {
   console.log("called get_menu_design()");
@@ -16012,7 +16015,6 @@ function get_menu_design() {
       url: `${server_url}:${server_port}/menu_design?api_token=${server_token}`
     }).then((response) => {
       const json_data = response.data;
-      console.log(json_data);
       generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function() {
         canvas.loadFromJSON(json_data.canvas_objects, function() {
           canvas.renderAll();
@@ -16048,7 +16050,6 @@ function get_menu_items() {
     }).then((response) => {
       const json_data = response.data;
       menu_items = json_data;
-      console.log("menu_items:", menu_items);
       resolve();
     }).catch((error) => {
       console.error(error);
@@ -16088,6 +16089,7 @@ function get_selected_objects() {
 var item_quantity_input_listener;
 var item_quantity_minus_listener;
 var item_quantity_plus_listener;
+var item_pick_button_listener;
 function item_quantity_dialog(selected_object) {
   if (selected_object && selected_object.group_id) {
     console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
@@ -16104,11 +16106,9 @@ function item_quantity_dialog(selected_object) {
         const item_quantity_range_min = parseInt(item_quantity_range.min);
         const item_quantity_range_max = parseInt(item_quantity_range.max);
         const item_quantity_range_step = parseInt(item_quantity_range.step);
-        const item_quantity_minus = document.getElementById("item_quantity_minus");
-        const item_quantity_plus = document.getElementById("item_quantity_plus");
         item_name_span.textContent = item.item_name;
         item_price_span.textContent = item.item_price;
-        item_cost_by_quantity_span.textContent = item.item_price;
+        item_cost_by_quantity_span.textContent = item.item_price * parseInt(item_quantity_range.value);
         item_quantity_count.textContent = item_quantity_range.value;
         if (item_quantity_range) {
           if (item_quantity_input_listener) {
@@ -16124,6 +16124,7 @@ function item_quantity_dialog(selected_object) {
           };
           item_quantity_range.addEventListener("input", item_quantity_input_listener);
         }
+        const item_quantity_minus = document.getElementById("item_quantity_minus");
         if (item_quantity_minus) {
           if (item_quantity_minus_listener) {
             item_quantity_minus.removeEventListener("click", item_quantity_minus_listener);
@@ -16138,6 +16139,7 @@ function item_quantity_dialog(selected_object) {
           };
           item_quantity_minus.addEventListener("click", item_quantity_minus_listener);
         }
+        const item_quantity_plus = document.getElementById("item_quantity_plus");
         if (item_quantity_plus) {
           if (item_quantity_plus_listener) {
             item_quantity_plus.removeEventListener("click", item_quantity_plus_listener);
@@ -16152,6 +16154,28 @@ function item_quantity_dialog(selected_object) {
           };
           item_quantity_plus.addEventListener("click", item_quantity_plus_listener);
         }
+        const item_pick_button = document.getElementById("item_pick_button");
+        if (item_pick_button) {
+          if (item_pick_button_listener) {
+            item_pick_button.removeEventListener("click", item_pick_button_listener);
+          }
+          item_pick_button_listener = function() {
+            console.log("called item_pick_button_listener()");
+            dialog_close("item_order_quantity_dialog");
+            let item_details = {
+              "item_id": item.item_id,
+              "item_name": item.item_name,
+              "item_price": item.item_price,
+              "item_cost": parseInt(item_cost_by_quantity_span.textContent),
+              "item_quantity": parseInt(item_quantity_count.textContent)
+            };
+            picked_items.push(item_details);
+            console.log(item_details);
+            console.log("picked_items:", picked_items);
+            display_items_picked();
+          };
+          item_pick_button.addEventListener("click", item_pick_button_listener);
+        }
       }
     });
     const cancel_order_quantity_dialog_button = document.getElementById("cancel_order_quantity_dialog");
@@ -16162,6 +16186,26 @@ function item_quantity_dialog(selected_object) {
       });
     }
   }
+}
+function display_items_picked() {
+  console.log("called display_items_picked()");
+  var placeholder = document.querySelector("#items_picked_list");
+  var out = "";
+  for (let item of picked_items) {
+    out += `
+			<tr class="">
+				<td>
+					<button class="">
+						cancel
+					</button>
+				</td>
+				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
+				<td data-column="" class="text-center">${item.item_name}</td>
+				<td data-column="" class="text-center">${item.item_cost}</td>
+			</tr>
+		`;
+  }
+  placeholder.innerHTML = out;
 }
 function toggle_sidebar() {
   const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
@@ -16194,4 +16238,3 @@ function dialog_close(element_id) {
   fav_dialog.classList.add("hidden");
   fav_dialog.close();
 }
-get_menu_design();

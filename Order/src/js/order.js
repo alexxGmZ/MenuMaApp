@@ -11,18 +11,20 @@ const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
 
-let canvas;
+var canvas;
 const canvas_css_classes = "border-b";
 
-let menu_items;
+var menu_items;
+var picked_items = [];
 
 // forcse screen orientation to landscape
 window.screen.orientation.lock('landscape');
 window.addEventListener("DOMContentLoaded", () => {
+	get_menu_design();
 	hideStatusBar();
 	keepAwake();
 	toggle_sidebar();
-
+	display_items_picked();
 })
 
 function get_menu_design() {
@@ -34,8 +36,7 @@ function get_menu_design() {
 			.then(response => {
 				// console.log("Response Status: " + response.status);
 				const json_data = response.data;
-				console.log(json_data);
-
+				// console.log(json_data);
 				generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function() {
 					canvas.loadFromJSON(json_data.canvas_objects, function() {
 						canvas.renderAll(); // Render the canvas
@@ -57,7 +58,6 @@ function get_menu_design() {
 					// NOTE: if there are scaling problems then this might be the culprit
 					const scale = Math.min(window.innerWidth / json_data.canvas_width, window.innerHeight / json_data.canvas_height);
 					canvas.setZoom(scale);
-
 					get_selected_objects();
 					get_menu_items();
 				});
@@ -71,9 +71,9 @@ function get_menu_design() {
 	})
 }
 
-// this might serve as an item verification when ordering
+// NOTE: this might serve as an item verification when ordering
 // it is to make sure that the item exist in the Manage server
-// it will use the menu_items_lite endpoint to keep the data received light
+// it will use the menu_items_lite api endpoint to keep the data received light
 function get_menu_items() {
 	console.log("called get_menu_items()");
 	return new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ function get_menu_items() {
 				// console.log("Response Status: " + response.status);
 				const json_data = response.data;
 				menu_items = json_data;
-				console.log("menu_items:", menu_items);
+				// console.log("menu_items:", menu_items);
 				resolve();
 			})
 			.catch((error) => {
@@ -135,14 +135,16 @@ function get_selected_objects() {
 var item_quantity_input_listener;
 var item_quantity_minus_listener;
 var item_quantity_plus_listener;
+var item_pick_button_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
 		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
+
 		// update menu_items
 		get_menu_items();
-
 		const object_group_id = selected_object.group_id;
 		menu_items.forEach(item => {
+			// codition to make sure that the object exists in the inventory
 			if (item.item_id == object_group_id) {
 				dialog_open("item_order_quantity_dialog");
 				const item_name_span = document.getElementById("item_name");
@@ -155,14 +157,13 @@ function item_quantity_dialog(selected_object) {
 				const item_quantity_range_max = parseInt(item_quantity_range.max);
 				const item_quantity_range_step = parseInt(item_quantity_range.step);
 
-				const item_quantity_minus = document.getElementById("item_quantity_minus");
-				const item_quantity_plus = document.getElementById("item_quantity_plus");
-
+				// initial values to be displayed after opening the dialog
 				item_name_span.textContent = item.item_name;
 				item_price_span.textContent = item.item_price;
-				item_cost_by_quantity_span.textContent = item.item_price;
+				item_cost_by_quantity_span.textContent = item.item_price * parseInt(item_quantity_range.value);
 				item_quantity_count.textContent = item_quantity_range.value;
 
+				// handle quantity range input
 				if (item_quantity_range) {
 					if (item_quantity_input_listener) {
 						item_quantity_range.removeEventListener("input", item_quantity_input_listener);
@@ -178,6 +179,8 @@ function item_quantity_dialog(selected_object) {
 					item_quantity_range.addEventListener("input", item_quantity_input_listener);
 				}
 
+				// handle quantity minus button
+				const item_quantity_minus = document.getElementById("item_quantity_minus");
 				if (item_quantity_minus) {
 					if (item_quantity_minus_listener) {
 						item_quantity_minus.removeEventListener("click", item_quantity_minus_listener);
@@ -192,6 +195,8 @@ function item_quantity_dialog(selected_object) {
 					item_quantity_minus.addEventListener("click", item_quantity_minus_listener);
 				}
 
+				// handle quantity plus button
+				const item_quantity_plus = document.getElementById("item_quantity_plus");
 				if (item_quantity_plus) {
 					if (item_quantity_plus_listener) {
 						item_quantity_plus.removeEventListener("click", item_quantity_plus_listener);
@@ -205,6 +210,33 @@ function item_quantity_dialog(selected_object) {
 					}
 					item_quantity_plus.addEventListener("click", item_quantity_plus_listener);
 				}
+
+				// handle pick button
+				const item_pick_button = document.getElementById("item_pick_button");
+				if (item_pick_button) {
+					if (item_pick_button_listener) {
+						item_pick_button.removeEventListener("click", item_pick_button_listener);
+					}
+					// NOTE: needs to optimize the function especially when inserting objects
+					// that are already in the picked_items
+					item_pick_button_listener = function() {
+						console.log("called item_pick_button_listener()");
+						dialog_close("item_order_quantity_dialog");
+						// console.log("item_picked:", item);
+						let item_details = {
+							"item_id": item.item_id,
+							"item_name": item.item_name,
+							"item_price": item.item_price,
+							"item_cost": parseInt(item_cost_by_quantity_span.textContent),
+							"item_quantity": parseInt(item_quantity_count.textContent)
+						};
+						picked_items.push(item_details);
+						console.log(item_details);
+						console.log("picked_items:", picked_items);
+						display_items_picked();
+					}
+					item_pick_button.addEventListener("click", item_pick_button_listener);
+				}
 			}
 		})
 
@@ -217,6 +249,28 @@ function item_quantity_dialog(selected_object) {
 			})
 		}
 	}
+}
+
+function display_items_picked() {
+	console.log("called display_items_picked()");
+	var placeholder = document.querySelector("#items_picked_list");
+	var out = "";
+	for (let item of picked_items) {
+		// console.log(item);
+		out += `
+			<tr class="">
+				<td>
+					<button class="">
+						cancel
+					</button>
+				</td>
+				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
+				<td data-column="" class="text-center">${item.item_name}</td>
+				<td data-column="" class="text-center">${item.item_cost}</td>
+			</tr>
+		`
+	}
+	placeholder.innerHTML = out;
 }
 
 function toggle_sidebar() {
@@ -254,4 +308,3 @@ function dialog_close(element_id) {
 	fav_dialog.close();
 }
 
-get_menu_design();

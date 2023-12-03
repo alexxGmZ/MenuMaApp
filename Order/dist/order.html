@@ -12,15 +12,17 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.dc3a1adc.js"></script>
+  <script type="module" crossorigin src="/assets/order.99a01858.js"></script>
   <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
-  <link rel="stylesheet" href="/assets/statusbar.6a114c2e.css">
+  <link rel="stylesheet" href="/assets/statusbar.70f6abf2.css">
 </head>
 
 <body class="">
+	<!-- canvas area -->
 	<div id="canvas_area" class="">
 	</div>
 
+	<!-- item quantity dialog -->
 	<dialog id="item_order_quantity_dialog" class="hidden touch-none py-3 px-5 rounded-lg drop-shadow-lg">
 		<label for="item_name">Item:</label>
 		<span id="item_name" class="font-bold"></span>
@@ -52,15 +54,32 @@
 
 		<center>
 			<button id="cancel_order_quantity_dialog" class="px-2 border border-slate-300 rounded-lg mr-5">Cancel</button>
-			<button id="" class="px-2 border border-slate-300 rounded-lg">Pick</button>
+			<button id="item_pick_button" class="px-2 border border-slate-300 rounded-lg">Pick</button>
 		</center>
 	</dialog>
 
+	<!-- sidebar -->
 	<aside id="sidebar" class="fixed touch-none top-0 left-0 z-40">
 		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
-			<div class="py-2 pl-2">
-				<p>items ordered list</p>
-				<button id="" class="">Order</button>
+			<div class="flex flex-col py-2 pl-2 mr-2">
+				<div class="border rounded-lg h-[90%] mb-5 overflow-y-auto">
+					<!-- items picked table -->
+					<table id="items_picked_table" class="w-full">
+						<thead>
+							<tr class="border-b">
+								<th class="border-r">Action</th>
+								<th class="border-r">Quantity</th>
+								<th class="border-r">Item</th>
+								<th>Cost</th>
+							</tr>
+						</thead>
+						<tbody id="items_picked_list" class="max-h-96">
+						</tbody>
+					</table>
+				</div>
+				<button id="send_order" class="block border justify-center rounded-xl px-3 mx-auto">
+					Order
+				</button>
 			</div>
 			<button id="toggle_sidebar_min" class="bg-slate-300">
 				<img src="/assets/expand-right-double-svgrepo-com.17f41a47.svg" width="20px" style="transform: scaleX(-1)">
