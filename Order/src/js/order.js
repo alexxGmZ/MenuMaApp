@@ -138,13 +138,13 @@ var item_quantity_plus_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
 		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
-		dialog_open("item_order_quantity_dialog");
 		// update menu_items
 		get_menu_items();
 
 		const object_group_id = selected_object.group_id;
 		menu_items.forEach(item => {
 			if (item.item_id == object_group_id) {
+				dialog_open("item_order_quantity_dialog");
 				const item_name_span = document.getElementById("item_name");
 				const item_price_span = document.getElementById("item_price");
 				const item_cost_by_quantity_span = document.getElementById("item_cost_by_quantity");
