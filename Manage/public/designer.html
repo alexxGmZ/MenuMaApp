@@ -11,7 +11,7 @@
 
 <body class="">
 	<!-- top navbar	 -->
-	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
 		<div class="px-3 py-2 lg:px-5 lg:pl-3">
 			<div class="flex">
 				<div class="flex flex-row mr-4">
@@ -186,56 +186,56 @@
 
 	<!-- left sidebar -->
 	<aside id="left_sidebar"
-		class="fixed top-0 left-0 z-40 w-18 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+		class="fixed top-0 left-0 z-40 w-18 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
 		aria-label="Sidebar">
-		<div class="h-full px-2 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+		<div class="h-full px-2 pb-4 overflow-y-auto bg-white">
 			<ul class="space-y-1">
 				<li>
 					<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="./assets/svg/designer/sync-solid-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li class="pb-4">
 					<button onclick="dialog_open('load_current_synced_design_dialog')" title="Load current synced design"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="./assets/svg/designer/import-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/template-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="generate_rectangle()" title="Generate rectangle"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/rectangle-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="generate_circle()" title="Generate circle"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/circle-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="generate_text()" title="Generate a text box"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/text-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="generate_line()" title="Generate a line"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/line-tool-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
 				<li>
 					<button onclick="dialog_open('generate_item_card_dialog'); display_item_cards()"
 						title="Generate item card from items in the inventory"
-						class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
