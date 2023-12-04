@@ -12,9 +12,9 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.bd972702.js"></script>
+  <script type="module" crossorigin src="/assets/order.e748e2eb.js"></script>
   <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
-  <link rel="stylesheet" href="/assets/statusbar.f65d1354.css">
+  <link rel="stylesheet" href="/assets/statusbar.ce0d3f30.css">
 </head>
 
 <body class="">
@@ -67,7 +67,7 @@
 					<table id="items_picked_table" class="w-full">
 						<thead>
 							<tr class="border-b">
-								<th class="border-2 w-auto">Action</th>
+								<th class="border-2 w-auto">Cancel</th>
 								<th class="border-2">Item</th>
 								<th class="border-2">Quantity</th>
 								<th class="border-2">Price</th>
@@ -82,7 +82,7 @@
 					<label for="total_cost">Total</label>
 					<span id="total_cost" class="font-bold ml-auto">0</span>
 				</div>
-				<button id="send_order" class="block border justify-center rounded-xl px-3 mx-auto">
+				<button id="review_order_button" class="block border justify-center rounded-xl px-3 mx-auto">
 					Order
 				</button>
 			</div>
@@ -97,6 +97,52 @@
 		</div>
 	</aside>
 
+
+	<dialog id="review_order_dialog" class="hidden touch-none py-3 px-7 rounded-lg drop-shadow-lg">
+		<h1 class="font-bold mb-2 text-center">Review Order</h1>
+		<div class="flex mb-5">
+			<div class="border mr-2 p-2">
+				<!-- QR code area -->
+				<p>QR Code here</p>
+			</div>
+			<div class="p-2">
+				<label for="order_queue_number">Queue Number:</label>
+				<span id="order_queue_number" class="font-bold">0</span>
+				<br>
+
+				<label for="order_timestamp">Timestamp:</label>
+				<span id="order_timestamp" class="font-bold">time here</span>
+				<br>
+
+				<span>Items:</span>
+				<table class="ml-2 border">
+					<thead>
+						<tr>
+							<th class="border-2">Item</th>
+							<th class="border-2">Quantity</th>
+							<th class="border-2">Price</th>
+							<th class="border-2">Cost</th>
+						</tr>
+					</thead>
+					<tbody id="order_items_list">
+					</tbody>
+				</table>
+				<br>
+
+				<label for="order_total_cost">Total Cost:</label>
+				<span id="order_total_cost" class="font-bold"></span>
+				<br>
+			</div>
+		</div>
+		<center>
+			<button id="cancel_review_order_dialog" class="border rounded-2xl px-3 mr-4">
+				Cancel
+			</button>
+			<button id="order_button" class="border rounded-2xl px-3">
+				Done
+			</button>
+		</center>
+	</dialog>
 
 	
 </body>

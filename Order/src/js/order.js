@@ -319,6 +319,8 @@ var review_order_button_listener;
 function review_picked_items_dialog() {
 	if (picked_items.length == 0) return;
 	console.log("called review_picked_items_dialog()");
+
+	// display review order dialog
 	const review_order_button = document.getElementById("review_order_button");
 	if (review_order_button) {
 		if (review_order_button_listener) {
@@ -330,6 +332,7 @@ function review_picked_items_dialog() {
 		review_order_button.addEventListener("click", review_order_button_listener);
 	}
 
+	// cancel review button
 	const cancel_review_order_dialog = document.getElementById("cancel_review_order_dialog");
 	if (cancel_review_order_dialog) {
 		cancel_review_order_dialog.addEventListener("click", function() {
@@ -337,20 +340,26 @@ function review_picked_items_dialog() {
 		})
 	}
 
+	// display timestamp
+	const order_timestamp = document.getElementById("order_timestamp");
+	order_timestamp.textContent = get_current_timestamp();
+
+	// display ordered items in the dialog
 	var order_items_list = document.querySelector("#order_items_list");
 	var order_items_list_out = ""
 	for (let item of picked_items) {
 		order_items_list_out += `
 			<tr class="border-b">
-				<td data-column="" class="text-center font-bold">${item.item_name}</td>
-				<td data-column="" class="text-center">${item.item_quantity}</td>
-				<td data-column="" class="text-center">${item.item_price}</td>
-				<td data-column="" class="text-center">${item.item_cost}</td>
+				<td data-column="" class="text-center font-bold border-r border-l">${item.item_name}</td>
+				<td data-column="" class="text-center border-r">${item.item_quantity}</td>
+				<td data-column="" class="text-center border-r">${item.item_price}</td>
+				<td data-column="" class="text-center border-r">${item.item_cost}</td>
 			</tr>
 		`
 	}
 	order_items_list.innerHTML = order_items_list_out;
 
+	// display total cost count
 	let total_cost = 0;
 	picked_items.forEach(picked_item => {
 		total_cost += picked_item.item_cost
@@ -375,3 +384,17 @@ function dialog_close(element_id) {
 	fav_dialog.close();
 }
 
+function get_current_timestamp() {
+	console.log("called get_current_timestamp()");
+	const now = new Date();
+	const year = now.getFullYear();
+	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
+	const day = now.getDate().toString().padStart(2, '0');
+	const hours = now.getHours().toString().padStart(2, '0');
+	const minutes = now.getMinutes().toString().padStart(2, '0');
+	const seconds = now.getSeconds().toString().padStart(2, '0');
+
+	const timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+	return timestamp;
+}
