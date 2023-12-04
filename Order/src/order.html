@@ -64,7 +64,7 @@
 					<table id="items_picked_table" class="w-full">
 						<thead>
 							<tr class="border-b">
-								<th class="border-2 w-auto">Action</th>
+								<th class="border-2 w-auto">Cancel</th>
 								<th class="border-2">Item</th>
 								<th class="border-2">Quantity</th>
 								<th class="border-2">Price</th>
@@ -79,7 +79,7 @@
 					<label for="total_cost">Total</label>
 					<span id="total_cost" class="font-bold ml-auto">0</span>
 				</div>
-				<button id="send_order" class="block border justify-center rounded-xl px-3 mx-auto">
+				<button id="review_order_button" class="block border justify-center rounded-xl px-3 mx-auto">
 					Order
 				</button>
 			</div>
@@ -94,6 +94,52 @@
 		</div>
 	</aside>
 
+
+	<dialog id="review_order_dialog" class="hidden touch-none py-3 px-5 rounded-lg drop-shadow-lg">
+		<h1 class="font-bold mb-2 text-center">Review Order</h1>
+		<div class="flex mb-2">
+			<div class="border mr-2 p-2">
+				<!-- QR code area -->
+				<p>QR Code here</p>
+			</div>
+			<div class="border p-2">
+				<label for="order_queue_number">Queue Number:</label>
+				<span id="order_queue_number" class="font-bold">0</span>
+				<br>
+
+				<label for="order_timestamp">Timestamp:</label>
+				<span id="order_timestamp" class="font-bold">time here</span>
+				<br>
+
+				<span>Items:</span>
+				<table class="ml-2 border">
+					<thead>
+						<tr>
+							<th class="border-2">Item</th>
+							<th class="border-2">Quantity</th>
+							<th class="border-2">Price</th>
+							<th class="border-2">Cost</th>
+						</tr>
+					</thead>
+					<tbody id="order_items_list">
+					</tbody>
+				</table>
+				<br>
+
+				<label for="order_total_cost">Total Cost:</label>
+				<span id="order_total_cost" class="font-bold"></span>
+				<br>
+			</div>
+		</div>
+		<center>
+			<button id="cancel_review_order_dialog" class="border rounded-2xl px-3 mr-4">
+				Cancel
+			</button>
+			<button id="order_button" class="border rounded-2xl px-3">
+				Done
+			</button>
+		</center>
+	</dialog>
 
 	<script src="./js/order.js" type="module"></script>
 </body>

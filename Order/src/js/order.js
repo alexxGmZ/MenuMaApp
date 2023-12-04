@@ -3,8 +3,8 @@ import { fabric } from "fabric";
 import { hideStatusBar } from './statusbar';
 import { keepAwake } from './keep_awake';
 
-console.log("Server IP: ", sessionStorage.getItem("server_IP"));
-console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
+// console.log("Server IP: ", sessionStorage.getItem("server_IP"));
+// console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
 
 // const server_url = "http://192.168.254.115";
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
@@ -25,6 +25,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	keepAwake();
 	toggle_sidebar();
 	display_items_picked();
+	// review_picked_items_dialog();
 })
 
 function get_menu_design() {
@@ -138,7 +139,7 @@ var item_quantity_plus_listener;
 var item_pick_button_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
-		console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
+		// console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
 
 		// update menu_items
 		get_menu_items();
@@ -254,6 +255,7 @@ function item_quantity_dialog(selected_object) {
 
 						// render the items picked table
 						display_items_picked();
+						review_picked_items_dialog();
 					}
 					item_pick_button.addEventListener("click", item_pick_button_listener);
 				}
@@ -285,7 +287,7 @@ function display_items_picked() {
 					</button>
 				</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
-				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
+				<td data-column="" class="text-center">${item.item_quantity}</td>
 				<td data-column="" class="text-center">${item.item_price}</td>
 				<td data-column="" class="text-center">${item.item_cost}</td>
 			</tr>
@@ -311,6 +313,50 @@ function toggle_sidebar() {
 			document.getElementById("full_sidebar").classList.add("hidden");
 		})
 	}
+}
+
+var review_order_button_listener;
+function review_picked_items_dialog() {
+	if (picked_items.length == 0) return;
+	console.log("called review_picked_items_dialog()");
+	const review_order_button = document.getElementById("review_order_button");
+	if (review_order_button) {
+		if (review_order_button_listener) {
+			review_order_button.removeEventListener("click", review_order_button_listener);
+		}
+		review_order_button_listener = function() {
+			dialog_open("review_order_dialog");
+		}
+		review_order_button.addEventListener("click", review_order_button_listener);
+	}
+
+	const cancel_review_order_dialog = document.getElementById("cancel_review_order_dialog");
+	if (cancel_review_order_dialog) {
+		cancel_review_order_dialog.addEventListener("click", function() {
+			dialog_close("review_order_dialog");
+		})
+	}
+
+	var order_items_list = document.querySelector("#order_items_list");
+	var order_items_list_out = ""
+	for (let item of picked_items) {
+		order_items_list_out += `
+			<tr class="border-b">
+				<td data-column="" class="text-center font-bold">${item.item_name}</td>
+				<td data-column="" class="text-center">${item.item_quantity}</td>
+				<td data-column="" class="text-center">${item.item_price}</td>
+				<td data-column="" class="text-center">${item.item_cost}</td>
+			</tr>
+		`
+	}
+	order_items_list.innerHTML = order_items_list_out;
+
+	let total_cost = 0;
+	picked_items.forEach(picked_item => {
+		total_cost += picked_item.item_cost
+	})
+	const order_total_cost = document.getElementById("order_total_cost");
+	order_total_cost.textContent = total_cost;
 }
 
 function dialog_open(element_id) {
