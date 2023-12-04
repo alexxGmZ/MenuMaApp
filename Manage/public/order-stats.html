@@ -80,15 +80,28 @@
 	<!--CHART PRACTICE-->
 
 	<div id="chart"></div> <!--This is only practice chart-->
-	<div id="chart2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
-	<div id="chart3"></div> <!--WORKING CHART (TOTAL EARNINGS)-->
-	<div id="chart4"></div> <!--WORKING CHART (TOTAL EARNINGS (MONTHLY))-->
+
+	<div class="border-solid border-2 border-slate-300 rounded-lg">
+		<div id="chart2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
+	</div>
+
+	<br>
+
+	<div class="border-solid border-2 border-slate-300 rounded-lg">
+		<div id="chart3"></div> <!--WORKING CHART (TOTAL EARNINGS)-->
+	</div>
+
+	<br>
+	
+	<div class="border-solid border-2 border-slate-300 rounded-lg">
+		<div id="chart4"></div> <!--WORKING CHART (TOTAL EARNINGS (MONTHLY))-->
+	</div>
 
 	<!--END OF CHART PRACTICE-->
 
 
 	<!-- Dialog for deleting the stats -->
-	<dialog id="order_stats_dialog" class="rounded-lg drop-shadow-lg mx-auto">
+	<dialog id="order_stats_dialog" class="rounded-lg drop-shadow-lg mx-auto w-full max-w-lg">
 		<p class="text-center">Confirm to remove this stats?</p>
 		<br>
 		<div class="grid grid-cols-2 gap-4">
@@ -96,27 +109,27 @@
 				<p class="pl-1 pb-1">Transaction Date:</p>
 				<input type="text" id="transaction_date_placeholder" name="transaction_date_placeholder"
 					placeholder="Transaction Date"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
 
 				<p class="pl-1 pb-1 pt-1">Orders Taken:</p>
 				<input type="text" id="total_orders_taken_placeholder" name="total_orders_taken_placeholder"
 					placeholder="Orders Taken"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
 
 				<p class="pl-1 pb-1 pt-1">Orders Served:</p>
 				<input type="text" id="total_orders_done_placeholder" name="total_orders_done_placeholder"
 					placeholder="Orders Served"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
 			</div>
 			<div>
 				<p class="pl-1 pb-1">Orders Canceled:</p>
 				<input type="text" id="total_orders_canceled_placeholder" name="total_orders_canceled_placeholder"
 					placeholder="Orders Canceled"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
 
 				<p class="pl-1 pb-1">Earnings:</p>
 				<input type="text" id="earnings_placeholder" name="earnings_placeholder" placeholder="Earnings"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold"
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
 					disabled /><br>
 				<p class="text-center">Confirm to delete it?</p>
 				<center>

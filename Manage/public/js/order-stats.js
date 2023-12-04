@@ -213,7 +213,13 @@ function total_order_chart() {
 				show: true
 			},
 			legend: {
-				position: 'right'
+				position: 'inset',
+				inset: {
+					anchor: 'top-right',
+					x: 25,
+					y: 0,
+					step: 3
+				}
 			},
 			zoom: {
 				enabled: true
@@ -279,7 +285,13 @@ function total_earnings_chart() {
 				text: 'TOTAL EARNINGS (DAILY)'
 			},
 			legend: {
-				position: 'right'
+				position: 'inset',
+				inset: {
+					anchor: 'top-right',
+					x: 25,
+					y: 0,
+					step: 1
+				}
 			},
 			zoom: {
 				enabled: true
@@ -349,7 +361,13 @@ function total_earning_monthly_chart() {
 				text: 'TOTAL EARNINGS (MONTHLY)'
 			},
 			legend: {
-				position: 'right'
+				position: 'inset',
+				inset: {
+					anchor: 'top-right',
+					x: 25,
+					y: 0,
+					step: 1
+				}
 			},
 			zoom: {
 				enabled: true

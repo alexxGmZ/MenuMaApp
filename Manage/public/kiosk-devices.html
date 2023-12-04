@@ -206,7 +206,9 @@
 
 	<!-- update device details dialog -->
 	<dialog id="update_device_dialog" class="hidden rounded-lg">
+		<center>
 		<h1 class="font-bold">Update Device</h1>
+		</center>
 
 		<label for="update_device_ip">Device IP: </label>
 		<span id="update_device_ip"></span>
@@ -218,7 +220,7 @@
 		<br>
 
 		<label for="update_device_api_token">API Token: </label>
-		<span id="update_device_api_token"></span>
+		<span id="update_device_api_token" class="font-bold"></span>
 		<br>
 
 		<center>
@@ -273,9 +275,9 @@
 
 		<center>
 			<button onclick="dialog_close('delete_device_dialog')"
-				class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg mr-2">Cancel</button>
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg mx-auto w-3/12 max-w-xs">Cancel</button>
 			<button onclick="delete_device()"
-				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg mr-2 w-14">Yes</button>
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg mx-auto w-3/12 max-w-xs">Yes</button>
 		</center>
 	</dialog>
 
