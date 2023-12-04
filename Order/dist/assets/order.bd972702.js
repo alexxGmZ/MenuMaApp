@@ -15980,7 +15980,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.70f6abf2.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.f65d1354.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
@@ -16169,9 +16169,22 @@ function item_quantity_dialog(selected_object) {
               "item_cost": parseInt(item_cost_by_quantity_span.textContent),
               "item_quantity": parseInt(item_quantity_count.textContent)
             };
-            picked_items.push(item_details);
-            console.log(item_details);
-            console.log("picked_items:", picked_items);
+            let item_found = false;
+            picked_items.forEach((picked_item) => {
+              if (picked_item.item_id === item_details.item_id) {
+                picked_item.item_quantity += item_details.item_quantity;
+                picked_item.item_cost += item_details.item_cost;
+                item_found = true;
+              }
+            });
+            if (!item_found)
+              picked_items.push(item_details);
+            let total_cost = 0;
+            picked_items.forEach((picked_item) => {
+              total_cost += picked_item.item_cost;
+            });
+            const total_cost_span = document.getElementById("total_cost");
+            total_cost_span.textContent = total_cost;
             display_items_picked();
           };
           item_pick_button.addEventListener("click", item_pick_button_listener);
@@ -16193,14 +16206,15 @@ function display_items_picked() {
   var out = "";
   for (let item of picked_items) {
     out += `
-			<tr class="">
+			<tr class="border-b">
 				<td>
 					<button class="">
 						cancel
 					</button>
 				</td>
-				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
+				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
+				<td data-column="" class="text-center">${item.item_price}</td>
 				<td data-column="" class="text-center">${item.item_cost}</td>
 			</tr>
 		`;

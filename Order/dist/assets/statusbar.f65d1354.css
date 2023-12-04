@@ -551,6 +551,9 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -562,6 +565,9 @@ video {
 }
 .ml-2 {
   margin-left: 0.5rem;
+}
+.ml-auto {
+  margin-left: auto;
 }
 .mr-2 {
   margin-right: 0.5rem;
@@ -593,8 +599,8 @@ video {
 .h-16 {
   height: 4rem;
 }
-.h-\[90\%\] {
-  height: 90%;
+.h-\[85\%\] {
+  height: 85%;
 }
 .h-screen {
   height: 100vh;
@@ -607,6 +613,9 @@ video {
 }
 .w-56 {
   width: 14rem;
+}
+.w-auto {
+  width: auto;
 }
 .w-full {
   width: 100%;
@@ -658,9 +667,6 @@ video {
 }
 .border-b {
   border-bottom-width: 1px;
-}
-.border-r {
-  border-right-width: 1px;
 }
 .border-slate-300 {
   --tw-border-opacity: 1;

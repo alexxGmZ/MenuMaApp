@@ -59,20 +59,25 @@
 	<aside id="sidebar" class="fixed touch-none top-0 left-0 z-40">
 		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
 			<div class="flex flex-col py-2 pl-2 mr-2">
-				<div class="border rounded-lg h-[90%] mb-5 overflow-y-auto">
+				<div class="border rounded-lg h-[85%] mb-1 overflow-y-auto">
 					<!-- items picked table -->
 					<table id="items_picked_table" class="w-full">
 						<thead>
 							<tr class="border-b">
-								<th class="border-r">Action</th>
-								<th class="border-r">Quantity</th>
-								<th class="border-r">Item</th>
-								<th>Cost</th>
+								<th class="border-2 w-auto">Action</th>
+								<th class="border-2">Item</th>
+								<th class="border-2">Quantity</th>
+								<th class="border-2">Price</th>
+								<th class="border-2">Cost</th>
 							</tr>
 						</thead>
 						<tbody id="items_picked_list" class="max-h-96">
 						</tbody>
 					</table>
+				</div>
+				<div class="flex mb-3">
+					<label for="total_cost">Total</label>
+					<span id="total_cost" class="font-bold ml-auto">0</span>
 				</div>
 				<button id="send_order" class="block border justify-center rounded-xl px-3 mx-auto">
 					Order

@@ -230,9 +230,29 @@ function item_quantity_dialog(selected_object) {
 							"item_cost": parseInt(item_cost_by_quantity_span.textContent),
 							"item_quantity": parseInt(item_quantity_count.textContent)
 						};
-						picked_items.push(item_details);
-						console.log(item_details);
-						console.log("picked_items:", picked_items);
+						// console.log(item_details);
+
+						// if there's an identical item in picked items just increment the value of
+						// item quantiy and item cost, if not then insert that item in picked items
+						let item_found = false;
+						picked_items.forEach(picked_item => {
+							if (picked_item.item_id === item_details.item_id) {
+								picked_item.item_quantity += item_details.item_quantity;
+								picked_item.item_cost += item_details.item_cost;
+								item_found = true;
+							}
+						})
+						if (!item_found) picked_items.push(item_details);
+
+						// display the total cost
+						let total_cost = 0;
+						picked_items.forEach(picked_item => {
+							total_cost += picked_item.item_cost
+						})
+						const total_cost_span = document.getElementById("total_cost");
+						total_cost_span.textContent = total_cost;
+
+						// render the items picked table
 						display_items_picked();
 					}
 					item_pick_button.addEventListener("click", item_pick_button_listener);
@@ -258,14 +278,15 @@ function display_items_picked() {
 	for (let item of picked_items) {
 		// console.log(item);
 		out += `
-			<tr class="">
+			<tr class="border-b">
 				<td>
 					<button class="">
 						cancel
 					</button>
 				</td>
-				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
+				<td data-column="" class="text-center font-bold">${item.item_quantity}</td>
+				<td data-column="" class="text-center">${item.item_price}</td>
 				<td data-column="" class="text-center">${item.item_cost}</td>
 			</tr>
 		`
