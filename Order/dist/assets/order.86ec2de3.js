@@ -15980,7 +15980,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.ce0d3f30.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.a82abb9f.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
@@ -16029,6 +16029,7 @@ function update_local_storage_queue_number() {
   const current_date = `${year}-${month}-${day}`;
   const local_storage_date = localStorage.getItem("local_storage_date");
   const local_storage_queue_number = localStorage.getItem("local_storage_queue_number");
+  console.log("local_storage_queue_number:", local_storage_queue_number);
   if (local_storage_date !== current_date || !local_storage_queue_number) {
     localStorage.setItem("local_storage_queue_number", 1);
   }
@@ -16264,6 +16265,7 @@ function toggle_sidebar() {
   }
 }
 var review_order_button_listener;
+var order_button_listener;
 function review_picked_items_dialog() {
   if (picked_items.length == 0)
     return;
@@ -16274,7 +16276,10 @@ function review_picked_items_dialog() {
       review_order_button.removeEventListener("click", review_order_button_listener);
     }
     review_order_button_listener = function() {
-      dialog_open("review_order_dialog");
+      console.log("called review_order_button_listener()");
+      if (picked_items.length > 0) {
+        dialog_open("review_order_dialog");
+      }
     };
     review_order_button.addEventListener("click", review_order_button_listener);
   }
@@ -16284,12 +16289,32 @@ function review_picked_items_dialog() {
       dialog_close("review_order_dialog");
     });
   }
+  const order_button = document.getElementById("order_button");
+  if (order_button) {
+    if (order_button_listener) {
+      order_button.removeEventListener("click", order_button_listener);
+    }
+    order_button_listener = function() {
+      console.log("called order_button_listener()");
+      let local_storage_queue_number = parseInt(localStorage.getItem("local_storage_queue_number"));
+      local_storage_queue_number += 1;
+      localStorage.setItem("local_storage_queue_number", local_storage_queue_number);
+      document.getElementById("order_customer_name").value = "";
+      picked_items = [];
+      display_items_picked();
+      document.getElementById("total_cost").textContent = 0;
+      dialog_close("review_order_dialog");
+    };
+    order_button.addEventListener("click", order_button_listener);
+  }
   const order_queue_number = document.getElementById("order_queue_number");
-  order_queue_number.textContent = parseInt(localStorage.getItem("update_local_storage_queue_number"));
-  console.log("order_queue_number.textContent:", order_queue_number.textContent);
+  order_queue_number.textContent = localStorage.getItem("local_storage_queue_number");
+  const order_customer_name = document.getElementById("order_customer_name");
+  order_customer_name.addEventListener("input", function() {
+    console.log(order_customer_name.value);
+  });
   const order_timestamp = document.getElementById("order_timestamp");
   order_timestamp.textContent = get_current_timestamp();
-  console.log("order_timestamp.textContent:", order_timestamp.textContent);
   var order_items_list = document.querySelector("#order_items_list");
   var order_items_list_out = "";
   for (let item of picked_items) {
@@ -16303,21 +16328,21 @@ function review_picked_items_dialog() {
 		`;
   }
   order_items_list.innerHTML = order_items_list_out;
-  console.log("order_items_list.innerHTML:", order_items_list.innerHTML);
   let total_cost = 0;
   picked_items.forEach((picked_item) => {
     total_cost += picked_item.item_cost;
   });
   const order_total_cost = document.getElementById("order_total_cost");
   order_total_cost.textContent = total_cost;
-  console.log("order_total_cost.textContent:", order_total_cost.textContent);
 }
 function dialog_open(element_id) {
   console.log(`called dialog_open(${element_id})`);
   const fav_dialog = document.getElementById(element_id);
   fav_dialog.classList.add("active-dialog");
   fav_dialog.classList.remove("hidden");
+  fav_dialog.inert = true;
   fav_dialog.showModal();
+  fav_dialog.inert = false;
 }
 function dialog_close(element_id) {
   console.log(`called dialog_close(${element_id})`);

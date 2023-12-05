@@ -21,32 +21,6 @@ function set_server_connection() {
 	if (input_api_token == 0)
 		return alert("Enter Server Connection Token");
 
-
-	// if (navigator.onLine) {
-	// 	const url = `http://${input_server_ip}:8080/?api_token=${input_api_token}`;
-	// 	console.log("URL: " + url);
-	// 	fetch(url)
-	// 		.then(response => {
-	// 			if (response.status == 200) {
-	// 				console.log(`Server at ${url} is reachable`);
-	// 				sessionStorage.setItem("server_IP", input_server_ip);
-	// 				sessionStorage.setItem("server_api_token", input_api_token);
-	// 				window.location.href = "order.html";
-	// 			}
-	// 			else {
-	// 				console.log(`Server at ${url} is unreachable`);
-	// 				alert(`Connection Failed${response.status}: ${input_server_ip} is unreachable`);
-	// 			}
-	// 		})
-	// 		.catch(error => {
-	// 			console.error(`Error while reaching the server at ${url}: ${error}`);
-	// 			alert(`Connection Failed: ${input_server_ip} is unreachable\n${error}`);
-	// 		})
-	// }
-	// else {
-	// 	console.error("You are currently offline. Check your network connection.");
-	// 	alert(`Connection Failed: You are currently offline. Check your network connection`);
-	// }
 	return new Promise((resolve, reject) => {
 		if (navigator.onLine) {
 			const url = `http://${input_server_ip}:8080/status?api_token=${input_api_token}`;

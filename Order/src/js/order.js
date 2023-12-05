@@ -357,7 +357,10 @@ function review_picked_items_dialog() {
 			review_order_button.removeEventListener("click", review_order_button_listener);
 		}
 		review_order_button_listener = function() {
-			dialog_open("review_order_dialog");
+			console.log("called review_order_button_listener()");
+			if (picked_items.length > 0) {
+				dialog_open("review_order_dialog");
+			}
 		}
 		review_order_button.addEventListener("click", review_order_button_listener);
 	}
@@ -373,14 +376,26 @@ function review_picked_items_dialog() {
 	// send order button
 	const order_button = document.getElementById("order_button");
 	if (order_button) {
+		// clear the event listener
 		if (order_button_listener) {
 			order_button.removeEventListener("click", order_button_listener);
 		}
 		order_button_listener = function() {
 			console.log("called order_button_listener()");
-			// let local_storage_queue_number = parseInt(localStorage.getItem("local_storage_queue_number"));
-			// local_storage_queue_number += 1;
-			// localStorage.setItem("local_storage_queue_number", local_storage_queue_number);
+			// increment the queue number
+			let local_storage_queue_number = parseInt(localStorage.getItem("local_storage_queue_number"));
+			local_storage_queue_number += 1;
+			localStorage.setItem("local_storage_queue_number", local_storage_queue_number);
+
+			// clear the customer name input
+			document.getElementById("order_customer_name").value = "";
+
+			// clear picked items and sidebar details
+			picked_items = [];
+			display_items_picked();
+			document.getElementById("total_cost").textContent = 0;
+
+			// close dialog
 			dialog_close("review_order_dialog");
 		}
 		order_button.addEventListener("click", order_button_listener);
@@ -390,6 +405,11 @@ function review_picked_items_dialog() {
 	const order_queue_number = document.getElementById("order_queue_number")
 	order_queue_number.textContent = localStorage.getItem("local_storage_queue_number");
 	// console.log("order_queue_number.textContent:", order_queue_number.textContent);
+
+	const order_customer_name = document.getElementById("order_customer_name");
+	order_customer_name.addEventListener("input", function() {
+		console.log(order_customer_name.value);
+	});
 
 	// display timestamp
 	const order_timestamp = document.getElementById("order_timestamp");
@@ -427,7 +447,9 @@ function dialog_open(element_id) {
 	const fav_dialog = document.getElementById(element_id);
 	fav_dialog.classList.add("active-dialog");
 	fav_dialog.classList.remove("hidden");
+	fav_dialog.inert = true;
 	fav_dialog.showModal();
+	fav_dialog.inert = false;
 }
 
 function dialog_close(element_id) {
