@@ -84,72 +84,77 @@
 	<br><br>
 
 	<!-- device register success dialog -->
-	<dialog id="device_register_success_dialog" class="hidden rounded-lg">
+	<dialog id="device_register_success_dialog" class="hidden rounded-lg mx-auto w-full max-w-xs text-center">
 		<h1 class="font-bold">Device successfully registered</h1>
 		<br>
 
-		<label for="success_device_ip">IP Address:</label>
-		<span id="success_device_ip" class="font-bold"></span>
+		<label for="success_device_ip" class="float-left">IP Address:</label>
+		<span id="success_device_ip" class="font-medium border-solid border-2 border-slate-300 rounded-lg px-5 inline-block w-full"></span>
 		<br>
 
-		<label for="success_device_name">Device Name:</label>
-		<span id="success_device_name" class="font-bold"></span>
+		<label for="success_device_name" class="float-left">Device Name:</label>
+		<span id="success_device_name" class="font-medium border-solid border-2 border-slate-300 rounded-lg px-5 inline-block w-full"></span>
 		<br>
 
-		<label for="success_device_mac">MAC Address:</label>
-		<span id="success_device_mac" class="font-bold"></span>
+		<label for="success_device_mac" class="float-left">MAC Address:</label>
+		<span id="success_device_mac" class="font-medium border-solid border-2 border-slate-300 rounded-lg py-3 inline-block w-full"></span>
 		<br>
 
-		<label for="success_device_api_token">Token:</label>
-		<span id="success_device_api_token" class="font-bold"></span>
+		<label for="success_device_api_token" class="float-left">Token:</label>
+		<span id="success_device_api_token" class="font-medium border-solid border-2 border-slate-300 rounded-lg px-5 inline-block w-full"></span>
+		<br>
 		<br>
 
 		<center>
-			<button onclick="refresh_registered_devices_table()">OK</button>
+			<button onclick="refresh_registered_devices_table()" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg mx-auto w-3/12 max-w-xs w-1/2">OK</button>
 		</center>
 	</dialog>
 
 	<!-- ipv4 address already exist dialog -->
-	<dialog id="ipv4_already_exist_dialog" class="hidden rounded-lg">
+	<dialog id="ipv4_already_exist_dialog" class="hidden rounded-lg text-center mx-auto">
 		<p>
 			<span id="existing_ip" class="font-bold"></span>
 			already exist
 		</p>
+		<br>
 		<center>
-			<button onclick="dialog_close('ipv4_already_exist_dialog')">OK</button>
+			<button onclick="dialog_close('ipv4_already_exist_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
 		</center>
 	</dialog>
 
 	<!-- mac address already exist dialog -->
-	<dialog id="mac_address_already_exist_dialog" class="hidden rounded-lg">
+	<dialog id="mac_address_already_exist_dialog" class="hidden rounded-lg text-center mx-auto">
 		<p>
 			<span id="existing_mac_address" class="font-bold"></span>
 			already exist
 		</p>
+		<br>
 		<center>
-			<button onclick="dialog_close('mac_address_already_exist_dialog')">OK</button>
+			<button onclick="dialog_close('mac_address_already_exist_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
 		</center>
 	</dialog>
 
 	<!-- invalid ipv4 dialog -->
-	<dialog id="invalid_ipv4_dialog" class="hidden rounded-lg">
+	<dialog id="invalid_ipv4_dialog" class="hidden rounded-lg text-center mx-auto">
 		<p>
 			<span id="invalid_ip" class="font-bold"></span>
 			is invalid IPV4 address
 		</p>
+		<br>
 		<center>
-			<button onclick="dialog_close('invalid_ipv4_dialog')">OK</button>
+			<button onclick="dialog_close('invalid_ipv4_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
 		</center>
 	</dialog>
 
 	<!-- invalid ipv4 dialog -->
-	<dialog id="invalid_mac_address_dialog" class="hidden rounded-lg">
+	<dialog id="invalid_mac_address_dialog" class="hidden rounded-lg text-center mx-auto">
 		<p>
 			<span id="invalid_mac_address" class="font-bold"></span>
 			is invalid MAC address
 		</p>
+		<br>
 		<center>
-			<button onclick="dialog_close('invalid_mac_address_dialog')">OK</button>
+			<button onclick="dialog_close('invalid_mac_address_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
 		</center>
 	</dialog>
 
@@ -244,33 +249,34 @@
 	</dialog>
 
 	<!-- update device success dialog -->
-	<dialog id="update_device_success_dialog" class="hidden rounded-lg">
+	<dialog id="update_device_success_dialog" class="hidden rounded-lg mx-auto text-center">
 		<span id="update_device_success_ip" class="font-bold"></span>
 		<p>is successfully updated</p>
 		<br>
 		<center>
-			<button onclick="refresh_registered_devices_table()">Ok</button>
+			<button onclick="refresh_registered_devices_table()" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
 		</center>
 	</dialog>
 
 	<!-- delete device dialog -->
-	<dialog id="delete_device_dialog" class="hidden rounded-lg">
-		<h1 class="font-bold">Delete Device?</h1>
+	<dialog id="delete_device_dialog" class="hidden rounded-lg text-center mx-auto w-full max-w-xs">
+		<h1 class="font-bold text-center">Delete Device?</h1><br>
 
-		<label for="delete_device_ip">Device IP: </label>
-		<span id="delete_device_ip"></span>
+		<label for="delete_device_ip" class="float-left">Device IP: </label><br>
+		<span id="delete_device_ip" class="font-medium border-solid border-2 border-slate-300 rounded-lg px-5 inline-block w-full"></span>
 		<br>
 
-		<label for="delete_device_name">Device Name: </label>
-		<span id="delete_device_name"></span>
+		<label for="delete_device_name"  class="float-left">Device Name: </label><br>
+		<span id="delete_device_name" class="font-medium border-solid border-2 border-slate-300 rounded-lg px-5 inline-block w-full"></span>
 		<br>
 
-		<label for="delete_device_api_token">API Token: </label>
-		<span id="delete_device_api_token"></span>
+		<label for="delete_device_api_token"  class="float-left">API Token: </label><br>
+		<span id="delete_device_api_token" class="font-medium border-solid border-2 border-slate-300 rounded-lg px-5 inline-block w-full"></span>
 		<br>
 
-		<label for="delete_device_mac_address">MAC Address: </label>
-		<span id="delete_device_mac_address"></span>
+		<label for="delete_device_mac_address" class="float-left">MAC Address: </label><br>
+		<span id="delete_device_mac_address" class="font-medium border-solid border-2 border-slate-300 rounded-lg py-3 inline-block w-full"></span>
+		<br>
 		<br>
 
 		<center>
@@ -282,12 +288,12 @@
 	</dialog>
 
 	<!-- delete device success dialog -->
-	<dialog id="delete_device_success_dialog" class="hidden rounded-lg">
+	<dialog id="delete_device_success_dialog" class="hidden rounded-lg text-center w-full max-w-fit">
 		<span id="delete_device_success_ip" class="font-bold"></span>
 		<p>is successfully deleted</p>
 		<br>
 		<center>
-			<button onclick="refresh_registered_devices_table()">Ok</button>
+			<button onclick="refresh_registered_devices_table()" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg mx-auto w-1/2">OK</button>
 		</center>
 	</dialog>
 
