@@ -95,13 +95,21 @@
 	</aside>
 
 	<dialog id="review_order_dialog" class="hidden py-3 px-7 rounded-lg drop-shadow-lg touch-none overflow-y-scroll">
-		<h1 class="font-bold mb-2 text-center">E-receipt</h1>
+		<div class="flex mb-2 justify-between">
+			<button id="cancel_review_order_dialog" class="border rounded-2xl px-3">
+				Cancel
+			</button>
+			<h1 class="font-bold mb-2 text-center">E-receipt</h1>
+			<button id="order_button" class="border rounded-2xl px-3">
+				Done
+			</button>
+		</div>
 		<div class="flex mb-5">
 			<div class="border mr-2 p-2">
 				<!-- QR code area -->
 				<p>QR Code here</p>
 			</div>
-			<div class="p-2">
+			<div class="px-2">
 				<label for="order_queue_number">Queue Number:</label>
 				<span id="order_queue_number" class="font-bold"></span>
 				<br>
@@ -133,14 +141,6 @@
 				<br>
 			</div>
 		</div>
-		<center>
-			<button id="cancel_review_order_dialog" class="border rounded-2xl px-3 mr-4">
-				Cancel
-			</button>
-			<button id="order_button" class="border rounded-2xl px-3">
-				Done
-			</button>
-		</center>
 	</dialog>
 
 	<script src="./js/order.js" type="module"></script>
