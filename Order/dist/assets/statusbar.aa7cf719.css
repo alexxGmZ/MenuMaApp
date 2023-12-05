@@ -614,6 +614,9 @@ video {
 .w-16 {
   width: 4rem;
 }
+.w-24 {
+  width: 6rem;
+}
 .w-56 {
   width: 14rem;
 }
@@ -650,8 +653,11 @@ video {
 .justify-center {
   justify-content: center;
 }
-.overflow-y-auto {
-  overflow-y: auto;
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 .rounded-2xl {
   border-radius: 1rem;
