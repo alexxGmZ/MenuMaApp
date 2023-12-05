@@ -1,4 +1,4 @@
-import { W as WebPlugin } from "./statusbar.f6df8738.js";
+import { W as WebPlugin } from "./statusbar.05370d47.js";
 class KeepAwakeWeb extends WebPlugin {
   constructor() {
     super(...arguments);

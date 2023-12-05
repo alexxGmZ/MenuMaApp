@@ -1,4 +1,4 @@
-import { C as CapacitorHttp } from "./statusbar.f6df8738.js";
+import { C as CapacitorHttp } from "./statusbar.05370d47.js";
 var pull_to_refresh = "";
 window.addEventListener("DOMContentLoaded", () => {
   const connect_button = document.getElementById("connect_button");

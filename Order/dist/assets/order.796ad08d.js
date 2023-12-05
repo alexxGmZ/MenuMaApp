@@ -1,4 +1,4 @@
-import { r as registerPlugin, h as hideStatusBar, C as CapacitorHttp } from "./statusbar.f6df8738.js";
+import { r as registerPlugin, h as hideStatusBar, C as CapacitorHttp } from "./statusbar.05370d47.js";
 function getAugmentedNamespace(n) {
   if (n.__esModule)
     return n;
@@ -15980,7 +15980,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.a82abb9f.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.5b66aff6.js"), true ? ["assets/web.5b66aff6.js","assets/statusbar.05370d47.js","assets/statusbar.75af3b4e.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
