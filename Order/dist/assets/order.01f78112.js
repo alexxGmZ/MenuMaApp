@@ -1,4 +1,40 @@
 import { r as registerPlugin, h as hideStatusBar, C as CapacitorHttp } from "./statusbar.f6df8738.js";
+const scriptRel = "modulepreload";
+const seen = {};
+const base = "/";
+const __vitePreload = function preload(baseModule, deps) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  return Promise.all(deps.map((dep) => {
+    dep = `${base}${dep}`;
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
+const Preferences = registerPlugin("Preferences", {
+  web: () => __vitePreload(() => import("./web.9700c6c1.js"), true ? ["assets/web.9700c6c1.js","assets/statusbar.f6df8738.js","assets/statusbar.a82abb9f.css"] : void 0).then((m) => new m.PreferencesWeb())
+});
 function getAugmentedNamespace(n) {
   if (n.__esModule)
     return n;
@@ -15946,39 +15982,6 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     }
   })();
 })(fabric);
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
 const KeepAwake = registerPlugin("KeepAwake", {
   web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.a82abb9f.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
@@ -16008,30 +16011,61 @@ window.addEventListener("DOMContentLoaded", () => {
   toggle_sidebar();
   display_items_picked();
 });
-function update_local_storage_date() {
+async function update_local_storage_date() {
   console.log("called update_local_storage_date()");
   const now = new Date();
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0");
   const day = now.getDate().toString().padStart(2, "0");
   const current_date = `${year}-${month}-${day}`;
-  const local_storage_date = localStorage.getItem("local_storage_date");
-  if (local_storage_date !== current_date) {
-    localStorage.setItem("local_storage_date", current_date);
+  const local_storage_date = await Preferences.get({ key: "storage_date" });
+  if (!local_storage_date.value) {
+    await Preferences.set({
+      key: "storage_date",
+      value: JSON.stringify({
+        date: `${current_date}`
+      })
+    });
+  } else {
+    const storage_date = JSON.parse(local_storage_date.value).date;
+    console.log("storage_date:", storage_date);
+    if (storage_date !== current_date) {
+      await Preferences.set({
+        key: "storage_date",
+        value: JSON.stringify({
+          date: `${current_date}`
+        })
+      });
+    }
   }
 }
-function update_local_storage_queue_number() {
+async function update_local_storage_queue_number() {
   console.log("called update_local_storage_queue_number()");
   const now = new Date();
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0");
   const day = now.getDate().toString().padStart(2, "0");
   const current_date = `${year}-${month}-${day}`;
-  const local_storage_date = localStorage.getItem("local_storage_date");
-  const local_storage_queue_number = localStorage.getItem("local_storage_queue_number");
-  console.log("local_storage_queue_number:", local_storage_queue_number);
-  if (local_storage_date !== current_date || !local_storage_queue_number) {
-    localStorage.setItem("local_storage_queue_number", 1);
+  const local_storage_date = await Preferences.get({ key: "storage_date" });
+  const storage_date = JSON.parse(local_storage_date.value).date;
+  const local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
+  if (!local_storage_queue_number.value) {
+    await Preferences.set({
+      key: "storage_queue_number",
+      value: JSON.stringify({
+        queue_number: 1
+      })
+    });
+  } else {
+    JSON.parse(local_storage_queue_number.value).queue_number;
+    if (storage_date !== current_date || !local_storage_queue_number) {
+      await Preferences.set({
+        key: "storage_queue_number",
+        value: JSON.stringify({
+          queue_number: 1
+        })
+      });
+    }
   }
 }
 function get_menu_design() {
@@ -16294,11 +16328,17 @@ function review_picked_items_dialog() {
     if (order_button_listener) {
       order_button.removeEventListener("click", order_button_listener);
     }
-    order_button_listener = function() {
+    order_button_listener = async function() {
       console.log("called order_button_listener()");
-      let local_storage_queue_number = parseInt(localStorage.getItem("local_storage_queue_number"));
-      local_storage_queue_number += 1;
-      localStorage.setItem("local_storage_queue_number", local_storage_queue_number);
+      let local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
+      let temp_var = JSON.parse(local_storage_queue_number.value);
+      temp_var.queue_number += 1;
+      await Preferences.set({
+        key: "storage_queue_number",
+        value: JSON.stringify({
+          queue_number: temp_var.queue_number
+        })
+      });
       document.getElementById("order_customer_name").value = "";
       picked_items = [];
       display_items_picked();
@@ -16308,7 +16348,18 @@ function review_picked_items_dialog() {
     order_button.addEventListener("click", order_button_listener);
   }
   const order_queue_number = document.getElementById("order_queue_number");
-  order_queue_number.textContent = localStorage.getItem("local_storage_queue_number");
+  const storage_queue_number = function() {
+    return Preferences.get({ key: "storage_queue_number" }).then((storageQueueNumber) => {
+      let parsedQueueNumber = JSON.parse(storageQueueNumber.value);
+      return parsedQueueNumber.queue_number;
+    }).catch((error) => {
+      console.error("Error fetching queue number:", error);
+      return null;
+    });
+  };
+  storage_queue_number().then((queueNumber) => {
+    order_queue_number.textContent = queueNumber;
+  });
   const order_customer_name = document.getElementById("order_customer_name");
   order_customer_name.addEventListener("input", function() {
     console.log(order_customer_name.value);
