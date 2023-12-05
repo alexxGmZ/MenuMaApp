@@ -98,14 +98,14 @@ app.get("/menu_items_lite", authenticate_api_connection,
 	}
 );
 
-app.get("/", authenticate_api_connection,
+app.get("/status", authenticate_api_connection,
 	(request, response) => {
 		const server_ip = Object.values(os.networkInterfaces())
 			.flat()
 			.filter((iface) => iface.family === 'IPv4' && !iface.internal)
 			.map((iface) => iface.address)[0];
 		response.send(`Connected To MenuMaApp Manage Server: ${server_ip}`);
-		request_message_format("GET", "/", request.ip);
+		request_message_format("GET", "status", request.ip);
 	});
 
 // for adding inventory items to database
