@@ -1,4 +1,5 @@
 import { CapacitorHttp } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 import { fabric } from "fabric";
 import { hideStatusBar } from './statusbar';
 import { keepAwake } from './keep_awake';
@@ -26,21 +27,38 @@ window.addEventListener("DOMContentLoaded", () => {
 	display_items_picked();
 })
 
-function update_local_storage_date() {
+async function update_local_storage_date() {
 	console.log("called update_local_storage_date()");
 	const now = new Date();
 	const year = now.getFullYear();
 	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
 	const day = now.getDate().toString().padStart(2, '0');
-
 	const current_date = `${year}-${month}-${day}`;
-	const local_storage_date = localStorage.getItem("local_storage_date")
-	if (local_storage_date !== current_date) {
-		localStorage.setItem("local_storage_date", current_date);
+
+	const local_storage_date = await Preferences.get({ key: "storage_date" });
+	if (!local_storage_date.value) {
+		await Preferences.set({
+			key: "storage_date",
+			value: JSON.stringify({
+				date: `${current_date}`
+			})
+		});
+	}
+	else {
+		const storage_date = JSON.parse(local_storage_date.value).date;
+		console.log("storage_date:", storage_date);
+		if (storage_date !== current_date) {
+			await Preferences.set({
+				key: "storage_date",
+				value: JSON.stringify({
+					date: `${current_date}`
+				})
+			});
+		}
 	}
 }
 
-function update_local_storage_queue_number() {
+async function update_local_storage_queue_number() {
 	console.log("called update_local_storage_queue_number()")
 	const now = new Date();
 	const year = now.getFullYear();
@@ -48,12 +66,27 @@ function update_local_storage_queue_number() {
 	const day = now.getDate().toString().padStart(2, '0');
 	const current_date = `${year}-${month}-${day}`;
 
-	const local_storage_date = localStorage.getItem("local_storage_date")
-	const local_storage_queue_number = localStorage.getItem("local_storage_queue_number");
-	console.log("local_storage_queue_number:", local_storage_queue_number);
-
-	if (local_storage_date !== current_date || !local_storage_queue_number) {
-		localStorage.setItem("local_storage_queue_number", 1);
+	const local_storage_date = await Preferences.get({ key: "storage_date" });
+	const storage_date = JSON.parse(local_storage_date.value).date;
+	const local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
+	if (!local_storage_queue_number.value) {
+		await Preferences.set({
+			key: "storage_queue_number",
+			value: JSON.stringify({
+				queue_number: 1
+			})
+		});
+	}
+	else {
+		const storage_queue_number = JSON.parse(local_storage_queue_number.value).queue_number;
+		if (storage_date !== current_date || !local_storage_queue_number) {
+			await Preferences.set({
+				key: "storage_queue_number",
+				value: JSON.stringify({
+					queue_number: 1
+				})
+			});
+		}
 	}
 }
 
@@ -380,12 +413,18 @@ function review_picked_items_dialog() {
 		if (order_button_listener) {
 			order_button.removeEventListener("click", order_button_listener);
 		}
-		order_button_listener = function() {
+		order_button_listener = async function() {
 			console.log("called order_button_listener()");
 			// increment the queue number
-			let local_storage_queue_number = parseInt(localStorage.getItem("local_storage_queue_number"));
-			local_storage_queue_number += 1;
-			localStorage.setItem("local_storage_queue_number", local_storage_queue_number);
+			let local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
+			let temp_var = JSON.parse(local_storage_queue_number.value);
+			temp_var.queue_number += 1
+			await Preferences.set({
+				key: "storage_queue_number",
+				value: JSON.stringify({
+					queue_number: temp_var.queue_number
+				})
+			})
 
 			// clear the customer name input
 			document.getElementById("order_customer_name").value = "";
@@ -402,9 +441,22 @@ function review_picked_items_dialog() {
 	}
 
 	// display order queue number
-	const order_queue_number = document.getElementById("order_queue_number")
-	order_queue_number.textContent = localStorage.getItem("local_storage_queue_number");
-	// console.log("order_queue_number.textContent:", order_queue_number.textContent);
+	const order_queue_number = document.getElementById("order_queue_number");
+	const storage_queue_number = function() {
+		return Preferences.get({ key: "storage_queue_number" })
+			.then(storageQueueNumber => {
+				let parsedQueueNumber = JSON.parse(storageQueueNumber.value);
+				// console.log(parsedQueueNumber.queue_number);
+				return parsedQueueNumber.queue_number;
+			})
+			.catch(error => {
+				console.error("Error fetching queue number:", error);
+				return null; // or handle the error accordingly
+			});
+	}
+	storage_queue_number().then(queueNumber => {
+		order_queue_number.textContent = queueNumber;
+	});
 
 	const order_customer_name = document.getElementById("order_customer_name");
 	order_customer_name.addEventListener("input", function() {
