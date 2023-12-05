@@ -16000,12 +16000,39 @@ var menu_items;
 var picked_items = [];
 window.screen.orientation.lock("landscape");
 window.addEventListener("DOMContentLoaded", () => {
+  update_local_storage_date();
+  update_local_storage_queue_number();
   get_menu_design();
   hideStatusBar();
   keepAwake();
   toggle_sidebar();
   display_items_picked();
 });
+function update_local_storage_date() {
+  console.log("called update_local_storage_date()");
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
+  const current_date = `${year}-${month}-${day}`;
+  const local_storage_date = localStorage.getItem("local_storage_date");
+  if (local_storage_date !== current_date) {
+    localStorage.setItem("local_storage_date", current_date);
+  }
+}
+function update_local_storage_queue_number() {
+  console.log("called update_local_storage_queue_number()");
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
+  const current_date = `${year}-${month}-${day}`;
+  const local_storage_date = localStorage.getItem("local_storage_date");
+  const local_storage_queue_number = localStorage.getItem("local_storage_queue_number");
+  if (local_storage_date !== current_date || !local_storage_queue_number) {
+    localStorage.setItem("local_storage_queue_number", 1);
+  }
+}
 function get_menu_design() {
   console.log("called get_menu_design()");
   return new Promise((resolve, reject) => {
@@ -16257,8 +16284,12 @@ function review_picked_items_dialog() {
       dialog_close("review_order_dialog");
     });
   }
+  const order_queue_number = document.getElementById("order_queue_number");
+  order_queue_number.textContent = parseInt(localStorage.getItem("update_local_storage_queue_number"));
+  console.log("order_queue_number.textContent:", order_queue_number.textContent);
   const order_timestamp = document.getElementById("order_timestamp");
   order_timestamp.textContent = get_current_timestamp();
+  console.log("order_timestamp.textContent:", order_timestamp.textContent);
   var order_items_list = document.querySelector("#order_items_list");
   var order_items_list_out = "";
   for (let item of picked_items) {
@@ -16272,12 +16303,14 @@ function review_picked_items_dialog() {
 		`;
   }
   order_items_list.innerHTML = order_items_list_out;
+  console.log("order_items_list.innerHTML:", order_items_list.innerHTML);
   let total_cost = 0;
   picked_items.forEach((picked_item) => {
     total_cost += picked_item.item_cost;
   });
   const order_total_cost = document.getElementById("order_total_cost");
   order_total_cost.textContent = total_cost;
+  console.log("order_total_cost.textContent:", order_total_cost.textContent);
 }
 function dialog_open(element_id) {
   console.log(`called dialog_open(${element_id})`);

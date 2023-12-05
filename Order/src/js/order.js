@@ -3,10 +3,6 @@ import { fabric } from "fabric";
 import { hideStatusBar } from './statusbar';
 import { keepAwake } from './keep_awake';
 
-// console.log("Server IP: ", sessionStorage.getItem("server_IP"));
-// console.log("Server Token: ", sessionStorage.getItem("server_api_token"));
-
-// const server_url = "http://192.168.254.115";
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
 const server_port = 8080;
@@ -20,13 +16,46 @@ var picked_items = [];
 // forcse screen orientation to landscape
 window.screen.orientation.lock('landscape');
 window.addEventListener("DOMContentLoaded", () => {
+	update_local_storage_date();
+	update_local_storage_queue_number();
+
 	get_menu_design();
 	hideStatusBar();
 	keepAwake();
 	toggle_sidebar();
 	display_items_picked();
-	// review_picked_items_dialog();
 })
+
+function update_local_storage_date() {
+	console.log("called update_local_storage_date()");
+	const now = new Date();
+	const year = now.getFullYear();
+	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
+	const day = now.getDate().toString().padStart(2, '0');
+
+	const current_date = `${year}-${month}-${day}`;
+	const local_storage_date = localStorage.getItem("local_storage_date")
+	if (local_storage_date !== current_date) {
+		localStorage.setItem("local_storage_date", current_date);
+	}
+}
+
+function update_local_storage_queue_number() {
+	console.log("called update_local_storage_queue_number()")
+	const now = new Date();
+	const year = now.getFullYear();
+	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
+	const day = now.getDate().toString().padStart(2, '0');
+	const current_date = `${year}-${month}-${day}`;
+
+	const local_storage_date = localStorage.getItem("local_storage_date")
+	const local_storage_queue_number = localStorage.getItem("local_storage_queue_number");
+	console.log("local_storage_queue_number:", local_storage_queue_number);
+
+	if (local_storage_date !== current_date || !local_storage_queue_number) {
+		localStorage.setItem("local_storage_queue_number", 1);
+	}
+}
 
 function get_menu_design() {
 	console.log("called get_menu_design()");
@@ -316,6 +345,7 @@ function toggle_sidebar() {
 }
 
 var review_order_button_listener;
+var order_button_listener;
 function review_picked_items_dialog() {
 	if (picked_items.length == 0) return;
 	console.log("called review_picked_items_dialog()");
@@ -340,9 +370,31 @@ function review_picked_items_dialog() {
 		})
 	}
 
+	// send order button
+	const order_button = document.getElementById("order_button");
+	if (order_button) {
+		if (order_button_listener) {
+			order_button.removeEventListener("click", order_button_listener);
+		}
+		order_button_listener = function() {
+			console.log("called order_button_listener()");
+			// let local_storage_queue_number = parseInt(localStorage.getItem("local_storage_queue_number"));
+			// local_storage_queue_number += 1;
+			// localStorage.setItem("local_storage_queue_number", local_storage_queue_number);
+			dialog_close("review_order_dialog");
+		}
+		order_button.addEventListener("click", order_button_listener);
+	}
+
+	// display order queue number
+	const order_queue_number = document.getElementById("order_queue_number")
+	order_queue_number.textContent = localStorage.getItem("local_storage_queue_number");
+	// console.log("order_queue_number.textContent:", order_queue_number.textContent);
+
 	// display timestamp
 	const order_timestamp = document.getElementById("order_timestamp");
 	order_timestamp.textContent = get_current_timestamp();
+	// console.log("order_timestamp.textContent:", order_timestamp.textContent);
 
 	// display ordered items in the dialog
 	var order_items_list = document.querySelector("#order_items_list");
@@ -358,6 +410,7 @@ function review_picked_items_dialog() {
 		`
 	}
 	order_items_list.innerHTML = order_items_list_out;
+	// console.log("order_items_list.innerHTML:", order_items_list.innerHTML);
 
 	// display total cost count
 	let total_cost = 0;
@@ -366,6 +419,7 @@ function review_picked_items_dialog() {
 	})
 	const order_total_cost = document.getElementById("order_total_cost");
 	order_total_cost.textContent = total_cost;
+	// console.log("order_total_cost.textContent:", order_total_cost.textContent);
 }
 
 function dialog_open(element_id) {
