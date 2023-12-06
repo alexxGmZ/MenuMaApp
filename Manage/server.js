@@ -11,6 +11,7 @@ const fs = require("fs");
 // express
 const express = require("express");
 const cors = require("cors");
+const body_parser = require("body-parser");
 const app = express();
 const PORT = 8080;
 
@@ -19,6 +20,7 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+app.use(body_parser.json());
 app.use(cors());
 app.use(express.static("public"));
 
@@ -250,12 +252,6 @@ app.get("/orders",
 	}
 );
 
-app.get("/send_orders", authenticate_api_connection,
-	(request, response) => {
-
-	}
-);
-
 app.get("/menu_design", authenticate_api_connection,
 	(request, response) => {
 		const design_file = "./current_design.json";
@@ -275,6 +271,16 @@ app.get("/menu_design", authenticate_api_connection,
 				response.status(500).json({ error: 'Internal Server Error' });
 			}
 		})
+	}
+);
+
+app.post("/send_order", authenticate_api_connection,
+	(request, response) => {
+		console.log(request.body);
+		request_message_format("POST", "send_order", request.ip);
+		response.status(200).json({
+			message: "Order received successfully",
+		});
 	}
 );
 
