@@ -151,7 +151,7 @@ function get_menu_items() {
 				resolve();
 			})
 			.catch((error) => {
-				console.error(error);
+				alert(`Connection Failed: Server is down.\nYour order will not be received.\n${error}`);
 				reject(error);
 			});
 	})
@@ -418,24 +418,43 @@ function review_picked_items_dialog() {
 			// increment the queue number
 			let local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
 			let temp_var = JSON.parse(local_storage_queue_number.value);
-			temp_var.queue_number += 1
-			await Preferences.set({
-				key: "storage_queue_number",
-				value: JSON.stringify({
-					queue_number: temp_var.queue_number
+			let order_details = {
+				order_details: [{
+					queue_number: temp_var.queue_number,
+					customer_name: document.getElementById("order_customer_name").value,
+					total_price: document.getElementById("total_cost").textContent,
+					transaction_date: document.getElementById("order_timestamp").textContent,
+				}],
+				item_ordered: picked_items.map(item => ({
+					item_id: item.item_id,
+					item_name: item.item_name,
+					item_price: item.item_price,
+					item_quantity: item.item_quantity,
+					item_cost: item.item_cost
+				}))
+			};
+			// console.log("order_details", order_details);
+
+			send_order_to_server(order_details, async function() {
+				temp_var.queue_number += 1
+				await Preferences.set({
+					key: "storage_queue_number",
+					value: JSON.stringify({
+						queue_number: temp_var.queue_number
+					})
 				})
-			})
 
-			// clear the customer name input
-			document.getElementById("order_customer_name").value = "";
+				// clear the customer name input
+				document.getElementById("order_customer_name").value = "";
 
-			// clear picked items and sidebar details
-			picked_items = [];
-			display_items_picked();
-			document.getElementById("total_cost").textContent = 0;
+				// clear picked items and sidebar details
+				picked_items = [];
+				display_items_picked();
+				document.getElementById("total_cost").textContent = 0;
 
-			// close dialog
-			dialog_close("review_order_dialog");
+				// close dialog
+				dialog_close("review_order_dialog");
+			});
 		}
 		order_button.addEventListener("click", order_button_listener);
 	}
@@ -456,11 +475,6 @@ function review_picked_items_dialog() {
 	}
 	storage_queue_number().then(queueNumber => {
 		order_queue_number.textContent = queueNumber;
-	});
-
-	const order_customer_name = document.getElementById("order_customer_name");
-	order_customer_name.addEventListener("input", function() {
-		console.log(order_customer_name.value);
 	});
 
 	// display timestamp
@@ -492,6 +506,27 @@ function review_picked_items_dialog() {
 	const order_total_cost = document.getElementById("order_total_cost");
 	order_total_cost.textContent = total_cost;
 	// console.log("order_total_cost.textContent:", order_total_cost.textContent);
+}
+
+function send_order_to_server(order_details, callback) {
+	console.log(`called send_order_to_server()`)
+	CapacitorHttp.post({
+		url: `${server_url}:${server_port}/send_order?api_token=${server_token}`,
+		data: order_details,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then(response => {
+			// console.log(response);
+			if (response.status === 200) {
+				if (typeof callback === "function") callback();
+			}
+		})
+		.catch(error => {
+			console.error(error);
+			alert(error);
+		});
 }
 
 function dialog_open(element_id) {

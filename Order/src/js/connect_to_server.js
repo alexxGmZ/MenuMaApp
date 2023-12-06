@@ -44,7 +44,7 @@ function set_server_connection() {
 				})
 				.catch(error => {
 					console.error(`Error while reaching the server at ${url}: ${error}`);
-					alert(`Connection Failed: ${input_server_ip} is unreachable\n ${error}`);
+					alert(`Connection Failed: ${input_server_ip} is unreachable\n${error}`);
 					reject(`Error while reaching the server at ${url}: ${error}`);
 				});
 		} else {

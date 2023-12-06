@@ -16112,7 +16112,9 @@ function get_menu_items() {
       menu_items = json_data;
       resolve();
     }).catch((error) => {
-      console.error(error);
+      alert(`Connection Failed: Server is down.
+Your order will not be received.
+${error}`);
       reject(error);
     });
   });
