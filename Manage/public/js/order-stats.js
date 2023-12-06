@@ -411,11 +411,172 @@ function total_earning_monthly_chart() {
 
 }
 
+function best_seller_items() {
+
+	const dropProcedureQuery = 'DROP PROCEDURE IF EXISTS dynamic_query_procedure';
+
+	console.log("called best_seller_items()")
+
+	connection.query(dropProcedureQuery, function(err, result, fields) {
+		if (err) {
+			console.error(err.message);
+		} else {
+
+			const createProcedureQuery = `
+				CREATE PROCEDURE dynamic_query_procedure()
+				BEGIN
+					SELECT
+						GROUP_CONCAT(
+							DISTINCT CONCAT(
+								'MAX(CASE WHEN i.item_name = ''',
+								item_name,
+								''' THEN i.quantity_times_price END) AS ',
+								REPLACE(item_name, ' ', '_')
+							)
+						) INTO @columns
+					FROM items_ordered_history;
+
+					SET @query = CONCAT(
+						'SELECT o.transaction_date, ', @columns,
+						' FROM order_queue_history o ',
+						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
+						' WHERE o.order_status = ''Served'' ',
+						' GROUP BY o.transaction_date'
+					);
+
+					PREPARE final_query FROM @query;
+					EXECUTE final_query;
+					DEALLOCATE PREPARE final_query;
+				END;
+			`;
+
+			const executeProcedureQuery = 'CALL dynamic_query_procedure()';
+
+			connection.query(createProcedureQuery, function(err, result, fields) {
+				if (err) {
+					console.error(err.message);
+				} else {
+					connection.query(executeProcedureQuery, function(err, second_result, fields) {
+						if (err) {
+							console.error(err.message);
+						} else {
+							const order_stats_result = second_result[0];
+							console.log(order_stats_result)
+							
+							// const json_data = JSON.stringify(order_stats_result, null, 2).replace(/"([^"]+)":/g, '$1:');
+							const json_data = JSON.stringify(order_stats_result);
+							console.log(json_data);
+						
+							console.log('Raw order_stats_result:', order_stats_result);
+							const parsed_data = JSON.parse(json_data);
+						
+							console.log('Parsed data:', parsed_data);
+						
+							// Check if the data array is not empty and contains valid objects
+							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+								// Extract column names dynamically
+								var columns = Object.keys(parsed_data[0]);
+						
+								console.log('Columns:', columns);
+						
+								// Remove the 'transaction_date' from the list of columns if it is the X-axis
+								var xColumnIndex = columns.indexOf('transaction_date');
+								if (xColumnIndex !== -1) {
+									columns.splice(xColumnIndex, 1);
+								}
+						
+								var chart = c3.generate({
+									bindto: '#chart5',
+									data: {
+										json: parsed_data,
+										keys: {
+											x: 'transaction_date',
+											value: columns
+										},
+										type: 'spline'
+									},
+									axis: {
+										x: {
+											type: 'category'
+										}
+									}
+								});
+							} else {
+								console.error('Data array is empty or does not contain valid objects.');
+							}
+
+							//THE CHART
+							// const chart = c3.generate({
+							// 	bindto: '#chart5', //<div id="chart5"></div>
+							// 	title: {
+							// 		text: 'ITEMS BEST SELLER'
+							// 	},
+							// 	legend: {
+							// 		position: 'inset',
+							// 		inset: {
+							// 			anchor: 'top-right',
+							// 			x: 25,
+							// 			y: 0,
+							// 			step: 1
+							// 		}
+							// 	},
+							// 	zoom: {
+							// 		enabled: true
+							// 	},
+							// 	subchart: {
+							// 		show: true
+							// 	},
+							// 	size: {
+							// 		height: 500
+							// 	},
+							// 	data: {
+							// 		json: json_data,
+							// 		keys: {
+							// 		x: 'transaction_date', // Assuming 'transaction_date' is the x-axis key
+							// 		value: ['Burger', 'Pizza', 'Salad'] // Assuming these are your y-axis keys
+							// 		},
+							// 		type: 'bar'
+							// 	},
+							// 	axis: {
+							// 		x: {
+							// 			type: 'category',
+							// 			tick: {
+							// 				rotate: 75,
+							// 				multiline: false
+							// 			}
+							// 		},
+							// 		y: {
+							// 			label: {
+							// 				text: 'Total Earnings',
+							// 				position: 'outer-middle'
+							// 			},
+							// 			tick: {
+							// 				format: function(d) {
+							// 					return '₱' + d3.format(',')(d);
+							// 				}
+							// 			}
+							// 		}
+							// 	}
+							// });
+
+						}
+					})
+				}
+
+			})
+		}
+
+
+	})
+
+}
+
 // function for showing or hiding graph
 function show_graph_or_table() {
 	total_order_chart();
 	total_earnings_chart();
 	total_earning_monthly_chart();
+	best_seller_items();
 	//variables for hiding tables and chart
 	let element = document.getElementById("order_stats_table"); //<table>
 	let element2 = document.getElementById("chart2"); //<div chart2>
