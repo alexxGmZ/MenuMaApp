@@ -343,9 +343,9 @@ function display_items_picked() {
 		// console.log(item);
 		out += `
 			<tr class="border-b">
-				<td>
-					<button class="">
-						cancel
+				<td class="text-center">
+					<button id="delete_picked_item">
+						<img src="../assets/svg/cross-round-svgrepo-com.svg" width="18px">
 					</button>
 				</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
@@ -356,6 +356,22 @@ function display_items_picked() {
 		`
 	}
 	placeholder.innerHTML = out;
+	delete_picked_item();
+}
+
+var delete_picked_item_button_listener;
+function delete_picked_item() {
+	console.log("called delete_picked_item()");
+	const delete_picked_item = document.getElementById("delete_picked_item");
+	if (delete_picked_item) {
+		if (delete_picked_item_button_listener) {
+			delete_picked_item.removeEventListener("click", delete_picked_item_button_listener);
+		}
+		delete_picked_item_button_listener = function() {
+			console.log("called delete_picked_item_button_listener()");
+		}
+		delete_picked_item.addEventListener("click", delete_picked_item_button_listener);
+	}
 }
 
 function toggle_sidebar() {
