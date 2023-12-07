@@ -437,11 +437,11 @@ function best_seller_items() {
 					FROM items_ordered_history;
 
 					SET @query = CONCAT(
-						'SELECT o.transaction_date, ', @columns,
+						'SELECT DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') as transaction_date, ', @columns,
 						' FROM order_queue_history o ',
 						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
 						' WHERE o.order_status = ''Served'' ',
-						' GROUP BY o.transaction_date'
+						' GROUP BY DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'')'
 					);
 
 					PREPARE final_query FROM @query;
@@ -486,7 +486,28 @@ function best_seller_items() {
 								}
 						
 								var chart = c3.generate({
-									bindto: '#chart5',
+									bindto: '#chart5', //<div id="chart5"></div>
+									title: {
+										text: 'ITEMS BEST SELLER'
+									},
+									legend: {
+										position: 'inset',
+										inset: {
+											anchor: 'top-right',
+											x: 25,
+											y: 0,
+											step: 2
+										}
+									},
+									zoom: {
+										enabled: true
+									},
+									subchart: {
+										show: true
+									},
+									size: {
+										height: 500
+									},
 									data: {
 										json: parsed_data,
 										keys: {
@@ -497,69 +518,30 @@ function best_seller_items() {
 									},
 									axis: {
 										x: {
-											type: 'category'
+											type: 'category',
+											tick: {
+												rotate: 75,
+												multiline: false
+											}
+										},
+										y: {
+											label: {
+												text: 'Total Earnings',
+												position: 'outer-middle'
+											},
+											tick: {
+												format: function(d) {
+													return '₱' + d3.format(',')(d);
+												}
+											}
 										}
 									}
 								});
 							} else {
 								console.error('Data array is empty or does not contain valid objects.');
 							}
-
-							//THE CHART
-							// const chart = c3.generate({
-							// 	bindto: '#chart5', //<div id="chart5"></div>
-							// 	title: {
-							// 		text: 'ITEMS BEST SELLER'
-							// 	},
-							// 	legend: {
-							// 		position: 'inset',
-							// 		inset: {
-							// 			anchor: 'top-right',
-							// 			x: 25,
-							// 			y: 0,
-							// 			step: 1
-							// 		}
-							// 	},
-							// 	zoom: {
-							// 		enabled: true
-							// 	},
-							// 	subchart: {
-							// 		show: true
-							// 	},
-							// 	size: {
-							// 		height: 500
-							// 	},
-							// 	data: {
-							// 		json: json_data,
-							// 		keys: {
-							// 		x: 'transaction_date', // Assuming 'transaction_date' is the x-axis key
-							// 		value: ['Burger', 'Pizza', 'Salad'] // Assuming these are your y-axis keys
-							// 		},
-							// 		type: 'bar'
-							// 	},
-							// 	axis: {
-							// 		x: {
-							// 			type: 'category',
-							// 			tick: {
-							// 				rotate: 75,
-							// 				multiline: false
-							// 			}
-							// 		},
-							// 		y: {
-							// 			label: {
-							// 				text: 'Total Earnings',
-							// 				position: 'outer-middle'
-							// 			},
-							// 			tick: {
-							// 				format: function(d) {
-							// 					return '₱' + d3.format(',')(d);
-							// 				}
-							// 			}
-							// 		}
-							// 	}
-							// });
-
 						}
+
 					})
 				}
 
@@ -582,6 +564,7 @@ function show_graph_or_table() {
 	let element2 = document.getElementById("chart2"); //<div chart2>
 	let element3 = document.getElementById("chart3"); //<div chart3>
 	let element4 = document.getElementById("chart4"); //<div chart4>
+	let element5 = document.getElementById("chart5"); //<div chart4>
 	let hidden = element.getAttribute("hidden");
 
 	// hides & show the table
@@ -590,12 +573,14 @@ function show_graph_or_table() {
 		element2.setAttribute("hidden", "hidden");
 		element3.setAttribute("hidden", "hidden");
 		element4.setAttribute("hidden", "hidden");
+		element5.setAttribute("hidden", "hidden");
 		document.getElementById("load_chart_btn").innerHTML = "SHOW GRAPH";
 	} else {
 		element.setAttribute("hidden", "hidden");
 		element2.removeAttribute("hidden");
 		element3.removeAttribute("hidden");
 		element4.removeAttribute("hidden");
+		element5.removeAttribute("hidden");
 		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
 	}
 
