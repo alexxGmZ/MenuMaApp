@@ -165,16 +165,16 @@ function order_done() {
 							let current_day = String(currentDate.getDate()).padStart(2, '0');
 							let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
 							console.log("Current date is: " + current_formatted_date);
+							console.log(current_formatted_date)
 
 							const order_taken_count = 1;
 							const order_done_count = 1;
 
-							const update_order_stats = `UPDATE order_stats AS o_s
-								JOIN order_queue AS o_q ON o_s.transaction_date = o_q.transaction_date
-								SET o_s.total_orders_taken = o_s.total_orders_taken + ${order_taken_count},
-									o_s.total_orders_done = o_s.total_orders_done + ${order_done_count},
-									o_s.total_earnings = o_s.total_earnings + ${orderRow.total_price}
-								WHERE o_s.transaction_date = "${current_formatted_date}"`;
+							const update_order_stats = `UPDATE order_stats
+											SET total_orders_taken = total_orders_taken + '1',
+												total_orders_done = total_orders_taken + '1',
+												total_earnings = total_earnings + "${orderRow.total_price}"
+											WHERE transaction_date = "${current_formatted_date}"`;
 							connection.query(update_order_stats, error => {
 								if (error) console.log(error);
 								else console.log("Order Stat done success");
@@ -311,11 +311,11 @@ function order_cancel() {
 				const order_cancelled_count = 1;
 
 				// SQL query to get the dates in table
-				const update_order_stats = `UPDATE order_stats AS o_s
-				JOIN order_queue AS o_q ON o_s.transaction_date = o_q.transaction_date
-				SET o_s.total_orders_taken = o_s.total_orders_taken + ${order_taken_count},
-					o_s.total_orders_canceled = o_s.total_orders_canceled + ${order_cancelled_count}
-				WHERE o_s.transaction_date = "${current_formatted_date}";`;
+				const update_order_stats = `UPDATE order_stats
+								SET total_orders_taken = total_orders_taken + '1',
+									total_orders_canceled = total_orders_canceled + '1'
+								WHERE transaction_date = "${current_formatted_date}";
+								`;
 				connection.query(update_order_stats, error => {
 					if (error) {
 						console.log(error);

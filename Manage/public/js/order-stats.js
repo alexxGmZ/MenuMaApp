@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 	// put something if needed
 	display_order_stats();
-
+	hide_lines();
 	//chart purposes
 	//total_order_chart();
 
@@ -561,29 +561,62 @@ function show_graph_or_table() {
 	best_seller_items();
 	//variables for hiding tables and chart
 	let element = document.getElementById("order_stats_table"); //<table>
+	let div_hide_element2 = document.getElementById("chart2_placeholder") //<div placeholder for <div chart2>
 	let element2 = document.getElementById("chart2"); //<div chart2>
+
+	let div_hide_element3 = document.getElementById("chart3_placeholder") //<div placeholder for <div chart2>
 	let element3 = document.getElementById("chart3"); //<div chart3>
+	
+	let div_hide_element4 = document.getElementById("chart4_placeholder") //<div placeholder for <div chart2>
 	let element4 = document.getElementById("chart4"); //<div chart4>
-	let element5 = document.getElementById("chart5"); //<div chart4>
+
+	let div_hide_element5 = document.getElementById("chart5_placeholder") //<div placeholder for <div chart2>
+	let element5 = document.getElementById("chart5"); //<div chart5>
+
 	let hidden = element.getAttribute("hidden");
 
 	// hides & show the table
 	if (hidden) {
 		element.removeAttribute("hidden");
+		div_hide_element2.setAttribute("hidden", "hidden");
 		element2.setAttribute("hidden", "hidden");
+
+		div_hide_element3.setAttribute("hidden", "hidden");
 		element3.setAttribute("hidden", "hidden");
+
+		div_hide_element4.setAttribute("hidden", "hidden");
 		element4.setAttribute("hidden", "hidden");
+
+		div_hide_element5.setAttribute("hidden", "hidden");
 		element5.setAttribute("hidden", "hidden");
+
 		document.getElementById("load_chart_btn").innerHTML = "SHOW GRAPH";
 	} else {
 		element.setAttribute("hidden", "hidden");
+		div_hide_element2.removeAttribute("hidden");
 		element2.removeAttribute("hidden");
+
+		div_hide_element3.removeAttribute("hidden");
 		element3.removeAttribute("hidden");
+
+		div_hide_element4.removeAttribute("hidden");
 		element4.removeAttribute("hidden");
+
+		div_hide_element5.removeAttribute("hidden");
 		element5.removeAttribute("hidden");
+		
 		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
 	}
 
 	// NOTE: THE CHART IS DIV which <div id="chart#"></div>
 	// do note remove the div or elese chart will not load
+}
+
+// to hide lines in order_stats even the graph is not visible
+function hide_lines() {
+	let elements = document.querySelectorAll("#chart2_placeholder, #chart3_placeholder, #chart4_placeholder, #chart5_placeholder");
+
+	elements.forEach(function(element) {
+		element.setAttribute("hidden", "hidden");
+	});
 }
