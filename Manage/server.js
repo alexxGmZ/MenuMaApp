@@ -173,39 +173,7 @@ app.post("/update_item", upload.single("image"), (req, res) => {
 	});
 });
 
-// practice shit
-app.get("/shitty-images",
-	(request, response) => {
-		const query = "SELECT * from manage_db.practice_table";
-		connection.query(query, function(err, result) {
-			if (err) {
-				console.error(err);
-				return response.status(500).json({ error: "Internal Server Error" });
-			}
-
-			if (result.length === 0) {
-				return response.status(404).json({ error: "No images found" });
-			}
-
-			// Create an array to store image data URLs
-			const imageDataUrls = [];
-
-			// Loop through the result set and convert each image to a data URL
-			for (const row of result) {
-				const imageDataUrl = `data:image/jpeg;base64,${row.image.toString("base64")}`;
-				imageDataUrls.push(imageDataUrl);
-			}
-
-			// Send the array of image data URLs as a JSON response
-			response.status(200).json({ images: imageDataUrls });
-			request_message_format("GET", "shitty-images", request.ip);
-		});
-	}
-);
-
-app.get("/registered_employees",
-	// request (incoming data)
-	// response (outgoing data)
+app.get("/registered_employees", authenticate_api_connection,
 	(request, response) => {
 		const query = "SELECT * from manage_db.registered_employees";
 		connection.query(query, function(err, result) {
