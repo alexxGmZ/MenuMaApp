@@ -42,7 +42,7 @@ function display_orders() {
 				const markup = `
 					<tr class="mx-auto bg-sky-300 rounded-lg grid grid-cols-1 gap-2 w-60">
 						<td class="text-center font-bold rounded-t-lg pt-2 pb-2">${orders.queue_number}</td>
-						<td class="text-center bg-slate-50 rounded-lg whitespace-pre mx-2 h-24">${removed_comma}</td>
+						<td class="text-center bg-slate-50 rounded-lg whitespace-pre mx-2 h-24 overflow-y-scroll">${removed_comma}</td>
 						<td class="text-center px-2 italic">${orders.customer_name}</td>
 						<td class="text-center font-bold">₱${orders.total_price}</td>
 						<td class="grid grid-cols-2 gap-2 bg-sky-500 pb-2 rounded-b-lg">
@@ -139,6 +139,7 @@ function order_done() {
 							const order_id = orderRow.order_id;
 							const customer_names = orderRow.customer_name;
 							const overall_price = orderRow.total_price;
+							// console.log("The overall price is: ", orderRow.total_price)
 							// // Formatted Date
 							// var formattedDate = new Date (orderRow.transaction_date).toLocaleString();
 							// // Removed comma on the Formatted Date
@@ -169,11 +170,11 @@ function order_done() {
 							const order_done_count = 1;
 
 							const update_order_stats = `UPDATE order_stats AS o_s
-							JOIN order_queue AS o_q ON o_s.transaction_date = o_q.transaction_date
-							SET o_s.total_orders_taken = o_s.total_orders_taken + ${order_taken_count},
-								o_s.total_orders_done = o_s.total_orders_done + ${order_done_count},
-								o_s.total_earnings = o_s.total_earnings + ${orderRow.total_price}
-							WHERE o_s.transaction_date = "${current_formatted_date}"`;
+								JOIN order_queue AS o_q ON o_s.transaction_date = o_q.transaction_date
+								SET o_s.total_orders_taken = o_s.total_orders_taken + ${order_taken_count},
+									o_s.total_orders_done = o_s.total_orders_done + ${order_done_count},
+									o_s.total_earnings = o_s.total_earnings + ${orderRow.total_price}
+								WHERE o_s.transaction_date = "${current_formatted_date}"`;
 							connection.query(update_order_stats, error => {
 								if (error) console.log(error);
 								else console.log("Order Stat done success");
