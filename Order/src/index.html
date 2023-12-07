@@ -50,14 +50,16 @@
 				<img src="assets/svg/info-square-svgrepo-com(1).svg" width="25px">
 			</button>
 			<h1 class="font-bold mr-2">Resolution:</h1>
-			<p class="mr-2">W: <b id="screen_width" class="font-bold"></b></p>
-			<p>H: <b id="screen_height" class="font-bold"></b></p>
+			<span class="mr-2">(W) <b id="screen_width" class="font-bold"></b></span>
+			<span class="mr-3">(H) <b id="screen_height" class="font-bold"></b></span>
+			<span>IP: <b id="device_ip_address" class="font-bold"></b></span>
 		</div>
 	</div>
 
 
 	<script src="./js/connect_to_server.js" type="module"></script>
 	<script src="./js/get_screen_resolution.js" type="module"></script>
+	<script src="./js/get_device_ip.js" type="module"></script>
 	<!-- <script src="./js/pull_to_refresh.js" type="module"></script> -->
 	<script src="./js/statusbar.js" type="module"></script>
 </body>

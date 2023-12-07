@@ -314,10 +314,7 @@ function item_quantity_dialog(selected_object) {
 						})
 						const total_cost_span = document.getElementById("total_cost");
 						total_cost_span.textContent = total_cost;
-
-						// render the items picked table
-						display_items_picked();
-						review_picked_items_dialog();
+						sidebar();
 					}
 					item_pick_button.addEventListener("click", item_pick_button_listener);
 				}
@@ -335,6 +332,28 @@ function item_quantity_dialog(selected_object) {
 	}
 }
 
+var review_order_button_listener;
+function sidebar() {
+	if (picked_items.length == 0) return;
+	console.log("called sidebar()");
+	// render the items picked table
+	display_items_picked();
+
+	// display review order dialog
+	const review_order_button = document.getElementById("review_order_button");
+	if (review_order_button) {
+		if (review_order_button_listener) {
+			review_order_button.removeEventListener("click", review_order_button_listener);
+		}
+		review_order_button_listener = function() {
+			console.log("called review_order_button_listener()");
+			review_picked_items_dialog();
+			dialog_open("review_order_dialog");
+		}
+		review_order_button.addEventListener("click", review_order_button_listener);
+	}
+}
+
 function display_items_picked() {
 	console.log("called display_items_picked()");
 	var placeholder = document.querySelector("#items_picked_list");
@@ -344,8 +363,8 @@ function display_items_picked() {
 		out += `
 			<tr class="border-b">
 				<td class="text-center">
-					<button id="delete_picked_item">
-						<img src="../assets/svg/cross-round-svgrepo-com.svg" width="18px">
+					<button class="border px-2 rounded-xl" id="delete_picked_item">
+						remove
 					</button>
 				</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
@@ -374,45 +393,10 @@ function delete_picked_item() {
 	}
 }
 
-function toggle_sidebar() {
-	const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
-	if (toggle_sidebar_full) {
-		toggle_sidebar_full.addEventListener("click", function() {
-			document.getElementById("minimal_sidebar").classList.add("hidden");
-			document.getElementById("full_sidebar").classList.remove("hidden");
-			document.getElementById("full_sidebar").classList.add("grid");
-		})
-	}
-
-	const toggle_sidebar_min = document.getElementById("toggle_sidebar_min");
-	if (toggle_sidebar_min) {
-		toggle_sidebar_min.addEventListener("click", function() {
-			document.getElementById("minimal_sidebar").classList.remove("hidden");
-			document.getElementById("full_sidebar").classList.add("hidden");
-		})
-	}
-}
-
-var review_order_button_listener;
 var order_button_listener;
 function review_picked_items_dialog() {
 	if (picked_items.length == 0) return;
 	console.log("called review_picked_items_dialog()");
-
-	// display review order dialog
-	const review_order_button = document.getElementById("review_order_button");
-	if (review_order_button) {
-		if (review_order_button_listener) {
-			review_order_button.removeEventListener("click", review_order_button_listener);
-		}
-		review_order_button_listener = function() {
-			console.log("called review_order_button_listener()");
-			if (picked_items.length > 0) {
-				dialog_open("review_order_dialog");
-			}
-		}
-		review_order_button.addEventListener("click", review_order_button_listener);
-	}
 
 	// cancel review button
 	const cancel_review_order_dialog = document.getElementById("cancel_review_order_dialog");
@@ -543,6 +527,26 @@ function send_order_to_server(order_details, callback) {
 			console.error(error);
 			alert(error);
 		});
+}
+
+function toggle_sidebar() {
+	console.log("called toggle_sidebar()");
+	const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
+	if (toggle_sidebar_full) {
+		toggle_sidebar_full.addEventListener("click", function() {
+			document.getElementById("minimal_sidebar").classList.add("hidden");
+			document.getElementById("full_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("grid");
+		})
+	}
+
+	const toggle_sidebar_min = document.getElementById("toggle_sidebar_min");
+	if (toggle_sidebar_min) {
+		toggle_sidebar_min.addEventListener("click", function() {
+			document.getElementById("minimal_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("hidden");
+		})
+	}
 }
 
 function dialog_open(element_id) {

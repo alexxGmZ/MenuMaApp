@@ -16269,9 +16269,9 @@ function display_items_picked() {
   for (let item of picked_items) {
     out += `
 			<tr class="border-b">
-				<td>
-					<button class="">
-						cancel
+				<td class="text-center">
+					<button class="border px-2 rounded-xl" id="delete_picked_item">
+						remove
 					</button>
 				</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
@@ -16282,6 +16282,21 @@ function display_items_picked() {
 		`;
   }
   placeholder.innerHTML = out;
+  delete_picked_item();
+}
+var delete_picked_item_button_listener;
+function delete_picked_item() {
+  console.log("called delete_picked_item()");
+  const delete_picked_item2 = document.getElementById("delete_picked_item");
+  if (delete_picked_item2) {
+    if (delete_picked_item_button_listener) {
+      delete_picked_item2.removeEventListener("click", delete_picked_item_button_listener);
+    }
+    delete_picked_item_button_listener = function() {
+      console.log("called delete_picked_item_button_listener()");
+    };
+    delete_picked_item2.addEventListener("click", delete_picked_item_button_listener);
+  }
 }
 function toggle_sidebar() {
   const toggle_sidebar_full = document.getElementById("toggle_sidebar_full");
