@@ -25,6 +25,8 @@ app.use(cors());
 app.use(express.static("public"));
 
 const os = require("os");
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./localStorage');
 
 // format get request message
 function request_message_format(request_protocol, api_endpoint, ip_requested) {
@@ -67,6 +69,29 @@ function extractIPv4(ip) {
 	}
 	return ip;
 }
+
+function update_local_storage_date() {
+	console.log("called update_local_storage_date()");
+	const now = new Date();
+	const year = now.getFullYear();
+	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
+	const day = now.getDate().toString().padStart(2, '0');
+	const current_date = `${year}-${month}-${day}`;
+
+	const local_storage_date = localStorage.getItem("storage_date");
+	if (local_storage_date !== current_date) {
+		localStorage.setItem("storage_date", current_date);
+		localStorage.setItem("storage_queue_number", 1);
+	}
+
+	const local_storage_queue_number = localStorage.getItem("storage_queue_number");
+	if (!local_storage_queue_number) {
+		localStorage.setItem("storage_queue_number", 1);
+	}
+}
+
+// localStorage.setItem("storage_queue_number", 1);
+update_local_storage_date();
 
 // for the Order application to display menu items
 app.get("/menu_items", authenticate_api_connection,
@@ -244,11 +269,17 @@ app.get("/menu_design", authenticate_api_connection,
 
 app.post("/send_order", authenticate_api_connection,
 	(request, response) => {
-		console.log(request.body);
+		let queue_number = parseInt(localStorage.getItem("storage_queue_number"));
+		console.log("queue_number", queue_number);
+		console.log("request.body", request.body);
+
 		request_message_format("POST", "send_order", request.ip);
 		response.status(200).json({
 			message: "Order received successfully",
+			queue_number: queue_number
 		});
+		queue_number += 1;
+		localStorage.setItem("storage_queue_number", queue_number);
 	}
 );
 
