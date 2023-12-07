@@ -172,7 +172,7 @@ function order_done() {
 
 							const update_order_stats = `UPDATE order_stats
 											SET total_orders_taken = total_orders_taken + '1',
-												total_orders_done = total_orders_taken + '1',
+												total_orders_done = total_orders_done + '1',
 												total_earnings = total_earnings + "${orderRow.total_price}"
 											WHERE transaction_date = "${current_formatted_date}"`;
 							connection.query(update_order_stats, error => {
