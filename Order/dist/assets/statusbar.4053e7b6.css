@@ -617,6 +617,9 @@ video {
 .w-56 {
   width: 14rem;
 }
+.w-\[200px\] {
+  width: 200px;
+}
 .w-auto {
   width: auto;
 }

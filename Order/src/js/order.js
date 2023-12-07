@@ -17,45 +17,12 @@ var picked_items = [];
 // forcse screen orientation to landscape
 window.screen.orientation.lock('landscape');
 window.addEventListener("DOMContentLoaded", () => {
-	update_local_storage_date();
-
 	get_menu_design();
 	hideStatusBar();
 	keepAwake();
 	toggle_sidebar();
 	display_items_picked();
 })
-
-async function update_local_storage_date() {
-	console.log("called update_local_storage_date()");
-	const now = new Date();
-	const year = now.getFullYear();
-	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
-	const day = now.getDate().toString().padStart(2, '0');
-	const current_date = `${year}-${month}-${day}`;
-
-	const local_storage_date = await Preferences.get({ key: "storage_date" });
-	if (!local_storage_date.value) {
-		await Preferences.set({
-			key: "storage_date",
-			value: JSON.stringify({
-				date: `${current_date}`
-			})
-		});
-	}
-	else {
-		const storage_date = JSON.parse(local_storage_date.value).date;
-		console.log("storage_date:", storage_date);
-		if (storage_date !== current_date) {
-			await Preferences.set({
-				key: "storage_date",
-				value: JSON.stringify({
-					date: `${current_date}`
-				})
-			});
-		}
-	}
-}
 
 function get_menu_design() {
 	console.log("called get_menu_design()");
@@ -64,9 +31,7 @@ function get_menu_design() {
 			url: `${server_url}:${server_port}/menu_design?api_token=${server_token}`,
 		})
 			.then(response => {
-				// console.log("Response Status: " + response.status);
 				const json_data = response.data;
-				// console.log(json_data);
 				generate_canvas_area(json_data.canvas_height, json_data.canvas_width, function() {
 					canvas.loadFromJSON(json_data.canvas_objects, function() {
 						canvas.renderAll(); // Render the canvas
@@ -111,10 +76,8 @@ function get_menu_items() {
 			url: `${server_url}:${server_port}/menu_items_lite?api_token=${server_token}`,
 		})
 			.then(response => {
-				// console.log("Response Status: " + response.status);
 				const json_data = response.data;
 				menu_items = json_data;
-				// console.log("menu_items:", menu_items);
 				resolve();
 			})
 			.catch((error) => {
@@ -130,8 +93,6 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	const canvas_element = document.createElement("canvas");
 	canvas_element.id = "canvas";
 	canvas_element.className = canvas_css_classes;
-	// canvas_element.width = canvas_width;
-	// canvas_element.height = canvas_height;
 
 	// Append the canvas element to the container div
 	const canvas_placeholder = document.querySelector("#canvas_area");
@@ -168,7 +129,6 @@ var item_quantity_plus_listener;
 var item_pick_button_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
-		// console.log(`Selected object - Type: ${selected_object.type}, Object ID: ${selected_object.object_id}`);
 
 		// update menu_items
 		get_menu_items();
@@ -252,7 +212,6 @@ function item_quantity_dialog(selected_object) {
 					item_pick_button_listener = function() {
 						console.log("called item_pick_button_listener()");
 						dialog_close("item_order_quantity_dialog");
-						// console.log("item_picked:", item);
 						let item_details = {
 							"item_id": item.item_id,
 							"item_name": item.item_name,
@@ -260,7 +219,6 @@ function item_quantity_dialog(selected_object) {
 							"item_cost": parseInt(item_cost_by_quantity_span.textContent),
 							"item_quantity": parseInt(item_quantity_count.textContent)
 						};
-						// console.log(item_details);
 
 						// if there's an identical item in picked items just increment the value of
 						// item quantiy and item cost, if not then insert that item in picked items
@@ -326,7 +284,6 @@ function display_items_picked() {
 	var placeholder = document.querySelector("#items_picked_list");
 	var out = "";
 	for (let item of picked_items) {
-		// console.log(item);
 		out += `
 			<tr class="border-b">
 				<td class="text-center">
@@ -397,7 +354,6 @@ function review_picked_items_dialog() {
 					item_cost: item.item_cost
 				}))
 			};
-			// console.log("order_details", order_details);
 
 			send_order_to_server(order_details, function() {
 				dialog_open("display_queue_number_dialog");
@@ -411,7 +367,6 @@ function review_picked_items_dialog() {
 	// display timestamp
 	const order_timestamp = document.getElementById("order_timestamp");
 	order_timestamp.textContent = get_current_timestamp();
-	// console.log("order_timestamp.textContent:", order_timestamp.textContent);
 
 	// display ordered items in the dialog
 	var order_items_list = document.querySelector("#order_items_list");
@@ -427,7 +382,6 @@ function review_picked_items_dialog() {
 		`
 	}
 	order_items_list.innerHTML = order_items_list_out;
-	// console.log("order_items_list.innerHTML:", order_items_list.innerHTML);
 
 	// display total cost count
 	let total_cost = 0;
@@ -436,7 +390,6 @@ function review_picked_items_dialog() {
 	})
 	const order_total_cost = document.getElementById("order_total_cost");
 	order_total_cost.textContent = total_cost;
-	// console.log("order_total_cost.textContent:", order_total_cost.textContent);
 }
 
 var display_queue_number_done_listener;
@@ -480,13 +433,12 @@ function send_order_to_server(order_details, callback) {
 		},
 	})
 		.then(response => {
-			// console.log(response);
 			if (response.status === 200) {
 				if (typeof callback === "function") {
 					callback();
 					// display queue_number
 					document.getElementById("order_queue_number").textContent = response.data.queue_number;
-					// console.log(response.data.message);
+					generate_qrcode(response.data.queue_number, order_details);
 				}
 			}
 		})
@@ -494,6 +446,18 @@ function send_order_to_server(order_details, callback) {
 			console.error(error);
 			alert(error);
 		});
+}
+
+import QRCode from 'qrcode';
+import * as htmlToImage from 'html-to-image';
+
+function generate_qrcode(queue_number, order_details) {
+	console.log("called generate_qrcode()");
+	const canvas = document.getElementById("qr_code");
+	const qr_data = []
+	qr_data.push(queue_number, order_details)
+	const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, '');;
+	QRCode.toCanvas(canvas, jsoned_qr_data, { scale: 2});
 }
 
 function toggle_sidebar() {

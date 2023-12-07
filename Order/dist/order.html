@@ -12,9 +12,9 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.9ad7bbb6.js"></script>
+  <script type="module" crossorigin src="/assets/order.f1fbdf79.js"></script>
   <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
-  <link rel="stylesheet" href="/assets/statusbar.252b0d0d.css">
+  <link rel="stylesheet" href="/assets/statusbar.4053e7b6.css">
 </head>
 
 <body class="overflow-y-hidden fixed">
@@ -141,6 +141,7 @@
 		<div class="flex mb-2">
 			<div class="border px-2 mr-2">
 				<p>QR code here</p>
+				<canvas id="qr_code" width="30px" height="30px"></canvas>
 			</div>
 			<div>
 				<span>Your queue number is</span>
@@ -152,6 +153,10 @@
 			Ok
 		</button>
 	</dialog>
+
+	<div id="qr_code_image" class="border rounded-lg bg-white w-[200px]">
+		<h1 id="image_queue_number" class="text-2xl text-center"></h1>
+	</div>
 
 	
 </body>
