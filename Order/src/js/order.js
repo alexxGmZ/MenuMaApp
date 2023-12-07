@@ -18,7 +18,6 @@ var picked_items = [];
 window.screen.orientation.lock('landscape');
 window.addEventListener("DOMContentLoaded", () => {
 	update_local_storage_date();
-	update_local_storage_queue_number();
 
 	get_menu_design();
 	hideStatusBar();
@@ -52,38 +51,6 @@ async function update_local_storage_date() {
 				key: "storage_date",
 				value: JSON.stringify({
 					date: `${current_date}`
-				})
-			});
-		}
-	}
-}
-
-async function update_local_storage_queue_number() {
-	console.log("called update_local_storage_queue_number()")
-	const now = new Date();
-	const year = now.getFullYear();
-	const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed in JavaScript.
-	const day = now.getDate().toString().padStart(2, '0');
-	const current_date = `${year}-${month}-${day}`;
-
-	const local_storage_date = await Preferences.get({ key: "storage_date" });
-	const storage_date = JSON.parse(local_storage_date.value).date;
-	const local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
-	if (!local_storage_queue_number.value) {
-		await Preferences.set({
-			key: "storage_queue_number",
-			value: JSON.stringify({
-				queue_number: 1
-			})
-		});
-	}
-	else {
-		const storage_queue_number = JSON.parse(local_storage_queue_number.value).queue_number;
-		if (storage_date !== current_date || !local_storage_queue_number) {
-			await Preferences.set({
-				key: "storage_queue_number",
-				value: JSON.stringify({
-					queue_number: 1
 				})
 			});
 		}
@@ -416,11 +383,8 @@ function review_picked_items_dialog() {
 		order_button_listener = async function() {
 			console.log("called order_button_listener()");
 			// increment the queue number
-			let local_storage_queue_number = await Preferences.get({ key: "storage_queue_number" });
-			let temp_var = JSON.parse(local_storage_queue_number.value);
 			let order_details = {
 				order_details: [{
-					queue_number: temp_var.queue_number,
 					customer_name: document.getElementById("order_customer_name").value,
 					total_price: document.getElementById("total_cost").textContent,
 					transaction_date: document.getElementById("order_timestamp").textContent,
@@ -435,47 +399,14 @@ function review_picked_items_dialog() {
 			};
 			// console.log("order_details", order_details);
 
-			send_order_to_server(order_details, async function() {
-				temp_var.queue_number += 1
-				await Preferences.set({
-					key: "storage_queue_number",
-					value: JSON.stringify({
-						queue_number: temp_var.queue_number
-					})
-				})
+			send_order_to_server(order_details, function() {
+				dialog_open("display_queue_number_dialog");
+				queue_number_dialog();
 
-				// clear the customer name input
-				document.getElementById("order_customer_name").value = "";
-
-				// clear picked items and sidebar details
-				picked_items = [];
-				display_items_picked();
-				document.getElementById("total_cost").textContent = 0;
-
-				// close dialog
-				dialog_close("review_order_dialog");
 			});
 		}
 		order_button.addEventListener("click", order_button_listener);
 	}
-
-	// display order queue number
-	const order_queue_number = document.getElementById("order_queue_number");
-	const storage_queue_number = function() {
-		return Preferences.get({ key: "storage_queue_number" })
-			.then(storageQueueNumber => {
-				let parsedQueueNumber = JSON.parse(storageQueueNumber.value);
-				// console.log(parsedQueueNumber.queue_number);
-				return parsedQueueNumber.queue_number;
-			})
-			.catch(error => {
-				console.error("Error fetching queue number:", error);
-				return null; // or handle the error accordingly
-			});
-	}
-	storage_queue_number().then(queueNumber => {
-		order_queue_number.textContent = queueNumber;
-	});
 
 	// display timestamp
 	const order_timestamp = document.getElementById("order_timestamp");
@@ -488,10 +419,10 @@ function review_picked_items_dialog() {
 	for (let item of picked_items) {
 		order_items_list_out += `
 			<tr class="border-b">
-				<td data-column="" class="text-center font-bold border-r border-l">${item.item_name}</td>
-				<td data-column="" class="text-center border-r">${item.item_quantity}</td>
-				<td data-column="" class="text-center border-r">${item.item_price}</td>
-				<td data-column="" class="text-center border-r">${item.item_cost}</td>
+				<td data-column="" class="text-center px-2 font-bold border-r border-l">${item.item_name}</td>
+				<td data-column="" class="text-center px-2 border-r">${item.item_quantity}</td>
+				<td data-column="" class="text-center px-2 border-r">${item.item_price}</td>
+				<td data-column="" class="text-center px-2 border-r">${item.item_cost}</td>
 			</tr>
 		`
 	}
@@ -508,6 +439,37 @@ function review_picked_items_dialog() {
 	// console.log("order_total_cost.textContent:", order_total_cost.textContent);
 }
 
+var display_queue_number_done_listener;
+function queue_number_dialog() {
+	console.log("called queue_number_dialog()");
+
+	const display_queue_number_done_button = document.getElementById("display_queue_number_done_button");
+	if (display_queue_number_done_button) {
+		if (display_queue_number_done_listener) {
+			display_queue_number_done_button.removeEventListener("click", display_queue_number_done_listener);
+		}
+		display_queue_number_done_listener = function() {
+			console.log("called display_queue_number_done_listener()");
+			dialog_close("display_queue_number_dialog");
+			// clear the customer name input
+			document.getElementById("order_customer_name").value = "";
+
+			// clear picked items and sidebar details
+			picked_items = [];
+			display_items_picked();
+			document.getElementById("total_cost").textContent = 0;
+
+			// close dialog
+			dialog_close("review_order_dialog");
+
+			// toggle sidebar min
+			document.getElementById("minimal_sidebar").classList.remove("hidden");
+			document.getElementById("full_sidebar").classList.add("hidden");
+		}
+		display_queue_number_done_button.addEventListener("click", display_queue_number_done_listener);
+	}
+}
+
 function send_order_to_server(order_details, callback) {
 	console.log(`called send_order_to_server()`)
 	CapacitorHttp.post({
@@ -520,7 +482,12 @@ function send_order_to_server(order_details, callback) {
 		.then(response => {
 			// console.log(response);
 			if (response.status === 200) {
-				if (typeof callback === "function") callback();
+				if (typeof callback === "function") {
+					callback();
+					// display queue_number
+					document.getElementById("order_queue_number").textContent = response.data.queue_number;
+					// console.log(response.data.message);
+				}
 			}
 		})
 		.catch(error => {
