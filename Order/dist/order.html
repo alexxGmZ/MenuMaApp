@@ -12,9 +12,9 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.407f4b55.js"></script>
+  <script type="module" crossorigin src="/assets/order.9ad7bbb6.js"></script>
   <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
-  <link rel="stylesheet" href="/assets/statusbar.a82abb9f.css">
+  <link rel="stylesheet" href="/assets/statusbar.252b0d0d.css">
 </head>
 
 <body class="overflow-y-hidden fixed">
@@ -102,48 +102,55 @@
 			<button id="cancel_review_order_dialog" class="border rounded-2xl px-3">
 				Cancel
 			</button>
-			<h1 class="font-bold mb-2 text-center">E-receipt</h1>
+			<h1 class="font-bold mb-2 text-center">Review Order</h1>
 			<button id="order_button" class="border rounded-2xl px-3">
 				Done
 			</button>
 		</div>
-		<div class="flex mb-5">
-			<div class="border mr-2 p-2">
-				<!-- QR code area -->
-				<p>QR Code here</p>
+		<div class="mb-5 px-2">
+			<label for="order_customer_name">Customer Name:</label>
+			<input type="text" id="order_customer_name" autocomplete="off" class="border rounded-lg w-24 px-2">
+			<br>
+
+			<label for="order_timestamp">Timestamp:</label>
+			<span id="order_timestamp" class="font-bold"></span>
+			<br>
+
+			<table class="ml-2 border">
+				<thead>
+					<tr>
+						<th class="border-2">Item</th>
+						<th class="border-2">Quantity</th>
+						<th class="border-2">Price</th>
+						<th class="border-2">Cost</th>
+					</tr>
+				</thead>
+				<tbody id="order_items_list">
+				</tbody>
+			</table>
+			<br>
+
+			<label for="order_total_cost">Total Cost:</label>
+			<span id="order_total_cost" class="font-bold"></span>
+			<br>
+		</div>
+	</dialog>
+
+	<dialog id="display_queue_number_dialog"
+		class="hidden py-3 px-7 rounded-lg drop-shadow-lg touch-none overflow-y-scroll">
+		<div class="flex mb-2">
+			<div class="border px-2 mr-2">
+				<p>QR code here</p>
 			</div>
-			<div class="px-2">
-				<label for="order_queue_number">Queue Number:</label>
-				<span id="order_queue_number" class="font-bold"></span>
+			<div>
+				<span>Your queue number is</span>
 				<br>
-
-				<label for="order_customer_name">Customer Name:</label>
-				<input type="text" id="order_customer_name" autocomplete="off" class="border rounded-lg w-24 px-2">
-				<br>
-
-				<label for="order_timestamp">Timestamp:</label>
-				<span id="order_timestamp" class="font-bold"></span>
-				<br>
-
-				<table class="ml-2 border">
-					<thead>
-						<tr>
-							<th class="border-2">Item</th>
-							<th class="border-2">Quantity</th>
-							<th class="border-2">Price</th>
-							<th class="border-2">Cost</th>
-						</tr>
-					</thead>
-					<tbody id="order_items_list">
-					</tbody>
-				</table>
-				<br>
-
-				<label for="order_total_cost">Total Cost:</label>
-				<span id="order_total_cost" class="font-bold"></span>
-				<br>
+				<span id="order_queue_number" class="font-bold text-[70px]"></span>
 			</div>
 		</div>
+		<button id="display_queue_number_done_button" class="border px-3 rounded-xl">
+			Ok
+		</button>
 	</dialog>
 
 	
