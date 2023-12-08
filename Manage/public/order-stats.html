@@ -82,7 +82,48 @@
 	<div id="chart"></div> <!--This is only practice chart-->
 
 	<div id="chart2_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
-		<div id="chart2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
+		<div class="grid grid-cols-3 gap-4 m-5">
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300">
+				<!--Date Picker-->
+				<p class="text-center mb-2">Select Daily</p>
+				<span class="px-2 float-left">Select starting date:</span>
+				<input type="date" id="date_daily_start" name="date_daily_start" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-1/2 mx-2 pl-10 mb-2 float-right"><br><br>
+				<span class="px-2 float-left">Endpoint to:</span>
+				<input type="date" id="date_daily_end" name="date_daily_end" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-1/2 mx-2 pl-10 mb-2 float-right"><br>
+				<center>
+					<br>
+					<button onclick="total_order_chart_base_on_date_picker()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Load Selected Daily
+					</button>
+				</center>
+			</div>
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300">
+				<!--Date Picker-->
+				<p class="text-center mb-2">Select Monthly</p>
+				<span class="px-2 float-left">Select starting date: </span>
+				<input type="date" id="" name="" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-1/2 mx-2 pl-10 mb-2 float-right"><br><br>
+				<span class="px-2 float-left">endpoint to:</span>
+				<input type="date" id="" name="" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-1/2 mx-2 pl-10 mb-2 float-right"><br>
+				<center>
+					<br>
+					<button class="col-span-3 m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">Load Selected Monthly</button>
+				</center>
+			</div>
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300">
+				<!--Date Picker-->
+				<p class="text-center mb-2">Select Yearly</p>
+				<span class="px-2 float-left">Select starting date: </span>
+				<input type="date" id="" name="" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-1/2 mx-2 pl-10 mb-2 float-right"><br><br>
+				<span class="px-2 float-left">endpoint to: </span>
+				<input type="date" id="" name="" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-1/2 mx-2 pl-10 mb-2 float-right"><br>
+				<center>
+					<br>
+					<button class="col-span-3 m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">Load Selected Yearly</button>
+				</center>
+			</div>
+		</div>
+		<div id="chart2" class="pt-2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
 	</div>
 
 	<br>
@@ -170,6 +211,8 @@
 			</button>
 		</center>
 	</dialog>
+
+	<!--Dialog for selecting date is empty (Daily)-->
 
 </body>
 

@@ -260,6 +260,27 @@ function total_order_chart() {
 
 }
 
+// chart to load total orders taken based on date selected
+function total_order_chart_base_on_date_picker() {
+	console.log("called total_order_chart_base_on_date_picker()")
+
+	var date_input_daily_start = document.getElementById("date_daily_start");
+	var date_input_daily_start_value = date_input_daily_start.value;
+
+	var date_input_daily_end = document.getElementById("date_daily_end");
+	var date_input_daily_end_value = date_input_daily_end.value;
+
+	console.log("The Date is: ", date_input_daily_start_value, " and the end is: ", date_input_daily_end_value);
+
+	if (date_input_daily_start_value === "" || date_input_daily_end_value === "") {
+		console.log("Date is Empty!")
+		return;
+	}
+
+	
+
+}
+
 // total earning chart everyday
 function total_earnings_chart() {
 	console.log("called total_earnings_chart()")
@@ -414,6 +435,7 @@ function total_earning_monthly_chart() {
 
 }
 
+// chart to load best seller items
 function best_seller_items() {
 	console.log("called best_seller_items()")
 
@@ -558,6 +580,7 @@ function best_seller_items() {
 
 }
 
+// chart to load items quantities sold
 function item_quantity_sold() {
 	console.log("called item_quantity_sold()")
 
