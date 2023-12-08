@@ -87,13 +87,13 @@
 			<div class="mr-10 mt-12">
 				<h2 class="font-bold">Background Color:</h2>
 				<label for="rgb_r">Red:</label>
-				<input id="rgb_r" value="255" class="w-8">
+				<input id="rgb_r" value="255" class="border rounded-lg w-8">
 				<br>
 				<label for="rgb_g">Green:</label>
-				<input id="rgb_g" value="255" class="w-8">
+				<input id="rgb_g" value="255" class="border rounded-lg w-8">
 				<br>
 				<label for="rgb_b">Blue:</label>
-				<input id="rgb_b" value="255" class="w-8">
+				<input id="rgb_b" value="255" class="border rounded-lg w-8">
 				<br>
 			</div>
 			<div id="canvas_color_picker">
@@ -101,27 +101,26 @@
 		</div>
 		<br>
 
-		<h2 class="font-bold">Resolution Presets</h2>
-		<button onclick="create_canvas('mobile')">Mobile 1280 x 720</button>
-		<br>
-
-		<button onclick="create_canvas('tablet')">Tablet 1280 x 800</button>
-		<br>
-		<br>
-
-		<h2>Custom Resolution</h2>
-		<label for="custom_canvas_height">Height:</label>
-		<input type="text" id="custom_canvas_height">
-		<br>
-
-		<label for="custom_canvas_width">Width:</label>
-		<input type="text" id="custom_canvas_width">
-		<br>
-		<button onclick="create_canvas('custom')">Use Custom Resolution</button>
-		<br><br>
-
+		<h2 class="font-bold">Canvas Resolution:</h2>
+		<div class="flex mb-1">
+			<label for="custom_canvas_height">Height:</label>
+			<input type="text" id="custom_canvas_height" class="border rounded-lg px-2 w-[100px]">
+			<p>px</p>
+		</div>
+		<div class="flex mb-4">
+			<label for="custom_canvas_width">Width:</label>
+			<input type="text" id="custom_canvas_width" class="border rounded-lg px-2 w-[100px]">
+			<p>px</p>
+		</div>
 		<center>
-			<button onclick="dialog_close('create_canvas_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Cancel</button>
+			<button onclick="create_canvas()"
+				class="rounded-lg bg-gray-300 py-1 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+				Create
+			</button>
+			<button onclick="dialog_close('create_canvas_dialog')"
+				class="rounded-lg bg-gray-300 py-1 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+				Cancel
+			</button>
 		</center>
 	</dialog>
 
@@ -203,8 +202,7 @@
 					</button>
 				</li>
 				<li>
-					<button
-						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+					<button class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/template-svgrepo-com.svg" width="20px" alt="">
 					</button>
 				</li>
@@ -256,8 +254,10 @@
 		<br>
 
 		<center>
-			<button onclick="sync_design_to_order()" class="rounded-lg mr-10 bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Sync</button>
-			<button onclick="dialog_close('sync_design_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Cancel</button>
+			<button onclick="sync_design_to_order()"
+				class="rounded-lg mr-10 bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Sync</button>
+			<button onclick="dialog_close('sync_design_dialog')"
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Cancel</button>
 		</center>
 	</dialog>
 
@@ -272,8 +272,10 @@
 		<br>
 
 		<center>
-			<button onclick="load_current_synced_design()" class="rounded-lg mr-10 bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Load</button>
-			<button onclick="dialog_close('load_current_synced_design_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Cancel</button>
+			<button onclick="load_current_synced_design()"
+				class="rounded-lg mr-10 bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Load</button>
+			<button onclick="dialog_close('load_current_synced_design_dialog')"
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">Cancel</button>
 		</center>
 	</dialog>
 
