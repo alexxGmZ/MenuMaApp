@@ -43,30 +43,26 @@ async function list_available_devices() {
 	for (let i = 0; i < results.length; i++) {
 		if (results[i].alive) {
 			const ip = network_prefix + (i + startIP);
-
 			const deviceNamePromise = new Promise((resolve, reject) => {
 				dns.reverse(ip, (err, hostnames) => {
 					if (!err && hostnames && hostnames.length > 0) {
 						resolve(hostnames[0]);
-					} else {
+					}
+					else {
 						resolve("Unknown");
 					}
 				});
 			});
 			// Await the DNS lookup Promise
 			const deviceName = await deviceNamePromise;
-
 			// store ip and device name on devices
 			devices.push({ ip, deviceName });
 		}
 	}
 
-	// console.log(devices);
-
 	// place all the scanned devices inside a table body with a local_devices id
 	let placeholder = document.querySelector("#local_devices");
 	let out = "";
-
 	for (let row of devices) {
 		out += `
 			<tr class="border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
@@ -75,10 +71,7 @@ async function list_available_devices() {
 			</tr>
 		`;
 	}
-
 	placeholder.innerHTML = out;
-
-	console.log('Network Scan completed.');
 }
 
 function get_local_ip_address() {
@@ -86,9 +79,7 @@ function get_local_ip_address() {
 	return new Promise((resolve, reject) => {
 		const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
 		const pc = new RTCPeerConnection({ iceServers: [] });
-
 		pc.createDataChannel("");
-
 		pc.createOffer()
 			.then(offer => pc.setLocalDescription(offer))
 			.catch(error => reject(error));
@@ -117,8 +108,6 @@ function list_registered_devices() {
 	console.log("called list_registered_devices()");
 	connection.query("SELECT * FROM api_connected_devices ORDER BY timestamp_column DESC", (err, result) => {
 		if (err) throw err;
-		// console.log(result);
-
 		let placeholder = document.querySelector("#registered_devices");
 		let out = ""
 
@@ -144,8 +133,6 @@ function list_registered_devices() {
 				</tr>
 			`;
 		}
-
-		// display output in document/kiosk-devices.html
 		placeholder.innerHTML = out;
 	})
 }
@@ -164,7 +151,6 @@ function refresh_registered_devices_table() {
 	// empty the registered_devices table body
 	const table_body = document.getElementById("registered_devices");
 	table_body.innerHTML = "";
-
 	// repopulate the registered_devices table body
 	list_registered_devices();
 }
@@ -187,7 +173,6 @@ function register_device() {
 	}
 
 	const device_name = document.getElementById("device_name").value.trim();
-
 	connection.query(
 		"SELECT COUNT(*) AS count FROM api_connected_devices WHERE ip_address = ?",
 		[device_ip],
@@ -211,12 +196,6 @@ function register_device() {
 							(insertError) => {
 								if (insertError) alert(insertError);
 								else {
-									// console.log("IP: " + device_ip);
-									// console.log("Name: " + device_name);
-									// console.log("Mac: " + device_mac_address);
-									// console.log("Token: " + api_token);
-									// console.log("Timestamp: " + get_current_timestamp());
-
 									dialog_open("device_register_success_dialog");
 									document.getElementById("success_device_ip").innerHTML = device_ip;
 									document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
@@ -248,12 +227,6 @@ function register_device() {
 											(insertError) => {
 												if (insertError) alert(insertError);
 												else {
-													// console.log("IP: " + device_ip);
-													// console.log("Name: " + device_name);
-													// console.log("Mac: " + device_mac_address);
-													// console.log("Token: " + api_token);
-													// console.log("Timestamp: " + get_current_timestamp());
-
 													dialog_open("device_register_success_dialog");
 													document.getElementById("success_device_ip").innerHTML = device_ip;
 													document.getElementById("success_device_name").innerHTML = document.getElementById("device_name").value;
@@ -285,7 +258,6 @@ function delete_device() {
 		else {
 			dialog_open('delete_device_success_dialog');
 			document.getElementById("delete_device_success_ip").innerHTML = ip;
-			// console.log(ip + " deleted");
 		}
 	});
 }
@@ -301,13 +273,6 @@ function update_device() {
 	const device_name = document.getElementById("update_device_name").value;
 	const api_token = document.getElementById("update_device_api_token").innerHTML;
 	const timestamp = get_current_timestamp();
-
-	// console.log("IP: " + ip);
-	// console.log("MAC: " + mac_address);
-	// console.log("Name: " + device_name);
-	// console.log("Token: " + api_token);
-	// console.log("Timestamp: " + timestamp);
-
 	connection.query(
 		"UPDATE api_connected_devices SET device_name = ?, api_token = ?, mac_address = ?, timestamp_column = ? WHERE ip_address = ?",
 		[device_name, api_token, mac_address, timestamp, ip],
@@ -319,7 +284,6 @@ function update_device() {
 			else {
 				dialog_open("update_device_success_dialog");
 				document.getElementById("update_device_success_ip").innerHTML = ip;
-				// console.log(ip + " updated");
 			}
 		}
 	);
@@ -334,7 +298,6 @@ function toggle_sort_devices_table() {
 	headers.forEach((header) => {
 		const column = header.getAttribute("data-column");
 		sortOrders[column] = "asc"; // Set the initial sort order to ascending
-
 		header.addEventListener("click", () => {
 			// Toggle sort order on each click
 			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
@@ -348,7 +311,6 @@ function sort_registered_devices(table, column, sortOrder) {
 
 	const tbody = table.querySelector("tbody");
 	const rows = Array.from(tbody.querySelectorAll("tr"));
-
 	rows.sort((a, b) => {
 		const cell_a = a.querySelector(`td[data-column="${column}"]`);
 		const cell_b = b.querySelector(`td[data-column="${column}"]`);
@@ -371,7 +333,6 @@ document.getElementById("update_device_gen_token_button").addEventListener(
 		const device_ip = document.getElementById("update_device_ip").innerHTML;
 		const timestamp = get_current_timestamp();
 		const api_token = generate_api_token(device_ip, timestamp)
-
 		document.getElementById("update_device_api_token").innerHTML = api_token;
 	}
 );
@@ -390,11 +351,6 @@ function row_click() {
 				var device_name = row.getElementsByTagName("td")[1].innerHTML;
 				var api_token = row.getElementsByTagName("td")[2].innerHTML;
 				var mac_address = row.getElementsByTagName("td")[3].innerHTML;
-
-				// console.log(device_ip);
-				// console.log(device_name);
-				// console.log(api_token);
-				// console.log(mac_address);
 
 				// for deleting device
 				document.getElementById("delete_device_ip").innerHTML = device_ip;
@@ -430,9 +386,7 @@ function get_current_timestamp() {
 	const hours = now.getHours().toString().padStart(2, '0');
 	const minutes = now.getMinutes().toString().padStart(2, '0');
 	const seconds = now.getSeconds().toString().padStart(2, '0');
-
 	const timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
 	return timestamp;
 }
 

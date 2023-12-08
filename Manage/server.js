@@ -35,7 +35,7 @@ function request_message_format(request_protocol, api_endpoint, ip_requested) {
 	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
 }
 
-function authenticate_api_connection(req, res, next) {
+function authenticate_api_token(req, res, next) {
 	// const ip = req.ip;
 	let ip = extractIPv4(req.ip);
 	const token = req.query.api_token;
@@ -90,11 +90,10 @@ function update_local_storage_date() {
 	}
 }
 
-// localStorage.setItem("storage_queue_number", 1);
 update_local_storage_date();
 
 // for the Order application to display menu items
-app.get("/menu_items", authenticate_api_connection,
+app.get("/menu_items", authenticate_api_token,
 	(request, response) => {
 		const query = "SELECT * from manage_db.menu_items";
 		connection.query(query, function(err, result) {
@@ -114,7 +113,7 @@ app.get("/menu_items", authenticate_api_connection,
 );
 
 // no image to make it fast
-app.get("/menu_items_lite", authenticate_api_connection,
+app.get("/menu_items_lite", authenticate_api_token,
 	(request, response) => {
 		const query = "SELECT item_id, item_name, item_price FROM manage_db.menu_items";
 		connection.query(query, function(err, result) {
@@ -125,7 +124,7 @@ app.get("/menu_items_lite", authenticate_api_connection,
 	}
 );
 
-app.get("/status", authenticate_api_connection,
+app.get("/status", authenticate_api_token,
 	(request, response) => {
 		const server_ip = Object.values(os.networkInterfaces())
 			.flat()
@@ -198,7 +197,7 @@ app.post("/update_item", upload.single("image"), (req, res) => {
 	});
 });
 
-app.get("/registered_employees", authenticate_api_connection,
+app.get("/registered_employees", authenticate_api_token,
 	(request, response) => {
 		const query = "SELECT * from manage_db.registered_employees";
 		connection.query(query, function(err, result) {
@@ -225,19 +224,16 @@ app.get("/orders",
 				if (err) throw err;
 
 				request_message_format("GET", "orders", request.ip);
-
 				// Organize the data into the desired nested structure
 				const nestedData = orderQueueResult.map(order => {
 					// Find items_ordered entries with matching order_id
 					const matchedItems = itemsOrderedResult.filter(item => item.order_id === order.order_id);
-
 					// Create a new object with the order_queue data and nested items_ordered
 					return {
 						...order,
 						items_ordered: matchedItems
 					};
 				});
-
 				// Format the result as JSON with 2 spaces indentation
 				response.status(200).send(nestedData);
 			});
@@ -245,7 +241,7 @@ app.get("/orders",
 	}
 );
 
-app.get("/menu_design", authenticate_api_connection,
+app.get("/menu_design", authenticate_api_token,
 	(request, response) => {
 		const design_file = "./current_design.json";
 		fs.readFile(design_file, "utf8", (err, data) => {
@@ -267,7 +263,7 @@ app.get("/menu_design", authenticate_api_connection,
 	}
 );
 
-app.post("/send_order", authenticate_api_connection,
+app.post("/send_order", authenticate_api_token,
 	(request, response) => {
 		let queue_number = parseInt(localStorage.getItem("storage_queue_number"));
 		console.log("queue_number", queue_number);
@@ -281,38 +277,21 @@ app.post("/send_order", authenticate_api_connection,
 
 		// The const to get the data
 		const json_data = request.body
-		// console.log("The JSON DATA",json_data)
-
 		// to access the order_details
 		const json_order_details = json_data.order_details;
-		// console.log("The JSON DATA (order_details)", json_order_details);
-
 		//to acces the items_ordered
 		const json_item_ordered = json_data.item_ordered;
-		// console.log("The JSON DATA (item_ordered)", json_item_ordered);
-
 		//to insert the order_details into const
 		const customerName = json_order_details[0].customer_name;
 		const totalPrice = json_order_details[0].total_price;
 		const transactioDate = json_order_details[0].transaction_date;
-		const ipAddress =  extractIPv4(request.ip);
-
-		// console.log("Customer queue number is: ", queue_number);
-		// console.log("Customer name is: ", customerName);
-		// console.log("Customer total price is: ", totalPrice);
-		// console.log("Customer transaction date is: ", transactioDate);
-		// console.log("Customer ip address used is: ", ipAddress);
-
+		const ipAddress = extractIPv4(request.ip);
 		const temp_current_queue = queue_number
-
 		const order_details_query = "INSERT INTO order_queue (queue_number, customer_name, total_price, transaction_date, kiosk_ip_address) VALUES (?, ?, ?, ?, ?)";
 		connection.query(order_details_query, [queue_number, customerName, totalPrice, transactioDate, ipAddress], (error, results) => {
-			if(error) {
+			if (error) {
 				console.log(error);
-				result.status(500).send("ERROR INSERTING IT!")
-			} else {
-				// console.log("SUCCESSFULLY INSERTED!")
-				console.log("Order QUEUE CHecker: ", temp_current_queue)
+				response.status(500).send("ERROR INSERTING IT!")
 			}
 		});
 
@@ -320,29 +299,15 @@ app.post("/send_order", authenticate_api_connection,
 			if (err) {
 				console.log("DIDN'T FIND THE ORDER ID NUMBER")
 			} else {
-				// console.log("HERE THE EXISTING ORDER ID: ",order_result);
 				const orderId = order_result[0].order_id;
-				// console.log("ID is: ", orderId)
 
 				json_item_ordered.forEach((item, index) => {
-					// console.log(`Item ${index + 1}:`);
-					// console.log("Item ID:", item.item_id);
-					// console.log("Item Name:", item.item_name);
-					// console.log("Item Price:", item.item_price);
-					// console.log("Item Quantity:", item.item_quantity);
-					// console.log("Item Cost:", item.item_cost);
-					// console.log("Item Queue#: ", temp_current_queue);
-
 					const item_ordered_query = "INSERT INTO items_ordered (item_id, item_name, item_price, quantity, quantity_times_price, order_id, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?)";
 					connection.query(item_ordered_query, [item.item_id, item.item_name, item.item_price, item.item_price, item.item_cost, orderId, temp_current_queue], (err, results) => {
 						if (err) {
-							result.status(500).send("ERROR INSERTING IT!")
-						} else {
-							// console.log("SUCCESSFULLY INSERTED!")
-							console.log("NEXT QUEUE CHeck will be: ", queue_number)
+							response.status(500).send("ERROR INSERTING IT!")
 						}
 					})
-
 				})
 			}
 		})
