@@ -30,31 +30,19 @@ const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray
 // default background color
 let canvas_bg_color = "rgb(255, 255, 255)"
 
-function create_canvas(size) {
-	console.log(`called create_canvas(${size})`);
+function create_canvas() {
+	console.log(`called create_canvas()`);
 
 	const red = document.getElementById("rgb_r").value;
 	const green = document.getElementById("rgb_g").value;
 	const blue = document.getElementById("rgb_b").value;
 	canvas_bg_color = `rgb(${red}, ${green}, ${blue})`;
-	// console.log(canvas_bg_color);
 
-	if (size === "custom") {
-		const input_custom_canvas_height = document.getElementById("custom_canvas_height").value;
-		const input_custom_canvas_width = document.getElementById("custom_canvas_width").value;
-
-		if (input_custom_canvas_height.trim() && input_custom_canvas_width.trim()) {
-			canvas_height = input_custom_canvas_height.trim();
-			canvas_width = input_custom_canvas_width.trim();
-		}
-	}
-	else if (size === "mobile") {
-		canvas_height = 720;
-		canvas_width = 1280;
-	}
-	else if (size === "tablet") {
-		canvas_height = 800;
-		canvas_width = 1280;
+	const input_custom_canvas_height = document.getElementById("custom_canvas_height").value;
+	const input_custom_canvas_width = document.getElementById("custom_canvas_width").value;
+	if (input_custom_canvas_height.trim() && input_custom_canvas_width.trim()) {
+		canvas_height = input_custom_canvas_height.trim();
+		canvas_width = input_custom_canvas_width.trim();
 	}
 
 	generate_canvas_area(canvas_height, canvas_width, function() {
