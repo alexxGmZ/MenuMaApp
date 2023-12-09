@@ -67,11 +67,10 @@ function generate_text() {
 function generate_line() {
 	if (!canvas) return;
 	console.log("called generate_line()");
-	const line = new fabric.Line([10, 10, 100, 100], {
-		fill: "black",          // Line color
-		stroke: "black",        // Line color
-		strokeWidth: 2,       // Line width
-	});
+	const line = new fabric.Line([10, 50, 100, 50], {
+        stroke: "rgba(0, 0, 0, 1)",        // Line color
+        strokeWidth: 2,       // Line width
+    });
 	canvas.add(line);
 }
 
