@@ -382,13 +382,14 @@
 
 				<p class="font-bold">Fill Color</p>
 				<label for="text_fill_color_r">R:</label>
-				<input id="text_fill_color_r" class="border-slate-200 drop-shadow-md w-8">
+				<input id="text_fill_color_r" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
 				<label for="text_fill_color_g">G:</label>
-				<input id="text_fill_color_g" class="border-slate-200 drop-shadow-md w-8">
+				<input id="text_fill_color_g" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
 				<label for="text_fill_color_b">B:</label>
-				<input id="text_fill_color_b" class="border-slate-200 drop-shadow-md w-8">
-				<button id="text_fill_change"
-					class="rounded-xl border border-slate-200 px-1 hover:drop-shadow-lg">Change</button>
+				<input id="text_fill_color_b" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+				<button id="text_fill_change" class="rounded-xl border border-slate-200 px-1 hover:drop-shadow-lg">
+					Change
+				</button>
 				<br>
 				<br>
 
@@ -401,7 +402,31 @@
 			</div>
 
 			<div id="object_properties_rect" class="hidden">
-				<span>Show rectangle object properties here</span>
+				<div class="mb-2">
+					<p class="font-bold">Fill Color</p>
+					<label for="rect_fill_color_r">R:</label>
+					<input id="rect_fill_color_r" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+					<label for="rect_fill_color_g">G:</label>
+					<input id="rect_fill_color_g" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+					<label for="rect_fill_color_b">B:</label>
+					<input id="rect_fill_color_b" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+					<button id="rect_fill_change" class="rounded-xl border border-slate-200 px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
+
+				<div>
+					<p class="font-bold">Stroke Color</p>
+					<label for="rect_stroke_color_r">R:</label>
+					<input id="rect_stroke_color_r" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+					<label for="rect_stroke_color_g">G:</label>
+					<input id="rect_stroke_color_g" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+					<label for="rect_stroke_color_b">B:</label>
+					<input id="rect_stroke_color_b" class="border-slate-200 drop-shadow-md w-8 rounded-lg px-1">
+					<button id="rect_stroke_change" class="rounded-xl border border-slate-200 px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
 			</div>
 
 			<div id="object_properties_circ" class="hidden">
@@ -415,7 +440,7 @@
 
 		<br><br>
 		<center>
-			<button onclick="object_properties('hide')">Close</button>
+			<button onclick="object_properties('hide')" class="border rounded-xl px-2">Close</button>
 		</center>
 	</div>
 

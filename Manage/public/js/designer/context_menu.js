@@ -271,8 +271,9 @@ function img_object_properties(object) {
 }
 
 function rect_object_properties(object) {
-	console.log(`called rect_object_properties()`);
-	document.getElementById("object_properties_rect").style.display = "flex";
+	console.log(`called rect_object_properties(${object})`);
+	console.log(object);
+	document.getElementById("object_properties_rect").style.display = "initial";
 
 }
 
