@@ -112,6 +112,30 @@
 	<br>
 
 	<div id="chart3_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
+		<div class="mx-auto w-full max-w-xl">
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="earning_start_date" name="earning_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="earning_end_date" name="earning_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<center>
+					<button onclick="total_earning_daily_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Daily
+					</button>
+					<button onclick="total_earning_monthly_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Monthly
+					</button>
+					<button onclick="total_earning_yearly_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Yearly
+					</button>
+				</center>
+			</div>
+		</div>
 		<div id="chart3"></div> <!--WORKING CHART (TOTAL EARNINGS)-->
 	</div>
 

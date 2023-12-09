@@ -152,7 +152,8 @@ function row_click() {
 var chart2; //for total_order_chart(), total_order_daily_selected_date(), total_order_monthly_selected_date
 			//and total_order_yearly_selected_date
 
-var chart3; //for total_earnings_chart(), total_earning_daily_selected_date()
+var chart3; //for total_earnings_chart(), total_earning_daily_selected_date(), total_earning_monthly_selected_date
+			//and total_earning_yearly_selected_date
 
 // chart to load total_order_taken
 function total_order_chart() {
@@ -447,7 +448,7 @@ function total_earnings_chart() {
 			columns[1].push(row.total_earnings);	// data name (the blue dots data)
 		});
 
-		const chart = c3.generate({
+		chart3 = c3.generate({
 			bindto: '#chart3', // <div id="chart3"></div>
 			title: {
 				text: 'TOTAL EARNINGS (DAILY)'
@@ -482,6 +483,7 @@ function total_earnings_chart() {
 					type: 'category',
 					tick: {
 						rotate: 75,
+						culling: true,
 						multiline: false
 					}
 				},
@@ -499,6 +501,180 @@ function total_earnings_chart() {
 			}
 		});
 
+	})
+
+}
+
+function total_earning_daily_selected_date() {
+	console.log("called total_earning_daily_selected_date()")
+
+	var date_input_start = document.getElementById("earning_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("earning_end_date");
+	var date_end_value = date_input_end.value;
+
+	// console.log("Dates are: ", date_start_value, " and ", date_end_value)
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	connection.query(`
+	SELECT
+		DATE_FORMAT(transaction_date, '%M %e, %Y') AS formatted_date,
+		order_stats.total_earnings
+	FROM
+		order_stats
+	WHERE
+		transaction_date BETWEEN "${date_start_value}" AND "${date_end_value}";
+	`, function(err, earning_daily_result, fields) {
+		if (err) throw err;
+		// console.log("the result: ", earning_daily_result)
+
+		const columns = [['x'], ['Total Earnings']];
+		earning_daily_result.forEach(row => {
+			columns[0].push(row.formatted_date);
+			columns[1].push(row.total_earnings);
+		})
+
+		// load the updated chart (total_earnings_chart())
+		chart3.load({
+			columns: columns,
+			axis: {
+				x: {
+					culling: false
+				}
+			}
+		})
+
+	})
+
+}
+
+// chart to load total earnings taken based on date selected (monthly)
+function total_earning_monthly_selected_date() {
+	console.log("called total_earning_daily_selected_date()")
+
+	var date_input_start = document.getElementById("earning_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("earning_end_date");
+	var date_end_value = date_input_end.value;
+
+	// console.log("Dates are: ", date_start_value, " and ", date_end_value)
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	connection.query(`
+	SELECT
+		CONCAT(MONTHNAME(transaction_date), ' ', YEAR(transaction_date)) AS month,
+		SUM(total_earnings) AS earnings
+	FROM
+		order_stats
+	WHERE
+		transaction_date BETWEEN "${date_start_value}" AND "${date_end_value}"
+	GROUP BY
+		MONTH(transaction_date), YEAR(transaction_date);
+	`, function(err, earning_monthly_result, fields) {
+		if (err) throw err;
+		// console.log("the result: ", earning_monthly_result)
+
+		const columns = [['x'], ['Total Earnings']];
+		earning_monthly_result.forEach(row => {
+			columns[0].push(row.month);
+			columns[1].push(row.earnings);
+		})
+
+		// load the updated chart (total_earnings_chart())
+		chart3.load({
+			columns: columns,
+			axis: {
+				x: {
+					culling: false
+				}
+			}
+		})
+
+	})
+
+}
+
+// chart to load total earnings taken based on date selected (yearly)
+function total_earning_yearly_selected_date() {
+	console.log("called total_earning_daily_selected_date()");
+
+	var date_input_start = document.getElementById("earning_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("earning_end_date");
+	var date_end_value = date_input_end.value;
+
+	var start_year_value = date_start_value.substring(0, 4);
+	var end_year_value = date_end_value.substring(0, 4);
+
+	// console.log("Dates are: ", start_year_value, " and ", end_year_value)
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	connection.query(`
+	SELECT
+		YEAR(transaction_date) AS year,
+		SUM(total_earnings) AS earnings
+	FROM
+		order_stats
+	WHERE
+		YEAR(transaction_date) BETWEEN "${start_year_value}" AND "${end_year_value}"
+	GROUP BY
+		YEAR(transaction_date);
+	`, function(err, earning_yearly_result, fields) {
+		if (err) throw err;
+		// console.log("the result: ", earning_yearly_result)
+
+		const columns = [['x'], ['Total Earnings']];
+		earning_yearly_result.forEach(row => {
+			columns[0].push(row.year);
+			columns[1].push(row.earnings);
+		})
+
+		// load the updated chart (total_earnings_chart())
+		chart3.load({
+			columns: columns,
+			axis: {
+				x: {
+					culling: false
+				}
+			}
+		})
+		
 	})
 
 }
