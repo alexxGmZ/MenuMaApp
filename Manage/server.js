@@ -1,9 +1,6 @@
 // mysql module
-// const mysql = require(__dirname + "/js/modules/mysql.js");
 const mysql = require("./public/js/modules/mysql.js");
-// check database connection
 mysql.check_connection();
-// call connection variable
 const connection = mysql.connection;
 
 const fs = require("fs");
@@ -25,14 +22,12 @@ app.use(cors());
 app.use(express.static("public"));
 
 const os = require("os");
-const { LocalStorage } = require('node-localstorage');
-const localStorage = new LocalStorage('./localStorage');
-
 // format get request message
 function request_message_format(request_protocol, api_endpoint, ip_requested) {
 	const currentDate = new Date();
+	const ip = extractIPv4(ip_requested)
 	const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
+	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip} ${formattedDate}`);
 }
 
 function authenticate_api_token(req, res, next) {
@@ -70,6 +65,8 @@ function extractIPv4(ip) {
 	return ip;
 }
 
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./localStorage');
 function update_local_storage_date() {
 	console.log("called update_local_storage_date()");
 	const now = new Date();
@@ -162,9 +159,6 @@ app.post("/upload_item", upload.single("image"), (req, res) => {
 app.post("/update_item", upload.single("image"), (req, res) => {
 	// Extract data from the request body
 	const { id, name, description, price } = req.body;
-	const body = JSON.stringify(req.body, null, 2);
-	// console.log(body);
-
 	var sql_query = "";
 	var sql_parameters = [];
 
@@ -172,7 +166,6 @@ app.post("/update_item", upload.single("image"), (req, res) => {
 	if (req.file) {
 		sql_query = "UPDATE manage_db.menu_items SET item_name = ?, item_desc = ?, item_price = ?, item_image = ? WHERE item_id = ?";
 		sql_parameters = [name, description, price, req.file.buffer, id];
-		// console.log(req.file.buffer);
 	}
 	else {
 		sql_query = "UPDATE manage_db.menu_items SET item_name = ?, item_desc = ?, item_price = ? WHERE item_id = ?";
@@ -202,7 +195,6 @@ app.get("/registered_employees", authenticate_api_token,
 		const query = "SELECT * from manage_db.registered_employees";
 		connection.query(query, function(err, result) {
 			if (err) throw err;
-
 			request_message_format("GET", "registered_employees", request.ip);
 			response.status(200).send(result);
 		})
@@ -276,7 +268,7 @@ app.post("/send_order", authenticate_api_token,
 		});
 
 		// The const to get the data
-		const json_data = request.body
+		const json_data = request.body;
 		// to access the order_details
 		const json_order_details = json_data.order_details;
 		//to acces the items_ordered
@@ -286,29 +278,31 @@ app.post("/send_order", authenticate_api_token,
 		const totalPrice = json_order_details[0].total_price;
 		const transactioDate = json_order_details[0].transaction_date;
 		const ipAddress = extractIPv4(request.ip);
-		const temp_current_queue = queue_number
+		const temp_current_queue = queue_number;
 		const order_details_query = "INSERT INTO order_queue (queue_number, customer_name, total_price, transaction_date, kiosk_ip_address) VALUES (?, ?, ?, ?, ?)";
-		connection.query(order_details_query, [queue_number, customerName, totalPrice, transactioDate, ipAddress], (error, results) => {
+		connection.query(order_details_query, [queue_number, customerName, totalPrice, transactioDate, ipAddress], (error) => {
 			if (error) {
 				console.log(error);
-				response.status(500).send("ERROR INSERTING IT!")
+				response.status(500).send("ERROR INSERTING IT!");
 			}
 		});
 
-		connection.query(`SELECT order_id FROM order_queue WHERE queue_number = '${queue_number}'`, function(err, order_result, fields) {
+		connection.query(`SELECT order_id FROM order_queue WHERE queue_number = '${queue_number}'`, function(err, order_result) {
 			if (err) {
-				console.log("DIDN'T FIND THE ORDER ID NUMBER")
-			} else {
+				console.log("DIDN'T FIND THE ORDER ID NUMBER");
+				throw err;
+			}
+			else {
 				const orderId = order_result[0].order_id;
-
 				json_item_ordered.forEach((item, index) => {
 					const item_ordered_query = "INSERT INTO items_ordered (item_id, item_name, item_price, quantity, quantity_times_price, order_id, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?)";
-					connection.query(item_ordered_query, [item.item_id, item.item_name, item.item_price, item.item_price, item.item_cost, orderId, temp_current_queue], (err, results) => {
+					connection.query(item_ordered_query, [item.item_id, item.item_name, item.item_price, item.item_price, item.item_cost, orderId, temp_current_queue], (err) => {
 						if (err) {
 							response.status(500).send("ERROR INSERTING IT!")
+							throw err;
 						}
-					})
-				})
+					});
+				});
 			}
 		})
 
