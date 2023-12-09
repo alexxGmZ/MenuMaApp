@@ -204,7 +204,6 @@ function object_properties_text(object) {
 	document.getElementById("text_font_size").addEventListener("input", change_text_font_size_listener);
 
 	var text_fill_rgb_values = object.fill.match(/\d+/g);
-	// console.log(text_fill_rgb_values);
 	document.getElementById("text_fill_color_r").value = text_fill_rgb_values[0]
 	document.getElementById("text_fill_color_g").value = text_fill_rgb_values[1]
 	document.getElementById("text_fill_color_b").value = text_fill_rgb_values[2]
@@ -224,7 +223,9 @@ function object_properties_text(object) {
 		borderColor: "#000000"
 	});
 
-	let red, green, blue;
+	let red = document.getElementById("text_fill_color_r").value;
+	let green = document.getElementById("text_fill_color_g").value;
+	let blue = document.getElementById("text_fill_color_b").value;
 
 	text_fill_color_picker.on('color:change', function(color) {
 		red = color.rgb.r;
@@ -272,21 +273,57 @@ function img_object_properties(object) {
 
 function rect_object_properties(object) {
 	console.log(`called rect_object_properties(${object})`);
-	console.log(object);
 	document.getElementById("object_properties_rect").style.display = "initial";
 
+	// initial fill color input values
+	var rect_fill_rgba_values = object.fill.match(/\d+/g);
+	console.log (rect_fill_rgba_values);
+	document.getElementById("rect_fill_color_r").value = rect_fill_rgba_values[0]
+	document.getElementById("rect_fill_color_g").value = rect_fill_rgba_values[1]
+	document.getElementById("rect_fill_color_b").value = rect_fill_rgba_values[2]
+	document.getElementById("rect_fill_color_a").value = rect_fill_rgba_values[3]
+
+	// initial stroke color input values
+	var rect_stroke_rgba_values = object.stroke.match(/\d+/g);
+	console.log (rect_stroke_rgba_values);
+	document.getElementById("rect_stroke_color_r").value = rect_stroke_rgba_values[0]
+	document.getElementById("rect_stroke_color_g").value = rect_stroke_rgba_values[1]
+	document.getElementById("rect_stroke_color_b").value = rect_stroke_rgba_values[2]
+	document.getElementById("rect_stroke_color_a").value = rect_stroke_rgba_values[3]
 }
 
 function circ_object_properties(object) {
 	console.log(`called circ_object_properties()`);
-	document.getElementById("object_properties_circ").style.display = "flex";
+	document.getElementById("object_properties_circ").style.display = "initial";
 
+	// initial fill color input values
+	var circ_fill_rgba_values = object.fill.match(/\d+/g);
+	console.log (circ_fill_rgba_values);
+	document.getElementById("circ_fill_color_r").value = circ_fill_rgba_values[0]
+	document.getElementById("circ_fill_color_g").value = circ_fill_rgba_values[1]
+	document.getElementById("circ_fill_color_b").value = circ_fill_rgba_values[2]
+	document.getElementById("circ_fill_color_a").value = circ_fill_rgba_values[3]
+
+	// initial stroke color input values
+	var circ_stroke_rgba_values = object.stroke.match(/\d+/g);
+	console.log (circ_stroke_rgba_values);
+	document.getElementById("circ_stroke_color_r").value = circ_stroke_rgba_values[0]
+	document.getElementById("circ_stroke_color_g").value = circ_stroke_rgba_values[1]
+	document.getElementById("circ_stroke_color_b").value = circ_stroke_rgba_values[2]
+	document.getElementById("circ_stroke_color_a").value = circ_stroke_rgba_values[3]
 }
 
 function line_object_properties(object) {
 	console.log(`called line_object_properties()`);
-	document.getElementById("object_properties_line").style.display = "flex";
+	document.getElementById("object_properties_line").style.display = "initial";
 
+	// initial stroke color input values
+	var line_stroke_rgba_values = object.stroke.match(/\d+/g);
+	console.log (line_stroke_rgba_values);
+	document.getElementById("line_stroke_color_r").value = line_stroke_rgba_values[0]
+	document.getElementById("line_stroke_color_g").value = line_stroke_rgba_values[1]
+	document.getElementById("line_stroke_color_b").value = line_stroke_rgba_values[2]
+	document.getElementById("line_stroke_color_a").value = line_stroke_rgba_values[3]
 }
 
 function canvas_properties() {

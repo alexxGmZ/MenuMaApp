@@ -31,7 +31,7 @@ function generate_rectangle() {
 		width: 50,
 		height: 50,
 		fill: "rgba(255, 255, 255, 0)",
-		stroke: "black",
+		stroke: "rgba(0, 0, 0, 1)",
 		strokeWidth: 2,
 	});
 
@@ -46,7 +46,7 @@ function generate_circle() {
 		left: 100,
 		top: 100,
 		fill: "rgba(255, 255, 255, 0)",
-		stroke: "black",
+		stroke: "rgba(0, 0, 0, 1)",
 		strokeWidth: 2,
 	})
 
