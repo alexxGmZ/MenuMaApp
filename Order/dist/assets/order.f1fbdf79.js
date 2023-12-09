@@ -33,7 +33,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web.9700c6c1.js"), true ? ["assets/web.9700c6c1.js","assets/statusbar.f6df8738.js","assets/statusbar.4053e7b6.css"] : void 0).then((m) => new m.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web.9700c6c1.js"), true ? ["assets/web.9700c6c1.js","assets/statusbar.f6df8738.js","assets/statusbar.e59c8d6d.css"] : void 0).then((m) => new m.PreferencesWeb())
 });
 function getAugmentedNamespace(n) {
   if (n.__esModule)
@@ -15983,7 +15983,7 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
   })();
 })(fabric);
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.4053e7b6.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.e59c8d6d.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
