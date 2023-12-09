@@ -303,7 +303,7 @@ app.post("/send_order", authenticate_api_token,
 
 				json_item_ordered.forEach((item, index) => {
 					const item_ordered_query = "INSERT INTO items_ordered (item_id, item_name, item_price, quantity, quantity_times_price, order_id, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?)";
-					connection.query(item_ordered_query, [item.item_id, item.item_name, item.item_price, item.item_price, item.item_cost, orderId, temp_current_queue], (err, results) => {
+					connection.query(item_ordered_query, [item.item_id, item.item_name, item.item_price, item.item_quantity, item.item_cost, orderId, temp_current_queue], (err, results) => {
 						if (err) {
 							response.status(500).send("ERROR INSERTING IT!")
 						}

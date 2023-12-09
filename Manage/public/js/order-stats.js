@@ -148,41 +148,15 @@ function row_click() {
 
 }
 
+// chart variables
+var chart2; //for total_order_chart(), total_order_daily_selected_date(), total_order_monthly_selected_date
+			//and total_order_yearly_selected_date
+
+var chart3; //for total_earnings_chart(), total_earning_daily_selected_date()
+
 // chart to load total_order_taken
 function total_order_chart() {
 	console.log("called total_order_chart()")
-	// chart purposes
-	// var chart = c3.generate({
-	//     bindto: '#chart',
-	//     data: {
-	//       columns: [
-	//         ['Everyday_Earning', 52.75, 90, 175, 25.65, 46.10, 10]
-	//       ],
-	// 	  types: {
-	// 		Everyday_Earning: 'area-spline'
-	// 	  }
-	//     },
-	// 	axis: {
-	// 		y: {
-	// 			label: {
-	// 				text: 'Total Earnings',
-	// 				position: 'outer-middle'
-	// 			},
-	// 			tick: {
-	// 				format: function (d) {
-	// 					return '₱' + d3.format(',')(d);
-	// 				}
-	// 			}
-	// 		},
-	// 		x: {
-	// 			type: 'category',
-	// 			categories: ['2023-10-31', '2023-11-02', '2023-11-03', '2023-11-03', '2023-11-03', '2023-11-03',],
-	// 			label: {
-	// 				position: 'outer-center'
-	// 			}
-	// 		}
-	// 	}
-	// });
 
 	connection.query("SELECT * FROM order_stats", function(err, order_stats_result, fields) {
 		if (err) throw err;
@@ -204,7 +178,8 @@ function total_order_chart() {
 			columns[3].push(row.total_orders_canceled)	// data name (the green dots data)
 		});
 
-		const chart = c3.generate({
+		// Used chart2 to load the updated data based on date pick of the exisitng chart instead load a new chart
+		chart2 = c3.generate({
 			bindto: '#chart2', // <div id="chart2"></div>
 			title: {
 				text: 'TOTAL ORDERS TAKEN, SERVED & CANCELED'
@@ -228,7 +203,7 @@ function total_order_chart() {
 				enabled: true
 			},
 			size: {
-				height: 500
+				height: 550
 			},
 			data: {
 				x: 'x',
@@ -244,6 +219,7 @@ function total_order_chart() {
 					type: 'category',
 					tick: {
 						rotate: 75,
+						culling: true,
 						multiline: false
 					}
 				},
@@ -260,24 +236,192 @@ function total_order_chart() {
 
 }
 
-// chart to load total orders taken based on date selected
-function total_order_chart_base_on_date_picker() {
+// chart to load total orders taken based on date selected (daily)
+function total_order_daily_selected_date() {
 	console.log("called total_order_chart_base_on_date_picker()")
 
-	var date_input_daily_start = document.getElementById("date_daily_start");
-	var date_input_daily_start_value = date_input_daily_start.value;
+	var date_input_start = document.getElementById("start_date");
+	var date_start_value = date_input_start.value;
 
-	var date_input_daily_end = document.getElementById("date_daily_end");
-	var date_input_daily_end_value = date_input_daily_end.value;
+	var date_input_end = document.getElementById("end_date");
+	var date_end_value = date_input_end.value;
 
-	console.log("The Date is: ", date_input_daily_start_value, " and the end is: ", date_input_daily_end_value);
+	// console.log("The Date is: ", date_start_value, " and the end is: ", date_end_value);
 
-	if (date_input_daily_start_value === "" || date_input_daily_end_value === "") {
+	if (date_start_value === "") {
 		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
 		return;
 	}
 
-	
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	connection.query(`
+		SELECT
+			DATE_FORMAT(transaction_date, '%M %e, %Y') AS formatted_date,
+			order_stats.total_orders_taken,
+			order_stats.total_orders_done,
+			order_stats.total_orders_canceled
+		FROM
+			order_stats
+		WHERE
+			transaction_date BETWEEN "${date_start_value}" AND "${date_end_value}";
+	`, function(err, date_result, fields) {
+		if (err) throw err;
+		console.log("Date result is: ", date_result)
+
+		const columns = [['x'], ['Total Order Taken'], ['Total Order Done'], ['Total Order Canceled']];
+		date_result.forEach(row => {
+			columns[0].push(row.formatted_date);
+			columns[1].push(row.total_orders_taken);	
+			columns[2].push(row.total_orders_done);		
+			columns[3].push(row.total_orders_canceled);
+
+		});
+
+		// load the updated chart (total_order_chart())
+		chart2.load({
+			columns: columns,
+			axis: {
+				x: {
+					culling: false
+				}
+			}
+		})
+
+	})
+
+}
+
+// chart to load total orders taken based on date selected (monthly)
+function total_order_monthly_selected_date() {
+	console.log("called total_order_monthly_selected_date()")
+
+	var date_input_start = document.getElementById("start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("end_date");
+	var date_end_value = date_input_end.value;
+
+	// var start_month_value = date_start_value.substring(0, 7);
+	// var end_month_value = date_end_value.substring(0, 7);
+
+	// console.log("The Date is: ", date_start_value, " and the end is: ", date_end_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	connection.query(`
+	SELECT
+		CONCAT(MONTHNAME(transaction_date), ' ', YEAR(transaction_date)) AS month,
+		SUM(total_orders_taken) AS total_taken,
+		SUM(total_orders_done) AS total_done,
+		SUM(total_orders_canceled) AS total_canceled
+	FROM
+		order_stats
+	WHERE
+		transaction_date BETWEEN "${date_start_value}" AND "${date_end_value}"
+	GROUP BY
+		MONTH(transaction_date), YEAR(transaction_date);
+	`, function(err, month_result, fields) {
+		if (err) throw err;
+		console.log("Date result is: ", month_result)
+
+		const columns = [['x'], ['Total Order Taken'], ['Total Order Done'], ['Total Order Canceled']];
+		month_result.forEach(row => {
+			columns[0].push(row.month);
+			columns[1].push(row.total_taken);	
+			columns[2].push(row.total_done);		
+			columns[3].push(row.total_canceled);
+		})
+
+		// load the updated chart (total_order_chart())
+		chart2.load({
+			columns: columns,
+			axis: {
+				x: {
+					culling: false
+				}
+			}
+		})
+	})
+}
+
+// chart to load total orders taken based on date selected (yearly)
+function total_order_yearly_selected_date() {
+	console.log("called total_order_yearly_selected_date()")
+
+	var date_input_start = document.getElementById("start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("end_date");
+	var date_end_value = date_input_end.value;
+
+	var start_year_value = date_start_value.substring(0, 4);
+	var end_year_value = date_end_value.substring(0, 4);
+
+	// console.log("The Date is: ", start_year_value, " and the end is: ", end_year_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	connection.query(`
+	SELECT
+		YEAR(transaction_date) AS year,
+		SUM(total_orders_taken) AS total_taken,
+		SUM(total_orders_done) AS total_done,
+		SUM(total_orders_canceled) AS total_canceled
+	FROM
+		order_stats
+	WHERE
+		YEAR(transaction_date) BETWEEN "${start_year_value}" AND "${end_year_value}"
+	GROUP BY
+		YEAR(transaction_date);
+	`, function(err, year_result, fields) {
+		if (err) throw err;
+		console.log("Yearly is: ", year_result)
+
+		const columns = [['x'], ['Total Order Taken'], ['Total Order Done'], ['Total Order Canceled']];
+		year_result.forEach(row => {
+			columns[0].push(row.year);
+			columns[1].push(row.total_taken);	
+			columns[2].push(row.total_done);		
+			columns[3].push(row.total_canceled);
+		})
+
+		// load the updated chart (total_order_chart())
+		chart2.load({
+			columns: columns,
+			axis: {
+				x: {
+					culling: false
+				}
+			}
+		})
+
+	})
 
 }
 
@@ -359,6 +503,7 @@ function total_earnings_chart() {
 
 }
 
+// monthly earning chart
 function total_earning_monthly_chart() {
 	console.log("called total_earning_monthly_chart()")
 
