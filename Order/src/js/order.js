@@ -449,7 +449,6 @@ function send_order_to_server(order_details, callback) {
 }
 
 import QRCode from 'qrcode';
-import * as htmlToImage from 'html-to-image';
 
 function generate_qrcode(queue_number, order_details) {
 	console.log("called generate_qrcode()");
