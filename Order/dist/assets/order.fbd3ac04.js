@@ -1,40 +1,4 @@
 import { r as registerPlugin, h as hideStatusBar, C as CapacitorHttp } from "./statusbar.f6df8738.js";
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
-registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web.9700c6c1.js"), true ? ["assets/web.9700c6c1.js","assets/statusbar.f6df8738.js","assets/statusbar.e50d23ab.css"] : void 0).then((m) => new m.PreferencesWeb())
-});
 function getAugmentedNamespace(n) {
   if (n.__esModule)
     return n;
@@ -15982,6 +15946,39 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     }
   })();
 })(fabric);
+const scriptRel = "modulepreload";
+const seen = {};
+const base = "/";
+const __vitePreload = function preload(baseModule, deps) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  return Promise.all(deps.map((dep) => {
+    dep = `${base}${dep}`;
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
 const KeepAwake = registerPlugin("KeepAwake", {
   web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.e50d23ab.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
@@ -18379,8 +18376,10 @@ function send_order_to_server(order_details, callback) {
 function generate_qrcode(queue_number, order_details) {
   console.log("called generate_qrcode()");
   const canvas2 = document.getElementById("qr_code");
-  const qr_data = [];
-  qr_data.push(queue_number, order_details);
+  order_details.item_ordered.forEach((item) => {
+    delete item.item_id;
+  });
+  const qr_data = [{ "queue_number": queue_number }, order_details];
   const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, "");
   browser.toCanvas(canvas2, jsoned_qr_data, { scale: 2 });
 }

@@ -1,8 +1,8 @@
 import { CapacitorHttp } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';
 import { fabric } from "fabric";
 import { hideStatusBar } from './statusbar';
 import { keepAwake } from './keep_awake';
+import QRCode from 'qrcode';
 
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
@@ -460,14 +460,14 @@ function send_order_to_server(order_details, callback) {
 		});
 }
 
-import QRCode from 'qrcode';
-
 function generate_qrcode(queue_number, order_details) {
 	console.log("called generate_qrcode()");
 	const canvas = document.getElementById("qr_code");
-	const qr_data = []
-	qr_data.push(queue_number, order_details)
-	const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, '');;
+	order_details.item_ordered.forEach(item => {
+		delete item.item_id;
+	});
+	const qr_data = [{ "queue_number": queue_number }, order_details];
+	const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, '');
 	QRCode.toCanvas(canvas, jsoned_qr_data, { scale: 2 });
 }
 
