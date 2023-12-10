@@ -37,9 +37,34 @@
 						</a>
 					</li>
 					<li>
-						<button onclick="show_graph_or_table()" id="load_chart_btn"
-							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">
-							SHOW GRAPH
+						<p class="mt-2">View Chart: </p>
+					</li>
+					<li>
+						<button onclick="dialog_open('total_order_dialog'); total_order_chart()" id=""
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
+							<img src="assets/svg/pencil-alt.svg">
+							<span class="mx-2">Orders </span>
+						</button>
+					</li>
+					<li>
+						<button onclick="dialog_open('total_earnings_dialog'); total_earnings_chart()" id=""
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
+							<img src="assets/svg/cash.svg">
+							<span class="mx-2">Earnings </span>
+						</button>
+					</li>
+					<li>
+						<button onclick="dialog_open('best_seller_dialog'); best_seller_items()" id=""
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
+							<img src="assets/svg/thumb-up.svg">
+							<span class="mx-2">Best Seller </span>
+						</button>
+					</li>
+					<li>
+						<button onclick="dialog_open('quantity_sold_dialog'); item_quantity_sold()" id=""
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
+							<img src="assets/svg/shopping-bag.svg">
+							<span class="mx-2">Items Sold </span>
 						</button>
 					</li>
 				</ul>
@@ -53,6 +78,10 @@
 		<h1 class="font-extrabold pb-3">SHOWING ORDER STATS</h1>
 	</center>
 	<div>
+		<span class="d-flex justify-content-center float-right mb-2">
+			Total Earnings: <input type="text" placeholder="Number" id="total_earning_placeholder" class="rounded-lg pl-2 bg-gray-300"
+				disabled />
+		</span>
 		<table id="order_stats_table" onclick="" class="text-left w-full mx-auto shadow-md table-fixed">
 			<thead class="text-zinc-950 uppercase font-bold">
 				<tr>
@@ -68,97 +97,10 @@
 				<!--OUTPUT OF HISTORY from order-stats.js-->
 			</tbody>
 		</table>
-		<span class="d-flex justify-content-center float-right">
-			Total Earnings: <input type="text" placeholder="Number" id="total_earning_placeholder" class="rounded-lg"
-				disabled />
-		</span>
 	</div>
 
 	<br>
 	<br>
-
-	<!--THE CHARTS-->
-
-	<div id="chart"></div> <!--This is only practice chart-->
-
-	<div id="chart2_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
-		<div class="mx-auto w-full max-w-xl">
-			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
-				<!--Date Picker-->
-				<p class="text-center mb-2 font-medium">Organize by: </p>
-				<span class="px-2">Starting date:</span>
-				<input type="date" id="start_date" name="start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
-				<span class="px-2">Endpoint to:</span>
-				<input type="date" id="end_date" name="end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
-				<center>
-					<button onclick="total_order_daily_selected_date()"
-						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
-						Daily
-					</button>
-					<button onclick="total_order_monthly_selected_date()"
-						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
-						Monthly
-					</button>
-					<button onclick="total_order_yearly_selected_date()"
-						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
-						Yearly
-					</button>
-				</center>
-			</div>
-		</div>
-		<div id="chart2" class="pt-2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
-	</div>
-
-	<br>
-
-	<div id="chart3_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
-		<div class="mx-auto w-full max-w-xl">
-			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
-				<!--Date Picker-->
-				<p class="text-center mb-2 font-medium">Organize by: </p>
-				<span class="px-2">Starting date:</span>
-				<input type="date" id="earning_start_date" name="earning_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
-				<span class="px-2">Endpoint to:</span>
-				<input type="date" id="earning_end_date" name="earning_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
-				<center>
-					<button onclick="total_earning_daily_selected_date()"
-						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
-						Daily
-					</button>
-					<button onclick="total_earning_monthly_selected_date()"
-						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
-						Monthly
-					</button>
-					<button onclick="total_earning_yearly_selected_date()"
-						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
-						Yearly
-					</button>
-				</center>
-			</div>
-		</div>
-		<div id="chart3"></div> <!--WORKING CHART (TOTAL EARNINGS)-->
-	</div>
-
-	<br>
-	
-	<div id="chart4_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
-		<div id="chart4"></div> <!--WORKING CHART (TOTAL EARNINGS (MONTHLY))-->
-	</div>
-
-	<br>
-	
-	<div id="chart5_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
-		<div id="chart5"></div> <!--WORKING CHART (BEST ITEM SELLER)-->
-	</div>
-
-	<br>
-
-	<div id="chart6_placeholder" class="border-solid border-2 border-slate-300 rounded-lg">
-		<div id="chart6"></div> <!--WORKING CHART (TOTAL QUANTITY SOLD)-->
-	</div>
-
-	<!--END OF CHARTS-->
-
 
 	<!-- Dialog for deleting the stats -->
 	<dialog id="order_stats_dialog" class="rounded-lg drop-shadow-lg mx-auto w-full max-w-lg">
@@ -239,6 +181,138 @@
 				OK
 			</button>
 		</center>
+	</dialog>
+
+	<!--CHART DIALOG FOR TOTAL ORDER-->
+	<dialog id="total_order_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
+		<button onclick="dialog_close('total_order_dialog')"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
+			Close
+		</button>
+		<div class="mx-auto text-center w-full max-w-xl">
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="start_date" name="start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="end_date" name="end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<center>
+					<button onclick="total_order_daily_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Daily
+					</button>
+					<button onclick="total_order_monthly_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Monthly
+					</button>
+					<button onclick="total_order_yearly_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Yearly
+					</button>
+				</center>
+			</div>
+		</div>
+		<div id="chart2" class="pt-2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
+	</dialog>
+
+	<!--CHART FOR TOTAL EARNINGS-->
+	<dialog id="total_earnings_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
+		<button onclick="dialog_close('total_earnings_dialog')"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
+			Close
+		</button>
+		<div class="mx-auto w-full max-w-xl">
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="earning_start_date" name="earning_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="earning_end_date" name="earning_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<center>
+					<button onclick="total_earning_daily_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Daily
+					</button>
+					<button onclick="total_earning_monthly_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Monthly
+					</button>
+					<button onclick="total_earning_yearly_selected_date()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Yearly
+					</button>
+				</center>
+			</div>
+		</div>
+		<div id="chart3"></div> <!--WORKING CHART (TOTAL EARNINGS)-->
+	</dialog>
+
+	<!--CHART FOR BEST SELLER-->
+	<dialog id="best_seller_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
+		<button onclick="dialog_close('best_seller_dialog')"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
+			Close
+		</button>
+		<div class="mx-auto w-full max-w-xl">
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="best_seller_start_date" name="best_seller_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="best_seller_end_date" name="best_seller_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<center>
+					<button onclick="best_seller_items_daily()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Daily
+					</button>
+					<button onclick="best_seller_items_monthly()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Monthly
+					</button>
+					<button onclick="best_seller_items_yearly()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Yearly
+					</button>
+				</center>
+			</div>
+		</div>
+		<div id="chart4"></div> <!--REMOVED and replaced by BEST ITEM SELLER (TOTAL EARNINGS (MONTHLY))-->
+	</dialog>
+
+	<!--CHART FOR ITEM QUANTITY SOLD-->
+	<dialog id="quantity_sold_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
+		<button onclick="dialog_close('quantity_sold_dialog')"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
+			Close
+		</button>
+		<div class="mx-auto w-full max-w-xl">
+			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="quantity_start_date" name="quantity_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="quantity_end_date" name="quantity_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<center>
+					<button onclick="item_quantity_sold_daily()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Daily
+					</button>
+					<button onclick="item_quantity_sold_monthly()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Monthly
+					</button>
+					<button onclick="item_quantity_sold_yearly()"
+						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+						Yearly
+					</button>
+				</center>
+			</div>
+		</div>
+		<div id="chart5"></div> <!--REPLACED by ITEM SOLD QUANTITY ()-->
 	</dialog>
 
 </body>
