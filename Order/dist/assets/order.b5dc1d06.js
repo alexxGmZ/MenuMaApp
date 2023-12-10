@@ -1,40 +1,4 @@
 import { r as registerPlugin, h as hideStatusBar, C as CapacitorHttp } from "./statusbar.f6df8738.js";
-const scriptRel = "modulepreload";
-const seen = {};
-const base = "/";
-const __vitePreload = function preload(baseModule, deps) {
-  if (!deps || deps.length === 0) {
-    return baseModule();
-  }
-  return Promise.all(deps.map((dep) => {
-    dep = `${base}${dep}`;
-    if (dep in seen)
-      return;
-    seen[dep] = true;
-    const isCss = dep.endsWith(".css");
-    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-      return;
-    }
-    const link = document.createElement("link");
-    link.rel = isCss ? "stylesheet" : scriptRel;
-    if (!isCss) {
-      link.as = "script";
-      link.crossOrigin = "";
-    }
-    link.href = dep;
-    document.head.appendChild(link);
-    if (isCss) {
-      return new Promise((res, rej) => {
-        link.addEventListener("load", res);
-        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-      });
-    }
-  })).then(() => baseModule());
-};
-registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web.9700c6c1.js"), true ? ["assets/web.9700c6c1.js","assets/statusbar.f6df8738.js","assets/statusbar.e50d23ab.css"] : void 0).then((m) => new m.PreferencesWeb())
-});
 function getAugmentedNamespace(n) {
   if (n.__esModule)
     return n;
@@ -15982,6 +15946,39 @@ var require$$2 = /* @__PURE__ */ getAugmentedNamespace(__viteBrowserExternal$1);
     }
   })();
 })(fabric);
+const scriptRel = "modulepreload";
+const seen = {};
+const base = "/";
+const __vitePreload = function preload(baseModule, deps) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  return Promise.all(deps.map((dep) => {
+    dep = `${base}${dep}`;
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
 const KeepAwake = registerPlugin("KeepAwake", {
   web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.e50d23ab.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
@@ -18174,8 +18171,8 @@ function item_quantity_dialog(selected_object) {
               "item_id": item.item_id,
               "item_name": item.item_name,
               "item_price": item.item_price,
-              "item_cost": parseInt(item_cost_by_quantity_span.textContent),
-              "item_quantity": parseInt(item_quantity_count.textContent)
+              "item_cost": parseFloat(item_cost_by_quantity_span.textContent),
+              "item_quantity": parseFloat(item_quantity_count.textContent)
             };
             let item_found = false;
             picked_items.forEach((picked_item) => {
@@ -18187,12 +18184,6 @@ function item_quantity_dialog(selected_object) {
             });
             if (!item_found)
               picked_items.push(item_details);
-            let total_cost = 0;
-            picked_items.forEach((picked_item) => {
-              total_cost += picked_item.item_cost;
-            });
-            const total_cost_span = document.getElementById("total_cost");
-            total_cost_span.textContent = total_cost;
             sidebar();
           };
           item_pick_button.addEventListener("click", item_pick_button_listener);
@@ -18228,6 +18219,12 @@ function sidebar() {
     };
     review_order_button.addEventListener("click", review_order_button_listener);
   }
+  let total_cost = 0;
+  picked_items.forEach((picked_item) => {
+    total_cost += picked_item.item_cost;
+  });
+  const total_cost_span = document.getElementById("total_cost");
+  total_cost_span.textContent = parseFloat(total_cost);
 }
 function display_items_picked() {
   console.log("called display_items_picked()");
@@ -18262,12 +18259,6 @@ function delete_picked_item() {
       console.log("item_id", item_id);
       picked_items = picked_items.filter((item) => item.item_id !== item_id);
       console.log(picked_items);
-      let total_cost = 0;
-      picked_items.forEach((picked_item) => {
-        total_cost += picked_item.item_cost;
-      });
-      const total_cost_span = document.getElementById("total_cost");
-      total_cost_span.textContent = total_cost;
       display_items_picked();
     });
   });
@@ -18331,7 +18322,7 @@ function review_picked_items_dialog() {
     total_cost += picked_item.item_cost;
   });
   const order_total_cost = document.getElementById("order_total_cost");
-  order_total_cost.textContent = total_cost;
+  order_total_cost.textContent = parseFloat(total_cost);
 }
 var display_queue_number_done_listener;
 function queue_number_dialog() {
@@ -18379,8 +18370,10 @@ function send_order_to_server(order_details, callback) {
 function generate_qrcode(queue_number, order_details) {
   console.log("called generate_qrcode()");
   const canvas2 = document.getElementById("qr_code");
-  const qr_data = [];
-  qr_data.push(queue_number, order_details);
+  order_details.item_ordered.forEach((item) => {
+    delete item.item_id;
+  });
+  const qr_data = [{ "queue_number": queue_number }, order_details];
   const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, "");
   browser.toCanvas(canvas2, jsoned_qr_data, { scale: 2 });
 }

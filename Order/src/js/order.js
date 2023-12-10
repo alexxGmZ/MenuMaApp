@@ -1,8 +1,8 @@
 import { CapacitorHttp } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';
 import { fabric } from "fabric";
 import { hideStatusBar } from './statusbar';
 import { keepAwake } from './keep_awake';
+import QRCode from 'qrcode';
 
 const server_url = `http://${sessionStorage.getItem("server_IP")}`;
 const server_token = sessionStorage.getItem("server_api_token");
@@ -215,8 +215,8 @@ function item_quantity_dialog(selected_object) {
 							"item_id": item.item_id,
 							"item_name": item.item_name,
 							"item_price": item.item_price,
-							"item_cost": parseInt(item_cost_by_quantity_span.textContent),
-							"item_quantity": parseInt(item_quantity_count.textContent)
+							"item_cost": parseFloat(item_cost_by_quantity_span.textContent),
+							"item_quantity": parseFloat(item_quantity_count.textContent)
 						};
 
 						// if there's an identical item in picked items just increment the value of
@@ -231,13 +231,6 @@ function item_quantity_dialog(selected_object) {
 						})
 						if (!item_found) picked_items.push(item_details);
 
-						// display the total cost
-						let total_cost = 0;
-						picked_items.forEach(picked_item => {
-							total_cost += picked_item.item_cost
-						})
-						const total_cost_span = document.getElementById("total_cost");
-						total_cost_span.textContent = total_cost;
 						sidebar();
 					}
 					item_pick_button.addEventListener("click", item_pick_button_listener);
@@ -277,6 +270,14 @@ function sidebar() {
 		}
 		review_order_button.addEventListener("click", review_order_button_listener);
 	}
+
+	// display the total cost
+	let total_cost = 0;
+	picked_items.forEach(picked_item => {
+		total_cost += picked_item.item_cost
+	})
+	const total_cost_span = document.getElementById("total_cost");
+	total_cost_span.textContent = parseFloat(total_cost);
 }
 
 function display_items_picked() {
@@ -318,12 +319,12 @@ function delete_picked_item() {
 			picked_items = picked_items.filter(item => item.item_id !== item_id);
 			console.log(picked_items);
 
-			let total_cost = 0;
-			picked_items.forEach(picked_item => {
-				total_cost += picked_item.item_cost
-			})
-			const total_cost_span = document.getElementById("total_cost");
-			total_cost_span.textContent = total_cost;
+			// let total_cost = 0;
+			// picked_items.forEach(picked_item => {
+			// 	total_cost += picked_item.item_cost
+			// })
+			// const total_cost_span = document.getElementById("total_cost");
+			// total_cost_span.textContent = parseFloat(total_cost);
 			display_items_picked();
 		});
 	});
@@ -401,7 +402,7 @@ function review_picked_items_dialog() {
 		total_cost += picked_item.item_cost
 	})
 	const order_total_cost = document.getElementById("order_total_cost");
-	order_total_cost.textContent = total_cost;
+	order_total_cost.textContent = parseFloat(total_cost);
 }
 
 var display_queue_number_done_listener;
@@ -460,14 +461,14 @@ function send_order_to_server(order_details, callback) {
 		});
 }
 
-import QRCode from 'qrcode';
-
 function generate_qrcode(queue_number, order_details) {
 	console.log("called generate_qrcode()");
 	const canvas = document.getElementById("qr_code");
-	const qr_data = []
-	qr_data.push(queue_number, order_details)
-	const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, '');;
+	order_details.item_ordered.forEach(item => {
+		delete item.item_id;
+	});
+	const qr_data = [{ "queue_number": queue_number }, order_details];
+	const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, '');
 	QRCode.toCanvas(canvas, jsoned_qr_data, { scale: 2 });
 }
 
