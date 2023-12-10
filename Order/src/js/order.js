@@ -129,7 +129,6 @@ var item_quantity_plus_listener;
 var item_pick_button_listener;
 function item_quantity_dialog(selected_object) {
 	if (selected_object && selected_object.group_id) {
-
 		// update menu_items
 		get_menu_items();
 		const object_group_id = selected_object.group_id;
@@ -271,6 +270,7 @@ function sidebar() {
 			review_order_button.removeEventListener("click", review_order_button_listener);
 		}
 		review_order_button_listener = function() {
+			if (picked_items.length == 0) return;
 			console.log("called review_order_button_listener()");
 			review_picked_items_dialog();
 			dialog_open("review_order_dialog");
@@ -287,10 +287,11 @@ function display_items_picked() {
 		out += `
 			<tr class="border-b">
 				<td class="text-center">
-					<button class="border px-2 rounded-xl" id="delete_picked_item">
+					<button class="delete_picked_item_button border px-2 rounded-xl">
 						remove
 					</button>
 				</td>
+				<td data-column="" class="text-center hidden">${item.item_id}</td>
 				<td data-column="" class="text-center">${item.item_name}</td>
 				<td data-column="" class="text-center">${item.item_quantity}</td>
 				<td data-column="" class="text-center">${item.item_price}</td>
@@ -305,16 +306,27 @@ function display_items_picked() {
 var delete_picked_item_button_listener;
 function delete_picked_item() {
 	console.log("called delete_picked_item()");
-	const delete_picked_item = document.getElementById("delete_picked_item");
-	if (delete_picked_item) {
-		if (delete_picked_item_button_listener) {
-			delete_picked_item.removeEventListener("click", delete_picked_item_button_listener);
-		}
-		delete_picked_item_button_listener = function() {
-			console.log("called delete_picked_item_button_listener()");
-		}
-		delete_picked_item.addEventListener("click", delete_picked_item_button_listener);
-	}
+	var delete_buttons = document.querySelectorAll(".delete_picked_item_button");
+	delete_buttons.forEach(function(button) {
+		button.addEventListener("click", function() {
+			// Get the parent row of the clicked button
+			const row = button.closest("tr");
+
+			// Access the specific data within the row
+			const item_id = parseInt(row.querySelector(".hidden").textContent);
+			console.log("item_id", item_id);
+			picked_items = picked_items.filter(item => item.item_id !== item_id);
+			console.log(picked_items);
+
+			let total_cost = 0;
+			picked_items.forEach(picked_item => {
+				total_cost += picked_item.item_cost
+			})
+			const total_cost_span = document.getElementById("total_cost");
+			total_cost_span.textContent = total_cost;
+			display_items_picked();
+		});
+	});
 }
 
 var order_button_listener;
@@ -456,7 +468,7 @@ function generate_qrcode(queue_number, order_details) {
 	const qr_data = []
 	qr_data.push(queue_number, order_details)
 	const jsoned_qr_data = JSON.stringify(qr_data, null, 2).replace(/[\[\]{}]/g, '');;
-	QRCode.toCanvas(canvas, jsoned_qr_data, { scale: 2});
+	QRCode.toCanvas(canvas, jsoned_qr_data, { scale: 2 });
 }
 
 function toggle_sidebar() {

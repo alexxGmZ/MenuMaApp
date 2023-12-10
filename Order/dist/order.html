@@ -12,9 +12,9 @@
 	<link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFwcCIsCiAgInNob3J0X25hbWUiOiAiQXBwIiwKICAic3RhcnRfdXJsIjogImluZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImFzc2V0cy9pbWdzL2xvZ28ucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XSwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMzFkNTNkIiwKICAidGhlbWVfY29sb3IiOiAiIzMxZDUzZCIKfQo=" />
 	
 	<meta name="theme-color" content="#31d53d" />
-  <script type="module" crossorigin src="/assets/order.f1fbdf79.js"></script>
+  <script type="module" crossorigin src="/assets/order.451dd6d3.js"></script>
   <link rel="modulepreload" href="/assets/statusbar.f6df8738.js">
-  <link rel="stylesheet" href="/assets/statusbar.e59c8d6d.css">
+  <link rel="stylesheet" href="/assets/statusbar.e50d23ab.css">
 </head>
 
 <body class="overflow-y-hidden fixed">
@@ -116,7 +116,7 @@
 			<span id="order_timestamp" class="font-bold"></span>
 			<br>
 
-			<table class="ml-2 border">
+			<table id="order_items_table" class="ml-2 border">
 				<thead>
 					<tr>
 						<th class="border-2">Item</th>
@@ -140,17 +140,20 @@
 		class="hidden py-3 px-7 rounded-lg drop-shadow-lg touch-none overflow-y-scroll">
 		<div class="flex mb-2">
 			<div class="border p-2 mr-2">
+				Scan or take a pic
 				<canvas id="qr_code" width="30px" height="30px"></canvas>
 			</div>
-			<div>
+			<div class="text-center">
 				<span>Your queue number is</span>
 				<br>
-				<span id="order_queue_number" class="font-bold text-[70px]"></span>
+				<span id="order_queue_number" class="font-bold text-[100px]"></span>
 			</div>
 		</div>
-		<button id="display_queue_number_done_button" class="border px-3 rounded-xl">
-			Ok
-		</button>
+		<center>
+			<button id="display_queue_number_done_button" class="border px-3 rounded-xl">
+				Ok
+			</button>
+		</center>
 	</dialog>
 
 	<div id="qr_code_image" class="border rounded-lg bg-white w-[200px]">
