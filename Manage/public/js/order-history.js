@@ -23,7 +23,7 @@ function display_order_history() {
 
 		//const queries
 		const items_ordered_history_query = `SELECT * FROM manage_db.items_ordered_history`;
-		const ordered_queue_history_query = `SELECT * FROM manage_db.order_queue_history`;
+		const ordered_queue_history_query = `SELECT * FROM manage_db.order_queue_history ORDER BY transaction_date DESC`;
 
 		//get all history from table "items_ordered_history"
 		connection.query(items_ordered_history_query, function(err, items_history_result) {
