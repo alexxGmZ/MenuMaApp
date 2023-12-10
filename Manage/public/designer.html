@@ -470,8 +470,8 @@
 
 			<!-- modifiable object properties for a line object -->
 			<div id="object_properties_line" class="hidden">
-				<div>
-					<p class="font-bold">Stroke Color</p>
+				<div class="mb-6">
+					<p class="font-bold">Color</p>
 					<label for="line_stroke_color_r">R:</label>
 					<input type="number" min="0" max="255" id="line_stroke_color_r" class="border w-12 rounded-lg px-1">
 					<label for="line_stroke_color_g">G:</label>
@@ -479,10 +479,12 @@
 					<label for="line_stroke_color_b">B:</label>
 					<input type="number" min="0" max="255" id="line_stroke_color_b" class="border w-12 rounded-lg px-1">
 					<label for="line_stroke_color_a">A:</label>
-					<input type="number" min="0" max="255" id="line_stroke_color_a" class="border w-12 rounded-lg px-1">
+					<input type="number" min="0" max="1" step="0.01" id="line_stroke_color_a" class="border w-14 rounded-lg px-1">
 					<button id="line_stroke_change" class="rounded-xl border px-1 hover:drop-shadow-lg">
 						Change
 					</button>
+				</div>
+				<div id="line_stroke_color_picker">
 				</div>
 			</div>
 		</div>

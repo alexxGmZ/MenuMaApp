@@ -184,7 +184,6 @@ function object_properties_text(object) {
 	document.getElementById("text_font").value = object.fontFamily;
 	document.getElementById("text_font_size").value = object.fontSize;
 
-
 	if (change_text_font_listener)
 		document.getElementById("text_font").removeEventListener("input", change_text_font_listener);
 	change_text_font_listener = function() {
@@ -244,15 +243,15 @@ function object_properties_text(object) {
 	document.getElementById("text_fill_color_r").addEventListener("input", function() {
 		red = this.value;
 		update_color_picker();
-	})
+	});
 	document.getElementById("text_fill_color_g").addEventListener("input", function() {
 		green = this.value;
 		update_color_picker();
-	})
+	});
 	document.getElementById("text_fill_color_b").addEventListener("input", function() {
 		blue = this.value;
 		update_color_picker();
-	})
+	});
 
 	if (change_text_fill_listener)
 		document.getElementById("text_fill_change").removeEventListener("click", change_text_fill_listener);
@@ -277,7 +276,7 @@ function rect_object_properties(object) {
 
 	// initial fill color input values
 	var rect_fill_rgba_values = object.fill.match(/\d+/g);
-	console.log (rect_fill_rgba_values);
+	console.log(rect_fill_rgba_values);
 	document.getElementById("rect_fill_color_r").value = rect_fill_rgba_values[0]
 	document.getElementById("rect_fill_color_g").value = rect_fill_rgba_values[1]
 	document.getElementById("rect_fill_color_b").value = rect_fill_rgba_values[2]
@@ -285,7 +284,7 @@ function rect_object_properties(object) {
 
 	// initial stroke color input values
 	var rect_stroke_rgba_values = object.stroke.match(/\d+/g);
-	console.log (rect_stroke_rgba_values);
+	console.log(rect_stroke_rgba_values);
 	document.getElementById("rect_stroke_color_r").value = rect_stroke_rgba_values[0]
 	document.getElementById("rect_stroke_color_g").value = rect_stroke_rgba_values[1]
 	document.getElementById("rect_stroke_color_b").value = rect_stroke_rgba_values[2]
@@ -298,7 +297,7 @@ function circ_object_properties(object) {
 
 	// initial fill color input values
 	var circ_fill_rgba_values = object.fill.match(/\d+/g);
-	console.log (circ_fill_rgba_values);
+	console.log(circ_fill_rgba_values);
 	document.getElementById("circ_fill_color_r").value = circ_fill_rgba_values[0]
 	document.getElementById("circ_fill_color_g").value = circ_fill_rgba_values[1]
 	document.getElementById("circ_fill_color_b").value = circ_fill_rgba_values[2]
@@ -306,24 +305,107 @@ function circ_object_properties(object) {
 
 	// initial stroke color input values
 	var circ_stroke_rgba_values = object.stroke.match(/\d+/g);
-	console.log (circ_stroke_rgba_values);
+	console.log(circ_stroke_rgba_values);
 	document.getElementById("circ_stroke_color_r").value = circ_stroke_rgba_values[0]
 	document.getElementById("circ_stroke_color_g").value = circ_stroke_rgba_values[1]
 	document.getElementById("circ_stroke_color_b").value = circ_stroke_rgba_values[2]
 	document.getElementById("circ_stroke_color_a").value = circ_stroke_rgba_values[3]
 }
 
+var change_line_stroke_listener;
+var line_stroke_color_picker;
 function line_object_properties(object) {
 	console.log(`called line_object_properties()`);
+	console.log(object);
 	document.getElementById("object_properties_line").style.display = "initial";
 
 	// initial stroke color input values
 	var line_stroke_rgba_values = object.stroke.match(/\d+/g);
-	console.log (line_stroke_rgba_values);
 	document.getElementById("line_stroke_color_r").value = line_stroke_rgba_values[0]
 	document.getElementById("line_stroke_color_g").value = line_stroke_rgba_values[1]
 	document.getElementById("line_stroke_color_b").value = line_stroke_rgba_values[2]
 	document.getElementById("line_stroke_color_a").value = line_stroke_rgba_values[3]
+
+	// to prevent stacking up of color picker every time object properties is open
+	if (line_stroke_color_picker) {
+		document.getElementById("line_stroke_color_picker").innerHTML = "";
+	}
+	line_stroke_color_picker = new iro.ColorPicker("#line_stroke_color_picker", {
+		// Set the size of the color picker
+		width: 190,
+		// set initial color to object's original fill
+		color: object.stroke,
+		layoutDirection: "horizontal",
+		borderWidth: 1,
+		borderColor: "#000000",
+		layout: [
+			{
+				component: iro.ui.Wheel,
+				options: {}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "value"
+				}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "alpha"
+				}
+			},
+		]
+	});
+
+	var stroke_red = document.getElementById("line_stroke_color_r").value;
+	var stroke_green = document.getElementById("line_stroke_color_g").value;
+	var stroke_blue = document.getElementById("line_stroke_color_b").value;
+	var stroke_alpha = document.getElementById("line_stroke_color_a").value;
+
+	line_stroke_color_picker.on("color:change", function(color) {
+		stroke_red = color.rgba.r;
+		stroke_green = color.rgba.g;
+		stroke_blue = color.rgba.b;
+		stroke_alpha = color.rgba.a;
+		document.getElementById("line_stroke_color_r").value = stroke_red;
+		document.getElementById("line_stroke_color_g").value = stroke_green;
+		document.getElementById("line_stroke_color_b").value = stroke_blue;
+		document.getElementById("line_stroke_color_a").value = stroke_alpha;
+	})
+
+	function update_color_picker() {
+		var new_color = `rgba(${stroke_red}, ${stroke_green}, ${stroke_blue}, ${stroke_alpha})`
+		line_stroke_color_picker.color.set(new_color);
+	}
+
+	document.getElementById("line_stroke_color_r").addEventListener("input", function() {
+		stroke_red = this.value;
+		update_color_picker();
+	});
+	document.getElementById("line_stroke_color_g").addEventListener("input", function() {
+		stroke_green = this.value;
+		update_color_picker();
+	});
+	document.getElementById("line_stroke_color_b").addEventListener("input", function() {
+		stroke_blue = this.value;
+		update_color_picker();
+	});
+	document.getElementById("line_stroke_color_a").addEventListener("input", function() {
+		stroke_alpha = this.value;
+		update_color_picker();
+	});
+
+	// change stroke color button
+	if (change_line_stroke_listener) {
+		document.getElementById("line_stroke_change").removeEventListener("click", change_line_stroke_listener);
+	}
+	change_line_stroke_listener = function() {
+		console.log("called change_line_stroke_listener()");
+		object.set({ stroke: `rgba(${stroke_red}, ${stroke_green}, ${stroke_blue}, ${stroke_alpha})` });
+		canvas.renderAll();
+	}
+	document.getElementById("line_stroke_change").addEventListener("click", change_line_stroke_listener);
 }
 
 function canvas_properties() {
