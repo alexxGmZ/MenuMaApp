@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	// put something if needed
 	display_order_stats();
-	hide_lines();
 	//chart purposes
 	//total_order_chart();
 
@@ -154,6 +153,12 @@ var chart2; //for total_order_chart(), total_order_daily_selected_date(), total_
 
 var chart3; //for total_earnings_chart(), total_earning_daily_selected_date(), total_earning_monthly_selected_date
 			//and total_earning_yearly_selected_date
+
+var chart4; //for best_seller_items(), best_seller_items_daily, best_seller_items_monthly
+			//and best_seller_items_yearly
+
+var chart5; //for item_quantity_sold(), item_quantity_sold_daily, item_quantity_sold_monthly
+			//and item_quantity_sold_yearly
 
 // chart to load total_order_taken
 function total_order_chart() {
@@ -451,7 +456,7 @@ function total_earnings_chart() {
 		chart3 = c3.generate({
 			bindto: '#chart3', // <div id="chart3"></div>
 			title: {
-				text: 'TOTAL EARNINGS (DAILY)'
+				text: 'TOTAL EARNINGS'
 			},
 			legend: {
 				position: 'inset',
@@ -679,83 +684,6 @@ function total_earning_yearly_selected_date() {
 
 }
 
-// monthly earning chart
-function total_earning_monthly_chart() {
-	console.log("called total_earning_monthly_chart()")
-
-	connection.query(`SELECT DATE_FORMAT(transaction_Date, '%Y-%m') AS month,
-						SUM(total_earnings) AS total_amount
-					FROM manage_db.order_stats
-					GROUP BY month
-					ORDER BY month`, function(err, order_stats_result, fields) {
-		if (err) throw err;
-		console.log(order_stats_result)
-
-		const columns = [['x'], ['Total Earnings']]
-		order_stats_result.forEach(row => {
-
-			// The chart data based on Mysql query
-			columns[0].push(row.month);			// x-axis name (the bottom text)
-			columns[1].push(row.total_amount);	// data name (the blue dots data)
-
-		});
-
-		const chart = c3.generate({
-			bindto: '#chart4', // <div id="chart3"></div>
-			title: {
-				text: 'TOTAL EARNINGS (MONTHLY)'
-			},
-			legend: {
-				position: 'inset',
-				inset: {
-					anchor: 'top-right',
-					x: 25,
-					y: 0,
-					step: 1
-				}
-			},
-			zoom: {
-				enabled: true
-			},
-			subchart: {
-				show: true
-			},
-			size: {
-				height: 500
-			},
-			data: {
-				x: 'x',
-				columns: columns,
-				types: {
-					'Total Earnings': 'spline'
-				}
-			},
-			axis: {
-				x: {
-					type: 'category',
-					tick: {
-						rotate: 75,
-						multiline: false
-					}
-				},
-				y: {
-					label: {
-						text: 'Total Earnings',
-						position: 'outer-middle'
-					},
-					tick: {
-						format: function(d) {
-							return '₱' + d3.format(',')(d);
-						}
-					}
-				}
-			}
-		});
-
-	})
-
-}
-
 // chart to load best seller items
 function best_seller_items() {
 	console.log("called best_seller_items()")
@@ -773,7 +701,7 @@ function best_seller_items() {
 					SELECT
 						GROUP_CONCAT(
 							DISTINCT CONCAT(
-								'MAX(CASE WHEN i.item_name = ''',
+								'SUM(CASE WHEN i.item_name = ''',
 								item_name,
 								''' THEN i.quantity_times_price END) AS ',
 								REPLACE(item_name, ' ', '_')
@@ -830,8 +758,8 @@ function best_seller_items() {
 									columns.splice(xColumnIndex, 1);
 								}
 						
-								var chart = c3.generate({
-									bindto: '#chart5', //<div id="chart5"></div>
+								chart4 = c3.generate({
+									bindto: '#chart4', //<div id="chart4"></div>
 									title: {
 										text: 'ITEMS BEST SELLER'
 									},
@@ -854,7 +782,7 @@ function best_seller_items() {
 										show: true
 									},
 									size: {
-										height: 500
+										height: 550
 									},
 									data: {
 										json: parsed_data,
@@ -868,7 +796,7 @@ function best_seller_items() {
 										x: {
 											type: 'category',
 											tick: {
-												rotate: 75,
+												rotate: 50,
 												multiline: false
 											}
 										},
@@ -897,6 +825,344 @@ function best_seller_items() {
 		}
 
 
+	})
+
+}
+
+// chart to load best_seller_items base on the date selected (daily)
+function best_seller_items_daily() {
+	console.log("called best_seller_items_daily()")
+
+	var date_input_start = document.getElementById("best_seller_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("best_seller_end_date");
+	var date_end_value = date_input_end.value;
+
+	// console.log("Date is: ", date_start_value, " to ", date_end_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	const dropProcedureQuery = 'DROP PROCEDURE IF EXISTS dynamic_query_procedure';
+
+	connection.query(dropProcedureQuery, function(err, result, fields) {
+		if (err) {
+			console.error(err.message);
+		} else {
+			const createProcedureQuery = `
+				CREATE PROCEDURE dynamic_query_procedure()
+				BEGIN
+					SELECT
+					GROUP_CONCAT(
+						DISTINCT CONCAT(
+							'SUM(CASE WHEN i.item_name = ''',
+							item_name,
+							''' THEN i.quantity_times_price END) AS ',
+							REPLACE(item_name, ' ', '_')
+						)
+					) INTO @columns
+					FROM items_ordered_history;
+					
+					SET @query = CONCAT(
+						'SELECT DATE_FORMAT(o.transaction_date, ''%M %e %Y'') as transaction_date, ', @columns,
+						' FROM order_queue_history o ',
+						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
+						' WHERE o.order_status = ''Served'' ',
+						' AND DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') BETWEEN ''${date_start_value}'' AND ''${date_end_value}'' ',
+						' GROUP BY DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'')'
+					);
+					
+					PREPARE final_query FROM @query;
+					EXECUTE final_query;
+					DEALLOCATE PREPARE final_query;
+				END;
+			`;
+
+			const executeProcedureQuery = 'CALL dynamic_query_procedure()';
+
+			connection.query(createProcedureQuery, function(err, first_result, fields) {
+				if (err) {
+					console.error(err.message);
+				} else {
+					connection.query(executeProcedureQuery, function(err, second_result, fields) {
+						const best_seller_result = second_result[0];
+						// console.log(best_seller_result)
+
+						const json_data = JSON.stringify(best_seller_result);
+						console.log(json_data);
+
+						console.log('Raw order_stats_result:', best_seller_result);
+						const parsed_data = JSON.parse(json_data);
+
+						console.log('Parsed data:', parsed_data);
+
+						// Check if the data array is not empty and contains valid objects
+						if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+							// Extract column names dynamically
+							var columns = Object.keys(parsed_data[0]);
+
+							console.log("Columns :", columns)
+
+							// Remove the 'transaction_date' from the list of columns if it is the X-axis
+							var xColumnIndex = columns.indexOf('transaction_date');
+							if (xColumnIndex !== -1) {
+								columns.splice(xColumnIndex, 1);
+							}
+
+							// load the updated chart (total_earnings_chart())
+							chart4.load({
+								json: parsed_data,
+								keys: {
+									x: 'transaction_date',
+									value: columns
+								},
+								type: 'spline'
+							})
+
+						} else {
+							console.error('Data array is empty or does not contain valid objects.');
+						}
+
+					})
+				}
+			})
+
+		}
+	});
+
+}
+
+// chart to load best_seller_items base on the date selected (monthyly)
+function best_seller_items_monthly() {
+	console.log("called best_seller_items_monthly()")
+
+	var date_input_start = document.getElementById("best_seller_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("best_seller_end_date");
+	var date_end_value = date_input_end.value;
+
+	// console.log("Date is: ", date_start_value, " to ", date_end_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	const dropProcedureQuery = 'DROP PROCEDURE IF EXISTS dynamic_query_procedure';
+
+	connection.query(dropProcedureQuery, function(err, result, fields) {
+		if (err) {
+			console.error(err.message);
+		} else {
+			const createProcedureQuery = `
+				CREATE PROCEDURE dynamic_query_procedure()
+				BEGIN
+					SELECT
+					GROUP_CONCAT(
+						DISTINCT CONCAT(
+							'SUM(CASE WHEN i.item_name = ''',
+							item_name,
+							''' THEN i.quantity_times_price END) AS ',
+							REPLACE(item_name, ' ', '_')
+						)
+					) INTO @columns
+					FROM items_ordered_history;
+					
+					SET @query = CONCAT(
+						'SELECT DATE_FORMAT(o.transaction_date, ''%M %Y'') as transaction_month, ', @columns,
+						' FROM order_queue_history o ',
+						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
+						' WHERE o.order_status = ''Served'' ',
+						' AND DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') BETWEEN ''2023-12-07'' AND ''2023-12-09'' ',
+						' GROUP BY DATE_FORMAT(o.transaction_date, ''%Y-%m'')'
+					);
+					
+					PREPARE final_query FROM @query;
+					EXECUTE final_query;
+					DEALLOCATE PREPARE final_query;
+				END;
+			`;
+
+			const executeProcedureQuery = 'CALL dynamic_query_procedure()';
+
+			connection.query(createProcedureQuery, function(err, first_result, fields) {
+				if (err) {
+					console.error(err.message);
+				} else {
+					connection.query(executeProcedureQuery, function(err, second_result, fields) {
+						const best_seller_result = second_result[0];
+						// console.log(best_seller_result)
+
+						const json_data = JSON.stringify(best_seller_result);
+						console.log(json_data);
+
+						console.log('Raw order_stats_result:', best_seller_result);
+						const parsed_data = JSON.parse(json_data);
+
+						console.log('Parsed data:', parsed_data);
+
+						if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+							// Extract column names dynamically
+							var columns = Object.keys(parsed_data[0]);
+
+							console.log("Columns :", columns)
+
+							// Remove the 'transaction_date' from the list of columns if it is the X-axis
+							var xColumnIndex = columns.indexOf('transaction_month');
+							if (xColumnIndex !== -1) {
+								columns.splice(xColumnIndex, 1);
+							}
+
+							// load the updated chart (total_earnings_chart())
+							chart4.load({
+								json: parsed_data,
+								keys: {
+									x: 'transaction_month',
+									value: columns
+								},
+								type: 'spline'
+							})
+						} else {
+							console.error('Data array is empty or does not contain valid objects.');
+						}
+
+					})
+				}
+			})
+
+		}
+	})
+
+}
+
+// chart to load best_seller_items base on the date selected (monthyly)
+function best_seller_items_yearly() {
+	console.log("called best_seller_items_monthly()")
+
+	var date_input_start = document.getElementById("best_seller_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("best_seller_end_date");
+	var date_end_value = date_input_end.value;
+
+	var start_year_value = date_start_value.substring(0, 4);
+	var end_year_value = date_end_value.substring(0, 4);
+
+	// console.log("Date is: ", start_year_value, " to ", end_year_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	const dropProcedureQuery = 'DROP PROCEDURE IF EXISTS dynamic_query_procedure';
+
+	connection.query(dropProcedureQuery, function(err, result, fields) {
+		if (err) {
+			console.error(err.message);
+		} else {
+			const createProcedureQuery = `
+				CREATE PROCEDURE dynamic_query_procedure()
+				BEGIN
+					SELECT
+					GROUP_CONCAT(
+						DISTINCT CONCAT(
+							'SUM(CASE WHEN i.item_name = ''',
+							item_name,
+							''' THEN i.quantity_times_price END) AS ',
+							REPLACE(item_name, ' ', '_')
+						)
+					) INTO @columns
+					FROM items_ordered_history;
+					
+					SET @query = CONCAT(
+						'SELECT YEAR(o.transaction_date) as transaction_year, ', @columns,
+						' FROM order_queue_history o ',
+						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
+						' WHERE o.order_status = ''Served'' ',
+						' AND YEAR(o.transaction_date) BETWEEN ${start_year_value} AND ${end_year_value} ',
+						' GROUP BY YEAR(o.transaction_date)'
+					);
+					
+					PREPARE final_query FROM @query;
+					EXECUTE final_query;
+					DEALLOCATE PREPARE final_query;
+				END;
+			`;
+
+			const executeProcedureQuery = 'CALL dynamic_query_procedure()';
+
+			connection.query(createProcedureQuery, function(err, first_result, fields) {
+				if (err) {
+					console.error(err.message);
+				} else {
+					connection.query(executeProcedureQuery, function(err, second_result, fields) {
+						const best_seller_result = second_result[0];
+						// console.log(best_seller_result)
+
+						const json_data = JSON.stringify(best_seller_result);
+						console.log(json_data);
+
+						console.log('Raw order_stats_result:', best_seller_result);
+						const parsed_data = JSON.parse(json_data);
+
+						console.log('Parsed data:', parsed_data);
+
+						if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+							// Extract column names dynamically
+							var columns = Object.keys(parsed_data[0]);
+
+							console.log("Columns :", columns)
+
+							// Remove the 'transaction_date' from the list of columns if it is the X-axis
+							var xColumnIndex = columns.indexOf('transaction_year');
+							if (xColumnIndex !== -1) {
+								columns.splice(xColumnIndex, 1);
+							}
+
+							// load the updated chart (total_earnings_chart())
+							chart4.load({
+								json: parsed_data,
+								keys: {
+									x: 'transaction_year',
+									value: columns
+								},
+								type: 'spline'
+							})
+						} else {
+							console.error('Data array is empty or does not contain valid objects.');
+						}
+
+					})
+				}
+			})
+
+		}
 	})
 
 }
@@ -981,8 +1247,8 @@ function item_quantity_sold() {
 									columns.splice(xColumnIndex, 1);
 								}
 
-								var chart = c3.generate({
-									bindto: '#chart6', //<div id="chart6"></div>
+								chart5 = c3.generate({
+									bindto: '#chart5', //<div id="chart6"></div>
 									title: {
 										text: `ITEM'S QUANTITY SOLD`
 									},
@@ -1047,71 +1313,372 @@ function item_quantity_sold() {
 
 }
 
-// function for showing or hiding graph
-function show_graph_or_table() {
-	total_order_chart();
-	total_earnings_chart();
-	total_earning_monthly_chart();
-	best_seller_items();
-	item_quantity_sold();
-	//variables for hiding tables and chart
-	let element = document.getElementById("order_stats_table"); //<table>
-	let div_hide_element2 = document.getElementById("chart2_placeholder") //<div placeholder for <div chart2>
-	let element2 = document.getElementById("chart2"); //<div chart2>
+// chart to load items quantities sold based on date picker (daily)
+function item_quantity_sold_daily() {
+	console.log("called item_quantity_sold_daily()")
 
-	let div_hide_element3 = document.getElementById("chart3_placeholder") //<div placeholder for <div chart2>
-	let element3 = document.getElementById("chart3"); //<div chart3>
-	
-	let div_hide_element4 = document.getElementById("chart4_placeholder") //<div placeholder for <div chart2>
-	let element4 = document.getElementById("chart4"); //<div chart4>
+	var date_input_start = document.getElementById("quantity_start_date");
+	var date_start_value = date_input_start.value;
 
-	let div_hide_element5 = document.getElementById("chart5_placeholder") //<div placeholder for <div chart2>
-	let element5 = document.getElementById("chart5"); //<div chart5>
+	var date_input_end = document.getElementById("quantity_end_date");
+	var date_end_value = date_input_end.value;
 
-	let hidden = element.getAttribute("hidden");
+	// console.log("Date is: ", date_start_value, " to ", date_end_value);
 
-	// hides & show the table
-	if (hidden) {
-		element.removeAttribute("hidden");
-		div_hide_element2.setAttribute("hidden", "hidden");
-		element2.setAttribute("hidden", "hidden");
-
-		div_hide_element3.setAttribute("hidden", "hidden");
-		element3.setAttribute("hidden", "hidden");
-
-		div_hide_element4.setAttribute("hidden", "hidden");
-		element4.setAttribute("hidden", "hidden");
-
-		div_hide_element5.setAttribute("hidden", "hidden");
-		element5.setAttribute("hidden", "hidden");
-
-		document.getElementById("load_chart_btn").innerHTML = "SHOW GRAPH";
-	} else {
-		element.setAttribute("hidden", "hidden");
-		div_hide_element2.removeAttribute("hidden");
-		element2.removeAttribute("hidden");
-
-		div_hide_element3.removeAttribute("hidden");
-		element3.removeAttribute("hidden");
-
-		div_hide_element4.removeAttribute("hidden");
-		element4.removeAttribute("hidden");
-
-		div_hide_element5.removeAttribute("hidden");
-		element5.removeAttribute("hidden");
-		
-		document.getElementById("load_chart_btn").innerHTML = "SHOW TABLE";
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
 	}
 
-	// NOTE: THE CHART IS DIV which <div id="chart#"></div>
-	// do note remove the div or elese chart will not load
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	const drop_current_procedure = 'DROP PROCEDURE IF EXISTS item_quantity_sold_procedure';
+
+	connection.query(drop_current_procedure, function(err, result ,fields) {
+		if (err) {
+			console.error(err.message);
+		} else {
+			const create_procedure_query = `
+				CREATE PROCEDURE item_quantity_sold_procedure()
+				BEGIN
+					SET @sql = NULL;
+
+					SELECT
+					GROUP_CONCAT(DISTINCT
+						CONCAT(
+						'SUM(CASE WHEN item_name = ''',
+						item_name,
+						''' THEN quantity END) AS ',
+						REPLACE(item_name, ' ', '_')
+						)
+					) INTO @sql
+					FROM items_ordered_history;
+					
+					SET @sql = CONCAT(
+					'SELECT DATE_FORMAT(transaction_date, ''%M %e %Y'') AS transaction_date, ', @sql, '
+					FROM (
+						SELECT
+						oqh.transaction_date,
+						ioh.item_name,
+						ioh.quantity
+						FROM order_queue_history oqh
+						JOIN items_ordered_history ioh ON oqh.order_id = ioh.order_id
+						WHERE oqh.order_status = ''Served''
+						AND DATE(oqh.transaction_date) BETWEEN ''${date_start_value}'' AND ''${date_end_value}''
+					) AS subquery
+					GROUP BY DATE_FORMAT(transaction_date, ''%Y-%m-%d'')'
+					);
+					
+					PREPARE statement FROM @sql;
+					EXECUTE statement;
+					DEALLOCATE PREPARE statement;
+				END;
+			`;
+
+			const execute_procedure_query = 'CALL item_quantity_sold_procedure()';
+
+			connection.query(create_procedure_query, function(err, first_result, fields) {
+				if (err) {
+					console.error(err.message);
+				} else {
+					connection.query(execute_procedure_query, function(err, second_result, fields) {
+						if (err) {
+							console.error(err.message);
+						} else {
+							const item_quantity_sold_result = second_result[0];
+							console.log("Raw sql query result: ", item_quantity_sold_result);
+
+							// to convert it into json
+							const json_data = JSON.stringify(item_quantity_sold_result);
+							console.log("The converted JSON: ", json_data);
+
+							// to parse the JSON data
+							const parsed_data = JSON.parse(json_data);
+							console.log("Parse JSON data: ", parsed_data);
+
+							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+								// Extract column names dynamically
+								var columns = Object.keys(parsed_data[0]);
+
+								console.log("Columns :", columns)
+
+								// Remove the 'transaction_date' from the list of columns if it is the X-axis
+								var xColumnIndex = columns.indexOf('transaction_date');
+								if (xColumnIndex !== -1) {
+									columns.splice(xColumnIndex, 1);
+								}
+
+								// load the updated chart (total_earnings_chart())
+								chart5.load({
+									json: parsed_data,
+									keys: {
+										x: 'transaction_date',
+										value: columns
+									},
+									type: 'spline'
+								})
+							} else {
+								console.error('Data array is empty or does not contain valid objects.');
+							}
+
+						}
+					})
+				}
+			})
+
+		}
+	})
+	
 }
 
-// to hide lines in order_stats even the graph is not visible
-function hide_lines() {
-	let elements = document.querySelectorAll("#chart2_placeholder, #chart3_placeholder, #chart4_placeholder, #chart5_placeholder");
+// chart to load items quantities sold based on date picker (monthly)
+function item_quantity_sold_monthly() {
+	console.log("called item_quantity_sold_monthly()")
 
-	elements.forEach(function(element) {
-		element.setAttribute("hidden", "hidden");
-	});
+	var date_input_start = document.getElementById("quantity_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("quantity_end_date");
+	var date_end_value = date_input_end.value;
+
+	// console.log("Date is: ", date_start_value, " to ", date_end_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	const drop_current_procedure = 'DROP PROCEDURE IF EXISTS item_quantity_sold_procedure';
+
+	connection.query(drop_current_procedure, function(err, result, fields) {
+		if (err) {
+			console.err(err.message)
+		} else {
+			const create_procedure_query = `
+				CREATE PROCEDURE item_quantity_sold_procedure()
+				BEGIN
+					SET @sql = NULL;
+
+					SELECT
+					GROUP_CONCAT(DISTINCT
+						CONCAT(
+						'SUM(CASE WHEN item_name = ''',
+						item_name,
+						''' THEN quantity END) AS ',
+						REPLACE(item_name, ' ', '_')
+						)
+					) INTO @sql
+					FROM items_ordered_history;
+					
+					SET @sql = CONCAT(
+					'SELECT DATE_FORMAT(transaction_date, ''%M %Y'') AS transaction_month, ', @sql, '
+					FROM (
+						SELECT
+						oqh.transaction_date,
+						ioh.item_name,
+						ioh.quantity
+						FROM order_queue_history oqh
+						JOIN items_ordered_history ioh ON oqh.order_id = ioh.order_id
+						WHERE oqh.order_status = ''Served''
+						AND DATE(oqh.transaction_date) BETWEEN ''${date_start_value}'' AND ''${date_end_value}''
+					) AS subquery
+					GROUP BY DATE_FORMAT(transaction_date, ''%Y-%m'')'
+					);
+					
+					PREPARE statement FROM @sql;
+					EXECUTE statement;
+					DEALLOCATE PREPARE statement;				
+				END;
+			`;
+
+			const execute_procedure_query = 'CALL item_quantity_sold_procedure()';
+
+			connection.query(create_procedure_query, function(err, first_result, fields) {
+				if (err) {
+					console.err(err.message)
+				} else {
+					connection.query(execute_procedure_query, function(err, second_result, fields) {
+						if (err) {
+							console.err(err.message)
+						} else {
+							const item_quantity_sold_result = second_result[0];
+							console.log("Raw sql query result: ", item_quantity_sold_result);
+
+							// to convert it into json
+							const json_data = JSON.stringify(item_quantity_sold_result);
+							console.log("The converted JSON: ", json_data);
+
+							// to parse the JSON data
+							const parsed_data = JSON.parse(json_data);
+							console.log("Parse JSON data: ", parsed_data);
+
+							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+								// Extract column names dynamically
+								var columns = Object.keys(parsed_data[0]);
+
+								console.log("Columns :", columns)
+
+								// Remove the 'transaction_date' from the list of columns if it is the X-axis
+								var xColumnIndex = columns.indexOf('transaction_month');
+								if (xColumnIndex !== -1) {
+									columns.splice(xColumnIndex, 1);
+								}
+
+								// load the updated chart (total_earnings_chart())
+								chart5.load({
+									json: parsed_data,
+									keys: {
+										x: 'transaction_month',
+										value: columns
+									},
+									type: 'spline'
+								})
+							} else {
+								console.error('Data array is empty or does not contain valid objects.');
+							}
+
+						}
+					})
+				}
+			})
+
+		}
+	})
+
 }
+
+// chart to load items quantities sold based on date picker (yearly)
+function item_quantity_sold_yearly() {
+	console.log("called item_quantity_sold_monthly()")
+
+	var date_input_start = document.getElementById("quantity_start_date");
+	var date_start_value = date_input_start.value;
+
+	var date_input_end = document.getElementById("quantity_end_date");
+	var date_end_value = date_input_end.value;
+
+	// console.log("Date is: ", date_start_value, " to ", date_end_value);
+
+	if (date_start_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_start');
+		return;
+	}
+
+	if (date_end_value === "") {
+		console.log("Date is Empty!")
+		dialog_open('date_selected_error_dialog_end');
+		return;
+	}
+
+	const drop_current_procedure = 'DROP PROCEDURE IF EXISTS item_quantity_sold_procedure';
+
+	connection.query(drop_current_procedure, function(err, result, fields) {
+		if (err) {
+			console.error(err.message)
+		} else {
+			const create_procedure_query = `
+				CREATE PROCEDURE item_quantity_sold_procedure()
+				BEGIN
+					SET @sql = NULL;
+
+					SELECT
+					GROUP_CONCAT(DISTINCT
+						CONCAT(
+						'SUM(CASE WHEN item_name = ''',
+						item_name,
+						''' THEN quantity END) AS ',
+						REPLACE(item_name, ' ', '_')
+						)
+					) INTO @sql
+					FROM items_ordered_history;
+					
+					SET @sql = CONCAT(
+					'SELECT DATE_FORMAT(transaction_date, ''%Y'') AS transaction_year, ', @sql, '
+					FROM (
+						SELECT
+						oqh.transaction_date,
+						ioh.item_name,
+						ioh.quantity
+						FROM order_queue_history oqh
+						JOIN items_ordered_history ioh ON oqh.order_id = ioh.order_id
+						WHERE oqh.order_status = ''Served''
+						AND DATE(oqh.transaction_date) BETWEEN ''${date_start_value}'' AND ''${date_end_value}''
+					) AS subquery
+					GROUP BY DATE_FORMAT(transaction_date, ''%Y'')'
+					);
+					
+					PREPARE statement FROM @sql;
+					EXECUTE statement;
+					DEALLOCATE PREPARE statement;
+				END;
+			`;
+
+			const execute_procedure_query = 'CALL item_quantity_sold_procedure()';
+
+			connection.query(create_procedure_query, function(err, first_result, fields) {
+				if (err) {
+					console.error(err.message);
+				} else {
+					connection.query(execute_procedure_query, function(err, second_result, fields) {
+						if (err) {
+							console.error(err.message)
+						} else {
+							const item_quantity_sold_result = second_result[0];
+							console.log("Raw sql query result: ", item_quantity_sold_result);
+
+							// to convert it into json
+							const json_data = JSON.stringify(item_quantity_sold_result);
+							console.log("The converted JSON: ", json_data);
+
+							// to parse the JSON data
+							const parsed_data = JSON.parse(json_data);
+							console.log("Parse JSON data: ", parsed_data);
+
+							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
+								// Extract column names dynamically
+								var columns = Object.keys(parsed_data[0]);
+
+								console.log("Columns :", columns)
+
+								// Remove the 'transaction_date' from the list of columns if it is the X-axis
+								var xColumnIndex = columns.indexOf('transaction_year');
+								if (xColumnIndex !== -1) {
+									columns.splice(xColumnIndex, 1);
+								}
+
+								// load the updated chart (total_earnings_chart())
+								chart5.load({
+									json: parsed_data,
+									keys: {
+										x: 'transaction_year',
+										value: columns
+									},
+									type: 'spline'
+								})
+							} else {
+								console.error('Data array is empty or does not contain valid objects.');
+							}
+
+						}
+					})
+				}	
+			})
+
+		}
+	})
+
+}
+
