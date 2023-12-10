@@ -137,17 +137,20 @@
 		class="hidden py-3 px-7 rounded-lg drop-shadow-lg touch-none overflow-y-scroll">
 		<div class="flex mb-2">
 			<div class="border p-2 mr-2">
+				Scan or take a pic
 				<canvas id="qr_code" width="30px" height="30px"></canvas>
 			</div>
-			<div>
+			<div class="text-center">
 				<span>Your queue number is</span>
 				<br>
-				<span id="order_queue_number" class="font-bold text-[70px]"></span>
+				<span id="order_queue_number" class="font-bold text-[100px]"></span>
 			</div>
 		</div>
-		<button id="display_queue_number_done_button" class="border px-3 rounded-xl">
-			Ok
-		</button>
+		<center>
+			<button id="display_queue_number_done_button" class="border px-3 rounded-xl">
+				Ok
+			</button>
+		</center>
 	</dialog>
 
 	<div id="qr_code_image" class="border rounded-lg bg-white w-[200px]">
