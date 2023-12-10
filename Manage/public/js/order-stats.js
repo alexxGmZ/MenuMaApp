@@ -23,7 +23,7 @@ const dialog_close = dialog.dialog_close;
 function display_order_stats() {
 	console.log("called display_order_stats()");
 
-	connection.query("SELECT * FROM order_stats", function(err, order_stats_result, fields) {
+	connection.query("SELECT * FROM order_stats ORDER BY transaction_date DESC", function(err, order_stats_result, fields) {
 		if (err) throw err;
 		console.log(order_stats_result);
 
