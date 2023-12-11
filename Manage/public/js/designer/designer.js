@@ -27,7 +27,6 @@ let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-1 sm:order-1 sm:ml-0 sm:mr-4"
-// default background color
 let canvas_bg_color = "rgb(255, 255, 255)"
 
 function create_canvas() {
@@ -177,8 +176,8 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	const canvas_element = document.createElement("canvas");
 	canvas_element.id = canvas_element_id;
 	canvas_element.className = canvas_css_classes;
-	canvas_element.width = canvas_width
-	canvas_element.height = canvas_height
+	// canvas_element.width = canvas_width
+	// canvas_element.height = canvas_height
 
 	// WARN: do not remove coz i don't know why but if this is removed there is no margin
 	// bellow the canvas and tailwind css class like "mb" doesn't work
@@ -199,6 +198,8 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 		backgroundColor: canvas_bg_color,
 		fireRightClick: true,
 		preserveObjectStacking: true,
+		height: canvas_height,
+		width: canvas_width
 	});
 
 	if (canvas) {
@@ -370,7 +371,6 @@ function canvas_scaler() {
 	document.getElementById("canvas_scaler_plus").disabled = false;
 
 	const range_input = document.getElementById("canvas_scale_range_input");
-
 	const range_step = parseFloat(range_input.step);
 	const range_max = parseFloat(range_input.max);
 	const range_min = parseFloat(range_input.min)
@@ -380,8 +380,10 @@ function canvas_scaler() {
 	document.getElementById("canvas_scaler_minus").addEventListener("click", function() {
 		// stop the scale if range_min is reached
 		if (parseFloat(range_input.value) <= range_min) return;
-
 		range_input.value = parseFloat(range_input.value) - range_step;
+		canvas.setHeight(canvas_height * parseFloat(range_input.value));
+		canvas.setWidth(canvas_width * parseFloat(range_input.value));
+		canvas.setZoom(parseFloat(range_input.value));
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
 	});
 
@@ -389,14 +391,19 @@ function canvas_scaler() {
 	document.getElementById("canvas_scaler_plus").addEventListener("click", function() {
 		// stop the scale if range_max is reached
 		if (parseFloat(range_input.value) >= range_max) return;
-
 		range_input.value = parseFloat(range_input.value) + range_step;
+		canvas.setHeight(canvas_height * parseFloat(range_input.value));
+		canvas.setWidth(canvas_width * parseFloat(range_input.value));
+		canvas.setZoom(parseFloat(range_input.value));
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
 	});
 
 	// if the range input slider is used
 	range_input.addEventListener("input", function() {
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+		canvas.setHeight(canvas_height * parseFloat(range_input.value));
+		canvas.setWidth(canvas_width * parseFloat(range_input.value));
+		canvas.setZoom(parseFloat(range_input.value));
 	})
 }
 
