@@ -18259,6 +18259,12 @@ function delete_picked_item() {
       console.log("item_id", item_id);
       picked_items = picked_items.filter((item) => item.item_id !== item_id);
       console.log(picked_items);
+      let total_cost = 0;
+      picked_items.forEach((picked_item) => {
+        total_cost += picked_item.item_cost;
+      });
+      const total_cost_span = document.getElementById("total_cost");
+      total_cost_span.textContent = parseFloat(total_cost);
       display_items_picked();
     });
   });
