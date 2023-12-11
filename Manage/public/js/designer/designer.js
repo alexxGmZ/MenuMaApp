@@ -28,6 +28,7 @@ const canvas_element_id = "canvas"
 // using tailwind css classes
 const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-1 sm:order-1 sm:ml-0 sm:mr-4"
 let canvas_bg_color = "rgb(255, 255, 255)"
+var canvas_zoom = 1;
 
 function create_canvas() {
 	console.log(`called create_canvas()`);
@@ -385,6 +386,9 @@ function canvas_scaler() {
 		canvas.setWidth(canvas_width * parseFloat(range_input.value));
 		canvas.setZoom(parseFloat(range_input.value));
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+
+		// to be used for context menu and object properties coordinates
+		canvas_zoom = parseFloat(range_input.value);
 	});
 
 	// plus button is clicked
@@ -396,6 +400,9 @@ function canvas_scaler() {
 		canvas.setWidth(canvas_width * parseFloat(range_input.value));
 		canvas.setZoom(parseFloat(range_input.value));
 		document.getElementById("scale_multiplier_text").textContent = range_input.value + "x";
+
+		// to be used for context menu and object properties coordinates
+		canvas_zoom = parseFloat(range_input.value);
 	});
 
 	// if the range input slider is used
@@ -404,6 +411,9 @@ function canvas_scaler() {
 		canvas.setHeight(canvas_height * parseFloat(range_input.value));
 		canvas.setWidth(canvas_width * parseFloat(range_input.value));
 		canvas.setZoom(parseFloat(range_input.value));
+
+		// to be used for context menu and object properties coordinates
+		canvas_zoom = parseFloat(range_input.value);
 	})
 }
 

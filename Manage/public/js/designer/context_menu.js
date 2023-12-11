@@ -1,5 +1,8 @@
 // NOTE: undeclared variables are located in designer.js
 // canvas
+// iro
+// fabric
+// canvas_zoom
 
 let pointer_x, pointer_y;
 function get_selected_objects() {
@@ -12,7 +15,6 @@ function get_selected_objects() {
 		const { x, y } = canvas.getPointer();
 		pointer_x = x;
 		pointer_y = y;
-		// console.log("mouse position: ", pointer_x, pointer_y);
 
 		// if canvas is clicked
 		if (selected_objects.length == 0) {
@@ -60,12 +62,10 @@ function context_menu(display_style) {
 	else if (display_style === "show") {
 		// display context menu based on the mouse pointer position
 		context_menu.style.display = 'block';
-		context_menu.style.left = (pointer_x + 80) + 'px';
-		context_menu.style.top = (pointer_y + 90) + 'px';
+		context_menu.style.left = ((pointer_x * canvas_zoom) + 80) + 'px';
+		context_menu.style.top = ((pointer_y * canvas_zoom) + 90) + 'px';
 
 		const selected_objects = canvas.getActiveObjects();
-		// console.log("selected_objects.length:", selected_objects.length)
-
 		document.getElementById("context_menu_select_group").style.display = "none";
 		document.getElementById("layer_bring_to_front").style.display = "none";
 		document.getElementById("layer_bring_forward").style.display = "none";
@@ -132,11 +132,9 @@ function object_properties(display_style) {
 
 		// render object properties window
 		properties_element.style.display = 'block';
-		properties_element.style.left = (pointer_x + 80) + 'px';
-		properties_element.style.top = (pointer_y + 90) + 'px';
+		properties_element.style.left = ((pointer_x * canvas_zoom) + 80) + 'px';
+		properties_element.style.top = ((pointer_y * canvas_zoom) + 90) + 'px';
 		properties_window_drag_event();
-
-		// console.log(selected_object);
 
 		const object_type = selected_object.type;
 		const object_group_id = selected_object.group_id;
@@ -153,8 +151,8 @@ function object_properties(display_style) {
 		document.getElementById("object_properties_line").style.display = "none";
 
 		const object_properties_map = {
-			"text": object_properties_text,
-			"i-text": object_properties_text,
+			"text": text_object_properties,
+			"i-text": text_object_properties,
 			"rect": rect_object_properties,
 			"circle": circ_object_properties,
 			"image": img_object_properties,
@@ -176,10 +174,8 @@ var change_text_font_listener;
 var change_text_font_size_listener;
 var change_text_fill_listener;
 var text_fill_color_picker;
-function object_properties_text(object) {
-	console.log(`called object_properties_text(${object})`);
-	console.log(object);
-
+function text_object_properties(object) {
+	console.log(`called text_object_properties(${object})`);
 	document.getElementById("object_properties_text").style.display = "initial";
 	document.getElementById("text_font").value = object.fontFamily;
 	document.getElementById("text_font_size").value = object.fontSize;
@@ -265,7 +261,6 @@ function object_properties_text(object) {
 
 function img_object_properties(object) {
 	console.log(`called img_object_properties()`);
-	console.log(object);
 	document.getElementById("object_properties_img").style.display = "flex";
 
 }
@@ -280,7 +275,6 @@ function rect_object_properties(object) {
 
 	// initial fill color input values
 	var rect_fill_rgba_values = object.fill.match(/\d+/g);
-	console.log(rect_fill_rgba_values);
 	document.getElementById("rect_fill_color_r").value = rect_fill_rgba_values[0];
 	document.getElementById("rect_fill_color_g").value = rect_fill_rgba_values[1];
 	document.getElementById("rect_fill_color_b").value = rect_fill_rgba_values[2];
@@ -366,7 +360,6 @@ function rect_object_properties(object) {
 
 	// initial stroke color input values
 	var rect_stroke_rgba_values = object.stroke.match(/\d+/g);
-	console.log(rect_stroke_rgba_values);
 	document.getElementById("rect_stroke_color_r").value = rect_stroke_rgba_values[0];
 	document.getElementById("rect_stroke_color_g").value = rect_stroke_rgba_values[1];
 	document.getElementById("rect_stroke_color_b").value = rect_stroke_rgba_values[2];
@@ -449,32 +442,184 @@ function rect_object_properties(object) {
 	document.getElementById("rect_stroke_change").addEventListener("click", change_rect_stroke_listener);
 }
 
+var change_circ_fill_listener;
+var change_circ_stroke_listener;
+var circ_fill_color_picker;
+var circ_stroke_color_picker;
 function circ_object_properties(object) {
-	console.log(`called circ_object_properties()`);
+	console.log(`called circ_object_properties(${object})`);
 	document.getElementById("object_properties_circ").style.display = "initial";
 
 	// initial fill color input values
 	var circ_fill_rgba_values = object.fill.match(/\d+/g);
-	console.log(circ_fill_rgba_values);
 	document.getElementById("circ_fill_color_r").value = circ_fill_rgba_values[0];
 	document.getElementById("circ_fill_color_g").value = circ_fill_rgba_values[1];
 	document.getElementById("circ_fill_color_b").value = circ_fill_rgba_values[2];
 	document.getElementById("circ_fill_color_a").value = circ_fill_rgba_values[3];
+	// to prevent stacking up of color picker every time object properties is open
+	if (circ_fill_color_picker) {
+		document.getElementById("circ_fill_color_picker").innerHTML = "";
+	}
+	circ_fill_color_picker = new iro.ColorPicker("#circ_fill_color_picker", {
+		// Set the size of the color picker
+		width: 150,
+		// set initial color to object's original fill
+		color: object.fill,
+		layoutDirection: "horizontal",
+		borderWidth: 1,
+		borderColor: "#000000",
+		layout: [
+			{
+				component: iro.ui.Wheel,
+				options: {}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "value"
+				}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "alpha"
+				}
+			},
+		]
+	});
+
+	// handle fill color inputs
+	var fill_red = circ_fill_rgba_values[0];
+	var fill_green = circ_fill_rgba_values[1];
+	var fill_blue = circ_fill_rgba_values[2];
+	var fill_alpha = circ_fill_rgba_values[3];
+	circ_fill_color_picker.on("color:change", function(color) {
+		fill_red = color.rgba.r;
+		fill_green = color.rgba.g;
+		fill_blue = color.rgba.b;
+		fill_alpha = color.rgba.a;
+		document.getElementById("circ_fill_color_r").value = fill_red;
+		document.getElementById("circ_fill_color_g").value = fill_green;
+		document.getElementById("circ_fill_color_b").value = fill_blue;
+		document.getElementById("circ_fill_color_a").value = fill_alpha;
+	})
+	function update_circ_fill_color_picker() {
+		var new_color = `rgba(${fill_red}, ${fill_green}, ${fill_blue}, ${fill_alpha})`
+		circ_fill_color_picker.color.set(new_color);
+	}
+	document.getElementById("circ_fill_color_r").addEventListener("input", function() {
+		fill_red = this.value;
+		update_circ_fill_color_picker();
+	});
+	document.getElementById("circ_fill_color_g").addEventListener("input", function() {
+		fill_green = this.value;
+		update_circ_fill_color_picker();
+	});
+	document.getElementById("circ_fill_color_b").addEventListener("input", function() {
+		fill_blue = this.value;
+		update_circ_fill_color_picker();
+	});
+	document.getElementById("circ_fill_color_a").addEventListener("input", function() {
+		fill_alpha = this.value;
+		update_circ_fill_color_picker();
+	});
+	if (change_circ_fill_listener) {
+		document.getElementById("circ_fill_change").removeEventListener("click", change_circ_fill_listener);
+	}
+	change_circ_fill_listener = function() {
+		console.log("called change_circ_fill_listener()");
+		object.set({ fill: `rgba(${fill_red}, ${fill_green}, ${fill_blue}, ${fill_alpha})` });
+		canvas.renderAll();
+	}
+	document.getElementById("circ_fill_change").addEventListener("click", change_circ_fill_listener);
 
 	// initial stroke color input values
 	var circ_stroke_rgba_values = object.stroke.match(/\d+/g);
-	console.log(circ_stroke_rgba_values);
 	document.getElementById("circ_stroke_color_r").value = circ_stroke_rgba_values[0];
 	document.getElementById("circ_stroke_color_g").value = circ_stroke_rgba_values[1];
 	document.getElementById("circ_stroke_color_b").value = circ_stroke_rgba_values[2];
 	document.getElementById("circ_stroke_color_a").value = circ_stroke_rgba_values[3];
+	// to prevent stacking up of color picker every time object properties is open
+	if (circ_stroke_color_picker) {
+		document.getElementById("circ_stroke_color_picker").innerHTML = "";
+	}
+	circ_stroke_color_picker = new iro.ColorPicker("#circ_stroke_color_picker", {
+		// Set the size of the color picker
+		width: 150,
+		// set initial color to object's original fill
+		color: object.stroke,
+		layoutDirection: "horizontal",
+		borderWidth: 1,
+		borderColor: "#000000",
+		layout: [
+			{
+				component: iro.ui.Wheel,
+				options: {}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "value"
+				}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "alpha"
+				}
+			},
+		]
+	});
+
+	var stroke_red = circ_stroke_rgba_values[0];
+	var stroke_green = circ_stroke_rgba_values[1];
+	var stroke_blue = circ_stroke_rgba_values[2];
+	var stroke_alpha = circ_stroke_rgba_values[3];
+	circ_stroke_color_picker.on("color:change", function(color) {
+		stroke_red = color.rgba.r;
+		stroke_green = color.rgba.g;
+		stroke_blue = color.rgba.b;
+		stroke_alpha = color.rgba.a;
+		document.getElementById("circ_stroke_color_r").value = stroke_red;
+		document.getElementById("circ_stroke_color_g").value = stroke_green;
+		document.getElementById("circ_stroke_color_b").value = stroke_blue;
+		document.getElementById("circ_stroke_color_a").value = stroke_alpha;
+	})
+	function update_circ_stroke_color_picker() {
+		var new_color = `rgba(${stroke_red}, ${stroke_green}, ${stroke_blue}, ${stroke_alpha})`
+		circ_stroke_color_picker.color.set(new_color);
+	}
+	document.getElementById("circ_stroke_color_r").addEventListener("input", function() {
+		stroke_red = this.value;
+		update_circ_stroke_color_picker();
+	});
+	document.getElementById("circ_stroke_color_g").addEventListener("input", function() {
+		stroke_green = this.value;
+		update_circ_stroke_color_picker();
+	});
+	document.getElementById("circ_stroke_color_b").addEventListener("input", function() {
+		stroke_blue = this.value;
+		update_circ_stroke_color_picker();
+	});
+	document.getElementById("circ_stroke_color_a").addEventListener("input", function() {
+		stroke_alpha = this.value;
+		update_circ_stroke_color_picker();
+	});
+	if (change_circ_stroke_listener) {
+		document.getElementById("circ_stroke_change").removeEventListener("click", change_circ_stroke_listener);
+	}
+	change_circ_stroke_listener = function() {
+		console.log("called change_circ_stroke_listener()");
+		object.set({ stroke: `rgba(${stroke_red}, ${stroke_green}, ${stroke_blue}, ${stroke_alpha})` });
+		canvas.renderAll();
+	}
+	document.getElementById("circ_stroke_change").addEventListener("click", change_circ_stroke_listener);
 }
 
 var change_line_stroke_listener;
 var line_stroke_color_picker;
 function line_object_properties(object) {
-	console.log(`called line_object_properties()`);
-	console.log(object);
+	console.log(`called line_object_properties(${object})`);
 	document.getElementById("object_properties_line").style.display = "initial";
 
 	// initial stroke color input values
