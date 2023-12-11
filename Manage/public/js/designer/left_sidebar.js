@@ -1,3 +1,11 @@
+// NOTE: undeclared variables are located in designer.js
+// canvas
+// canvas_height
+// canvas_width
+// fs
+// fabric
+// dialog_close
+
 // mysql stuff
 const mysql = require(__dirname + "/js/modules/mysql.js");
 mysql.check_connection();
@@ -36,6 +44,7 @@ function generate_rectangle() {
 	});
 
 	canvas.add(rect);
+	canvas.setActiveObject(rect);
 }
 
 function generate_circle() {
@@ -51,6 +60,7 @@ function generate_circle() {
 	})
 
 	canvas.add(circle);
+	canvas.setActiveObject(circle);
 }
 
 function generate_text() {
@@ -59,9 +69,10 @@ function generate_text() {
 	const text = new fabric.IText("text", {
 		left: 100,
 		top: 100,
-		fontSize: 20
+		fontSize: 30
 	});
 	canvas.add(text);
+	canvas.setActiveObject(text);
 }
 
 function generate_line() {
@@ -72,6 +83,7 @@ function generate_line() {
         strokeWidth: 2,       // Line width
     });
 	canvas.add(line);
+	canvas.setActiveObject(line);
 }
 
 function display_item_cards() {
@@ -133,7 +145,7 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	item_id = parseInt(item_id);
 
 	const name = new fabric.IText(item_name, {
-		fontSize: 20,
+		fontSize: 30,
 		group_id: item_id,
 		object_id: `${item_id}_name`
 	});
@@ -154,15 +166,10 @@ function generate_item_card(item_id, item_name, item_desc, item_image, item_pric
 	});
 
 	const price = new fabric.Text(item_price, {
-		fontSize: 19,
+		fontSize: 29,
 		group_id: item_id,
 		object_id: `${item_id}_price`
 	});
-
-	console.log(`group_id: ${item_id}`)
-	console.log(`name.object_id: ${name.object_id}`)
-	console.log(`description.object_id: ${description.object_id}`)
-	console.log(`price.object_id: ${price.object_id}`)
 
 	canvas.add(name);
 	canvas.add(description);
