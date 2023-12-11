@@ -172,10 +172,10 @@ function object_properties(display_style) {
 }
 
 // text or itext object input event listeners
-let change_text_font_listener;
-let change_text_font_size_listener;
-let change_text_fill_listener;
-let text_fill_color_picker;
+var change_text_font_listener;
+var change_text_font_size_listener;
+var change_text_fill_listener;
+var text_fill_color_picker;
 function object_properties_text(object) {
 	console.log(`called object_properties_text(${object})`);
 	console.log(object);
@@ -214,7 +214,7 @@ function object_properties_text(object) {
 
 	text_fill_color_picker = new iro.ColorPicker("#text_fill_color_picker", {
 		// Set the size of the color picker
-		width: 200,
+		width: 150,
 		// set initial color to object's original fill
 		color: object.fill,
 		layoutDirection: "horizontal",
@@ -270,6 +270,10 @@ function img_object_properties(object) {
 
 }
 
+var change_rect_fill_listener;
+var change_rect_stroke_listener;
+var rect_fill_color_picker;
+var rect_stroke_color_picker;
 function rect_object_properties(object) {
 	console.log(`called rect_object_properties(${object})`);
 	document.getElementById("object_properties_rect").style.display = "initial";
@@ -277,18 +281,172 @@ function rect_object_properties(object) {
 	// initial fill color input values
 	var rect_fill_rgba_values = object.fill.match(/\d+/g);
 	console.log(rect_fill_rgba_values);
-	document.getElementById("rect_fill_color_r").value = rect_fill_rgba_values[0]
-	document.getElementById("rect_fill_color_g").value = rect_fill_rgba_values[1]
-	document.getElementById("rect_fill_color_b").value = rect_fill_rgba_values[2]
-	document.getElementById("rect_fill_color_a").value = rect_fill_rgba_values[3]
+	document.getElementById("rect_fill_color_r").value = rect_fill_rgba_values[0];
+	document.getElementById("rect_fill_color_g").value = rect_fill_rgba_values[1];
+	document.getElementById("rect_fill_color_b").value = rect_fill_rgba_values[2];
+	document.getElementById("rect_fill_color_a").value = rect_fill_rgba_values[3];
+	// to prevent stacking up of color picker every time object properties is open
+	if (rect_fill_color_picker) {
+		document.getElementById("rect_fill_color_picker").innerHTML = "";
+	}
+	rect_fill_color_picker = new iro.ColorPicker("#rect_fill_color_picker", {
+		// Set the size of the color picker
+		width: 150,
+		// set initial color to object's original fill
+		color: object.fill,
+		layoutDirection: "horizontal",
+		borderWidth: 1,
+		borderColor: "#000000",
+		layout: [
+			{
+				component: iro.ui.Wheel,
+				options: {}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "value"
+				}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "alpha"
+				}
+			},
+		]
+	});
+
+	// handle fill color inputs
+	var fill_red = rect_fill_rgba_values[0];
+	var fill_green = rect_fill_rgba_values[1];
+	var fill_blue = rect_fill_rgba_values[2];
+	var fill_alpha = rect_fill_rgba_values[3];
+	rect_fill_color_picker.on("color:change", function(color) {
+		fill_red = color.rgba.r;
+		fill_green = color.rgba.g;
+		fill_blue = color.rgba.b;
+		fill_alpha = color.rgba.a;
+		document.getElementById("rect_fill_color_r").value = fill_red;
+		document.getElementById("rect_fill_color_g").value = fill_green;
+		document.getElementById("rect_fill_color_b").value = fill_blue;
+		document.getElementById("rect_fill_color_a").value = fill_alpha;
+	})
+	function update_rect_fill_color_picker() {
+		var new_color = `rgba(${fill_red}, ${fill_green}, ${fill_blue}, ${fill_alpha})`
+		rect_fill_color_picker.color.set(new_color);
+	}
+	document.getElementById("rect_fill_color_r").addEventListener("input", function() {
+		fill_red = this.value;
+		update_rect_fill_color_picker();
+	})
+	document.getElementById("rect_fill_color_g").addEventListener("input", function() {
+		fill_green = this.value;
+		update_rect_fill_color_picker();
+	})
+	document.getElementById("rect_fill_color_b").addEventListener("input", function() {
+		fill_blue = this.value;
+		update_rect_fill_color_picker();
+	})
+	document.getElementById("rect_fill_color_a").addEventListener("input", function() {
+		fill_alpha = this.value;
+		update_rect_fill_color_picker();
+	})
+
+	if (change_rect_fill_listener) {
+		document.getElementById("rect_fill_change").removeEventListener("click", change_rect_fill_listener);
+	}
+	change_rect_fill_listener = function() {
+		console.log("called change_rect_fill_listener()");
+		object.set({ fill: `rgba(${fill_red}, ${fill_green}, ${fill_blue}, ${fill_alpha})` });
+		canvas.renderAll();
+	}
+	// change rect fill button
+	document.getElementById("rect_fill_change").addEventListener("click", change_rect_fill_listener);
 
 	// initial stroke color input values
 	var rect_stroke_rgba_values = object.stroke.match(/\d+/g);
 	console.log(rect_stroke_rgba_values);
-	document.getElementById("rect_stroke_color_r").value = rect_stroke_rgba_values[0]
-	document.getElementById("rect_stroke_color_g").value = rect_stroke_rgba_values[1]
-	document.getElementById("rect_stroke_color_b").value = rect_stroke_rgba_values[2]
-	document.getElementById("rect_stroke_color_a").value = rect_stroke_rgba_values[3]
+	document.getElementById("rect_stroke_color_r").value = rect_stroke_rgba_values[0];
+	document.getElementById("rect_stroke_color_g").value = rect_stroke_rgba_values[1];
+	document.getElementById("rect_stroke_color_b").value = rect_stroke_rgba_values[2];
+	document.getElementById("rect_stroke_color_a").value = rect_stroke_rgba_values[3];
+	// to prevent stacking up of color picker every time object properties is open
+	if (rect_stroke_color_picker) {
+		document.getElementById("rect_stroke_color_picker").innerHTML = "";
+	}
+	rect_stroke_color_picker = new iro.ColorPicker("#rect_stroke_color_picker", {
+		// Set the size of the color picker
+		width: 150,
+		// set initial color to object's original fill
+		color: object.stroke,
+		layoutDirection: "horizontal",
+		borderWidth: 1,
+		borderColor: "#000000",
+		layout: [
+			{
+				component: iro.ui.Wheel,
+				options: {}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "value"
+				}
+			},
+			{
+				component: iro.ui.Slider,
+				options: {
+					sliderType: "alpha"
+				}
+			},
+		]
+	})
+
+	// handle stroke color inputs
+	var stroke_red = document.getElementById("rect_stroke_color_r").value;
+	var stroke_green = document.getElementById("rect_stroke_color_g").value;
+	var stroke_blue = document.getElementById("rect_stroke_color_b").value;
+	var stroke_alpha = document.getElementById("rect_stroke_color_a").value;
+	rect_stroke_color_picker.on("color:change", function(color) {
+		stroke_red = color.rgba.r;
+		stroke_green = color.rgba.g;
+		stroke_blue = color.rgba.b;
+		stroke_alpha = color.rgba.a;
+		document.getElementById("rect_stroke_color_r").value = stroke_red;
+		document.getElementById("rect_stroke_color_g").value = stroke_green;
+		document.getElementById("rect_stroke_color_b").value = stroke_blue;
+		document.getElementById("rect_stroke_color_a").value = stroke_alpha;
+	})
+	function update_rect_stroke_color_picker() {
+		var new_color = `rgba(${stroke_red}, ${stroke_green}, ${stroke_blue}, ${stroke_alpha})`
+		rect_stroke_color_picker.color.set(new_color);
+	}
+	document.getElementById("rect_stroke_color_r").addEventListener("input", function() {
+		stroke_red = this.value;
+		update_rect_stroke_color_picker();
+	});
+	document.getElementById("rect_stroke_color_g").addEventListener("input", function() {
+		stroke_green = this.value;
+		update_rect_stroke_color_picker();
+	});
+	document.getElementById("rect_stroke_color_b").addEventListener("input", function() {
+		stroke_blue = this.value;
+		update_rect_stroke_color_picker();
+	});
+	document.getElementById("rect_stroke_color_a").addEventListener("input", function() {
+		stroke_alpha = this.value;
+		update_rect_stroke_color_picker();
+	});
+	if (change_rect_stroke_listener) {
+		document.getElementById("rect_stroke_change").removeEventListener("click", change_rect_stroke_listener);
+	}
+	change_rect_stroke_listener = function() {
+		console.log("called change_rect_stroke_listener()");
+		object.set({ stroke: `rgba(${stroke_red}, ${stroke_green}, ${stroke_blue}, ${stroke_alpha})` });
+		canvas.renderAll();
+	}
+	document.getElementById("rect_stroke_change").addEventListener("click", change_rect_stroke_listener);
 }
 
 function circ_object_properties(object) {
@@ -298,18 +456,18 @@ function circ_object_properties(object) {
 	// initial fill color input values
 	var circ_fill_rgba_values = object.fill.match(/\d+/g);
 	console.log(circ_fill_rgba_values);
-	document.getElementById("circ_fill_color_r").value = circ_fill_rgba_values[0]
-	document.getElementById("circ_fill_color_g").value = circ_fill_rgba_values[1]
-	document.getElementById("circ_fill_color_b").value = circ_fill_rgba_values[2]
-	document.getElementById("circ_fill_color_a").value = circ_fill_rgba_values[3]
+	document.getElementById("circ_fill_color_r").value = circ_fill_rgba_values[0];
+	document.getElementById("circ_fill_color_g").value = circ_fill_rgba_values[1];
+	document.getElementById("circ_fill_color_b").value = circ_fill_rgba_values[2];
+	document.getElementById("circ_fill_color_a").value = circ_fill_rgba_values[3];
 
 	// initial stroke color input values
 	var circ_stroke_rgba_values = object.stroke.match(/\d+/g);
 	console.log(circ_stroke_rgba_values);
-	document.getElementById("circ_stroke_color_r").value = circ_stroke_rgba_values[0]
-	document.getElementById("circ_stroke_color_g").value = circ_stroke_rgba_values[1]
-	document.getElementById("circ_stroke_color_b").value = circ_stroke_rgba_values[2]
-	document.getElementById("circ_stroke_color_a").value = circ_stroke_rgba_values[3]
+	document.getElementById("circ_stroke_color_r").value = circ_stroke_rgba_values[0];
+	document.getElementById("circ_stroke_color_g").value = circ_stroke_rgba_values[1];
+	document.getElementById("circ_stroke_color_b").value = circ_stroke_rgba_values[2];
+	document.getElementById("circ_stroke_color_a").value = circ_stroke_rgba_values[3];
 }
 
 var change_line_stroke_listener;
@@ -321,10 +479,10 @@ function line_object_properties(object) {
 
 	// initial stroke color input values
 	var line_stroke_rgba_values = object.stroke.match(/\d+/g);
-	document.getElementById("line_stroke_color_r").value = line_stroke_rgba_values[0]
-	document.getElementById("line_stroke_color_g").value = line_stroke_rgba_values[1]
-	document.getElementById("line_stroke_color_b").value = line_stroke_rgba_values[2]
-	document.getElementById("line_stroke_color_a").value = line_stroke_rgba_values[3]
+	document.getElementById("line_stroke_color_r").value = line_stroke_rgba_values[0];
+	document.getElementById("line_stroke_color_g").value = line_stroke_rgba_values[1];
+	document.getElementById("line_stroke_color_b").value = line_stroke_rgba_values[2];
+	document.getElementById("line_stroke_color_a").value = line_stroke_rgba_values[3];
 
 	// to prevent stacking up of color picker every time object properties is open
 	if (line_stroke_color_picker) {
@@ -332,7 +490,7 @@ function line_object_properties(object) {
 	}
 	line_stroke_color_picker = new iro.ColorPicker("#line_stroke_color_picker", {
 		// Set the size of the color picker
-		width: 190,
+		width: 150,
 		// set initial color to object's original fill
 		color: object.stroke,
 		layoutDirection: "horizontal",
