@@ -347,7 +347,7 @@
 	</div>
 
 	<div id="object_properties"
-		class="hidden whitespace-nowrap absolute z-50 bg-white text-sm rounded-md px-4 pb-4 drop-shadow-lg">
+		class="hidden whitespace-nowrap absolute z-50 bg-white text-sm rounded-md border px-4 pb-4 drop-shadow-lg overflow-y-scroll">
 		<div id="object_properties_header" class="cursor-move font-bold text-center">
 			Object Properties
 		</div>
@@ -413,13 +413,15 @@
 					<label for="rect_fill_color_b">B:</label>
 					<input type="number" min="0" max="255" id="rect_fill_color_b" class="border w-12 rounded-lg px-1">
 					<label for="rect_fill_color_a">A:</label>
-					<input type="number" min="0" max="255" id="rect_fill_color_a" class="border w-12 rounded-lg px-1">
+					<input type="number" min="0" max="1" step="0.01" id="rect_fill_color_a" class="border w-14 rounded-lg px-1">
 					<button id="rect_fill_change" class="rounded-xl border px-1 hover:drop-shadow-lg">
 						Change
 					</button>
 				</div>
+				<div id="rect_fill_color_picker" class="mb-3">
+				</div>
 
-				<div>
+				<div class="mb-2">
 					<p class="font-bold">Stroke Color</p>
 					<label for="rect_stroke_color_r">R:</label>
 					<input type="number" min="0" max="255" id="rect_stroke_color_r" class="border w-12 rounded-lg px-1">
@@ -428,10 +430,12 @@
 					<label for="rect_stroke_color_b">B:</label>
 					<input type="number" min="0" max="255" id="rect_stroke_color_b" class="border w-12 rounded-lg px-1">
 					<label for="rect_stroke_color_a">A:</label>
-					<input type="number" min="0" max="255" id="rect_stroke_color_a" class="border w-12 rounded-lg px-1">
+					<input type="number" min="0" max="1" step="0.01" id="rect_stroke_color_a" class="border w-14 rounded-lg px-1">
 					<button id="rect_stroke_change" class="rounded-xl border px-1 hover:drop-shadow-lg">
 						Change
 					</button>
+				</div>
+				<div id="rect_stroke_color_picker">
 				</div>
 			</div>
 
