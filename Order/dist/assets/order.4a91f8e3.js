@@ -15980,7 +15980,7 @@ const __vitePreload = function preload(baseModule, deps) {
   })).then(() => baseModule());
 };
 const KeepAwake = registerPlugin("KeepAwake", {
-  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.e50d23ab.css"] : void 0).then((m) => new m.KeepAwakeWeb())
+  web: () => __vitePreload(() => import("./web.72dbbb21.js"), true ? ["assets/web.72dbbb21.js","assets/statusbar.f6df8738.js","assets/statusbar.48e61afa.css"] : void 0).then((m) => new m.KeepAwakeWeb())
 });
 const isSupported = async () => {
   const result = await KeepAwake.isSupported();
@@ -18097,8 +18097,8 @@ var item_quantity_minus_listener;
 var item_quantity_plus_listener;
 var item_pick_button_listener;
 function item_quantity_dialog(selected_object) {
+  get_menu_items();
   if (selected_object && selected_object.group_id) {
-    get_menu_items();
     const object_group_id = selected_object.group_id;
     menu_items.forEach((item) => {
       if (item.item_id == object_group_id) {

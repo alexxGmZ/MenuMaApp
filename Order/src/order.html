@@ -14,13 +14,13 @@
 	<meta name="theme-color" content="#31d53d" />
 </head>
 
-<body class="overflow-y-hidden fixed">
+<body class="fixed">
 	<!-- canvas area -->
 	<div id="canvas_area" class="touch-none">
 	</div>
 
 	<!-- item quantity dialog -->
-	<dialog id="item_order_quantity_dialog" class="hidden touch-none py-3 px-5 rounded-lg drop-shadow-lg">
+	<dialog id="item_order_quantity_dialog" class="hidden touch-none overflow-y-scroll py-3 px-5 rounded-lg drop-shadow-lg">
 		<label for="item_name">Item:</label>
 		<span id="item_name" class="font-bold"></span>
 		<br>
@@ -59,7 +59,7 @@
 	<aside id="sidebar" class="fixed touch-none top-0 left-0 z-40">
 		<div id="full_sidebar" class="hidden grid-cols-[500px_auto] h-screen bg-white shadow-2xl">
 			<div class="flex flex-col py-2 pl-2 mr-2">
-				<div class="border rounded-lg h-[85%] mb-1 touch-none overflow-y-scroll">
+				<div class="border rounded-lg h-[85%] mb-1 overflow-y-scroll">
 					<!-- items picked table -->
 					<table id="items_picked_table" class="w-full">
 						<thead>
@@ -94,7 +94,7 @@
 		</div>
 	</aside>
 
-	<dialog id="review_order_dialog" class="hidden py-3 px-7 rounded-lg drop-shadow-lg touch-none overflow-y-scroll">
+	<dialog id="review_order_dialog" class="hidden py-3 px-7 rounded-lg drop-shadow-lg overflow-y-scroll">
 		<div class="flex mb-2 justify-between">
 			<button id="cancel_review_order_dialog" class="border rounded-2xl px-3">
 				Cancel
@@ -134,7 +134,7 @@
 	</dialog>
 
 	<dialog id="display_queue_number_dialog"
-		class="hidden py-3 px-7 rounded-lg drop-shadow-lg touch-none overflow-y-scroll">
+		class="hidden py-3 px-7 rounded-lg drop-shadow-lg overflow-y-scroll">
 		<div class="flex mb-2">
 			<div class="border p-2 mr-2">
 				Scan or take a pic

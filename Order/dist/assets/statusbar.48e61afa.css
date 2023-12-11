@@ -656,9 +656,6 @@ video {
 .justify-between {
   justify-content: space-between;
 }
-.overflow-y-hidden {
-  overflow-y: hidden;
-}
 .overflow-y-scroll {
   overflow-y: scroll;
 }
