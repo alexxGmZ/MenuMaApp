@@ -265,6 +265,7 @@ function img_object_properties(object) {
 
 }
 
+var change_rect_radius_listener;
 var change_rect_fill_listener;
 var change_rect_stroke_width_listener;
 var change_rect_stroke_listener;
@@ -273,6 +274,18 @@ var rect_stroke_color_picker;
 function rect_object_properties(object) {
 	console.log(`called rect_object_properties(${object})`);
 	document.getElementById("object_properties_rect").style.display = "initial";
+
+	// rect radius
+	document.getElementById("rect_radius").value = object.rx;
+	if (change_rect_radius_listener) {
+		document.getElementById("rect_radius").removeEventListener("input", change_rect_radius_listener);
+	}
+	change_rect_radius_listener = function() {
+		console.log("called change_rect_radius_listener()");
+		object.set({ rx: parseFloat(this.value), ry: parseFloat(this.value) });
+		canvas.renderAll();
+	}
+	document.getElementById("rect_radius").addEventListener("input", change_rect_radius_listener);
 
 	// initial fill color input values
 	var rect_fill_rgba_values = object.fill.match(/\d+/g);
@@ -761,7 +774,8 @@ function properties_window_drag_event() {
 	if (document.getElementById("object_properties_header")) {
 		// if present, the header is where you move the DIV from:
 		document.getElementById("object_properties_header").onmousedown = dragMouseDown;
-	} else {
+	}
+	else {
 		// otherwise, move the DIV from anywhere inside the DIV:
 		properties_element.onmousedown = dragMouseDown;
 	}
