@@ -231,8 +231,8 @@
 					</button>
 				</li>
 				<li>
-					<button onclick="dialog_open('generate_item_card_dialog'); display_item_cards()"
-						title="Generate item card from items in the inventory"
+					<button onclick="dialog_open('generate_item_objects_dialog'); display_item_cards()"
+						title="Generate objects from items in the inventory"
 						class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
 						<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
 					</button>
@@ -280,13 +280,19 @@
 	</dialog>
 
 	<!-- generate item card dialog -->
-	<dialog id="generate_item_card_dialog" class="hidden rounded-lg mx-auto drop-shadow-lg">
-		<table id="item_card_table" class="">
+	<dialog id="generate_item_objects_dialog" class="hidden rounded-lg drop-shadow-lg">
+		<h1 class="text-center font-bold mb-3">Generate Item Objects</h1>
+		<table id="item_card_table" class="text-sm text-center px-2">
 			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Price</th>
+				<tr class="border-t border-b">
+					<th class="px-2">ID</th>
+					<th class="px-2">Name</th>
+					<th class="border-r px-2">Price</th>
+					<th class="px-2">Name</th>
+					<th class="px-2">Price</th>
+					<th class="px-2">Description</th>
+					<th class="px-2">Image</th>
+					<th class="px-2"></th>
 				</tr>
 			</thead>
 			<tbody id="item_card_list">
@@ -295,7 +301,7 @@
 		<br>
 
 		<center>
-			<button onclick="dialog_close('generate_item_card_dialog')">Cancel</button>
+			<button onclick="dialog_close('generate_item_objects_dialog')" class="border rounded-xl px-2">Cancel</button>
 		</center>
 	</dialog>
 

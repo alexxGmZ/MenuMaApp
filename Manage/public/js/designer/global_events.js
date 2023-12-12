@@ -2,11 +2,12 @@
 // EVENTS
 //
 document.addEventListener("DOMContentLoaded", function() {
-	item_card_row_click();
 	load_current_synced_design();
 	create_canvas_color_picker();
 	canvas_scaler();
 	supported_font_checker();
+	display_item_cards();
+	// item_card_row_click();
 });
 
 document.addEventListener("keydown", function(event) {

@@ -79,9 +79,9 @@ function generate_line() {
 	if (!canvas) return;
 	console.log("called generate_line()");
 	const line = new fabric.Line([10, 50, 100, 50], {
-        stroke: "rgba(0, 0, 0, 1)",        // Line color
-        strokeWidth: 2,       // Line width
-    });
+		stroke: "rgba(0, 0, 0, 1)",        // Line color
+		strokeWidth: 2,       // Line width
+	});
 	canvas.add(line);
 	canvas.setActiveObject(line);
 }
@@ -100,12 +100,27 @@ function display_item_cards() {
 			// to read the blob data type
 			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
 			out += `
-				<tr class="">
-					<td data-column="item_id" class="">${row.item_id}</td>
-					<td data-column="item_name" class="">${row.item_name}</td>
+				<tr class="border-b">
+					<td data-column="item_id" class="px-2">${row.item_id}</td>
+					<td data-column="item_name" class="px-2">${row.item_name}</td>
 					<td data-column="item_desc" class="hidden">${row.item_desc}</td>
-					<td class="hidden"><img src="${image_src}" alt="Foods Image" width="300"></td>
-					<td data-column="item_price" class="">${row.item_price}</td>
+					<td data-column="item_img" class="hidden"><img src="${image_src}" alt="Foods Image" width="300"></td>
+					<td data-column="item_price" class="border-r px-2">${row.item_price}</td>
+					<td data-column="item_name_checkbox" class="">
+						<input type="checkbox">
+					</td>
+					<td data-column="item_price_checkbox" class="">
+						<input type="checkbox">
+					</td>
+					<td data-column="item_desc_checkbox" class="">
+						<input type="checkbox">
+					</td>
+					<td data-column="item_img_checkbox" class="">
+						<input type="checkbox">
+					</td>
+					<td data-column="" class="">
+						<button onclick="item_card_row_click(this)" class="border rounded-xl px-2">Generate</button>
+					</td>
 				</tr>
 			`;
 		}
@@ -113,66 +128,90 @@ function display_item_cards() {
 	});
 }
 
-function item_card_row_click() {
+function item_card_row_click(button) {
 	console.log("called item_card_row_click()");
+	dialog_close("generate_item_objects_dialog");
+	if (!button) return;
 
-	const table = document.getElementById("item_card_table");
+	// const table = document.getElementById("item_card_table");
+	const row = button.closest('tr');
+	if (!row) return;
 
-	if (table) {
-		table.addEventListener("click", (event) => {
-			console.log("table row is clicked");
-			const clickedRow = event.target.closest("tr");
+	const item_id = row.querySelector('[data-column="item_id"]').textContent;
+	const item_name = row.querySelector('[data-column="item_name"]').textContent;
+	const item_desc = row.querySelector('[data-column="item_desc"]').textContent;
+	const item_img = row.querySelector('[data-column="item_img"]').querySelector("img").src;
+	const item_price = row.querySelector('[data-column="item_price"]').textContent;
 
-			if (clickedRow) {
-				const cells = clickedRow.querySelectorAll("td");
-				// console.log(cells);
-				const item_id = cells[0].textContent;
-				const item_name = cells[1].textContent;
-				const item_desc = cells[2].textContent;
-				const item_image = cells[3].querySelector("img").src;
-				const item_price = cells[4].textContent;
+	// checkbox
+	const item_name_checkbox = row.querySelector('[data-column="item_name_checkbox"]').querySelector("input").checked;
+	const item_price_checkbox = row.querySelector('[data-column="item_price_checkbox"]').querySelector("input").checked;
+	const item_desc_checkbox = row.querySelector('[data-column="item_desc_checkbox"]').querySelector("input").checked;
+	const item_img_checkbox = row.querySelector('[data-column="item_img_checkbox"]').querySelector("input").checked;
 
-				generate_item_card(item_id, item_name, item_desc, item_image, item_price);
-			}
-		});
+	const checkboxes = {
+		"name": item_name_checkbox,
+		"price": item_price_checkbox,
+		"desc": item_desc_checkbox,
+		"img": item_img_checkbox,
 	}
+
+	generate_item_objects(item_id, item_name, item_desc, item_img, item_price, checkboxes);
 }
 
-function generate_item_card(item_id, item_name, item_desc, item_image, item_price) {
+function generate_item_objects(item_id, item_name, item_desc, item_image, item_price, checkboxes) {
 	if (!canvas) return;
-	console.log(`called generate_item_card(${item_id}, ${item_name}, ${item_desc}, ${item_image.slice(0, 30) + "..."}, ${item_price})`);
+	console.log(`called generate_item_card(${item_id}, ${item_name}, ${item_desc}, ${item_image.slice(0, 30) + "..."}, ${item_price}, ${checkboxes})`);
 
 	item_id = parseInt(item_id);
+	const centerX = window.innerWidth / 2;
+	const centerY = window.innerHeight / 2;
+	console.log(centerX, centerY);
 
-	const name = new fabric.IText(item_name, {
-		fontSize: 30,
-		group_id: item_id,
-		object_id: `${item_id}_name`
-	});
+	if (checkboxes.name) {
+		const name = new fabric.IText(item_name, {
+			fontSize: 30,
+			group_id: item_id,
+			object_id: `${item_id}_name`,
+			left: 100,
+			top: 100,
+		});
+		canvas.add(name);
+	}
 
-	const description = new fabric.IText(item_desc, {
-		fontSize: 18,
-		group_id: item_id,
-		object_id: `${item_id}_desc`
-	});
+	if (checkboxes.desc && item_desc.trim() !== "") {
+		const description = new fabric.IText(item_desc, {
+			fontSize: 28,
+			group_id: item_id,
+			object_id: `${item_id}_desc`,
+			left: 100,
+			top: 100,
+		});
+		canvas.add(description);
+	}
 
-	const image = new fabric.Image.fromURL(item_image, (img) => {
-		img.scale(0.3);
-		img.group_id = item_id;
-		img.object_id = `${item_id}_img`;
-		console.log("img.object_id: " + img.object_id);
-		canvas.add(img);
-		// canvas.renderAll();
-	});
+	if (checkboxes.img) {
+		const image = new fabric.Image.fromURL(item_image, (img) => {
+			img.scale(0.3);
+			img.group_id = item_id;
+			img.object_id = `${item_id}_img`;
+			img.left = 100;
+			img.top = 100;
+			console.log("img.object_id: " + img.object_id);
+			canvas.add(img);
+			canvas.renderAll();
+		});
+	}
 
-	const price = new fabric.Text(item_price, {
-		fontSize: 29,
-		group_id: item_id,
-		object_id: `${item_id}_price`
-	});
-
-	canvas.add(name);
-	canvas.add(description);
-	canvas.add(price);
+	if (checkboxes.price) {
+		const price = new fabric.Text(item_price, {
+			fontSize: 29,
+			group_id: item_id,
+			object_id: `${item_id}_price`,
+			left: 100,
+			top: 100,
+		});
+		canvas.add(price);
+	}
 }
 
