@@ -266,6 +266,7 @@ function img_object_properties(object) {
 }
 
 var change_rect_fill_listener;
+var change_rect_stroke_width_listener;
 var change_rect_stroke_listener;
 var rect_fill_color_picker;
 var rect_stroke_color_picker;
@@ -358,6 +359,17 @@ function rect_object_properties(object) {
 	// change rect fill button
 	document.getElementById("rect_fill_change").addEventListener("click", change_rect_fill_listener);
 
+	// stroke width
+	document.getElementById("rect_stroke_width").value = object.strokeWidth;
+	if (change_rect_stroke_width_listener)
+		document.getElementById("rect_stroke_width").removeEventListener("input", change_rect_stroke_width_listener);
+	change_rect_stroke_width_listener = function() {
+		console.log("called change_rect_stroke_width_listener()");
+		object.set({ strokeWidth: parseFloat(this.value) });
+		canvas.renderAll();
+	}
+	document.getElementById("rect_stroke_width").addEventListener("input", change_rect_stroke_width_listener);
+
 	// initial stroke color input values
 	var rect_stroke_rgba_values = object.stroke.match(/\d+/g);
 	document.getElementById("rect_stroke_color_r").value = rect_stroke_rgba_values[0];
@@ -443,6 +455,7 @@ function rect_object_properties(object) {
 }
 
 var change_circ_fill_listener;
+var change_circ_stroke_width_listener;
 var change_circ_stroke_listener;
 var circ_fill_color_picker;
 var circ_stroke_color_picker;
@@ -532,6 +545,17 @@ function circ_object_properties(object) {
 		canvas.renderAll();
 	}
 	document.getElementById("circ_fill_change").addEventListener("click", change_circ_fill_listener);
+
+	// stroke width
+	document.getElementById("circ_stroke_width").value = object.strokeWidth;
+	if (change_circ_stroke_width_listener)
+		document.getElementById("circ_stroke_width").removeEventListener("input", change_circ_stroke_width_listener);
+	change_circ_stroke_width_listener = function() {
+		console.log("called change_circ_stroke_width_listener()");
+		object.set({ strokeWidth: parseFloat(this.value) });
+		canvas.renderAll();
+	}
+	document.getElementById("circ_stroke_width").addEventListener("input", change_circ_stroke_width_listener);
 
 	// initial stroke color input values
 	var circ_stroke_rgba_values = object.stroke.match(/\d+/g);
