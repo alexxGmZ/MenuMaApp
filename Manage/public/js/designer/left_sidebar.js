@@ -41,6 +41,7 @@ function generate_rectangle() {
 		fill: "rgba(255, 255, 255, 0)",
 		stroke: "rgba(0, 0, 0, 1)",
 		strokeWidth: 2,
+		strokeUniform: true
 	});
 
 	canvas.add(rect);
@@ -57,6 +58,7 @@ function generate_circle() {
 		fill: "rgba(255, 255, 255, 0)",
 		stroke: "rgba(0, 0, 0, 1)",
 		strokeWidth: 2,
+		strokeUniform: true
 	})
 
 	canvas.add(circle);
