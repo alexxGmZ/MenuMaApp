@@ -17,6 +17,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="./styles/styles.css" rel="stylesheet">
 	<script src="./js/registration.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
 </head>
 
 <body class="px-3 py-3">
@@ -29,12 +30,16 @@
 	<nav class="pl-20 bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
 		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 			<div class="justify-between hidden w-full md:flex md:w-auto md:order-1">
-				<ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+				<ul
+					class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
 					<li>
-						<a href="main.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO MAIN MENU</a>
+						<a href="main.html"
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK
+							TO MAIN MENU</a>
 					</li>
 					<li>
-						<button onclick="dialog_open('add_employee_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="dialog_open('add_employee_dialog')"
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 							<img src="assets/svg/plus-circle.svg" class="hover:text-zinc-50">
 							<span class="mx-2">ADD NEW USER</span>
 						</button>
@@ -46,7 +51,8 @@
 
 	<!-- MAIN TABLE -->
 	<h1 class="font-bold pl-20">Registered Employees</h1>
-	<button onclick="refresh_employee_table()" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-500 hover:text-zinc-50 hover:drop-shadow-lg mb-2 ml-20">
+	<button onclick="refresh_employee_table()"
+		class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-500 hover:text-zinc-50 hover:drop-shadow-lg mb-2 ml-20">
 		<img src="assets/svg/refresh.svg" class="hover:text-zinc-50">
 		<span class="mx-2">Refresh table</span>
 	</button>
@@ -75,41 +81,49 @@
 	<!-- UPDATE MODAL -->
 	<dialog id="update_employee_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto">
 		<center>
-		<label for="name">Name</label>
+			<label for="name">Name</label>
 		</center>
-		<input type="text" name="name_2" id="name_2" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm text-center"><br>
+		<input type="text" name="name_2" id="name_2"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm text-center"><br>
 		<div class="grid gap-4 grid-cols-2">
 			<div class="text-center">
-				<input type="checkbox" name="design_priv_2" id="design_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="design_priv_2" id="design_priv_2"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="design_priv">Design Privilege</label>
 			</div>
 
 			<div class="text-center">
-				<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="inventory_priv">Inventory Privilege</label>
 			</div>
 
 			<div class="text-center">
-				<input type="checkbox" name="report_priv_2" id="report_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="report_priv_2" id="report_priv_2"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="report_priv">View Reports Privilege</label>
 			</div>
 
 			<div class="text-center">
-				<input type="checkbox" name="employee_priv_2" id="employee_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="employee_priv_2" id="employee_priv_2"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="employee_priv_2">View Employee Privilege</label>
 			</div>
 		</div>
 
 		<center>
-		<input type="checkbox" name="devices_priv_2" id="devices_priv_2" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
-		<label for="devices_priv">View Devices Privilege</label>
+			<input type="checkbox" name="devices_priv_2" id="devices_priv_2"
+				class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+			<label for="devices_priv">View Devices Privilege</label>
 		</Center>
 
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('update_employee_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="dialog_close('update_employee_dialog')"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				Cancel update
 			</button>
-			<button onclick="update_employee()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="update_employee()"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				Update Employee
 			</button>
 		</div>
@@ -119,7 +133,8 @@
 	<dialog id="update_employee_successs_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="update_employee_placeholder">Employee NAME</span>
 		<span> is successfully updated.</span><br><br>
-		<button onclick="refresh_employee_table()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+		<button onclick="refresh_employee_table()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
 			OK
 		</button>
 	</dialog>
@@ -131,40 +146,48 @@
 		<p class="hidden" id="id"></p>
 
 		<label for="name">Name:</label>
-		<input type="text" name="name" id="name" placeholder="Enter employee name" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<input type="text" name="name" id="name" placeholder="Enter employee name"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<label for="password">Password:</label>
-		<input type="text" name="password" id="password" placeholder="Enter password" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
+		<input type="text" name="password" id="password" placeholder="Enter password"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"><br>
 
 		<div class="grid gap-4 grid-cols-2">
 			<div class="text-center">
-				<input type="checkbox" name="design_priv" id="design_priv" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="design_priv" id="design_priv"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="design_priv">Design Privilege</label>
 			</div>
 			<div class="text-center">
-				<input type="checkbox" name="inventory_priv" id="inventory_priv" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="inventory_priv" id="inventory_priv"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="inventory_priv">Inventory Privilege</label>
 			</div>
 			<div class="text-center">
-				<input type="checkbox" name="report_priv" id="report_priv" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="report_priv" id="report_priv"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="report_priv">View Reports Privilege</label>
 			</div>
 			<div class="text-center">
-				<input type="checkbox" name="employee_priv" id="employee_priv" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+				<input type="checkbox" name="employee_priv" id="employee_priv"
+					class="text-2xl hover:cursor-pointer h-6 w-6"><br>
 				<label for="employee_priv">View Employee Privilege</label>
 			</div>
 		</div>
 
 		<center>
-		<input type="checkbox" name="devices_priv" id="devices_priv" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
-		<label for="devices_priv">View Devices Privilege</label>
+			<input type="checkbox" name="devices_priv" id="devices_priv" class="text-2xl hover:cursor-pointer h-6 w-6"><br>
+			<label for="devices_priv">View Devices Privilege</label>
 		</center>
 
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('add_employee_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="dialog_close('add_employee_dialog')"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				CANCEL
 			</button>
-			<button onclick="register_employee()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			<button onclick="register_employee()"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 				SUBMIT EMPLOYEE
 			</button>
 		</div>
@@ -174,7 +197,8 @@
 	<dialog id="add_employee_successs_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="add_employee_placeholder" class="font-bold"></span>
 		<span> is successfully added.</span><br><br>
-		<button onclick="refresh_employee_table()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+		<button onclick="refresh_employee_table()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
 			OK
 		</button>
 	</dialog>
@@ -182,7 +206,8 @@
 	<!-- ADD EMPLOYEE NAME BLANK ERROR -->
 	<dialog id="add_employee_name_error_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span> Name cant be blank!</span><br>
-		<button onclick="dialog_close('add_employee_name_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('add_employee_name_error_dialog')"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
@@ -190,7 +215,8 @@
 	<!-- ADD EMPLOYEE PASSWORD BLANK ERROR -->
 	<dialog id="add_employee_password_error_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span> Password cant be blank!</span><br>
-		<button onclick="dialog_close('add_employee_password_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+		<button onclick="dialog_close('add_employee_password_error_dialog')"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 			OK
 		</button>
 	</dialog>
@@ -199,7 +225,8 @@
 	<dialog id="remove_employee_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
 		<span id="removed_employee_placeholder" class="font-bold"></span>
 		<span> is successfully removed.</span><br><br>
-		<button onclick="refresh_employee_table()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+		<button onclick="refresh_employee_table()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
 			OK
 		</button>
 	</dialog>
