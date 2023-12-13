@@ -225,3 +225,20 @@ dialog_open("dialog_id");
 const dialog_close = dialog.dialog_close;
 dialog_close("dialog_id");
 ```
+<br>
+
+### disable_next_previous_key.js
+
+The [disable_next_previous_key.js](./public/js/modules/disable_next_previous_key.js) disables
+the thumb buttons of the mouse.
+
+**How to use:**
+
+Just call the script in the html body.
+
+```html
+<body>
+   <h1>Hello World</h1>
+   <script src="./js/modules/disable_next_previous_key.js"></script>
+</body
+```
