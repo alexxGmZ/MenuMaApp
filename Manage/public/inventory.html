@@ -18,6 +18,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="./styles/styles.css" rel="stylesheet">
 	<script src="./js/inventory.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
 </head>
 
 
@@ -27,24 +28,30 @@
 	<nav class="flex justify-center bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
 		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 			<div class="justify-between hidden w-full md:flex md:w-auto md:order-1">
-				<ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+				<ul
+					class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
 					<li>
-						<a href="main.html" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK TO MAIN MENU</a>
+						<a href="main.html"
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-gray-600 hover:text-zinc-50 hover:drop-shadow-lg">BACK
+							TO MAIN MENU</a>
 					</li>
 					<li>
-						<button onclick="refresh_menu_items()" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="refresh_menu_items()"
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-sky-400 hover:text-zinc-50 hover:drop-shadow-lg">
 							<img src="assets/svg/refresh.svg" class="hover:text-zinc-50">
 							<span class="mx-2">REFRESH ITEMS</span>
 						</button>
 					</li>
 					<li>
-						<button onclick="dialog_open('add_item_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="dialog_open('add_item_dialog')"
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
 							<img src="assets/svg/plus-circle.svg" class="hover:text-zinc-50">
 							<span class="mx-2">NEW ITEM</span>
 						</button>
 					</li>
 					<li>
-						<button onclick="dialog_open('search_item_dialog')" class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-yellow-500 hover:text-zinc-50 hover:drop-shadow-lg">
+						<button onclick="dialog_open('search_item_dialog')"
+							class="rounded-lg bg-gray-300 py-2 px-2 inline-flex hover:bg-yellow-500 hover:text-zinc-50 hover:drop-shadow-lg">
 							<img src="assets/svg/search.svg" class="hover:text-zinc-50">
 							<span class="mx-2">SEARCH ITEM VIA ID</span>
 						</button>
@@ -84,14 +91,26 @@
 	<!-- ADD ITEM DIALOG -->
 	<dialog id="add_item_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
 		<p class="pb-3 text-center font-bold">Add Item...</p>
-		<input type="text" id="add_item_name" placeholder="Food Name" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
-		<textarea type="text" id="add_item_desc" placeholder="Food Description" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea> <br>
+		<input type="text" id="add_item_name" placeholder="Food Name"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+		<br>
+		<textarea type="text" id="add_item_desc" placeholder="Food Description"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea>
+		<br>
 		<label for="img" class="ml-2">Select Food Image:</label>
-		<input type="file" id="add_item_img" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
-		<input type="text" id="add_item_price" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<input type="file" id="add_item_img" accept="image/*"
+			class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" />
+		<br>
+		<input type="text" id="add_item_price" placeholder="Food Price"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+		<br>
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('add_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg"> CANCEL </button>
-			<button onclick="add_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> ADD ITEM </button>
+			<button onclick="dialog_close('add_item_dialog')"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+				CANCEL </button>
+			<button onclick="add_item()"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+				ADD ITEM </button>
 		</div>
 	</dialog>
 
@@ -100,41 +119,58 @@
 		<span id="item_name_placeholder" class="font-bold">Item Name</span>
 		<span> is successfully added!</span>
 		<br><br>
-		<button onclick="refresh_menu_items()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12"> OK </button>
+		<button onclick="refresh_menu_items()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+			OK </button>
 	</dialog>
 
 	<!-- ADD ITEM DIALOG ERROR -->
 	<dialog id="add_item_error_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center w-full max-w-md">
 		<p>There is an error on adding / updating an item!</p>
-		<p>Please check if the inputs are not empty, choose image is a must or the price input box must be number!</p> <br><br>
-		<button onclick="dialog_close('add_item_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12"> OK </button>
+		<p>Please check if the inputs are not empty, choose image is a must or the price input box must be number!</p>
+		<br><br>
+		<button onclick="dialog_close('add_item_error_dialog')"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+			OK </button>
 	</dialog>
 
 	<!--THE POPUP WINDOW FOR ITEM UPDATE -->
 	<dialog id="update_item_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-lg">
-		<input type="hidden" id="update_item_id" name="foodidfield" placeholder="Food ID"  /> <br>
+		<input type="hidden" id="update_item_id" name="foodidfield" placeholder="Food ID" /> <br>
 		<h2 class="pb-3 text-center">Updating item....</h2>
 
 		<!-- preview current item name -->
-		<input type="text" id="update_item_name" placeholder="Food Name" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<input type="text" id="update_item_name" placeholder="Food Name"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+		<br>
 
 		<!-- preview current item description -->
-		<textarea type="text" id="update_item_desc" placeholder="Food Description" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea> <br>
+		<textarea type="text" id="update_item_desc" placeholder="Food Description"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea>
+		<br>
 
 		<!-- preview current item image -->
 		<center><img src="" id="update_image_preview"></center>
 
 		<!-- new image update button -->
 		<label for="img" class="ml-2">Select Food Image:</label>
-		<input type="file" id="update_new_image" name="update_new_image" accept="image/*" class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" /> <br>
+		<input type="file" id="update_new_image" name="update_new_image" accept="image/*"
+			class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" />
+		<br>
 
 		<!-- preview current item price -->
-		<input type="text" id="update_item_price" placeholder="Food Price" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
+		<input type="text" id="update_item_price" placeholder="Food Price"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+		<br>
 
 		<!-- close and update button -->
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
-			<button onclick="dialog_close('update_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">Cancel update</button>
-			<button onclick="update_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg" name="submit"> Update Item </button>
+			<button onclick="dialog_close('update_item_dialog')"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">Cancel
+				update</button>
+			<button onclick="update_item()"
+				class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"
+				name="submit"> Update Item </button>
 		</div>
 	</dialog>
 
@@ -143,7 +179,9 @@
 		<span id="updated_item_placeholder" class="font-bold">Item Name</span>
 		<span> is successfully updated.</span>
 		<br><br>
-		<button onclick="refresh_menu_items()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12"> OK </button>
+		<button onclick="refresh_menu_items()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+			OK </button>
 	</dialog>
 
 	<!-- add a dialog popup for item preview before deleting or removing -->
@@ -187,30 +225,45 @@
 		<br>
 		<br>
 
-		<button onclick="dialog_close('remove_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-2/12 mx-2"> NO </button>
-		<button onclick="delete_item()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-2/12 mx-2"> YES </button>
+		<button onclick="dialog_close('remove_item_dialog')"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-2/12 mx-2">
+			NO </button>
+		<button onclick="delete_item()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-2/12 mx-2">
+			YES </button>
 	</dialog>
 
 	<!-- SUCCESS REMOVE DIALOG -->
 	<dialog id="remove_item_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center max-w-xs">
 		<span id="removed_item_placeholder" class="font-bold">Item Name</span>
 		<span> is successfully removed.</span><br><br>
-		<button onclick="refresh_menu_items()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2"> OK </button>
+		<button onclick="refresh_menu_items()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+			OK </button>
 	</dialog>
 
 	<!-- SEARCH ID DIALOG -->
 	<dialog id="search_item_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center w-full max-w-xs">
 		<span> Searching food... </span><br>
-		<input type="text" id="search_item_box" placeholder="Enter food id here" class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" /> <br>
-		<button onclick="dialog_close('search_item_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg"> CANCEL </button>
-		<button onclick="search_via_id()" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg"> SEARCH </button>
+		<input type="text" id="search_item_box" placeholder="Enter food id here"
+			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+		<br>
+		<button onclick="dialog_close('search_item_dialog')"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			CANCEL </button>
+		<button onclick="search_via_id()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			SEARCH </button>
 	</dialog>
 
 	<!-- SEARCH ID BLANK ERROR -->
 	<dialog id="search_item_error_dialog" class="hidden rounded-lg drop-shadow-lg text-center mx-auto max-w-xs">
 		<span> Input cant be blank!</span><br><br>
-		<button onclick="dialog_close('search_item_error_dialog')" class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2"> OK </button>
+		<button onclick="dialog_close('search_item_error_dialog')"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+			OK </button>
 	</dialog>
 
 </body>
+
 </html>
