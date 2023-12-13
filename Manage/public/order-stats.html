@@ -20,6 +20,7 @@
 	<script src="./js/c3js/d3.v5.min.js" charset="utf-8"></script>
 	<script src="./js/c3js/c3.min.js"></script>
 	<script src="./js/order-stats.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
 </head>
 
 <body class="px-3 py-3">
@@ -79,8 +80,8 @@
 	</center>
 	<div>
 		<span class="d-flex justify-content-center float-right mb-2">
-			Total Earnings: <input type="text" placeholder="Number" id="total_earning_placeholder" class="rounded-lg pl-2 bg-gray-300"
-				disabled />
+			Total Earnings: <input type="text" placeholder="Number" id="total_earning_placeholder"
+				class="rounded-lg pl-2 bg-gray-300" disabled />
 		</span>
 		<table id="order_stats_table" onclick="" class="text-left w-full mx-auto shadow-md table-fixed">
 			<thead class="text-zinc-950 uppercase font-bold">
@@ -111,23 +112,27 @@
 				<p class="pl-1 pb-1">Transaction Date:</p>
 				<input type="text" id="transaction_date_placeholder" name="transaction_date_placeholder"
 					placeholder="Transaction Date"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
 
 				<p class="pl-1 pb-1 pt-1">Orders Taken:</p>
 				<input type="text" id="total_orders_taken_placeholder" name="total_orders_taken_placeholder"
 					placeholder="Orders Taken"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
 
 				<p class="pl-1 pb-1 pt-1">Orders Served:</p>
 				<input type="text" id="total_orders_done_placeholder" name="total_orders_done_placeholder"
 					placeholder="Orders Served"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
 			</div>
 			<div>
 				<p class="pl-1 pb-1">Orders Canceled:</p>
 				<input type="text" id="total_orders_canceled_placeholder" name="total_orders_canceled_placeholder"
 					placeholder="Orders Canceled"
-					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg" disabled />
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
 
 				<p class="pl-1 pb-1">Earnings:</p>
 				<input type="text" id="earnings_placeholder" name="earnings_placeholder" placeholder="Earnings"
@@ -194,9 +199,11 @@
 				<!--Date Picker-->
 				<p class="text-center mb-2 font-medium">Organize by: </p>
 				<span class="px-2">Starting date:</span>
-				<input type="date" id="start_date" name="start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="start_date" name="start_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<span class="px-2">Endpoint to:</span>
-				<input type="date" id="end_date" name="end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="end_date" name="end_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<center>
 					<button onclick="total_order_daily_selected_date()"
 						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
@@ -227,9 +234,11 @@
 				<!--Date Picker-->
 				<p class="text-center mb-2 font-medium">Organize by: </p>
 				<span class="px-2">Starting date:</span>
-				<input type="date" id="earning_start_date" name="earning_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="earning_start_date" name="earning_start_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<span class="px-2">Endpoint to:</span>
-				<input type="date" id="earning_end_date" name="earning_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="earning_end_date" name="earning_end_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<center>
 					<button onclick="total_earning_daily_selected_date()"
 						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
@@ -260,9 +269,11 @@
 				<!--Date Picker-->
 				<p class="text-center mb-2 font-medium">Organize by: </p>
 				<span class="px-2">Starting date:</span>
-				<input type="date" id="best_seller_start_date" name="best_seller_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="best_seller_start_date" name="best_seller_start_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<span class="px-2">Endpoint to:</span>
-				<input type="date" id="best_seller_end_date" name="best_seller_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="best_seller_end_date" name="best_seller_end_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<center>
 					<button onclick="best_seller_items_daily()"
 						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
@@ -293,9 +304,11 @@
 				<!--Date Picker-->
 				<p class="text-center mb-2 font-medium">Organize by: </p>
 				<span class="px-2">Starting date:</span>
-				<input type="date" id="quantity_start_date" name="quantity_start_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="quantity_start_date" name="quantity_start_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<span class="px-2">Endpoint to:</span>
-				<input type="date" id="quantity_end_date" name="quantity_end_date" class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
+				<input type="date" id="quantity_end_date" name="quantity_end_date"
+					class="rounded-lg border-2 hover:border-sky-500 focus:outline-none focus:ring-sky-500 w-3/12 pl-2 mx-2 mb-2">
 				<center>
 					<button onclick="item_quantity_sold_daily()"
 						class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
