@@ -99,6 +99,7 @@ function get_local_ip_address() {
 async function get_network_prefix() {
 	console.log("called get_network_prefix()");
 	const local_ip_address = await get_local_ip_address();
+	document.getElementById("server_ip_address").textContent = local_ip_address;
 	const ip_parts = local_ip_address.split('.');
 	const network_prefix = ip_parts.slice(0, 3).join('.');
 	return network_prefix;
