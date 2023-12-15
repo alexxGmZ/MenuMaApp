@@ -25,9 +25,8 @@ const os = require("os");
 // format get request message
 function request_message_format(request_protocol, api_endpoint, ip_requested) {
 	const currentDate = new Date();
-	const ip = extractIPv4(ip_requested)
 	const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip} ${formattedDate}`);
+	return console.log(`${request_protocol} request for ${api_endpoint} from ${ip_requested} ${formattedDate}`);
 }
 
 function authenticate_api_token(req, res, next) {
