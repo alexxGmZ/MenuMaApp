@@ -204,9 +204,10 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 
 	if (canvas) {
 		if (typeof callback === "function") callback();
+		// call canvas utilities
 		canvas_scaler();
 		canvas_pointer_coordinates();
-		// object_properties("hide");
+		change_canvas_resolution();
 	}
 }
 
@@ -356,6 +357,8 @@ function delete_selected_objects() {
 }
 
 function canvas_pointer_coordinates() {
+	if (!canvas) return;
+	console.log("called canvas_pointer_coordinates");
 	canvas.on("mouse:move", function(options) {
 		var pointer = canvas.getPointer(options.e);
 		var x = pointer.x.toFixed(3);
@@ -364,4 +367,32 @@ function canvas_pointer_coordinates() {
 		document.getElementById("canvas_pointer_coordinates_x").textContent = x;
 		document.getElementById("canvas_pointer_coordinates_y").textContent = y;
 	})
+}
+
+var change_canvas_res_listener;
+function change_canvas_resolution() {
+	if (!canvas) return;
+	console.log("called change_canvas_resolution()");
+	const change_height_input = document.getElementById("change_res_height");
+	const change_width_input = document.getElementById("change_res_width");
+	const change_res_button = document.getElementById("change_canvas_res_button");
+
+	// initial values of input boxes
+	change_height_input.value = canvas_height;
+	change_width_input.value = canvas_width;
+
+	// listener logic for change resolution button
+	if (change_canvas_res_listener) {
+		change_res_button.removeEventListener("click", change_canvas_res_listener)
+	}
+	change_canvas_res_listener = function() {
+		console.log("called change_canvas_res_listener()");
+		canvas_height = parseFloat(change_height_input.value);
+		canvas_width = parseFloat(change_width_input.value);
+		canvas.setHeight(canvas_height);
+		canvas.setWidth(canvas_width);
+		document.getElementById("canvas_resolution").textContent = `${canvas_width}x${canvas_height}`;
+		dialog_close("change_canvas_resolution_dialog");
+	}
+	change_res_button.addEventListener("click", change_canvas_res_listener);
 }

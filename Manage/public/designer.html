@@ -529,8 +529,8 @@
 		<div class="flex text-sm">
 			<label for="canvas_resolution">Canvas Resolution: </label>
 			<span id="canvas_resolution" class="font-bold mr-1"></span>
-			<button class="border rounded-xl mr-2 px-1">
-				<img src="assets/svg/designer/edit-2-svgrepo-com.svg" width="20px">
+			<button onclick="dialog_open('change_canvas_resolution_dialog')" class="border rounded-xl mr-2 px-1">
+				<img src="assets/svg/designer/edit-2-svgrepo-com.svg" width="15px">
 			</button>
 			<label for="canvas_pointer_coordinates_x">x:</label>
 			<span id="canvas_pointer_coordinates_x" class="font-bold mr-1"></span>
@@ -548,6 +548,30 @@
 			</button>
 		</div>
 	</div>
+
+	<!-- change canvas resolution dialog -->
+	<dialog id="change_canvas_resolution_dialog" class="hidden rounded-lg drop-shadow-lg text-center">
+		<h1 class="font-bold text-center mb-3">Change canvas Resolution</h1>
+		<div class="flex">
+			<label for="change_res_width">Width:</label>
+			<input id="change_res_width" type="number" class="border rounded-lg px-2 w-20">
+			<p>px</p>
+		</div>
+		<div class="flex mb-4">
+			<label for="change_res_height">Height:</label>
+			<input id="change_res_height" type="number" class="border rounded-lg px-2 w-20">
+			<p>px</p>
+		</div>
+		<p class="whitespace-pre-line mb-2">
+			<b>!!WARNING!!</b>
+			Objects will not scale along with the canvas.
+		</p>
+		<center>
+			<button id="change_canvas_res_button" class="border rounded-xl px-2 text-sm mr-3">Change</button>
+			<button onclick="dialog_close('change_canvas_resolution_dialog')"
+				class="border rounded-xl px-2 text-sm">Cancel</button>
+		</center>
+	</dialog>
 
 	<!-- javascript modules -->
 	<script src="./js/designer/designer.js"></script>

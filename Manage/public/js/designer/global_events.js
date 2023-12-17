@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	canvas_scaler();
 	supported_font_checker();
 	display_item_cards();
-	// item_card_row_click();
 });
 
 document.addEventListener("keydown", function(event) {
