@@ -82,15 +82,28 @@ To make sure that all the required dependencies are installed, type
 npm list
 ```
 
-This should output Electron and Tailwind CSS like this
+This should output the application dependencies like this.
 
 ```bash
-freezmenu-manage@1.0.0
-├── electron@25.2.0
+menumaapp-manage@1.0.0
+├── @jaames/iro@5.5.2
+├── body-parser@1.20.2
+├── cors@2.8.5
+├── electron@25.9.1
+├── express@4.18.2
+├── fabric@5.3.0
+├── multer@1.4.5-lts.1
+├── mysql2@3.6.0
+├── node-localstorage@3.0.5
+├── ping@0.4.4
 └── tailwindcss@3.3.2
 ```
 
-That's it, just read the documentation links provided at the top for these tools.
+To start the Manage application, type
+
+```bash
+npm start
+```
 
 <br>
 
