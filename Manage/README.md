@@ -25,6 +25,7 @@
   - [Custom Modules](#custom-modules)
     - [mysql.js](#mysqljs)
     - [dialog.js](#dialogjs)
+    - [disable_next_previous_key.js](#disablenextpreviouskeyjs)
 <!--toc:end-->
 
 <br>
