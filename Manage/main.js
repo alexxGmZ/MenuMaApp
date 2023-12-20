@@ -12,7 +12,7 @@ const createWindow = () => {
 		}
 	})
 
-	win.loadFile('./public/designer.html')
+	win.loadFile('./public/main.html')
 }
 
 app.whenReady().then(() => {
