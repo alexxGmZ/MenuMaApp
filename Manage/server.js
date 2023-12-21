@@ -132,26 +132,28 @@ app.get("/status", authenticate_api_token,
 
 // for adding inventory items to database
 app.post("/upload_item", upload.single("image"), (req, res) => {
-	if (!req.file) {
-		return res.json({ success: false });
-	}
-
 	const { name, description, price } = req.body;
 	const body = JSON.stringify(req.body, null, 2);
-	console.log(body);
-	console.log(req.file.buffer);
+	// console.log(body);
+	// console.log(req.file);
+
+	var sql_query = "INSERT INTO manage_db.menu_items (item_name, item_desc, item_price) VALUES (?, ?, ?)";
+	var sql_parameters = [name, description, price];
+	// if there is an image
+	if (req.file) {
+		sql_query = "INSERT INTO manage_db.menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?)";
+		sql_parameters = [name, description, req.file.buffer, price];
+	}
 
 	// Insert the image into the database
-	connection.query("INSERT INTO manage_db.menu_items (item_name, item_desc, item_image, item_price) VALUES (?, ?, ?, ?)",
-		[name, description, req.file.buffer, price], (err) => {
-			if (err) {
-				console.error("Error inserting data into MySQL:", err);
-				return res.json({ success: false });
-			}
-			request_message_format("POST", "upload_item", req.ip);
-			return res.json({ success: true });
+	connection.query(sql_query, sql_parameters, (err) => {
+		if (err) {
+			console.error("Error inserting data into MySQL:", err);
+			return res.json({ success: false });
 		}
-	);
+		request_message_format("POST", "upload_item", req.ip);
+		return res.json({ success: true });
+	});
 });
 
 // for updating inventory items to database
