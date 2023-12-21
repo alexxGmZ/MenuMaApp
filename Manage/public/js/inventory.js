@@ -39,7 +39,7 @@ function display_menu_items() {
 						<td data-column="item_id" class="text-center font-bold">${row.item_id}</td>
 						<td data-column="item_name" class="text-center">${row.item_name}</td>
 						<td data-column="item_description" class="text-center">${row.item_desc}</td>
-						<td><img src="${image_src}" alt="Foods Image" width="300"></td>
+						<td><img src="${image_src}" width="300"></td>
 						<td data-column="item_price" class="text-center">${row.item_price}</td>
 						<td data-column="item_quantity_sold" class="text-center">${row.quantity_sold}</td>
 						<td data-column="item_revenue" class="text-center font-bold">₱${row.revenue_generated}</td>
@@ -90,7 +90,7 @@ function add_item() {
 	const item_price = document.getElementById("add_item_price").value.trim();
 
 	// validate required inputs
-	if (!item_name || !item_price || !item_img)
+	if (!item_name || !item_price)
 		return dialog_open("add_item_error_dialog");
 
 	let form_data = new FormData();
@@ -141,12 +141,6 @@ function update_item() {
 		item_image = item_new_img.files[0];
 	}
 
-	// console.log(item_id);
-	// console.log(item_name);
-	// console.log(item_desc);
-	// console.log(item_image);
-	// console.log(item_price);
-
 	const form_data = new FormData();
 	form_data.append("id", item_id);
 	form_data.append("name", item_name);
@@ -166,6 +160,8 @@ function update_item() {
 				console.log(data.message);
 				dialog_open("update_item_success_dialog");
 				document.getElementById("updated_item_placeholder").innerHTML = document.getElementById("update_item_name").value;
+				// clear image input buffer
+				document.getElementById("update_new_image").value = "";
 			} else {
 				// Error occurred while updating
 				console.error("Error:", data.error);

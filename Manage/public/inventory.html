@@ -91,17 +91,17 @@
 	<!-- ADD ITEM DIALOG -->
 	<dialog id="add_item_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
 		<p class="pb-3 text-center font-bold">Add Item...</p>
-		<input type="text" id="add_item_name" placeholder="Food Name"
+		<input type="text" id="add_item_name" placeholder="Item Name"
 			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
 		<br>
-		<textarea type="text" id="add_item_desc" placeholder="Food Description"
+		<textarea type="text" id="add_item_desc" placeholder="Item Description"
 			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea>
 		<br>
 		<label for="img" class="ml-2">Select Food Image:</label>
 		<input type="file" id="add_item_img" accept="image/*"
 			class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" />
 		<br>
-		<input type="text" id="add_item_price" placeholder="Food Price"
+		<input type="number" id="add_item_price" placeholder="Item Price"
 			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
 		<br>
 		<div class="grid grid-cols-2 px-5 pt-2 gap-4">
@@ -126,8 +126,8 @@
 
 	<!-- ADD ITEM DIALOG ERROR -->
 	<dialog id="add_item_error_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center w-full max-w-md">
-		<p>There is an error on adding / updating an item!</p>
-		<p>Please check if the inputs are not empty, choose image is a must or the price input box must be number!</p>
+		<p>There is an error on adding an item!</p>
+		<p>Item name and price is required</p>
 		<br><br>
 		<button onclick="dialog_close('add_item_error_dialog')"
 			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
@@ -140,12 +140,12 @@
 		<h2 class="pb-3 text-center">Updating item....</h2>
 
 		<!-- preview current item name -->
-		<input type="text" id="update_item_name" placeholder="Food Name"
+		<input type="text" id="update_item_name" placeholder="Item Name"
 			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
 		<br>
 
 		<!-- preview current item description -->
-		<textarea type="text" id="update_item_desc" placeholder="Food Description"
+		<textarea type="text" id="update_item_desc" placeholder="Item Description"
 			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"></textarea>
 		<br>
 
@@ -153,13 +153,13 @@
 		<center><img src="" id="update_image_preview"></center>
 
 		<!-- new image update button -->
-		<label for="img" class="ml-2">Select Food Image:</label>
+		<label for="img" class="ml-2">New Image:</label>
 		<input type="file" id="update_new_image" name="update_new_image" accept="image/*"
 			class="cursor-pointer my-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-400 file:text-zinc-50 hover:file:bg-sky-600" />
 		<br>
 
 		<!-- preview current item price -->
-		<input type="text" id="update_item_price" placeholder="Food Price"
+		<input type="number" id="update_item_price" placeholder="Item Price"
 			class="w-full my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" />
 		<br>
 
