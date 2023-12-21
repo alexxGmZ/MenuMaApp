@@ -10,6 +10,7 @@ console.log("Timestamp: " + get_current_timestamp());
 const ping = require("ping");
 const dns = require("dns");
 const crypto = require("crypto");
+const os = require("os");
 
 // call mysql database module
 const mysql = require(__dirname + "/js/modules/mysql.js")
@@ -152,7 +153,7 @@ async function get_network_prefix() {
 	console.log("called get_network_prefix()");
 	const { ethernet_ip_address, wifi_ip_address } = await get_local_ip_addresses();
 	document.getElementById("ethernet_ip_address").textContent = ethernet_ip_address;
-	document.getElementById("wlan_ip_address").textContent = wifi_ip_address;
+	// document.getElementById("wlan_ip_address").textContent = wifi_ip_address;
 	const ip_parts = ethernet_ip_address.split('.');
 	const network_prefix = ip_parts.slice(0, 3).join('.');
 	return network_prefix;
@@ -455,3 +456,28 @@ function is_valid_mac_address(mac) {
 	const mac_pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 	return mac_pattern.test(mac);
 }
+
+// To get the wlan address proper way
+// console.log(os.networkInterfaces());
+
+function getWlanIpAddress() {
+	const interfaces = os.networkInterfaces();
+
+	// Find the WLAN interface directly, assuming it's named 'Wi-Fi'
+	const wlanInterface = interfaces['Wi-Fi'];
+
+	if (wlanInterface) {
+		const ipv4Address = wlanInterface.find(alias => alias.family === 'IPv4');
+
+		if (ipv4Address) {
+			return ipv4Address.address;
+		}
+	}
+
+  return 'WLAN IP address not found';
+}
+
+const wlanIpAddress = getWlanIpAddress();
+// console.log('WLAN IP Address:', wlanIpAddress);
+
+document.getElementById("wlan_ip_address").textContent = wlanIpAddress;
