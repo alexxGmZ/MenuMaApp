@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	list_available_devices();
 	list_registered_devices();
 	toggle_sort_devices_table();
+	display_wlan_ip_address();
 });
 
 console.log("Directory: " + __dirname);
@@ -75,85 +76,48 @@ async function list_available_devices() {
 	placeholder.innerHTML = out;
 }
 
-function get_local_ip_addresses() {
-	console.log("called get_local_ip_address()");
-	// return new Promise((resolve, reject) => {
-	// 	const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-	// 	const pc = new RTCPeerConnection({ iceServers: [] });
-	// 	pc.createDataChannel("");
-	// 	pc.createOffer()
-	// 		.then(offer => pc.setLocalDescription(offer))
-	// 		.catch(error => reject(error));
-	//
-	// 	pc.onicecandidate = (event) => {
-	// 		if (event.candidate) {
-	// 			const ip_regex = /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/;
-	// 			const ip_address = ip_regex.exec(event.candidate.candidate)[0];
-	// 			resolve(ip_address);
-	// 			pc.onicecandidate = null;
-	// 			pc.close();
-	// 		}
-	// 	};
-	// });
+function get_ethernet_ip_address() {
+	console.log("called get_ethernet_ip_address()");
 	return new Promise((resolve, reject) => {
-		const rtc_peer_connection =
-			window.RTCPeerConnection ||
-			window.mozRTCPeerConnection ||
-			window.webkitRTCPeerConnection;
+		const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+		const pc = new RTCPeerConnection({ iceServers: [] });
+		pc.createDataChannel("");
+		pc.createOffer()
+			.then(offer => pc.setLocalDescription(offer))
+			.catch(error => reject(error));
 
-		// Create RTCPeerConnection for Ethernet (wired) connection
-		const pc_ethernet = new rtc_peer_connection({ iceServers: [] });
-		pc_ethernet.createDataChannel("");
-		pc_ethernet.createOffer()
-			.then((offer) => pc_ethernet.setLocalDescription(offer))
-			.catch((error) => reject(error));
-
-		// Create RTCPeerConnection for Wi-Fi (wireless) connection
-		const pc_wifi = new rtc_peer_connection({ iceServers: [] });
-		pc_wifi.createDataChannel("");
-		pc_wifi.createOffer()
-			.then((offer) => pc_wifi.setLocalDescription(offer))
-			.catch((error) => reject(error));
-
-		// Variables to store the Ethernet and Wi-Fi IP addresses
-		let ethernet_ip_address, wifi_ip_address;
-
-		// Callback function for Ethernet RTCPeerConnection
-		pc_ethernet.onicecandidate = (event) => {
+		pc.onicecandidate = (event) => {
 			if (event.candidate) {
 				const ip_regex = /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/;
-				ethernet_ip_address = ip_regex.exec(event.candidate.candidate)[0];
-				pc_ethernet.onicecandidate = null;
-				pc_ethernet.close();
-				check_done();
+				const ip_address = ip_regex.exec(event.candidate.candidate)[0];
+				resolve(ip_address);
+				pc.onicecandidate = null;
+				pc.close();
 			}
 		};
-
-		// Callback function for Wi-Fi RTCPeerConnection
-		pc_wifi.onicecandidate = (event) => {
-			if (event.candidate) {
-				const ip_regex = /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/;
-				wifi_ip_address = ip_regex.exec(event.candidate.candidate)[0];
-				pc_wifi.onicecandidate = null;
-				pc_wifi.close();
-				check_done();
-			}
-		};
-
-		// Function to check if both Ethernet and Wi-Fi are done
-		function check_done() {
-			if (ethernet_ip_address && wifi_ip_address) {
-				resolve({ ethernet_ip_address, wifi_ip_address });
-			}
-		}
 	});
+}
+
+function display_wlan_ip_address() {
+	console.log("called display_wlan_ip_address()");
+	const interfaces = os.networkInterfaces();
+	const wlan_interface = interfaces['Wi-Fi'];
+
+	if (wlan_interface) {
+		const ipv4_address = wlan_interface.find(alias => alias.family === 'IPv4');
+		if (ipv4_address) {
+			document.getElementById("wlan_ip_address").textContent = ipv4_address.address;
+		}
+	}
+	else {
+		document.getElementById("wlan_ip_address").textContent = "WLAN IP address not found";
+	}
 }
 
 async function get_network_prefix() {
 	console.log("called get_network_prefix()");
-	const { ethernet_ip_address, wifi_ip_address } = await get_local_ip_addresses();
+	const ethernet_ip_address = await get_ethernet_ip_address();
 	document.getElementById("ethernet_ip_address").textContent = ethernet_ip_address;
-	// document.getElementById("wlan_ip_address").textContent = wifi_ip_address;
 	const ip_parts = ethernet_ip_address.split('.');
 	const network_prefix = ip_parts.slice(0, 3).join('.');
 	return network_prefix;
@@ -457,27 +421,3 @@ function is_valid_mac_address(mac) {
 	return mac_pattern.test(mac);
 }
 
-// To get the wlan address proper way
-// console.log(os.networkInterfaces());
-
-function getWlanIpAddress() {
-	const interfaces = os.networkInterfaces();
-
-	// Find the WLAN interface directly, assuming it's named 'Wi-Fi'
-	const wlanInterface = interfaces['Wi-Fi'];
-
-	if (wlanInterface) {
-		const ipv4Address = wlanInterface.find(alias => alias.family === 'IPv4');
-
-		if (ipv4Address) {
-			return ipv4Address.address;
-		}
-	}
-
-  return 'WLAN IP address not found';
-}
-
-const wlanIpAddress = getWlanIpAddress();
-// console.log('WLAN IP Address:', wlanIpAddress);
-
-document.getElementById("wlan_ip_address").textContent = wlanIpAddress;
