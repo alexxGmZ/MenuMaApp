@@ -43,3 +43,12 @@ This is the documentation directory, put here all documentation related stuff
 
 ## After the Proposal Defense
 * [Revision Form](https://docs.google.com/spreadsheets/d/1rQ0vqVQ4g3JFp0_HOR_9nt5sNWnwJQnu1hwKPZY8ggA)
+
+<br><br>
+
+## Final Defense
+* [Final Defense Form](https://docs.google.com/document/d/19YNf-wZA_aeyqgMxQW3i4_tXU9ef2FyP923Ew9x-pH8)
+* [Content Adviser's Endorsement for Final Defense](https://docs.google.com/document/d/1RIoZ_E-Xl0FGZ_Fk9CQF6qipm1GrZEXBdSIT2g3O50g)
+* [Programming Adviser's Endorsement for Final Defense](https://docs.google.com/document/d/1lGyst5XP-thMwgkHS9sSyUtKa-lVlES3ecUeE7-WBdw)
+* [Appointment for Final Defense](https://docs.google.com/document/d/11Zhn_3OOlxKWCvps_X0UoLRcRryknH4b3tFNkz82ttI)
+
