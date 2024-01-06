@@ -33,7 +33,7 @@ This is the documentation directory, put here all documentation related stuff
 * [Proposal Defense Form](https://docs.google.com/document/d/12_68agKmhul3oFAW54zpFk_zuq7l9LnNV6zh8rifZxg)
 
 ## During the Proposal Defense
-### Gradesheets
+### Gradesheets for Capstone 1
 * [Gradesheet Summary](https://docs.google.com/document/d/13mH1juc0abrQvWnc6Pixd7manJMpqFD3EQR-SeuGNzk)
 * [Panel Chairman](https://docs.google.com/document/d/1i0H8dZqasykhFKnzF_hFC9vxaUVmdkMkEN_nimDO_0Q)
 * [Panel Member 1](https://docs.google.com/document/d/1CPtd28XT1G4tKHKUvSqWC-K0oLVPeLRJdccb6dD9YJo)
@@ -52,3 +52,8 @@ This is the documentation directory, put here all documentation related stuff
 * [Programming Adviser's Endorsement for Final Defense](https://docs.google.com/document/d/1lGyst5XP-thMwgkHS9sSyUtKa-lVlES3ecUeE7-WBdw)
 * [Appointment for Final Defense](https://docs.google.com/document/d/11Zhn_3OOlxKWCvps_X0UoLRcRryknH4b3tFNkz82ttI)
 
+### Gradesheets for Capstone 2
+* [Gradesheet Summary]()
+* [Panel Chairman]()
+* [Panel Member 1]()
+* [Panel Member 2]()
