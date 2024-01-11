@@ -34,13 +34,13 @@ that was designed and synced by the Designer Page of the Manage application.
 {
    "canvas_objects": {
       "version": "5.3.0",
-         "objects": [
-            // canvas objects
-         ],
-         "background": "rgb(255, 173, 211)"
+      "objects": [
+         // canvas objects
+      ],
+      "background": "rgb(255, 173, 211)"
    },
-      "canvas_height": "720",
-      "canvas_width": "1440"
+   "canvas_height": "720",
+   "canvas_width": "1440"
 }
 ```
 > NOTE: Any device that request a connection for this endpoint requires a device token
@@ -54,13 +54,13 @@ The **menu_items** endpoints sends the data inside the menu_items table of the s
 [
    {
       "item_id": 1,
-         "item_name": "bulalo",
-         "item_desc": "",
-         "item_image": null,
-         "item_price": 10,
-         "quantity_sold": 21,
-         "revenue_generated": 210,
-         "item_status": 1
+      "item_name": "bulalo",
+      "item_desc": "",
+      "item_image": null,
+      "item_price": 10,
+      "quantity_sold": 21,
+      "revenue_generated": 210,
+      "item_status": 1
    },
    {
       "item_id": 2,
