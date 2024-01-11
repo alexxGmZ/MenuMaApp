@@ -50,6 +50,30 @@ which will be registered inside the Manage application.
 
 ## menu_items
 The **menu_items** endpoints sends the data inside the menu_items table of the sql database.
+```json
+[
+   {
+      "item_id": 1,
+         "item_name": "bulalo",
+         "item_desc": "",
+         "item_image": null,
+         "item_price": 10,
+         "quantity_sold": 21,
+         "revenue_generated": 210,
+         "item_status": 1
+   },
+   {
+      "item_id": 2,
+      "item_name": "kare kare",
+      "item_desc": "",
+      "item_image": null,
+      "item_price": 12,
+      "quantity_sold": 11,
+      "revenue_generated": 132,
+      "item_status": 1
+   }
+]
+```
 
 > NOTE: Any device that request a connection for this endpoint requires a device token
 which will be registered inside the Manage application.
@@ -59,10 +83,19 @@ which will be registered inside the Manage application.
 ## menu_items_lite
 The **menu_items_lite** endpoint sends only a few selected columns of the menu_items
 database table.
-```
-item_id
-item_name
-item_price
+```json
+[
+   {
+      "item_id": 1,
+      "item_name": "bulalo",
+      "item_price": 10
+   },
+   {
+      "item_id": 2,
+      "item_name": "kare kare",
+      "item_price": 12
+   }
+]
 ```
 > NOTE: Any device that request a connection for this endpoint requires a device token
 which will be registered inside the Manage application.
@@ -78,6 +111,22 @@ of the sql database table.
 ## registered_employees
 The **registered_employees** endpoint sends the data of the **registered_employees** table
 of the sql database.
+```json
+[
+   {
+      "employee_id": 1,
+      "name": "admin",
+      "password_hash": {
+         // password hash
+      },
+      "design_priv": 1,
+      "inventory_priv": 1,
+      "view_reports_priv": 1,
+      "manage_employee_priv": 1,
+      "manage_devices_priv": 1
+   }
+]
+```
 
 > NOTE: Any device that request a connection for this endpoint requires a device token
 which will be registered inside the Manage application.
