@@ -11,7 +11,7 @@ The Order application will be mainly developed for Android devices.
 * Capacitor
    * [documentation](https://capacitorjs.com/docs/)
 * Android Studio & Android SDK
-* Java v17+
+* OpenJDK v17+
 * Node v18.16.1
 * npm
 
@@ -27,11 +27,17 @@ Run ```npm install``` to install all the listed dependencies inside the ```./pac
 
 ```json
   "dependencies": {
+    "@capacitor-community/keep-awake": "^4.0.0",
     "@capacitor/camera": "latest",
     "@capacitor/core": "latest",
+    "@capacitor/keyboard": "^5.0.6",
     "@capacitor/network": "^5.0.6",
     "@capacitor/splash-screen": "latest",
-    "fabric": "^5.3.0"
+    "@capacitor/status-bar": "^5.0.6",
+    "cordova-plugin-screen-orientation": "^3.0.4",
+    "es6-promise-plugin": "^4.2.2",
+    "fabric": "^5.3.0",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "@capacitor/android": "^5.3.0",
