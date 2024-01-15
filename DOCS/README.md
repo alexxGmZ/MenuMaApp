@@ -57,3 +57,16 @@ This is the documentation directory, put here all documentation related stuff
 * [Panel Chairman](https://docs.google.com/document/d/1SI4S3HNzpQnxC4DtMOKjLzDLztyy9tgM)
 * [Panel Member 1](https://docs.google.com/document/d/1oBRCjPVApjKSRpHB05mXkd5P6GDYPN7v)
 * [Panel Member 2](https://docs.google.com/document/d/10koqNCvphhxh4m4oYLk9VQuGSF0DZJuf)
+
+<br><br>
+
+## Software Evalution Forms (For Collaborators)
+* [ISO 25010 Software Evaluation for Order Application (Functional Suitability & Usability)](https://docs.google.com/forms/d/1i_bDMgGW4uS_Q183v7JYGF1Op4pNxeMUiMt0gSxct10)
+* [ISO 25010 Software Evaluation for Manage Application (Functional Suitability & Usability)](https://docs.google.com/forms/d/10-Espo8VTLuxdnkQdgpsw713J8WLiq3Oe8AELO40_xs)
+
+<br>
+
+## Software Evalution Forms (For Responders)
+* [ISO 25010 Software Evaluation for Order Application (Functional Suitability & Usability)](https://forms.gle/JXGPSqr1Amf4dVmM9)
+* [ISO 25010 Software Evaluation for Manage Application (Functional Suitability & Usability)](https://forms.gle/WmUDdVZo2hQAMwjD8)
+
