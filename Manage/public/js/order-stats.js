@@ -991,7 +991,7 @@ function best_seller_items_monthly() {
 						' FROM order_queue_history o ',
 						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
 						' WHERE o.order_status = ''Served'' ',
-						' AND DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') BETWEEN ''2023-12-07'' AND ''2023-12-09'' ',
+						' AND DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') BETWEEN ''${date_start_value}'' AND ''${date_end_value}'' ',
 						' GROUP BY DATE_FORMAT(o.transaction_date, ''%Y-%m'')'
 					);
 					
