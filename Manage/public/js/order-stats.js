@@ -704,7 +704,7 @@ function best_seller_items() {
 								'SUM(CASE WHEN i.item_name = ''',
 								item_name,
 								''' THEN i.quantity_times_price END) AS ',
-								REPLACE(item_name, ' ', '_')
+								REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 							)
 						) INTO @columns
 					FROM items_ordered_history;
@@ -868,7 +868,7 @@ function best_seller_items_daily() {
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
 							''' THEN i.quantity_times_price END) AS ',
-							REPLACE(item_name, ' ', '_')
+							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
 					FROM items_ordered_history;
@@ -981,7 +981,7 @@ function best_seller_items_monthly() {
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
 							''' THEN i.quantity_times_price END) AS ',
-							REPLACE(item_name, ' ', '_')
+							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
 					FROM items_ordered_history;
@@ -1095,7 +1095,7 @@ function best_seller_items_yearly() {
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
 							''' THEN i.quantity_times_price END) AS ',
-							REPLACE(item_name, ' ', '_')
+							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
 					FROM items_ordered_history;
@@ -1188,7 +1188,7 @@ function item_quantity_sold() {
 								'SUM(CASE WHEN item_name = ''',
 								item_name,
 								''' THEN quantity END) AS ',
-								REPLACE(item_name, ' ', '_')
+								REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 							)
 						) INTO @sql
 					FROM items_ordered_history;
@@ -1354,7 +1354,7 @@ function item_quantity_sold_daily() {
 						'SUM(CASE WHEN item_name = ''',
 						item_name,
 						''' THEN quantity END) AS ',
-						REPLACE(item_name, ' ', '_')
+						REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @sql
 					FROM items_ordered_history;
@@ -1477,7 +1477,7 @@ function item_quantity_sold_monthly() {
 						'SUM(CASE WHEN item_name = ''',
 						item_name,
 						''' THEN quantity END) AS ',
-						REPLACE(item_name, ' ', '_')
+						REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @sql
 					FROM items_ordered_history;
@@ -1600,7 +1600,7 @@ function item_quantity_sold_yearly() {
 						'SUM(CASE WHEN item_name = ''',
 						item_name,
 						''' THEN quantity END) AS ',
-						REPLACE(item_name, ' ', '_')
+						REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @sql
 					FROM items_ordered_history;
