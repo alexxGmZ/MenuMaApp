@@ -703,7 +703,7 @@ function best_seller_items() {
 							DISTINCT CONCAT(
 								'SUM(CASE WHEN i.item_name = ''',
 								item_name,
-								''' THEN i.quantity_times_price END) AS ',
+								''' THEN i.quantity_times_price ELSE 0 END) AS ',
 								REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 							)
 						) INTO @columns
@@ -867,7 +867,7 @@ function best_seller_items_daily() {
 						DISTINCT CONCAT(
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
-							''' THEN i.quantity_times_price END) AS ',
+							''' THEN i.quantity_times_price ELSE 0 END) AS ',
 							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
@@ -980,7 +980,7 @@ function best_seller_items_monthly() {
 						DISTINCT CONCAT(
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
-							''' THEN i.quantity_times_price END) AS ',
+							''' THEN i.quantity_times_price ELSE 0 END) AS ',
 							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
@@ -1094,7 +1094,7 @@ function best_seller_items_yearly() {
 						DISTINCT CONCAT(
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
-							''' THEN i.quantity_times_price END) AS ',
+							''' THEN i.quantity_times_price ELSE 0 END) AS ',
 							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
