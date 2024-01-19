@@ -74,3 +74,7 @@ This is the documentation directory, put here all documentation related stuff
 * [ISO 25010 Software Evaluation for Order Application(Compatibility and Maintainability)](https://forms.gle/zroq7UWqkfABu2SW7)
 * [ISO 25010 Software Evaluation for Manage Application(Compatibility and Maintainability)](https://forms.gle/ea313xwSU7aiYMzc6)
 
+<br><br>
+
+## Powerpoint Presentation (For Collaborators)
+* [Google Slide Presentation](https://docs.google.com/presentation/d/1y9XMgcrKieeTezrz8ezNHjG-B-blkjDQaCSletOuwoQ)
