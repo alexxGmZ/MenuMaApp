@@ -86,8 +86,8 @@ function display_order_history() {
 							<td class="px-2">${order_history.order_id}</td>
 							<td class="px-2">Order #${order_history.queue_number}</td>
 							<td class="">${order_history.customer_name}</td>
-							<td class="whitespace-pre py-3">${removed_comma}</td>
-							<td class="">₱${order_history.total_price}</td>
+							<td class="whitespace-pre py-3 overflow-auto">${removed_comma}</td>
+							<td class="text-center">₱${order_history.total_price}</td>
 							<td class="">${formattedDate}</td>
 							<td class="">${order_history.kiosk_ip_address}</td>
 							<td class="text-center"><p class="rounded-full font-bold py-2 mx-4 ${statusClass}">${order_history.order_status}</p></td>

@@ -735,14 +735,6 @@ video {
   margin-top: 1rem;
 }
 
-.mb-48 {
-  margin-bottom: 12rem;
-}
-
-.mt-48 {
-  margin-top: 12rem;
-}
-
 .block {
   display: block;
 }
@@ -961,6 +953,10 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.overflow-auto {
+  overflow: auto;
 }
 
 .overflow-hidden {
@@ -1282,14 +1278,6 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
-}
-
-.pb-48 {
-  padding-bottom: 12rem;
-}
-
-.pt-48 {
-  padding-top: 12rem;
 }
 
 .text-left {
