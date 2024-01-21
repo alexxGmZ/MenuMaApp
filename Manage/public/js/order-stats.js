@@ -737,23 +737,23 @@ function best_seller_items() {
 							console.error(err.message);
 						} else {
 							const order_stats_result = second_result[0];
-							console.log(order_stats_result)
+							// console.log(order_stats_result)
 							
 							// const json_data = JSON.stringify(order_stats_result, null, 2).replace(/"([^"]+)":/g, '$1:');
 							const json_data = JSON.stringify(order_stats_result);
-							console.log(json_data);
+							// console.log(json_data);
 						
-							console.log('Raw order_stats_result:', order_stats_result);
+							// console.log('Raw order_stats_result:', order_stats_result);
 							const parsed_data = JSON.parse(json_data);
 						
-							console.log('Parsed data:', parsed_data);
+							// console.log('Parsed data:', parsed_data);
 						
 							// Check if the data array is not empty and contains valid objects
 							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 								// Extract column names dynamically
 								var columns = Object.keys(parsed_data[0]);
 						
-								console.log('Columns:', columns);
+								// console.log('Columns:', columns);
 						
 								// Remove the 'transaction_date' from the list of columns if it is the X-axis
 								var xColumnIndex = columns.indexOf('transaction_date');
@@ -895,19 +895,19 @@ function best_seller_items_daily() {
 						// console.log(best_seller_result)
 
 						const json_data = JSON.stringify(best_seller_result);
-						console.log(json_data);
+						// console.log(json_data);
 
-						console.log('Raw order_stats_result:', best_seller_result);
+						// console.log('Raw order_stats_result:', best_seller_result);
 						const parsed_data = JSON.parse(json_data);
 
-						console.log('Parsed data:', parsed_data);
+						// console.log('Parsed data:', parsed_data);
 
 						// Check if the data array is not empty and contains valid objects
 						if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 							// Extract column names dynamically
 							var columns = Object.keys(parsed_data[0]);
 
-							console.log("Columns :", columns)
+							// console.log("Columns :", columns)
 
 							// Remove the 'transaction_date' from the list of columns if it is the X-axis
 							var xColumnIndex = columns.indexOf('transaction_date');
@@ -1010,18 +1010,18 @@ function best_seller_items_monthly() {
 						// console.log(best_seller_result)
 
 						const json_data = JSON.stringify(best_seller_result);
-						console.log(json_data);
+						// console.log(json_data);
 
-						console.log('Raw order_stats_result:', best_seller_result);
+						// console.log('Raw order_stats_result:', best_seller_result);
 						const parsed_data = JSON.parse(json_data);
 
-						console.log('Parsed data:', parsed_data);
+						// console.log('Parsed data:', parsed_data);
 
 						if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 							// Extract column names dynamically
 							var columns = Object.keys(parsed_data[0]);
 
-							console.log("Columns :", columns)
+							// console.log("Columns :", columns)
 
 							// Remove the 'transaction_date' from the list of columns if it is the X-axis
 							var xColumnIndex = columns.indexOf('transaction_month');
@@ -1126,18 +1126,18 @@ function best_seller_items_yearly() {
 						// console.log(best_seller_result)
 
 						const json_data = JSON.stringify(best_seller_result);
-						console.log(json_data);
+						// console.log(json_data);
 
-						console.log('Raw order_stats_result:', best_seller_result);
+						// console.log('Raw order_stats_result:', best_seller_result);
 						const parsed_data = JSON.parse(json_data);
 
-						console.log('Parsed data:', parsed_data);
+						// console.log('Parsed data:', parsed_data);
 
 						if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 							// Extract column names dynamically
 							var columns = Object.keys(parsed_data[0]);
 
-							console.log("Columns :", columns)
+							// console.log("Columns :", columns)
 
 							// Remove the 'transaction_date' from the list of columns if it is the X-axis
 							var xColumnIndex = columns.indexOf('transaction_year');
@@ -1225,22 +1225,22 @@ function item_quantity_sold() {
 							console.log(err);
 						} else {
 							const item_quantity_sold_result = second_result[0];
-							console.log("Raw sql query result: ", item_quantity_sold_result);
+							// console.log("Raw sql query result: ", item_quantity_sold_result);
 
 							// to convert it into json
 							const json_data = JSON.stringify(item_quantity_sold_result);
-							console.log("The converted JSON: ", json_data);
+							// console.log("The converted JSON: ", json_data);
 
 							// to parse the JSON data
 							const parsed_data = JSON.parse(json_data);
-							console.log("Parse JSON data: ", parsed_data);
+							// console.log("Parse JSON data: ", parsed_data);
 
 							// Check if data array is not empty and contains valid objects
 							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 								
 								// to extract column name dynamically
 								var columns = Object.keys(parsed_data[0]);
-								console.log("Columns: ", columns);
+								// console.log("Columns: ", columns);
 
 								// remove the transaction_date from the list of columns if it's the X-axis
 								var xColumnIndex = columns.indexOf('transaction_date');
@@ -1384,21 +1384,21 @@ function item_quantity_sold_daily() {
 							console.error(err.message);
 						} else {
 							const item_quantity_sold_result = second_result[0];
-							console.log("Raw sql query result: ", item_quantity_sold_result);
+							// console.log("Raw sql query result: ", item_quantity_sold_result);
 
 							// to convert it into json
 							const json_data = JSON.stringify(item_quantity_sold_result);
-							console.log("The converted JSON: ", json_data);
+							// console.log("The converted JSON: ", json_data);
 
 							// to parse the JSON data
 							const parsed_data = JSON.parse(json_data);
-							console.log("Parse JSON data: ", parsed_data);
+							// console.log("Parse JSON data: ", parsed_data);
 
 							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 								// Extract column names dynamically
 								var columns = Object.keys(parsed_data[0]);
 
-								console.log("Columns :", columns)
+								// console.log("Columns :", columns)
 
 								// Remove the 'transaction_date' from the list of columns if it is the X-axis
 								var xColumnIndex = columns.indexOf('transaction_date');
@@ -1508,21 +1508,21 @@ function item_quantity_sold_monthly() {
 							console.err(err.message)
 						} else {
 							const item_quantity_sold_result = second_result[0];
-							console.log("Raw sql query result: ", item_quantity_sold_result);
+							// console.log("Raw sql query result: ", item_quantity_sold_result);
 
 							// to convert it into json
 							const json_data = JSON.stringify(item_quantity_sold_result);
-							console.log("The converted JSON: ", json_data);
+							// console.log("The converted JSON: ", json_data);
 
 							// to parse the JSON data
 							const parsed_data = JSON.parse(json_data);
-							console.log("Parse JSON data: ", parsed_data);
+							// console.log("Parse JSON data: ", parsed_data);
 
 							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 								// Extract column names dynamically
 								var columns = Object.keys(parsed_data[0]);
 
-								console.log("Columns :", columns)
+								// console.log("Columns :", columns)
 
 								// Remove the 'transaction_date' from the list of columns if it is the X-axis
 								var xColumnIndex = columns.indexOf('transaction_month');
@@ -1632,21 +1632,21 @@ function item_quantity_sold_yearly() {
 							console.error(err.message)
 						} else {
 							const item_quantity_sold_result = second_result[0];
-							console.log("Raw sql query result: ", item_quantity_sold_result);
+							// console.log("Raw sql query result: ", item_quantity_sold_result);
 
 							// to convert it into json
 							const json_data = JSON.stringify(item_quantity_sold_result);
-							console.log("The converted JSON: ", json_data);
+							// console.log("The converted JSON: ", json_data);
 
 							// to parse the JSON data
 							const parsed_data = JSON.parse(json_data);
-							console.log("Parse JSON data: ", parsed_data);
+							// console.log("Parse JSON data: ", parsed_data);
 
 							if (Array.isArray(parsed_data) && parsed_data.length > 0 && typeof parsed_data[0] === 'object') {
 								// Extract column names dynamically
 								var columns = Object.keys(parsed_data[0]);
 
-								console.log("Columns :", columns)
+								// console.log("Columns :", columns)
 
 								// Remove the 'transaction_date' from the list of columns if it is the X-axis
 								var xColumnIndex = columns.indexOf('transaction_year');
