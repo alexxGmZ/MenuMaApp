@@ -698,28 +698,31 @@ function best_seller_items() {
 			const createProcedureQuery = `
 				CREATE PROCEDURE dynamic_query_procedure()
 				BEGIN
-					SELECT
-						GROUP_CONCAT(
-							DISTINCT CONCAT(
-								'SUM(CASE WHEN i.item_name = ''',
-								item_name,
-								''' THEN i.quantity_times_price ELSE 0 END) AS ',
-								REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
-							)
-						) INTO @columns
-					FROM items_ordered_history;
+				SET SESSION group_concat_max_len = 1000000;
 
-					SET @query = CONCAT(
-						'SELECT DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') as transaction_date, ', @columns,
-						' FROM order_queue_history o ',
-						' JOIN items_ordered_history i ON o.order_id = i.order_id ',
-						' WHERE o.order_status = ''Served'' ',
-						' GROUP BY DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'')'
-					);
-
-					PREPARE final_query FROM @query;
-					EXECUTE final_query;
-					DEALLOCATE PREPARE final_query;
+				SELECT
+					GROUP_CONCAT(
+						DISTINCT CONCAT(
+							'SUM(CASE WHEN i.item_name = ''',
+							item_name,
+							''' THEN i.quantity_times_price END) AS ',
+							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
+						)
+					) INTO @columns
+				FROM (SELECT DISTINCT item_name FROM items_ordered_history) AS item_names;
+				
+				SET @query = CONCAT(
+					'SELECT DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'') as transaction_date, ', @columns,
+					' FROM order_queue_history o ',
+					' JOIN items_ordered_history i ON o.order_id = i.order_id ',
+					' WHERE o.order_status = ''Served'' ',
+					' GROUP BY DATE_FORMAT(o.transaction_date, ''%Y-%m-%d'')'
+				);
+				
+				PREPARE final_query FROM @query;
+				EXECUTE final_query;
+				DEALLOCATE PREPARE final_query;
+				
 				END;
 			`;
 
@@ -764,16 +767,7 @@ function best_seller_items() {
 										text: 'ITEMS BEST SELLER'
 									},
 									padding: {
-										top: 40
-									},
-									legend: {
-										position: 'inset',
-										inset: {
-											anchor: 'top-right',
-											x: 15,
-											y: -40,
-											step: 2,
-										}
+										top: 10
 									},
 									zoom: {
 										enabled: true
@@ -782,7 +776,7 @@ function best_seller_items() {
 										show: true
 									},
 									size: {
-										height: 550
+										height: 750
 									},
 									data: {
 										json: parsed_data,
@@ -862,12 +856,14 @@ function best_seller_items_daily() {
 			const createProcedureQuery = `
 				CREATE PROCEDURE dynamic_query_procedure()
 				BEGIN
+				SET SESSION group_concat_max_len = 1000000;
+
 					SELECT
 					GROUP_CONCAT(
 						DISTINCT CONCAT(
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
-							''' THEN i.quantity_times_price ELSE 0 END) AS ',
+							''' THEN i.quantity_times_price END) AS ',
 							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
@@ -975,12 +971,14 @@ function best_seller_items_monthly() {
 			const createProcedureQuery = `
 				CREATE PROCEDURE dynamic_query_procedure()
 				BEGIN
+				SET SESSION group_concat_max_len = 1000000;
+
 					SELECT
 					GROUP_CONCAT(
 						DISTINCT CONCAT(
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
-							''' THEN i.quantity_times_price ELSE 0 END) AS ',
+							''' THEN i.quantity_times_price END) AS ',
 							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
@@ -1089,12 +1087,14 @@ function best_seller_items_yearly() {
 			const createProcedureQuery = `
 				CREATE PROCEDURE dynamic_query_procedure()
 				BEGIN
+				SET SESSION group_concat_max_len = 1000000;
+
 					SELECT
 					GROUP_CONCAT(
 						DISTINCT CONCAT(
 							'SUM(CASE WHEN i.item_name = ''',
 							item_name,
-							''' THEN i.quantity_times_price ELSE 0 END) AS ',
+							''' THEN i.quantity_times_price END) AS ',
 							REPLACE(REGEXP_REPLACE(item_name, '[^A-Za-z0-9]+', '_'), '_', '_')
 						)
 					) INTO @columns
@@ -1181,6 +1181,7 @@ function item_quantity_sold() {
 				CREATE PROCEDURE item_quantity_sold_procedure()
 				BEGIN
 					SET @sql = NULL;
+					SET SESSION group_concat_max_len = 1000000;
 				
 					SELECT
 						GROUP_CONCAT(DISTINCT
@@ -1255,15 +1256,6 @@ function item_quantity_sold() {
 									padding: {
 										top: 40
 									},
-									legend: {
-										position: 'inset',
-										inset: {
-											anchor: 'top-right',
-											x: 15,
-											y: -40,
-											step: 2,
-										}
-									},
 									zoom: {
 										enabled: true
 									},
@@ -1271,7 +1263,7 @@ function item_quantity_sold() {
 										show: true
 									},
 									size: {
-										height: 500
+										height: 700
 									},
 									data: {
 										json: parsed_data,
@@ -1347,6 +1339,7 @@ function item_quantity_sold_daily() {
 				CREATE PROCEDURE item_quantity_sold_procedure()
 				BEGIN
 					SET @sql = NULL;
+					SET SESSION group_concat_max_len = 1000000;
 
 					SELECT
 					GROUP_CONCAT(DISTINCT
@@ -1470,6 +1463,7 @@ function item_quantity_sold_monthly() {
 				CREATE PROCEDURE item_quantity_sold_procedure()
 				BEGIN
 					SET @sql = NULL;
+					SET SESSION group_concat_max_len = 1000000;
 
 					SELECT
 					GROUP_CONCAT(DISTINCT
@@ -1593,6 +1587,7 @@ function item_quantity_sold_yearly() {
 				CREATE PROCEDURE item_quantity_sold_procedure()
 				BEGIN
 					SET @sql = NULL;
+					SET SESSION group_concat_max_len = 1000000;
 
 					SELECT
 					GROUP_CONCAT(DISTINCT
