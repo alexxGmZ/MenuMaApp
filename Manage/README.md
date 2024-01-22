@@ -113,9 +113,6 @@ Install MySql version 8.
 Use the [database_setup.sql](./database_setup.sql) file which contains the SQL script for
 initializing the MySql database.
 
-You can use the [dummy data](./dummy_data.sql) to as an initial data to fill up the
-database.
-
 <br>
 
 ## Custom Modules
