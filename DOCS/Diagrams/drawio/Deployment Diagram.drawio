@@ -1,9 +1,12 @@
 <mxfile host="65bd71144e">
     <diagram id="Vfg_s8rGCRNalU27XtB3" name="Page-1">
-        <mxGraphModel dx="920" dy="521" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1000" math="0" shadow="0">
+        <mxGraphModel dx="1105" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="150" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=220;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="115" target="148">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="115" value="" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.externalEntity;flipH=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="440" width="450" height="450" as="geometry"/>
                 </mxCell>
@@ -15,6 +18,9 @@
                 </mxCell>
                 <mxCell id="120" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;RAM :8GB&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ROM: 256GB&lt;/span&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="110" y="830" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="152" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=120;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="128" target="148">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="128" value="" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.externalEntity;fontSize=14;flipH=1;" parent="1" vertex="1">
                     <mxGeometry x="730" y="460" width="250" height="380" as="geometry"/>
@@ -55,11 +61,8 @@
                 <mxCell id="145" value="Input Order/s" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.externalEntity;fontSize=14;flipH=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="760" y="680" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="146" value="" style="endArrow=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=220;exitPerimeter=0;" parent="1" source="115" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="630" y="660" as="sourcePoint"/>
-                        <mxPoint x="730" y="660" as="targetPoint"/>
-                    </mxGeometry>
+                <mxCell id="148" value="" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=default;strokeColor=default;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.wireless_modem;fillStyle=solid;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="110" width="170" height="150" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
