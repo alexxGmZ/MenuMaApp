@@ -92,3 +92,38 @@ the Android Studio's slow android virtual machines.
 on how to setup android development evironment. If using an android hardware, turn on the
 developer settings. How? Go search in Google.
 
+<br><br>
+
+## Directory and File Structure
+
+The structure is bound to change depending on the state of the development.
+
+```
+Order/
+   android/
+   dist/
+   src/
+      assets/
+      css/
+      js/
+   capacitor.config.json
+   vite.config.js
+```
+
+```Order/```. The root directory for the Order application, contains all the crucial files
+and codes.
+
+```Order/android/```. Contains configurations used by the Android SDK to create an APK for
+the application.
+
+```Order/dist/```. The build files, best not to tinker this directory.
+
+```Order/src/```. Contains the Order applications development code. This is the directory
+that should be played with.
+
+```Order/src/assets/```. Constains the Order application's assets (images and icons).
+
+```Order/src/css/```. Contains all the Order application's css files or stylesheets.
+
+```Order/src/js```. Contains all the javascript files or modules crucial for the Order
+application.
