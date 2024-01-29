@@ -21,6 +21,7 @@
 	<script src="./js/c3js/c3.min.js"></script>
 	<script src="./js/order-stats.js"></script>
 	<script src="./js/modules/disable_next_previous_key.js"></script>
+	<script src="./js/c3js/html2canvas.min.js"></script>
 </head>
 
 <body class="px-3 py-3">
@@ -190,10 +191,16 @@
 
 	<!--CHART DIALOG FOR TOTAL ORDER-->
 	<dialog id="total_order_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
-		<button onclick="dialog_close('total_order_dialog')"
-			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
-			Close
-		</button>
+		<div class="grid grid-cols-1 float-right">
+			<button onclick="dialog_close('total_order_dialog')"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white">
+				Close
+			</button>
+			<button onclick="generate_png_total_order()"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+				Generate PNG
+			</button>
+		</div>
 		<div class="mx-auto text-center w-full max-w-xl">
 			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
 				<!--Date Picker-->
@@ -225,10 +232,16 @@
 
 	<!--CHART FOR TOTAL EARNINGS-->
 	<dialog id="total_earnings_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
-		<button onclick="dialog_close('total_earnings_dialog')"
+		<div class="grid grid-cols-1 float-right">
+			<button onclick="dialog_close('total_earnings_dialog')"
 			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
-			Close
-		</button>
+				Close
+			</button>
+			<button onclick="generate_png_total_earnings()"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white float-right">
+				Generate PNG
+			</button>
+		</div>
 		<div class="mx-auto w-full max-w-xl">
 			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
 				<!--Date Picker-->
@@ -260,10 +273,16 @@
 
 	<!--CHART FOR BEST SELLER-->
 	<dialog id="best_seller_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
-		<button onclick="dialog_close('best_seller_dialog')"
-			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
-			Close
-		</button>
+		<div class="grid grid-cols-1 float-right">
+			<button onclick="dialog_close('best_seller_dialog')"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white">
+				Close
+			</button>
+			<button onclick="generate_png_best_seller()"
+				class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white">
+				Generate PNG
+			</button>
+		</div>
 		<div class="mx-auto w-full max-w-xl">
 			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
 				<!--Date Picker-->
@@ -295,10 +314,16 @@
 
 	<!--CHART FOR ITEM QUANTITY SOLD-->
 	<dialog id="quantity_sold_dialog" class="border-solid border-2 border-slate-300 rounded-lg mx-auto w-full">
-		<button onclick="dialog_close('quantity_sold_dialog')"
+		<div class="grid grid-cols-1 float-right">
+			<button onclick="dialog_close('quantity_sold_dialog')"
 			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-red-500 hover:text-white float-right">
-			Close
-		</button>
+				Close
+			</button>
+			<button onclick="generate_png_total_items_sold()"
+			class="m-2 p-2 px-5 bg-gray-300 rounded-md hover:bg-green-500 hover:text-white float-right">
+				Generate PNG
+			</button>
+		</div>
 		<div class="mx-auto w-full max-w-xl">
 			<div class="bg-white drop-shadow-md rounded-lg border border-slate-300 my-2">
 				<!--Date Picker-->

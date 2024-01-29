@@ -431,6 +431,24 @@ function total_order_yearly_selected_date() {
 
 }
 
+// To Generate PNG of the chart for total orders
+function generate_png_total_order() {
+	console.log("called generate_png()")
+
+	// Use html2canvas to capture the chart as a canvas
+    html2canvas(document.getElementById('chart2')).then(function(canvas) {
+		// Convert canvas to data URL (PNG format)
+		var imgData = canvas.toDataURL('image/png');
+		
+		// Create a temporary link and trigger a download
+		var a = document.createElement('a');
+		a.href = imgData;
+		a.download = 'total_orders_chart.png';
+		a.click();
+	});
+
+}
+
 // total earning chart everyday
 function total_earnings_chart() {
 	console.log("called total_earnings_chart()")
@@ -681,6 +699,24 @@ function total_earning_yearly_selected_date() {
 		})
 		
 	})
+
+}
+
+// To Generate PNG of the chart for total earnings
+function generate_png_total_earnings() {
+	console.log("called generate_png()")
+
+	// Use html2canvas to capture the chart as a canvas
+    html2canvas(document.getElementById('chart3')).then(function(canvas) {
+		// Convert canvas to data URL (PNG format)
+		var imgData = canvas.toDataURL('image/png');
+		
+		// Create a temporary link and trigger a download
+		var a = document.createElement('a');
+		a.href = imgData;
+		a.download = 'total_earnings_chart.png';
+		a.click();
+	});
 
 }
 
@@ -1164,6 +1200,24 @@ function best_seller_items_yearly() {
 
 		}
 	})
+
+}
+
+// To Generate PNG of the chart for best seller
+function generate_png_best_seller() {
+	console.log("called generate_png()")
+
+	// Use html2canvas to capture the chart as a canvas
+    html2canvas(document.getElementById('chart4')).then(function(canvas) {
+		// Convert canvas to data URL (PNG format)
+		var imgData = canvas.toDataURL('image/png');
+		
+		// Create a temporary link and trigger a download
+		var a = document.createElement('a');
+		a.href = imgData;
+		a.download = 'best_seller_chart.png';
+		a.click();
+	});
 
 }
 
@@ -1674,6 +1728,24 @@ function item_quantity_sold_yearly() {
 
 		}
 	})
+
+}
+
+// To Generate PNG of the chart for total items sold
+function generate_png_total_items_sold() {
+	console.log("called generate_png()")
+
+	// Use html2canvas to capture the chart as a canvas
+    html2canvas(document.getElementById('chart5')).then(function(canvas) {
+		// Convert canvas to data URL (PNG format)
+		var imgData = canvas.toDataURL('image/png');
+		
+		// Create a temporary link and trigger a download
+		var a = document.createElement('a');
+		a.href = imgData;
+		a.download = 'total_items_sold.png';
+		a.click();
+	});
 
 }
 
