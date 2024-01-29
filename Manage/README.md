@@ -36,6 +36,10 @@ The structure is bound to change depending on the state of the development.
 
 ```
 Manage/
+   api/
+      get/
+      post/
+      utils/
    public/
       js/
          modules/
@@ -50,6 +54,14 @@ Manage/
 
 ```Manage/``` is the root folder, all code inside this folder is for the "Manage" application
 only. This directory is intended for framework configurations.
+
+```Manage/api/```. The directory for the Manage application's API.
+
+```Manage/api/get/```. The directory for the GET endpoint's code.
+
+```Manage/api/post/```. The directory for the POST endpoint's code.
+
+```Manage/api/utils/```. The directory for the API utilities that can be reused.
 
 ```Manage/public/``` directory is for all of the html files.
 
