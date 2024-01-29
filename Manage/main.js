@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const menumaapp_server = require("./server.js");
+const menumaapp_server = require("./api/server.js");
 
 const createWindow = () => {
 	const win = new BrowserWindow({
@@ -16,5 +16,5 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-	createWindow()
+	// createWindow()
 })
