@@ -50,9 +50,11 @@ update_local_storage_date();
 
 // GET endpoint controllers
 const menu_design_controller = require("./get/menu_design.js").get_menu_design;
-const menu_items_controller = require("./get/menu_items.js").menu_items
-const menu_items_lite_controller = require("./get/menu_items_lite.js").menu_items_lite
+const menu_items_controller = require("./get/menu_items.js").menu_items;
+const menu_items_lite_controller = require("./get/menu_items_lite.js").menu_items_lite;
 const orders_controller = require("./get/orders.js").get_orders;
+const order_history_controller = require("./get/order_history.js").get_order_history;
+const order_stats_controller = require("./get/order_stats.js").get_order_status;
 const server_status_controller = require("./get/status.js").server_status;
 const registered_employees_controller = require("./get/registered_employees.js").registered_employees;
 
@@ -60,6 +62,8 @@ app.get("/menu_design", auth_api_token, menu_design_controller);
 app.get("/menu_items", auth_api_token, menu_items_controller);
 app.get("/menu_items_lite", auth_api_token, menu_items_lite_controller);
 app.get("/orders", orders_controller);
+app.get("/order_history", auth_api_token, order_history_controller);
+app.get("/order_stats", auth_api_token, order_stats_controller);
 app.get("/registered_employees", auth_api_token, registered_employees_controller);
 app.get("/status", auth_api_token, server_status_controller);
 
