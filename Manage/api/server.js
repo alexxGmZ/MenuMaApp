@@ -19,10 +19,10 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+// utilities
 const endpoint_log = require("./utils/endpoint_log.js").endpoint_log;
 const extract_ipv4 = require("./utils/extract_ipv4.js").extract_ipv4;
 const auth_api_token = require("./utils/auth_api_token.js").auth_api_token;
-// format get request message
 
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./localStorage');

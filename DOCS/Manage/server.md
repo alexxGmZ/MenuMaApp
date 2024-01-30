@@ -16,8 +16,10 @@ The server also handles the queue number of each order received.
 * [/menu_items](#menuitems)
 * [/menu_items_lite](#menuitemslite)
 * [/orders](#orders)
+* [/order_history](#orderhistory)
+* [/order_stats](#orderstats)
 * [/registered_employees](#registeredemployees)
-* [/status]()
+* [/status](#status)
 
 **POST**
 * [/upload_item](#uploaditem)
@@ -26,7 +28,21 @@ The server also handles the queue number of each order received.
 
 <br>
 
-## menu_design
+# GET
+
+<br>
+
+**NOTE:** GET endpoints that requires a token can be accessed like this.
+```bash
+<serverIP>:8080/<endpoint>?api_token=<token>
+
+# example using curl
+curl "192.168.1.1:8080/menu_design?api_token=1688dfea"
+```
+
+<br>
+
+## /menu_design
 The **menu_design** endpoint sends the contents of the temporary file [**current_design.json**](../../Manage/current_design.json)
 which contains the canvas objects such as shapes, texts, or images and the canvas resolution
 that was designed and synced by the Designer Page of the Manage application.
@@ -48,7 +64,7 @@ which will be registered inside the Manage application.
 
 <br>
 
-## menu_items
+## /menu_items
 The **menu_items** endpoints sends the data inside the menu_items table of the sql database.
 ```json
 [
@@ -80,7 +96,7 @@ which will be registered inside the Manage application.
 
 <br>
 
-## menu_items_lite
+## /menu_items_lite
 The **menu_items_lite** endpoint sends only a few selected columns of the menu_items
 database table.
 ```json
@@ -102,13 +118,31 @@ which will be registered inside the Manage application.
 
 <br>
 
-## orders
+## /orders
 The **orders** endpoint sends a joined data of the **order_queue** and **items_ordered**
 of the sql database table.
 
 <br>
 
-## registered_employees
+## /order_history
+The **order_history** endpoint sends a joined data of the **order_queue_history** and
+**items_ordered_history** of the sql database table.
+
+> NOTE: Any device that request a connection for this endpoint requires a device token
+which will be registered inside the Manage application.
+
+<br>
+
+## /order_stats
+The **order_stats** endpoint sends the data of the **order_stats** table of the sql
+database.
+
+> NOTE: Any device that request a connection for this endpoint requires a device token
+which will be registered inside the Manage application.
+
+<br>
+
+## /registered_employees
 The **registered_employees** endpoint sends the data of the **registered_employees** table
 of the sql database.
 ```json
@@ -133,22 +167,38 @@ which will be registered inside the Manage application.
 
 <br>
 
-## upload_item
+## /status
+
+This endpoint can be used to check the connection for the Manage Application.
+
+> NOTE: Any device that request a connection for this endpoint requires a device token
+which will be registered inside the Manage application.
+
+<br>
+
+# POST
+
+<br>
+
+## /upload_item
 The **upload_item** endpoint inserts an item information to the menu_items table of the
 database. This endpoint is used in the Inventory page of the Manage application. It
 utilizes Multer to insert an image binary in the menu_items table as a blob object.
 
 <br>
 
-## update_item
+## /update_item
 The **update_item** endpoint handles the insertion of the updated item information of a
 menu item. It also utilizes Multer same as the upload_item endpoint for image binary
 insertion as a blob object.
 
 <br>
 
-## send_order
+## /send_order
 The **send_order** endpoint handles the insertion of the data received from the Order
 application to the **order_queue** and **items_ordered** table of the sql database. A
 successful order data received from the Order application returns a response which contains
 the queue number for the next order that will be taken.
+
+> NOTE: Any device that request a connection for this endpoint requires a device token
+which will be registered inside the Manage application.
