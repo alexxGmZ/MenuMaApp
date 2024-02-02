@@ -18,70 +18,38 @@
 	<link href="./styles/styles.css" rel="stylesheet">
 	<link href="./styles/order-queue.css" rel="stylesheet">
 	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
-	<script src="./js/order-queue.js"></script>
-	<script src="./js/modules/disable_next_previous_key.js"></script>
 </head>
 
-<body class="px-3 py-3">
-
-	<nav class="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
-		<div class="max-w-screen-xl mx-auto p-4">
-			<div class="hidden md:flex md:w-auto md:order-1">
-				<div class="dropdown inline-block">
-					<button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center ml-3">
-						<span class="mr-1">Menu</span>
-						<svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
-							<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-						</svg>
-					</button>
-					<ul class="dropdown-menu absolute hidden text-gray-700 pt-1 ml-3">
-						<li class="">
-							<a href="#" onclick="login_dialog_open('inventory.html')"
-								class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">
-								Inventory
-							</a>
-						</li>
-						<li class="">
-							<a href="#" onclick="login_dialog_open('registration.html')"
-								class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950">Manage
-								Employee
-							</a>
-						</li>
-						<li class="">
-							<a href="#" onclick="login_dialog_open('kiosk-devices.html')"
-								class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950"
-								href="#">
-								Kiosk Devices
-							</a>
-						</li>
-						<li class="">
-							<a href="#" onclick="login_dialog_open('order-history.html')"
-								class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950"
-								href="#">
-								Order History
-							</a>
-						</li>
-						<li class="">
-							<a href="#" onclick="login_dialog_open('designer.html')"
-								class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap hover:text-zinc-950"
-								href="#">
-								Designer
-							</a>
-						</li>
-					</ul>
-				</div>
-				<ul
-					class="p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
-					<li>
-						<a href="" onclick="display_orders()"
-							class="rounded-md bg-gray-300 py-2 mx-2 px-2 inline-flex hover:bg-sky-500 hover:text-zinc-50 hover:drop-shadow-lg">
-							Refresh
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+<body class="">
+	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
+		<p>User</p>
 	</nav>
+
+	<aside
+		class="fixed top-0 left-0 z-40 w-18 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0">
+		<div class="px-2">
+			<ul>
+				<li>
+					<a href="inventory.html">Menu Items</a>
+				</li>
+				<li>
+					<a href="registration.html">Manage Users</a>
+				</li>
+				<li>
+					<a href="kiosk-devices.html">Kiosk Devices</a>
+				</li>
+				<li>
+					<a href="order-history.html">Order History</a>
+				</li>
+				<li>
+					<a href="order-stats.html">Order Stats</a>
+				</li>
+				<li>
+					<a href="designer.html">Designer</a>
+				</li>
+			</ul>
+		</div>
+	</aside>
 
 	<br>
 	<br>
@@ -92,7 +60,7 @@
 	</center>
 
 	<!--SHOW FOOD QUEUE ORDERS-->
-	<div class="pt-4">
+	<div class="ml-16 border-l">
 		<table id="order_table" class="justify-center mx-auto table-fixed md:table-fixed" onclick="row_click()">
 			<tbody id="order-list" class="grid grid-cols-3 gap-4 place-content-center">
 
@@ -230,9 +198,9 @@
 		</button>
 	</dialog>
 
-	<!--
-	<a href="./practice.html">Practice</a>
-	-->
+	<script src="./js/order-queue.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+	<script src="./js/login.js"></script>
 </body>
 
 </html>
