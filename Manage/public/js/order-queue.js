@@ -373,7 +373,7 @@ function order_cancel() {
 	})
 }
 
-function login_dialog_open(redirect_site) {
+/* function login_dialog_open(redirect_site) {
 	console.log(`called login_dialog_open(${redirect_site})`)
 
 	const fav_dialog = document.getElementById("login_dialog");
@@ -447,7 +447,7 @@ function login() {
 			}
 		}
 	});
-}
+} */
 
 function daily_order_stats() {
 	console.log("called daily_order_stats()");

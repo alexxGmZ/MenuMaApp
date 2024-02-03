@@ -21,31 +21,36 @@
 </head>
 
 <body class="">
+	<!-- navbar -->
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
-		<p>User</p>
+		<button id="navbar_login" onclick="login_dialog_open()">Login</button>
+		<button id="navbar_logout">Logout</button>
 	</nav>
 
+	<!-- sidebar -->
 	<aside
 		class="fixed top-0 left-0 z-40 w-18 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0">
 		<div class="px-2">
 			<ul>
 				<li>
-					<a href="inventory.html">Menu Items</a>
+					<!-- <a href="inventory.html">Menu Items</a> -->
+					<button onclick="login_dialog_open('inventory.html')">Menu Items</button>
 				</li>
 				<li>
-					<a href="registration.html">Manage Users</a>
+					<!-- <a href="registration.html">Manage Users</a> -->
+					<button onclick="login_dialog_open('registration.html')">Manage Users</button>
 				</li>
 				<li>
-					<a href="kiosk-devices.html">Kiosk Devices</a>
+					<!-- <a href="kiosk-devices.html">Kiosk Devices</a> -->
+					<button onclick="login_dialog_open('kiosk-devices.html')">Kiosk Devices</button>
 				</li>
 				<li>
-					<a href="order-history.html">Order History</a>
+					<!-- <a href="order-stats.html">Order Stats</a> -->
+					<button onclick="login_dialog_open('order-history.html')">Order Stats</button>
 				</li>
 				<li>
-					<a href="order-stats.html">Order Stats</a>
-				</li>
-				<li>
-					<a href="designer.html">Designer</a>
+					<!-- <a href="designer.html">Designer</a> -->
+					<button onclick="login_dialog_open('designer.html')">Designer</button>
 				</li>
 			</ul>
 		</div>
@@ -156,7 +161,7 @@
 
 		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
 			<center>
-				<button onclick="login()"
+				<button onclick="login_user()"
 					class="rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
 					LOGIN
 				</button>
