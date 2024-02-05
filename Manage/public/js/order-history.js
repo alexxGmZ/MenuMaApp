@@ -39,7 +39,7 @@ function display_order_history() {
 					order_history: orders_history_result
 				};
 
-				console.log(combined);
+				// console.log(combined);
 
 				//Organized Data
 				const nestedData = orders_history_result.map(order => {
@@ -51,7 +51,7 @@ function display_order_history() {
 					};
 				});
 
-				console.log(nestedData);
+				// console.log(nestedData);
 
 				// For each loop
 				nestedData.forEach((order_history, index) => {
