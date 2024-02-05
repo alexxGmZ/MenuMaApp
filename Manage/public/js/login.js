@@ -18,33 +18,30 @@ if (sessionStorage.getItem("employee_name")) {
 	navbar_username.textContent = sessionStorage.getItem("employee_name");
 }
 
-
 function login_dialog_open(redirect_site) {
-	console.log(`called login_dialog_open(${redirect_site})`)
+	console.log(`called login_dialog_open(${redirect_site})`);
 
 	const employee_name = sessionStorage.getItem("employee_name");
+	const login_dialog = document.getElementById("login_dialog");
 
-	// check if an employee is logged in
 	if (!employee_name || employee_name === "") {
 		console.log("not logged in");
-		const fav_dialog = document.getElementById("login_dialog");
-		fav_dialog.classList.add("active-dialog");
-		fav_dialog.classList.remove("hidden");
+		login_dialog.classList.add("active-dialog");
+		login_dialog.classList.remove("hidden");
 
 		document.getElementById("login_redirect_site").textContent = redirect_site;
 
-		if (redirect_site === "inventory.html")
-			document.getElementById("login_dialog_header").innerHTML = "Manage Menu Items";
-		if (redirect_site === "registration.html")
-			document.getElementById("login_dialog_header").innerHTML = "Manage Users/Employee";
-		if (redirect_site === "kiosk-devices.html")
-			document.getElementById("login_dialog_header").innerHTML = "Manage Kiosk Devices";
-		if (redirect_site === "order-history.html")
-			document.getElementById("login_dialog_header").innerHTML = "Order History and Statistics";
-		if (redirect_site === "designer.html")
-			document.getElementById("login_dialog_header").innerHTML = "Menu/Kiosk Designer";
+		const login_dialog_header = document.getElementById("login_dialog_header");
+		const siteHeaders = {
+			"inventory.html": "Manage Menu Items",
+			"registration.html": "Manage Users/Employee",
+			"kiosk-devices.html": "Manage Kiosk Devices",
+			"order-history.html": "Order History and Statistics",
+			"designer.html": "Menu/Kiosk Designer"
+		};
 
-		fav_dialog.showModal();
+		login_dialog_header.innerHTML = siteHeaders[redirect_site] || "";
+		login_dialog.showModal();
 	}
 	else {
 		// console.log("logged in");
@@ -126,6 +123,9 @@ function process_site_access_rights(site) {
 		// console.log(`redirect to ${site}`);
 		location.replace(site);
 	}
+	// if the navbar login button is clicked then redirect to main.html
+	else if (site === "")
+		location.replace("main.html");
 	else {
 		dialog_open("lack_access_privilege_dialog");
 	}
