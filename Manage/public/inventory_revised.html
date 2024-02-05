@@ -1,0 +1,105 @@
+<!--
+	This is for Inventory Mode.
+	It enables food service establishments to add their menu items that will be used for
+		Designer Mode.
+
+	Intended functions:
+		* CRUD
+
+	Refer to the designed prototype "Laptop List" or "List".
+	NOTE: The design or layout may change depending on the status of the project.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>MenuMaApp Manage: Inventory Mode</title>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="./bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="./js/inventory_revised.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+    <link href="./styles/custom_scrollbar.css" rel="stylesheet">
+</head>
+
+<body class="px-2">
+    <!--Navigation Bar-->
+    <nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+                Libres Cafe
+            </a>
+            <div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-1">
+                        <a class="btn btn-outline-primary" href="#">Add new item</a>
+                    </li>
+                    <li class="nav-item px-1">
+                        <a class="btn btn-outline-primary" href="#">Refresh Items</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Categorized by
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Foods</a></li>
+                            <li><a class="dropdown-item" href="#">Drinks</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search via ID" aria-label="Search">
+                    <button class="btn btn-outline-primary px-2" type="submit">Search</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--End of Navigation Bar-->
+
+    <!--Sidebar-->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                (username session used)
+            </div>
+            <br>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="main.html">Home</a></li>
+                <a class="list-group-item list-group-item-action active" href="#">Menu Items</a></li>
+                <a class="list-group-item list-group-item-action" href="#">Manage Users</a></li>
+                <a class="list-group-item list-group-item-action" href="#">Kiosk Devices</a></li>
+                <a class="list-group-item list-group-item-action" href="#">Order Statistics</a></li>
+                <a class="list-group-item list-group-item-action" href="#">Designer</a></li>
+            </div>
+        </div>
+    </div>
+    <!--End of Sidebar-->
+
+    <br>
+    <br>
+    <br>
+
+    <!--Menu Items Table-->
+	<div>
+		<table id="menu_items_table" class="">
+            <div class="container">
+                <tbody id="menu_items_list" class="row">
+                    <!-- OUTPUT RESULT from sqlconnection.js -->
+                </tbody>
+            </div>
+		</table>
+	</div>
+	<!------------------->
+
+</body>
+
+</html>
