@@ -18,13 +18,22 @@
 	<link href="./styles/styles.css" rel="stylesheet">
 	<link href="./styles/order-queue.css" rel="stylesheet">
 	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body class="">
 	<!-- navbar -->
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
-		<button id="navbar_login" onclick="login_dialog_open()">Login</button>
-		<button id="navbar_logout" onclick="logout_user()">Logout</button>
+		<!-- using bootstrap -->
+		<!-- NOTE: if creating a navbar with login buttons, use this elements -->
+		<button id="navbar_login" onclick="login_dialog_open()" class="btn">Login</button>
+		<span id="navbar_user" class="d-none">
+			User:
+			<span id="navbar_username">test</span>
+		</span>
+		<button id="navbar_logout" onclick="logout_user()" class="btn d-none">Logout</button>
+		<!-- using bootstrap -->
 	</nav>
 
 	<!-- sidebar -->
@@ -203,9 +212,9 @@
 		</button>
 	</dialog>
 
+	<script src="./js/login.js"></script>
 	<script src="./js/order-queue.js"></script>
 	<script src="./js/modules/disable_next_previous_key.js"></script>
-	<script src="./js/login.js"></script>
 </body>
 
 </html>
