@@ -51,7 +51,7 @@ function display_order_history() {
 					};
 				});
 
-				console.log(nestedData);
+				// console.log(nestedData);
 
 				// For each loop
 				nestedData.forEach((order_history, index) => {
