@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	//toggle_sort_items_table();
 	const employee_name = sessionStorage.getItem("employee_name");
 	document.getElementById("used_account").innerHTML = "Current active user: " + employee_name;
+
+	// for add item dialog error shower and success
+	const error_div = document.getElementById("error_placeholder")
+	error_div.style.display = "none"
+	const success_div = document.getElementById("success_placeholder")
+	success_div.style.display = "none"
 });
 
 const fs = require('fs');
@@ -79,5 +85,94 @@ function refresh_menu_items() {
 
 	// repopulate the registered_devices table body
 	display_menu_items();
+
+}
+
+function add_item() {
+	console.log("called add_item()");
+
+	const item_name = document.getElementById("add_item_name").value.trim();
+	const item_desc = document.getElementById("add_item_desc").value.trim();
+	const item_img = document.getElementById("add_item_img");
+	const item_price = document.getElementById("add_item_price").value.trim();
+	const item_category = document.getElementById("add_item_category").value.trim();
+
+	if (!item_price) {
+		console.log("Not a Number!")
+
+		const error_div = document.getElementById("error_placeholder")
+		const error_text = document.getElementById("error_text_placeholder")
+		error_div.style.display = "block"
+		error_text.innerHTML = "Input field for price is empty!"
+
+	} else if (item_img.files.length > 0) {
+		//insert items
+
+		//to convert the image
+		const item_img_input = document.getElementById("add_item_img").files[0].path;
+		const image_file = fs.readFileSync(item_img_input);
+
+		const query = "INSERT INTO menu_items (item_name, item_desc, item_image, item_price, item_category) VALUES (?, ?, ?, ?, ?);";
+		connection.query(query, [item_name, item_desc, image_file, item_price, item_category], (error, results) => {
+			if (error) {
+				console.log(error)
+			} else {
+				console.log("Success!")
+			}
+		})
+
+		// to hide the error
+		const error_div = document.getElementById("error_placeholder")
+		error_div.style.display = "none"
+
+		// to show success
+		const success_div = document.getElementById("success_placeholder")
+		const success_text = document.getElementById("success_text_placeholder")
+		success_div.style.display = "block"
+		success_text.innerHTML = "Successfully Added!, you may now refresh the items"
+
+		// to change the button text
+		const cancel_btn = document.getElementById("modal_close_button")
+		cancel_btn.innerHTML = "Close"
+		const confirm_btn = document.getElementById("modal_confirm_button")
+		confirm_btn.style.display = "none"
+
+	} else {
+
+		// no image found error
+		const error_div = document.getElementById("error_placeholder")
+		const error_text = document.getElementById("error_text_placeholder")
+		error_div.style.display = "block"
+		error_text.innerHTML = "No image was found!"
+
+	}
+
+}
+
+// to set the value of button and divs show error or confirm to defautl state
+function default_value_btn() {
+	console.log("called default_value_btn()");
+
+	// to change the button text
+	const cancel_btn = document.getElementById("modal_close_button")
+	cancel_btn.innerHTML = "Cancel"
+	const confirm_btn = document.getElementById("modal_confirm_button")
+	confirm_btn.style.display = "block"
+
+	// to hide success
+	const success_div = document.getElementById("success_placeholder")
+	success_div.style.display = "none"
+
+	// to hide error
+	const error_div = document.getElementById("error_placeholder")
+	error_div.style.display = "none"
+	
+	// to remove the input values if added successfull or cancelled
+	const item_name = document.getElementById("add_item_name").value = "";
+	const item_desc = document.getElementById("add_item_desc").value = "";
+	const item_img = document.getElementById("add_item_img");
+	item_img.value = "";
+	const item_price = document.getElementById("add_item_price").value = "";
+	const item_category = document.getElementById("add_item_category").value = "";
 
 }
