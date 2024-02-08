@@ -33,7 +33,7 @@ function login_dialog_open(redirect_site) {
 
 		const login_dialog_header = document.getElementById("login_dialog_header");
 		const siteHeaders = {
-			"inventory.html": "Manage Menu Items",
+			"inventory_revised.html": "Manage Menu Items",
 			"registration.html": "Manage Users/Employee",
 			"kiosk-devices.html": "Manage Kiosk Devices",
 			"order-history.html": "Order History and Statistics",
@@ -111,7 +111,7 @@ function process_site_access_rights(site) {
 
 	const site_access_rights_map = {
 		"designer.html": "designer",
-		"inventory.html": "menu_items",
+		"inventory_revised.html": "menu_items",
 		"order-history.html": "reports",
 		"registration.html": "manage_users",
 		"kiosk-devices.html": "manage_devices",
