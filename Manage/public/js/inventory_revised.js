@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	const success_div_update = document.getElementById("success_placeholder_update")
 	success_div_update.style.display = "none"
 
+	// for searching an item error shower
+	const error_search_text = document.getElementById("search_error_text_placeholder")
+	error_search_text.style.display = "none"
+
 });
 
 const fs = require('fs');
@@ -334,17 +338,15 @@ function row_click() {
 	}
 }
 
-// sorting drink table based on the category
-function drink_sort_table() {
-	console.log("called drink_sort_table()")
+// function to categorized the table
+function display_choosed_category(category) {
+	console.log(`called display_choosed_category(${category})`);
 
 	// empty the registered_devices table body
 	const table_body = document.getElementById("menu_items_list");
 	table_body.innerHTML = "";
 
-	const drink_var = document.getElementById("drink_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${drink_var}"`, function(err, result) {
+	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${category}"`, function(err, result) {
 		if (err) throw err;
 
 		let placeholder = document.querySelector("#menu_items_list");
@@ -377,327 +379,92 @@ function drink_sort_table() {
 			`;
 		}
 		placeholder.innerHTML = out;
-	});
+	})
 }
+
+// sorting drink table based on the category
+function drink_categorized_table() { display_choosed_category('Drinks') }
 
 // sorting snacks table based on the category
-function snacks_sort_table() {
-	console.log("called snacks_sort_table()")
-
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
-
-	const snacks_var = document.getElementById("snacks_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${snacks_var}"`, function(err, result) {
-		if (err) throw err;
-
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
-
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-}
+function snacks_categorized_table() { display_choosed_category('Snacks') }
 
 // sorting add_day_silog table based on the category
-function alldaysilog_sort_table() {
-	console.log("called alldaysilog_sort_table()")
-
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
-
-	const alldaysilog_var = document.getElementById("alldaysilog_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${alldaysilog_var}"`, function(err, result) {
-		if (err) throw err;
-
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
-
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-}
+function alldaysilog_categorized_table() { display_choosed_category('All Day Silog') }
 
 // sorting short_orders table based on the category
-function shortorders_sort_table() {
-	console.log("called shortorders_sort_table()")
-
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
-
-	const shortorders_var = document.getElementById("shortorders_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${shortorders_var}"`, function(err, result) {
-		if (err) throw err;
-
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
-
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-}
+function shortorders_categorized_table() { display_choosed_category('Short Orders') }
 
 // sorting freshly table based on the category
-function freshly_sort_table() {
-	console.log("called freshly_sort_table()")
-
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
-
-	const freshly_var = document.getElementById("freshly_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${freshly_var}"`, function(err, result) {
-		if (err) throw err;
-
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
-
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-}
+function freshly_categorized_table() { display_choosed_category('Freshly Squeeze') }
 
 // sorting other_beverages table based on the category
-function other_sort_table() {
-	console.log("called other_sort_table()")
-
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
-
-	const other_var = document.getElementById("other_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${other_var}"`, function(err, result) {
-		if (err) throw err;
-
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
-
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-}
+function other_categorized_table() { display_choosed_category('Other Beverages') }
 
 // sorting beer table based on the category
-function beer_sort_table() {
-	console.log("called beer_sort_table()")
-
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
-
-	const beer_var = document.getElementById("beer_category_dropdown").innerHTML;
-
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${beer_var}"`, function(err, result) {
-		if (err) throw err;
-
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
-
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
-}
+function beer_categorized_table() { display_choosed_category('Beer') }
 
 // sorting extras table based on the category
-function extras_sort_table() {
-	console.log("called extras_sort_table()")
+function extras_categorized_table() { display_choosed_category('Extras') }
 
-	// empty the registered_devices table body
-	const table_body = document.getElementById("menu_items_list");
-	table_body.innerHTML = "";
+// function to view the items via ID only
+function search_item() {
+	console.log("called search_item()")
 
-	const extras_var = document.getElementById("extras_category_dropdown").innerHTML;
+	if (document.getElementById("search_item_box").value == "") {
 
-	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${extras_var}"`, function(err, result) {
-		if (err) throw err;
+		// if empty, show error
+		const error_search_text = document.getElementById("search_error_text_placeholder")
+		error_search_text.style.display = "block"
+		document.getElementById("search_error_text_placeholder").innerHTML = "Field cannot be empty!"
 
-		let placeholder = document.querySelector("#menu_items_list");
-		let out = "";
+	} else if (!/^\d+$/.test(document.getElementById("search_item_box").value.trim())) {
 
-		for (let row of result) {
-			// to read the blob data type
-			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-			out += `
-				<tr>
-					<td data-column="item_id">${row.item_id}</td>
-					<td data-column="item_name">${row.item_name}</td>
-					<td data-column="item_description">${row.item_desc}</td>
-					<td><img src="${image_src}" width="300"></td>
-					<td data-column="item_price">${row.item_price}</td>
-					<td data-column="item_quantity_sold">${row.quantity_sold}</td>
-					<td data-column="item_revenue">₱${row.revenue_generated}</td>
-					<td data-column="item_category">${row.item_category}</td>
-					<td class="pb-3">
-						<span class="action-btn">
-						<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-							</svg>
-						</button>
-						</span>
-					</td>
-				</tr>
-			`;
-		}
-		placeholder.innerHTML = out;
-	});
+		// if text, show error
+		const error_search_text = document.getElementById("search_error_text_placeholder")
+		error_search_text.style.display = "block"
+		document.getElementById("search_error_text_placeholder").innerHTML = "Only numbers are allowed!"
+
+	} else {
+		
+		// proceed if number
+		const error_search_text = document.getElementById("search_error_text_placeholder")
+		error_search_text.style.display = "none"
+
+		const id_value = document.getElementById("search_item_box").value;
+
+		connection.query(`SELECT * FROM manage_db.menu_items WHERE item_id = "${id_value}"`, function(err, result) {
+			if (err) throw err;
+
+			let placeholder = document.querySelector("#menu_items_list");
+			let out = "";
+
+			for (let row of result) {
+				// to read the blob data type
+				let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
+				out += `
+					<tr>
+						<td data-column="item_id">${row.item_id}</td>
+						<td data-column="item_name">${row.item_name}</td>
+						<td data-column="item_description">${row.item_desc}</td>
+						<td><img src="${image_src}" width="300"></td>
+						<td data-column="item_price">${row.item_price}</td>
+						<td data-column="item_quantity_sold">${row.quantity_sold}</td>
+						<td data-column="item_revenue">₱${row.revenue_generated}</td>
+						<td data-column="item_category">${row.item_category}</td>
+						<td class="pb-3">
+							<span class="action-btn">
+							<button onclick="row_click()" class="btn btn-outline-primary d-flex" data-bs-toggle="modal" data-bs-target="#update_item_dialog">
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+								</svg>
+							</button>
+							</span>
+						</td>
+					</tr>
+				`;
+			}
+			placeholder.innerHTML = out;
+		});
+	}
 }
