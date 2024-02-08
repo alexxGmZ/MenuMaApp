@@ -14,202 +14,231 @@
 <html lang="en">
 
 <head>
-    <title>MenuMaApp Manage: Inventory Mode</title>
-    <meta charset="UTF-8">
+	<title>MenuMaApp Manage: Inventory Mode</title>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
-    <script src="./bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="./js/inventory_revised.js"></script>
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="./js/inventory_revised.js"></script>
 	<script src="./js/modules/disable_next_previous_key.js"></script>
-    <link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
 </head>
 
 <body class="px-2">
-    <!--Navigation Bar-->
-    <nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                </svg>
-                Libres Cafe
-            </a>
-            <div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item px-1">
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add_item_dialog">Add new item</button>
-                    </li>
-                    <li class="nav-item px-1">
-                        <button class="btn btn-outline-primary" onclick="refresh_menu_items()">Refresh Table</button>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Categorize by
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="drink_category_dropdown" href="#" onclick="drink_sort_table()">Drinks</a></li>
-                            <li><a class="dropdown-item" id="snacks_category_dropdown" href="#" onclick="snacks_sort_table()">Snacks</a></li>
-                            <li><a class="dropdown-item" id="alldaysilog_category_dropdown" href="#" onclick="alldaysilog_sort_table()">All Day Silog</a></li>
-                            <li><a class="dropdown-item" id="shortorders_category_dropdown" href="#" onclick="shortorders_sort_table()">Short Orders</a></li>
-                            <li><a class="dropdown-item" id="freshly_category_dropdown" href="#" onclick="freshly_sort_table()">Freshly Squeeze</a></li>
-                            <li><a class="dropdown-item" id="other_category_dropdown" href="#" onclick="other_sort_table()">Other Beverages</a></li>
-                            <li><a class="dropdown-item" id="beer_category_dropdown" href="#" onclick="beer_sort_table()">Beer</a></li>
-                            <li><a class="dropdown-item" id="extras_category_dropdown" href="#" onclick="extras_sort_table()">Extras</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search via ID" aria-label="Search">
-                    <button class="btn btn-outline-primary px-2" type="submit">Search</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!--End of Navigation Bar-->
+	<!--Navigation Bar-->
+	<nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+				Libres Cafe
+			</a>
+			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item px-1">
+						<button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add_item_dialog">Add
+							new item</button>
+					</li>
+					<li class="nav-item px-1">
+						<button class="btn btn-outline-primary" onclick="refresh_menu_items()">Refresh Table</button>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Categorize by
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" id="drink_category_dropdown" href="#"
+									onclick="drink_sort_table()">Drinks</a></li>
+							<li><a class="dropdown-item" id="snacks_category_dropdown" href="#"
+									onclick="snacks_sort_table()">Snacks</a></li>
+							<li><a class="dropdown-item" id="alldaysilog_category_dropdown" href="#"
+									onclick="alldaysilog_sort_table()">All Day Silog</a></li>
+							<li><a class="dropdown-item" id="shortorders_category_dropdown" href="#"
+									onclick="shortorders_sort_table()">Short Orders</a></li>
+							<li><a class="dropdown-item" id="freshly_category_dropdown" href="#"
+									onclick="freshly_sort_table()">Freshly Squeeze</a></li>
+							<li><a class="dropdown-item" id="other_category_dropdown" href="#"
+									onclick="other_sort_table()">Other Beverages</a></li>
+							<li><a class="dropdown-item" id="beer_category_dropdown" href="#"
+									onclick="beer_sort_table()">Beer</a></li>
+							<li><a class="dropdown-item" id="extras_category_dropdown" href="#"
+									onclick="extras_sort_table()">Extras</a></li>
+						</ul>
+					</li>
+				</ul>
+				<div class="d-flex">
+					<input class="form-control me-2" type="search" placeholder="Search via ID" aria-label="Search">
+					<button class="btn btn-outline-primary px-2" type="submit">Search</button>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!--End of Navigation Bar-->
 
-    <!--Sidebar-->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                <span id="used_account">(username session used)</span>
-            </div>
-            <br>
-            <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="main.html">Home</a></li>
-                <a class="list-group-item list-group-item-action active" href="#">Menu Items</a></li>
-                <a class="list-group-item list-group-item-action" href="#">Manage Users</a></li>
-                <a class="list-group-item list-group-item-action" href="#">Kiosk Devices</a></li>
-                <a class="list-group-item list-group-item-action" href="#">Order Statistics</a></li>
-                <a class="list-group-item list-group-item-action" href="#">Designer</a></li>
-            </div>
-        </div>
-    </div>
-    <!--End of Sidebar-->
+	<!--Sidebar-->
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div>
+				<span id="used_account">(username session used)</span>
+			</div>
+			<br>
+			<div class="list-group">
+				<a class="list-group-item list-group-item-action" href="main.html">Home</a></li>
+				<a class="list-group-item list-group-item-action active" href="#">Menu Items</a></li>
+				<a class="list-group-item list-group-item-action" href="#">Manage Users</a></li>
+				<a class="list-group-item list-group-item-action" href="#">Kiosk Devices</a></li>
+				<a class="list-group-item list-group-item-action" href="#">Order Statistics</a></li>
+				<a class="list-group-item list-group-item-action" href="#">Designer</a></li>
+			</div>
+		</div>
+	</div>
+	<!--End of Sidebar-->
 
-    <br>
-    <br>
-    <br>
+	<br>
+	<br>
+	<br>
 
-    <!--Menu Items Table-->
+	<!--Menu Items Table-->
 	<div class="table-responsive">
 		<table id="menu_items_table" class="table table-sm table-hover align-middle">
-                <thead class="text-center">
-                    <tr>
-                        <th data-column="item_id">ID</th>
-                        <th data-column="item_name">Name</th>
-                        <th data-column="item_description">Description</th>
-                        <th>Image</th>
-                        <th data-column="item_price">Price</th>
-                        <th data-column="item_quantity_sold">Quantity Sold</th>
-                        <th data-column="item_revenue">Revenue Generated</th>
-                        <th data-column="item_category">Category</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="menu_items_list" class="text-center">
-                    <!-- OUTPUT RESULT from sqlconnection.js -->
-                </tbody>
+			<thead class="text-center">
+				<tr>
+					<th data-column="item_id">ID</th>
+					<th data-column="item_name">Name</th>
+					<th data-column="item_description">Description</th>
+					<th>Image</th>
+					<th data-column="item_price">Price</th>
+					<th data-column="item_quantity_sold">Quantity Sold</th>
+					<th data-column="item_revenue">Revenue Generated</th>
+					<th data-column="item_category">Category</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="menu_items_list" class="text-center">
+				<!-- OUTPUT RESULT from sqlconnection.js -->
+			</tbody>
 		</table>
 	</div>
 	<!------------------->
 
-    <!--ADD ITEM MODAL DIALOG-->
-    <div class="modal fade" id="add_item_dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Adding new item...</h1>
-                </div>
-                <div class="modal-body text-center">
-                    <input type="text" id="add_item_name" placeholder="Item Name" class="mb-3 form-control">
-                    <textarea type="text" id="add_item_desc" placeholder="Item Description" class="form-control mb-3"></textarea>
-                    <input type="file" id="add_item_img" accept="image/*" class="form-control mb-3">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">₱</span>
-                            <input type="number" id="add_item_price" name="add_item_price" placeholder="Item Price" class="form-control rounded-end">
-                            <span class="input-group-text ms-3 rounded-start">Select Category</span>
-                            <select id="add_item_category" name="add_item_category" class="form-control" placeholder="Item Category">
-                                <option value="Drinks">Drinks</option>
-                                <option value="Snacks">Snacks</option>
-                                <option value="All Day Silog">All Day Silog</option>
-                                <option value="Short Orders">Short Orders</option>
-                                <option value="Freshly Squeeze">Freshly Squeeze</option>
-                                <option value="Other Beverages">Other Beverages</option>
-                                <option value="Beer">Beer</option>
-                                <option value="Extras">Extras</option>
-                            </select>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" id="modal_close_button" data-bs-dismiss="modal" onclick="default_value_btn()">Cancel</button>
-                    <button type="button" class="btn btn-outline-success" id="modal_confirm_button" onclick="add_item()">Confirm</button>
-                </div>
-                <div class="text-center pb-3" id="error_placeholder">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-diamond-fill text-danger" viewBox="0 0 16 16">
-                        <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                    </svg>
-                    <span class="text-danger" id="error_text_placeholder">sample span error</span>
-                </div>
-                <div class="text-center pb-3" id="success_placeholder">
-                    <span class="text-success" id="success_text_placeholder">sample span success</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--End of ADD ITEM MODAL DIALOG-->
+	<!--ADD ITEM MODAL DIALOG-->
+	<div class="modal fade" id="add_item_dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Adding new item...</h1>
+				</div>
+				<div class="modal-body text-center">
+					<input type="text" id="add_item_name" placeholder="Item Name" class="mb-3 form-control">
+					<textarea type="text" id="add_item_desc" placeholder="Item Description"
+						class="form-control mb-3"></textarea>
+					<input type="file" id="add_item_img" accept="image/*" class="form-control mb-3">
+					<div class="input-group mb-3">
+						<span class="input-group-text">₱</span>
+						<input type="number" id="add_item_price" name="add_item_price" placeholder="Item Price"
+							class="form-control rounded-end">
+						<span class="input-group-text ms-3 rounded-start">Select Category</span>
+						<select id="add_item_category" name="add_item_category" class="form-control"
+							placeholder="Item Category">
+							<option value="Drinks">Drinks</option>
+							<option value="Snacks">Snacks</option>
+							<option value="All Day Silog">All Day Silog</option>
+							<option value="Short Orders">Short Orders</option>
+							<option value="Freshly Squeeze">Freshly Squeeze</option>
+							<option value="Other Beverages">Other Beverages</option>
+							<option value="Beer">Beer</option>
+							<option value="Extras">Extras</option>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" id="modal_close_button" data-bs-dismiss="modal"
+						onclick="default_value_btn()">Cancel</button>
+					<button type="button" class="btn btn-outline-success" id="modal_confirm_button"
+						onclick="add_item()">Confirm</button>
+				</div>
+				<div class="text-center pb-3" id="error_placeholder">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-exclamation-diamond-fill text-danger" viewBox="0 0 16 16">
+						<path
+							d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+					</svg>
+					<span class="text-danger" id="error_text_placeholder">sample span error</span>
+				</div>
+				<div class="text-center pb-3" id="success_placeholder">
+					<span class="text-success" id="success_text_placeholder">sample span success</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--End of ADD ITEM MODAL DIALOG-->
 
-    <!--UPDATE ITEM DIALOG MODAL-->
-    <div class="modal fade" id="update_item_dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Updating new item...</h1>
-                </div>
-                <div class="modal-body">
-                    <p hidden id="update_item_id">ID placeholder</p>
-                    <input type="text" id="update_item_name" placeholder="New Item Name" class="mb-3 form-control">
-                    <textarea type="text" id="update_item_desc" placeholder="New Item Description" class="form-control mb-3"></textarea>
-                    <span class="ps-2 pb-1">Currently used image:</span>
-                    <center><img src="" id="update_image_preview" width="250" height="175"></center>
-                    <span class="ps-2 pt-1">Choose a new image (optional)</span>
-                    <input type="file" id="update_item_img" accept="image/*" class="form-control mb-3">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">₱</span>
-                        <input type="number" id="update_item_price" name="update_item_price" placeholder="New Item Price" class="form-control rounded-end">
-                        <span class="input-group-text ms-3 rounded-start">Select Category</span>
-                        <select id="update_item_category" name="update_item_category" class="form-control" placeholder="New Item Category">
-                            <option value="Drinks">Drinks</option>
-                            <option value="Snacks">Snacks</option>
-                            <option value="All Day Silog">All Day Silog</option>
-                            <option value="Short Orders">Short Orders</option>
-                            <option value="Freshly Squeeze">Freshly Squeeze</option>
-                            <option value="Other Beverages">Other Beverages</option>
-                            <option value="Beer">Beer</option>
-                            <option value="Extras">Extras</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" onclick="default_value_btn_update()" data-bs-dismiss="modal" id="cancel_update">Cancel</button>
-                    <button type="button" class="btn btn-outline-success" onclick="update_item()" id="confirm_update">Confirm</button>
-                </div>
-                <div class="text-center pb-3" id="error_placeholder_update">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-diamond-fill text-danger" viewBox="0 0 16 16">
-                        <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                    </svg>
-                    <span class="text-danger" id="error_text_placeholder_update">sample span error</span>
-                </div>
-                <div class="text-center pb-3" id="success_placeholder_update">
-                    <span class="text-success" id="success_text_placeholder_update">sample span success</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--End of UPDATE ITEM MODAL DIALOG-->
+	<!--UPDATE ITEM DIALOG MODAL-->
+	<div class="modal fade" id="update_item_dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Updating new item...</h1>
+				</div>
+				<div class="modal-body">
+					<p hidden id="update_item_id">ID placeholder</p>
+					<input type="text" id="update_item_name" placeholder="New Item Name" class="mb-3 form-control">
+					<textarea type="text" id="update_item_desc" placeholder="New Item Description"
+						class="form-control mb-3"></textarea>
+					<span class="ps-2 pb-1">Currently used image:</span>
+					<center><img src="" id="update_image_preview" width="250" height="175"></center>
+					<span class="ps-2 pt-1">Choose a new image (optional)</span>
+					<input type="file" id="update_item_img" accept="image/*" class="form-control mb-3">
+					<div class="input-group mb-3">
+						<span class="input-group-text">₱</span>
+						<input type="number" id="update_item_price" name="update_item_price" placeholder="New Item Price"
+							class="form-control rounded-end">
+						<span class="input-group-text ms-3 rounded-start">Select Category</span>
+						<select id="update_item_category" name="update_item_category" class="form-control"
+							placeholder="New Item Category">
+							<option value="Drinks">Drinks</option>
+							<option value="Snacks">Snacks</option>
+							<option value="All Day Silog">All Day Silog</option>
+							<option value="Short Orders">Short Orders</option>
+							<option value="Freshly Squeeze">Freshly Squeeze</option>
+							<option value="Other Beverages">Other Beverages</option>
+							<option value="Beer">Beer</option>
+							<option value="Extras">Extras</option>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" onclick="default_value_btn_update()"
+						data-bs-dismiss="modal" id="cancel_update">Cancel</button>
+					<button type="button" class="btn btn-outline-success" onclick="update_item()"
+						id="confirm_update">Confirm</button>
+				</div>
+				<div class="text-center pb-3" id="error_placeholder_update">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-exclamation-diamond-fill text-danger" viewBox="0 0 16 16">
+						<path
+							d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+					</svg>
+					<span class="text-danger" id="error_text_placeholder_update">sample span error</span>
+				</div>
+				<div class="text-center pb-3" id="success_placeholder_update">
+					<span class="text-success" id="success_text_placeholder_update">sample span success</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--End of UPDATE ITEM MODAL DIALOG-->
 
 </body>
 

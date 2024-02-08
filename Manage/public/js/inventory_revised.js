@@ -33,21 +33,21 @@ const dialog_open = dialog.dialog_open;
 const dialog_close = dialog.dialog_close;
 
 function display_menu_items() {
-    console.log("called display_menu_items()")
+	console.log("called display_menu_items()")
 
-    connection.connect(function(err) {
-        if (err) throw err;
-        //Select all foods and return the result object:
-        connection.query("SELECT * FROM manage_db.menu_items", function(err, result) {
-            if (err) throw err;
+	connection.connect(function(err) {
+		if (err) throw err;
+		//Select all foods and return the result object:
+		connection.query("SELECT * FROM manage_db.menu_items", function(err, result) {
+			if (err) throw err;
 
 			let placeholder = document.querySelector("#menu_items_list");
 			let out = "";
 
-            for (let row of result) {
-                // to read the blob data type
-                let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
-                out += `
+			for (let row of result) {
+				// to read the blob data type
+				let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
+				out += `
 					<tr>
                         <td data-column="item_id">${row.item_id}</td>
 						<td data-column="item_name">${row.item_name}</td>
@@ -69,10 +69,10 @@ function display_menu_items() {
 						</td>
 					</tr>
 				`;
-            }
-            placeholder.innerHTML = out;
-        });
-    })
+			}
+			placeholder.innerHTML = out;
+		});
+	})
 }
 
 function refresh_menu_items() {
@@ -299,7 +299,7 @@ function row_click() {
 	var table = document.getElementById("menu_items_table");
 	var rows = table.getElementsByTagName("tr");
 
-	for (let i =0; i < rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var currentRow = table.rows[i];
 		var clickHandle = function(row) {
 			return function() {
