@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	display_menu_items();
 	//toggle_sort_items_table();
 	const employee_name = sessionStorage.getItem("employee_name");
-	document.getElementById("used_account").innerHTML = "Current active user: " + employee_name;
+	document.getElementById("used_account").innerHTML = "User: " + employee_name;
 
 	// for add item dialog error shower and success
 	const error_div = document.getElementById("error_placeholder")
@@ -167,8 +167,8 @@ function update_item() {
 	const item_img = document.getElementById("update_item_img");
 	const item_price = document.getElementById("update_item_price").value;
 	const item_category = document.getElementById("update_item_category").value;
-	
-	// check if price input is 0 or empty	
+
+	// check if price input is 0 or empty
 	if (document.getElementById("update_item_price").value == "" || document.getElementById("update_item_price").value == "0") {
 
 		// for update item dialog error shower
@@ -239,7 +239,7 @@ function update_item() {
 		error_div_update.style.display = "none"
 
 	}
- 
+
 }
 
 // to set the value of button and divs show error or confirm to defautl state
@@ -259,7 +259,7 @@ function default_value_btn() {
 	// to hide error
 	const error_div = document.getElementById("error_placeholder")
 	error_div.style.display = "none"
-	
+
 	// to remove the input values if added successfull or cancelled
 	const item_name = document.getElementById("add_item_name").value = "";
 	const item_desc = document.getElementById("add_item_desc").value = "";
@@ -289,7 +289,7 @@ function default_value_btn_update() {
 
 	const item_img = document.getElementById("update_item_img");
 	item_img.value = "";
-	
+
 }
 
 
@@ -343,7 +343,7 @@ function drink_sort_table() {
 	table_body.innerHTML = "";
 
 	const drink_var = document.getElementById("drink_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${drink_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -389,7 +389,7 @@ function snacks_sort_table() {
 	table_body.innerHTML = "";
 
 	const snacks_var = document.getElementById("snacks_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${snacks_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -435,7 +435,7 @@ function alldaysilog_sort_table() {
 	table_body.innerHTML = "";
 
 	const alldaysilog_var = document.getElementById("alldaysilog_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${alldaysilog_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -481,7 +481,7 @@ function shortorders_sort_table() {
 	table_body.innerHTML = "";
 
 	const shortorders_var = document.getElementById("shortorders_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${shortorders_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -527,7 +527,7 @@ function freshly_sort_table() {
 	table_body.innerHTML = "";
 
 	const freshly_var = document.getElementById("freshly_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${freshly_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -573,7 +573,7 @@ function other_sort_table() {
 	table_body.innerHTML = "";
 
 	const other_var = document.getElementById("other_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${other_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -619,7 +619,7 @@ function beer_sort_table() {
 	table_body.innerHTML = "";
 
 	const beer_var = document.getElementById("beer_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${beer_var}"`, function(err, result) {
 		if (err) throw err;
 
@@ -665,7 +665,7 @@ function extras_sort_table() {
 	table_body.innerHTML = "";
 
 	const extras_var = document.getElementById("extras_category_dropdown").innerHTML;
-	
+
 	connection.query(`SELECT * FROM manage_db.menu_items WHERE item_category = "${extras_var}"`, function(err, result) {
 		if (err) throw err;
 
