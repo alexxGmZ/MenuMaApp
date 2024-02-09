@@ -3,19 +3,19 @@
 // (/) create a proper page redirection when an employee is successfully logged in
 //     based on the page clicked and their corresponding access rights.
 
-const navbar_login_button = document.getElementById("navbar_login");
-const navbar_user_span = document.getElementById("navbar_user");
-const navbar_username = document.getElementById("navbar_username");
-const navbar_logout_button = document.getElementById("navbar_logout");
+const login_button = document.getElementById("login_button");
+const user_span = document.getElementById("user_span");
+const user_name = document.getElementById("user_name");
+const logout_button = document.getElementById("logout_button");
 
 // if a user is still logged in then show logout button, else show login button
 if (sessionStorage.getItem("employee_name")) {
-	navbar_login_button.classList.add("d-none");
-	navbar_logout_button.classList.remove("d-none");
+	login_button.classList.add("d-none");
+	logout_button.classList.remove("d-none");
 
 	// set navbar username
-	navbar_user_span.classList.remove("d-none");
-	navbar_username.textContent = sessionStorage.getItem("employee_name");
+	user_span.classList.remove("d-none");
+	user_name.textContent = sessionStorage.getItem("employee_name");
 }
 
 function login_dialog_open(redirect_site) {
@@ -46,8 +46,8 @@ function login_dialog_open(redirect_site) {
 	else {
 		// console.log("logged in");
 		process_site_access_rights(redirect_site);
-		navbar_login_button.classList.add("d-none");
-		navbar_logout_button.classList.remove("d-none");
+		login_button.classList.add("d-none");
+		logout_button.classList.remove("d-none");
 	}
 }
 
@@ -88,12 +88,12 @@ function login_user() {
 				process_site_access_rights(redirect_site);
 
 				// hide login button, show logout button
-				navbar_login_button.classList.add("d-none");
-				navbar_logout_button.classList.remove("d-none");
+				login_button.classList.add("d-none");
+				logout_button.classList.remove("d-none");
 
 				// set navbar username
-				navbar_user_span.classList.remove("d-none");
-				navbar_username.textContent = sessionStorage.getItem("employee_name");
+				user_span.classList.remove("d-none");
+				user_name.textContent = sessionStorage.getItem("employee_name");
 			}
 			else {
 				dialog_open('login_invalid_password_dialog');
@@ -141,10 +141,10 @@ function logout_user() {
 	location.replace("main.html");
 
 	// hide login button, show logout button
-	navbar_login_button.classList.remove("d-none");
-	navbar_logout_button.classList.add("d-none");
+	login_button.classList.remove("d-none");
+	logout_button.classList.add("d-none");
 
 	// hide navbar user name
-	navbar_user_span.classList.add("d-none");
-	navbar_username.textContent = "";
+	user_span.classList.add("d-none");
+	user_name.textContent = "";
 }

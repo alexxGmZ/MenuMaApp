@@ -27,12 +27,12 @@
 	<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
 		<!-- using bootstrap -->
 		<!-- NOTE: if creating a navbar with login buttons, use this elements -->
-		<button id="navbar_login" onclick="login_dialog_open()" class="btn">Login</button>
-		<span id="navbar_user" class="d-none">
+		<button id="login_button" onclick="login_dialog_open()" class="btn">Login</button>
+		<span id="user_span" class="d-none">
 			User:
-			<span id="navbar_username">test</span>
+			<span id="user_name">test</span>
 		</span>
-		<button id="navbar_logout" onclick="logout_user()" class="btn d-none">Logout</button>
+		<button id="logout_button" onclick="logout_user()" class="btn d-none">Logout</button>
 		<!-- using bootstrap -->
 	</nav>
 

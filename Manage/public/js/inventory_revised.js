@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	display_menu_items();
 	//toggle_sort_items_table();
-	const employee_name = sessionStorage.getItem("employee_name");
-	document.getElementById("used_account").innerHTML = "User: " + employee_name;
-
 	// for add item dialog error shower and success
 	const error_div = document.getElementById("error_placeholder")
 	error_div.style.display = "none"
