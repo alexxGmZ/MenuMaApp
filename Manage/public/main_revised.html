@@ -50,47 +50,44 @@
 	<!--End of Navigation Bar-->
 
 	<!--Sidebar-->
-	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
-		aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 		<div class="offcanvas-header">
 			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		</div>
 		<div class="offcanvas-body">
-			<div class="mb-5">
-				<span id="user_span" class="d-none">
-					User:
-					<span id="user_name">test</span>
-				</span>
-				<button id="login_button" onclick="login_dialog_open()" class="btn border btn-outline-secondary border-1 shadow-sm">Login</button>
-				<button id="logout_button" onclick="logout_user()" class="btn border btn-outline-secondary border-1 shadow-sm d-none">Logout</button>
-			</div>
 			<div class="list-group">
 				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
 					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
 				</a>
-				<button onclick="login_dialog_open('inventory_revised.html')"class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('inventory_revised.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
 				</button>
-				<button onclick="login_dialog_open('registration.html')"
-					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('registration.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
 				</button>
-				<button onclick="login_dialog_open('kiosk-devices.html')"
-					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('kiosk-devices.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
 				</button>
-				<button onclick="login_dialog_open('order-history.html')"
-					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button  onclick="login_dialog_open('order-history.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
 				</button>
-				<button onclick="login_dialog_open('designer.html')"
-					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('designer.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
 				</button>
-			</div>
-			<div>
-
+				<button id="logout_button" onclick="logout_user()" class="d-none position-absolute bottom-0 btn mb-2 border border-1 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
+					<span>Logout</span>
+					<span id="user_span" class="d-none">
+						"
+						<span id="user_name">user name</span>
+						"
+					</span>
+				</button>
+				<button id="login_button" onclick="login_dialog_open()" class="position-absolute bottom-0 btn mb-2 border border-1 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
+					Login
+				</button>
 			</div>
 		</div>
 	</div>

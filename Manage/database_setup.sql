@@ -29,7 +29,7 @@ CREATE TABLE menu_items(
    item_price FLOAT NOT NULL,
    quantity_sold INT DEFAULT 0,
    revenue_generated FLOAT DEFAULT 0,
-   item_status INT DEFAULT 1,
+	item_category TEXT,
    PRIMARY KEY(item_id)
 );
 
