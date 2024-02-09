@@ -76,7 +76,7 @@ function display_orders() {
 									<img src="assets/svg/x-circle.svg">
 								</button>
 								<br>
-								<button onclick="order_done()" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
+								<button onclick="order_done('${encodeURIComponent(JSON.stringify(orders))}')" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
 									<img src="assets/svg/check-circle.svg">
 								</button>
 							</div>
@@ -87,6 +87,11 @@ function display_orders() {
 			})
 		})
 		.catch(error => console.log(error));
+}
+
+function order_done(encoded_order) {
+	const order = JSON.parse(decodeURIComponent(encoded_order));
+	console.log(order);
 }
 
 // Get data from table
@@ -126,7 +131,7 @@ function row_click() {
 	}
 }
 
-function order_done() {
+/* function order_done() {
 	console.log("called order_done()");
 	// find the clicked row
 	var table = document.getElementById("order_table");
@@ -271,7 +276,7 @@ function order_done() {
 		};
 		currentRow.onclick = clickHandle(currentRow);
 	}
-}
+} */
 
 function order_cancel() {
 	console.log("called order_cancel()");
