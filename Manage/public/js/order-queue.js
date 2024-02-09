@@ -92,7 +92,130 @@ function display_orders() {
 function order_done(encoded_order) {
 	console.log("called order_done()");
 	const order = JSON.parse(decodeURIComponent(encoded_order));
-	console.log(order);
+	/*
+	console.log(order.queue_number);
+	
+	const food_items = order.items_ordered.map((item) => {
+		return `${item.quantity} ${item.item_name}<br>`;
+	})
+
+	const foods_ordered = food_items.join('');
+
+	console.log(foods_ordered.replace(/<br\s*\/?>/gi, "\n"));
+	console.log(order.customer_name)
+	console.log(order.total_price)
+	console.log(order.transaction_date)
+	*/
+
+	// Queries for getting data from order queue and items ordered tables specific for orders / row click
+	const items_ordered_data = `SELECT * FROM manage_db.items_ordered WHERE queue_number = "${order.queue_number}"`;
+	const order_queue_data = `SELECT * FROM manage_db.order_queue WHERE queue_number = "${order.queue_number}"`;
+	
+	// get all data from items ordered table
+	connection.query(items_ordered_data, function(err, items_ordered_data_result) {
+		if (err) throw err;
+
+		// get all data from order queue table
+		connection.query(order_queue_data, function(err, order_queue_data_result) {
+			if (err) throw err;
+
+			const orderQueueResult = order_queue_data_result;
+			
+			// Get specific data when clicked for order queue
+			if (orderQueueResult.length > 0) {
+				const orderRow = orderQueueResult[0];
+				// const order_num = orderRow.queue_number;
+				// const order_id = orderRow.order_id;
+				// const customer_names = orderRow.customer_name;
+				// const overall_price = orderRow.total_price;
+				// const kiosks = orderRow.kiosk_ip_address;
+				var status = "Served";
+
+				// Insertion Query
+				const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
+				// function of insert data into order_queue_history
+				connection.query(insert_order_queue_query, [orderRow.order_id, orderRow.queue_number, orderRow.transaction_date, orderRow.customer_name, orderRow.total_price, orderRow.kiosk_ip_address, status], (error, results) => {
+					if (error) console.log(error);
+					else console.log("Successfully Added! (Order Queue)")
+				});
+
+				// this will be the order_stats function
+				//Gets the date today
+				const currentDate = new Date();
+				let current_year = currentDate.getFullYear();
+				let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
+				let current_day = String(currentDate.getDate()).padStart(2, '0');
+				let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
+				// console.log("Current date is: " + current_formatted_date);
+				// console.log(current_formatted_date)
+
+				const order_taken_count = 1;
+				const order_done_count = 1;
+
+				const update_order_stats = `UPDATE order_stats
+											SET total_orders_taken = total_orders_taken + '1',
+												total_orders_done = total_orders_done + '1',
+												total_earnings = total_earnings + "${orderRow.total_price}"
+											WHERE transaction_date = "${current_formatted_date}"`;
+				connection.query(update_order_stats, error => {
+					if (error) console.log(error);
+					else console.log("Order Stat done success");
+				})
+
+				// Get Specific data when clicked for items ordered
+				console.log("Here are the orders per row:")
+				for (let itemRow of items_ordered_data_result) {
+					
+					//Insertion query
+					const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+					// functio nto insert data into items_ordered_history
+					connection.query(insert_items_ordered_query, [itemRow.items_ordered_id, itemRow.order_id, itemRow.item_id, itemRow.item_name, itemRow.item_price, itemRow.quantity, itemRow.quantity_times_price, itemRow.queue_number], (error, results) => {
+						if (error) console.log(error)
+						else console.log("Successfully Added! (Items Ordered)")
+					})
+					
+				}
+
+				// Update revenue everytime if the order is served
+				if (orderQueueResult.length > 0) {
+					const orderRow = orderQueueResult[0];
+					console.log("Item Order is: " + orderRow.order_id);
+
+					const update_revenue_query = `UPDATE menu_items AS m
+					JOIN items_ordered AS i_o ON m.item_id = i_o.item_id
+					SET m.revenue_generated = m.revenue_generated + i_o.quantity_times_price,
+						m.quantity_sold = m.quantity_sold + i_o.quantity
+					WHERE i_o.order_id = "${orderRow.order_id}"`;
+					connection.query(update_revenue_query, error => {
+						if (error) console.log(error);
+						else console.log("The revenue has been updated!");
+					});
+				}
+
+				// This will be the delete function after order is done or cancelled
+				const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order.queue_number}"`;
+				const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order.queue_number}"`;
+
+				connection.query(items_ordered_query, error => {
+					if (error) console.log(error);
+					else {
+						console.log("Removed Success from items_ordered");
+
+						connection.query(ordered_num_query, error => {
+							if (error) console.log(error);
+
+							else {
+								console.log("Removed success from order_queue")
+								dialog_open('done_order_success_dialog');
+								document.getElementById("done_order_num_placeholder").innerHTML = order.queue_number;
+							}
+						});
+					}
+				});
+
+			}
+		});
+	});
 }
 
 function order_cancel() {
