@@ -89,12 +89,17 @@
 		</div>
 		<div class="offcanvas-body">
 			<div class="mb-5">
-				<span id="used_account">(username session used)</span>
+				<span id="user_span" class="d-none">
+					User:
+					<span id="user_name">test</span>
+				</span>
+				<button id="login_button" onclick="login_dialog_open()" class="btn">Login</button>
+				<button id="logout_button" onclick="logout_user()" class="btn d-none">Logout</button>
 			</div>
 			<div class="list-group">
-				<button onclick="login_dialog_open()" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<a href="./main.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
-				</button>
+				</a>
 				<button class="btn mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
 					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
 				</button>
@@ -254,6 +259,14 @@
 		</div>
 	</div>
 	<!--End of UPDATE ITEM MODAL DIALOG-->
+
+	<dialog id="lack_access_privilege_dialog" class="d-none">
+		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
+		<button onclick="dialog_close('lack_access_privilege_dialog')"
+			class="">
+			OK
+		</button>
+	</dialog>
 
 	<script src="./js/login.js"></script>
 	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
