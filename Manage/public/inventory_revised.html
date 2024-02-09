@@ -18,9 +18,6 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
-	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
-	<script src="./js/inventory_revised.js"></script>
-	<script src="./js/modules/disable_next_previous_key.js"></script>
 	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
 </head>
 
@@ -85,23 +82,37 @@
 	<!--End of Navigation Bar-->
 
 	<!--Sidebar-->
-	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 		<div class="offcanvas-header">
 			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		</div>
 		<div class="offcanvas-body">
-			<div>
+			<div class="mb-5">
 				<span id="used_account">(username session used)</span>
 			</div>
-			<br>
 			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="main.html">Home</a></li>
-				<a class="list-group-item list-group-item-action active" href="#">Menu Items</a></li>
-				<a class="list-group-item list-group-item-action" href="#">Manage Users</a></li>
-				<a class="list-group-item list-group-item-action" href="#">Kiosk Devices</a></li>
-				<a class="list-group-item list-group-item-action" href="#">Order Statistics</a></li>
-				<a class="list-group-item list-group-item-action" href="#">Designer</a></li>
+				<button onclick="login_dialog_open()" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</button>
+				<button class="btn mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button  onclick="login_dialog_open('order-history.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button onclick="login_dialog_open('designer.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+			</div>
+			<div>
+
 			</div>
 		</div>
 	</div>
@@ -244,6 +255,10 @@
 	</div>
 	<!--End of UPDATE ITEM MODAL DIALOG-->
 
+	<script src="./js/login.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="./js/inventory_revised.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
 </body>
 
 </html>
