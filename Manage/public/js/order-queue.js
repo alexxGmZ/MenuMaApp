@@ -39,22 +39,49 @@ function display_orders() {
 				const removed_comma = food_items.join('');
 				//console.log(removed_comma);
 
+				// const markup = `
+				// 	<tr class="shadow-sm rounded-4 border spacer">
+				// 		<td class="text-center py-5">${orders.queue_number}</td>
+				// 		<td class="w-25 align-middle flex-nowrap">${removed_comma}</td>
+				// 		<td class="text-center align-middle">${orders.customer_name}</td>
+				// 		<td class="text-center align-middle">₱${orders.total_price}</td>
+				// 		<td class="text-center align-middle">
+				// 			<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="mb-1 btn border btn-outline-danger border-1 shadow-sm w-50">
+				// 				<img src="assets/svg/x-circle.svg">
+				// 			</button>
+				// 			<br>
+				// 			<button onclick="order_done()" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
+				// 				<img src="assets/svg/check-circle.svg">
+				// 			</button>
+				// 		</td>
+				// 	</tr>
+				// `;
 				const markup = `
-					<tr>
-						<td class="text-center py-5">${orders.queue_number}</td>
-						<td class="w-25 align-middle flex-nowrap">${removed_comma}</td>
-						<td class="text-center align-middle">${orders.customer_name}</td>
-						<td class="text-center align-middle">₱${orders.total_price}</td>
-						<td class="text-center align-middle">
-							<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="mb-1 btn border btn-outline-danger border-1 shadow-sm w-50">
-								<img src="assets/svg/x-circle.svg">
-							</button>
-							<br>
-							<button onclick="order_done()" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
-								<img src="assets/svg/check-circle.svg">
-							</button>
-						</td>
-					</tr>
+					<div class="shadow-sm mb-2 rounded-4 border border-2 p-3">
+						<div class="row">
+							<div class="col text-center fs-2">
+								${orders.queue_number}
+							</div>
+							<div class="col text-center">
+								${removed_comma}
+							</div>
+							<div class="col text-center">
+								${orders.customer_name}
+							</div>
+							<div class="col text-center fs-2">
+								${orders.total_price}
+							</div>
+							<div class="col text-center">
+								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="mb-1 btn border btn-outline-danger border-1 shadow-sm w-50">
+									<img src="assets/svg/x-circle.svg">
+								</button>
+								<br>
+								<button onclick="order_done()" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
+									<img src="assets/svg/check-circle.svg">
+								</button>
+							</div>
+						</div>
+					</div>
 				`;
 				document.querySelector("#order-list").insertAdjacentHTML('beforeend', markup);
 			})

@@ -98,27 +98,45 @@
 	<br>
 
 	<center>
-		<h1 class="font-extrabold">Order Queue Below</h1>
+		<h1 class="font-extrabold">Order Queue</h1>
 	</center>
 
 	<!--SHOW FOOD QUEUE ORDERS-->
 	<div class="mx-5">
-		<table id="order_table" onclick="row_click()" class="table table-striped text-start w-100 ">
-			<thead>
-				<tr>
-					<th class="text-center">Order Num #</th>
-					<th>Ordered Items</th>
-					<th class="text-center">Customer Name</th>
-					<th class="text-center">Price</th>
-					<th class="text-center">Actions</th>
-				</tr>
-			</thead>
-			<tbody id="order-list">
+		<!-- <table id="order_table" onclick="row_click()" class="text-start w-100 "> -->
+		<!-- 	<thead> -->
+		<!-- 		<tr> -->
+		<!-- 			<th class="text-center">Queue Number</th> -->
+		<!-- 			<th>Ordered Items</th> -->
+		<!-- 			<th class="text-center">Customer Name</th> -->
+		<!-- 			<th class="text-center">Price</th> -->
+		<!-- 			<th class="text-center">Actions</th> -->
+		<!-- 		</tr> -->
+		<!-- 	</thead> -->
+			<!-- <tbody id="order-list"> -->
+			<!-- </tbody> -->
+		<!-- </table> -->
+		<div class="row fw-bold p-3">
+			<div class="col text-center">
+				Queue Number
+			</div>
+			<div class="col text-center">
+				Ordered Items
+			</div>
+			<div class="col text-center">
+				Customer Name
+			</div>
+			<div class="col text-center">
+				Total Cost
+			</div>
+			<div class="col text-center">
+				Action
+			</div>
 
-				<!-- call the display_orders() function -->
-
-			</tbody>
-		</table>
+		</div>
+		<div id="order-list" class="list-group">
+			<!-- call the display_orders() function -->
+		</div>
 	</div>
 
 	<br><br>
@@ -132,17 +150,17 @@
 					<span class="">Order #</span>
 					<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number"
 						class="text-center form-control mb-2" disabled />
-	
+
 					<span class="">Food ordered</span>
 					<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered"
 						class="form-control text-center mb-2" disabled>
 					</textarea>
-	
+
 					<span class="">Customer name</span>
 					<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel"
 						placeholder="Customer Name" class="form-control text-center mb-2"
 						disabled />
-	
+
 					<span class="">Total Price</span>
 					<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price"
 						class="form-control text-center" disabled />
@@ -204,7 +222,7 @@
 			<label for="login_username" class="pb-2">Username</label>
 
 			<input type="password" id="login_password" placeholder=""
-				class="form-control text-center w-75 text-center">
+				class="form-control w-75 text-center">
 			<label for="login_password" class="">Password</label>
 		</center>
 
