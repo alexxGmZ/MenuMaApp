@@ -36,6 +36,15 @@
 				</svg>
 				Libres Cafe
 			</a>
+			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+				<button onclick="refresh_menu_items()" class="btn border btn-outline-secondary border-1 shadow-sm">
+					<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+						<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+					</svg>
+					Refresh
+				</button>
+			</div>
 		</div>
 	</nav>
 	<!--End of Navigation Bar-->
@@ -53,8 +62,8 @@
 					User:
 					<span id="user_name">test</span>
 				</span>
-				<button id="login_button" onclick="login_dialog_open()" class="btn">Login</button>
-				<button id="logout_button" onclick="logout_user()" class="btn d-none">Logout</button>
+				<button id="login_button" onclick="login_dialog_open()" class="btn border btn-outline-secondary border-1 shadow-sm">Login</button>
+				<button id="logout_button" onclick="logout_user()" class="btn border btn-outline-secondary border-1 shadow-sm d-none">Logout</button>
 			</div>
 			<div class="list-group">
 				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
@@ -96,9 +105,18 @@
 	</center>
 
 	<!--SHOW FOOD QUEUE ORDERS-->
-	<div class="ml-16 border-l">
-		<table id="order_table" class="justify-center mx-auto table-fixed md:table-fixed" onclick="row_click()">
-			<tbody id="order-list" class="grid grid-cols-3 gap-4 place-content-center">
+	<div class="mx-5">
+		<table id="order_table" onclick="row_click()" class="table table-striped text-start w-100 ">
+			<thead>
+				<tr>
+					<th class="text-center">Order Num #</th>
+					<th>Ordered Items</th>
+					<th class="text-center">Customer Name</th>
+					<th class="text-center">Price</th>
+					<th class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody id="order-list">
 
 				<!-- call the display_orders() function -->
 
@@ -109,45 +127,48 @@
 	<br><br>
 
 	<!-- Cancel Order Dialog -->
-	<dialog id="cancel_order_dialog" class="hidden rounded-lg drop-shadow-lg bg-red-200 mx-auto">
-		<p class="text-center">You are about to cancel a order!</p>
-		<div class="grid grid-cols-2 gap-4 place-content-center">
-			<div>
-				<p class="text-center font-bold">Order #</p>
-				<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number"
-					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled />
-
-				<p class="text-center font-bold">Food ordered</p>
-				<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered"
-					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md h-24" disabled>
-				</textarea>
-
-				<p class="text-center font-bold">Customer name</p>
-				<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel"
-					placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md"
-					disabled />
-
-				<p class="text-center font-bold">Total Price</p>
-				<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price"
-					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled />
-			</div>
-			<div class="grid place-items-center">
-				<div>
-					<p class="text-center pb-3">Proceed anyways?</p>
-					<center>
-						<button onclick="dialog_close('cancel_order_dialog')"
-							class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
-							<span class="mx-2"> NO </span>
-						</button>
-					</center>
-					<center>
-						<button onclick="order_cancel()"
-							class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-red-500 bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
-							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
-							<span class="mx-2"> YES </span>
-							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
-						</button>
-					</center>
+	<dialog id="cancel_order_dialog" class="hidden rounded border border-dark-subtle shadow">
+		<div class="container text-center">
+			<h5 class="text-center ">You are about to cancel a order!</h5>
+			<div class="row pb-2">
+				<div class="col">
+					<span class="">Order #</span>
+					<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number"
+						class="text-center form-control mb-2" disabled />
+	
+					<span class="">Food ordered</span>
+					<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered"
+						class="form-control text-center mb-2" disabled>
+					</textarea>
+	
+					<span class="">Customer name</span>
+					<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel"
+						placeholder="Customer Name" class="form-control text-center mb-2"
+						disabled />
+	
+					<span class="">Total Price</span>
+					<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price"
+						class="form-control text-center" disabled />
+				</div>
+				<div class="col align-self-center">
+					<div>
+						<p class="">Proceed anyways?</p>
+						<center>
+							<button onclick="dialog_close('cancel_order_dialog')"
+								class="btn border btn-outline-success border-1 shadow-sm">
+								<span class="mx-2"> NO </span>
+							</button>
+						</center>
+						<br>
+						<center>
+							<button onclick="order_cancel()"
+								class="btn border btn-outline-danger border-1 shadow-sm">
+								<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+								<span class="mx-2"> YES </span>
+								<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+							</button>
+						</center>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -165,42 +186,42 @@
 	</dialog>
 
 	<!--Done Order Success Dialog-->
-	<dialog id="done_order_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="done_order_success_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
 		<span>Order #</span>
 		<span id="done_order_num_placeholder">Order Number</span>
 		<span> is successfully served!</span><br>
 		<button onclick="location.reload()"
-			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- login dialog -->
-	<dialog id="login_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
+	<dialog id="login_dialog" class="hidden rounded border border-dark-subtle shadow">
 		<p id="login_redirect_site" class="hidden"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
 		<center>
 			<input type="text" id="login_username" placeholder=""
-				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-2/3 text-center"><br>
-			<label for="login_username" class="">Username</label><br>
+				class="form-control text-center w-75">
+			<label for="login_username" class="pb-2">Username</label>
 
 			<input type="password" id="login_password" placeholder=""
-				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-2/3 text-center"><br>
+				class="form-control text-center w-75 text-center">
 			<label for="login_password" class="">Password</label>
 		</center>
 
 		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
 			<center>
 				<button onclick="login_user()"
-					class="rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+					class="btn border btn-success border-1 shadow-sm">
 					LOGIN
 				</button>
 
 				<br>
 
 				<button onclick="dialog_close('login_dialog')"
-					class="rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-1/2">
+					class="btn border btn-danger border-1 shadow-sm">
 					CANCEL
 				</button>
 			</center>
@@ -208,28 +229,28 @@
 	</dialog>
 
 	<!-- invalid login username dialog -->
-	<dialog id="login_invalid_username_dialog" class="hidden text-center rounded-lg drop-shadow-lg">
+	<dialog id="login_invalid_username_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
 		<h1>This username doesn't exists!</h1>
 		<button onclick="dialog_close('login_invalid_username_dialog')"
-			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+			class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- invalid login password dialog -->
-	<dialog id="login_invalid_password_dialog" class="hidden text-center rounded-lg drop-shadow-lg">
+	<dialog id="login_invalid_password_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
 		<h1>Password doesn't matched!</h1>
 		<button onclick="dialog_close('login_invalid_password_dialog')"
-			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+			class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- when the user lacks access privilege -->
-	<dialog id="lack_access_privilege_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="lack_access_privilege_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
 		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
 		<button onclick="dialog_close('lack_access_privilege_dialog')"
-			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+			class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>

@@ -31,7 +31,7 @@ function display_orders() {
 			data.forEach(orders => {
 
 				const food_items = orders.items_ordered.map((item) => {
-					return `${item.quantity} ${item.item_name}\n`;
+					return `${item.quantity} ${item.item_name}<br>`;
 				})
 
 				// console.log(food_items);
@@ -40,22 +40,19 @@ function display_orders() {
 				//console.log(removed_comma);
 
 				const markup = `
-					<tr class="mx-auto bg-sky-300 rounded-lg grid grid-cols-1 gap-2 w-60">
-						<td class="text-center font-bold rounded-t-lg pt-2 pb-2">${orders.queue_number}</td>
-						<td class="text-center bg-slate-50 rounded-lg whitespace-pre mx-2 h-24 overflow-y-scroll">${removed_comma}</td>
-						<td class="text-center px-2 italic">${orders.customer_name}</td>
-						<td class="text-center font-bold">₱${orders.total_price}</td>
-						<td class="grid grid-cols-2 gap-2 bg-sky-500 pb-2 rounded-b-lg">
-							<center>
-								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="font-bold rounded-full mt-2 py-2 px-2 bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
-									<img src="assets/svg/x-circle.svg" class="hover:text-zinc-50">
-								</button>
-							</center>
-							<center>
-								<button onclick="order_done()" class="font-bold rounded-full mt-2 py-2 px-2 bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
-									<img src="assets/svg/check-circle.svg" class="hover:text-zinc-50">
-								</button>
-							</center>
+					<tr>
+						<td class="text-center py-5">${orders.queue_number}</td>
+						<td class="w-25 align-middle flex-nowrap">${removed_comma}</td>
+						<td class="text-center align-middle">${orders.customer_name}</td>
+						<td class="text-center align-middle">₱${orders.total_price}</td>
+						<td class="text-center align-middle">
+							<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="mb-1 btn border btn-outline-danger border-1 shadow-sm w-50">
+								<img src="assets/svg/x-circle.svg">
+							</button>
+							<br>
+							<button onclick="order_done()" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
+								<img src="assets/svg/check-circle.svg">
+							</button>
 						</td>
 					</tr>
 				`;
@@ -81,6 +78,7 @@ function row_click() {
 
 				var ordered_items = row.getElementsByTagName("td")[1];
 				var items = ordered_items.innerHTML;
+				items = items.replace(/<br\s*\/?>/gi, "\n");
 
 				var ordered_cutomer_name = row.getElementsByTagName("td")[2];
 				var customers = ordered_cutomer_name.innerHTML;
@@ -494,4 +492,13 @@ function daily_order_stats() {
 			// console.log("Sql date is: " + formattedDate);
 		}
 	})
+}
+
+function refresh_menu_items() {
+	// empty the registered_devices table body
+	const table_body = document.getElementById("order-list");
+	table_body.innerHTML = "";
+
+	// repopulate the registered_devices table body
+	display_orders();
 }
