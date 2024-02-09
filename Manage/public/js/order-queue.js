@@ -72,11 +72,11 @@ function display_orders() {
 								${orders.total_price}
 							</div>
 							<div class="col text-center">
-								<button onclick="dialog_open('cancel_order_dialog'); row_click();" class="mb-1 btn border btn-outline-danger border-1 shadow-sm w-50">
+								<button onclick="dialog_open('cancel_order_dialog'); row_click('${encodeURIComponent(JSON.stringify(orders))}');" class="mb-1 btn btn-outline-danger shadow-sm w-50">
 									<img src="assets/svg/x-circle.svg">
 								</button>
 								<br>
-								<button onclick="order_done('${encodeURIComponent(JSON.stringify(orders))}')" class="mt-1 btn border btn-outline-success border-1 shadow-sm w-50">
+								<button onclick="order_done('${encodeURIComponent(JSON.stringify(orders))}')" class="mt-1 btn btn-outline-success shadow-sm w-50">
 									<img src="assets/svg/check-circle.svg">
 								</button>
 							</div>
@@ -90,8 +90,7 @@ function display_orders() {
 }
 
 function order_done(encoded_order) {
-	console.log("called order_done(encoded_order)");
-
+	console.log("called order_done()");
 	const order = JSON.parse(decodeURIComponent(encoded_order));
 	/*
 	console.log(order.queue_number);
@@ -219,8 +218,27 @@ function order_done(encoded_order) {
 	});
 }
 
+function order_cancel() {
+	console.log("called order_cancel()");
+}
+
+function row_click(encoded_order) {
+	console.log("called row_click()");
+	const order = JSON.parse(decodeURIComponent(encoded_order));
+	document.getElementById("cancel_order_queue_num").textContent = order.queue_number;
+
+	document.getElementById("cancel_order_items").innerHTML = ""
+	order.items_ordered.forEach(item => {
+		const item_markup = `<span>${item.quantity} ${item.item_name}</span><br>`;
+		document.getElementById("cancel_order_items").insertAdjacentHTML("beforeend", item_markup)
+	})
+
+	document.getElementById("cancel_order_customer_name").textContent = order.customer_name;
+	document.getElementById("cancel_order_total_cost").textContent = order.total_price;
+}
+
 // Get data from table
-function row_click() {
+/* function row_click() {
 	console.log("called row_click()");
 	// find the clicked row
 	var table = document.getElementById("order_table");
@@ -254,7 +272,7 @@ function row_click() {
 		};
 		currentRow.onclick = clickHandle(currentRow);
 	}
-}
+} */
 
 /* function order_done() {
 	console.log("called order_done()");
@@ -403,7 +421,7 @@ function row_click() {
 	}
 } */
 
-function order_cancel() {
+/* function order_cancel() {
 	console.log("called order_cancel()");
 	// START SA ITEMS ORDERED BAGO ORDER QUEUE ang pag DELETE
 
@@ -526,82 +544,6 @@ function order_cancel() {
 			});
 		})
 	})
-}
-
-/* function login_dialog_open(redirect_site) {
-	console.log(`called login_dialog_open(${redirect_site})`)
-
-	const fav_dialog = document.getElementById("login_dialog");
-	fav_dialog.classList.add("active-dialog");
-	fav_dialog.classList.remove("hidden");
-
-	document.getElementById("login_redirect_site").textContent = redirect_site;
-
-	if (redirect_site === "inventory.html")
-		document.getElementById("login_dialog_header").innerHTML = "Manage Menu Inventory";
-	if (redirect_site === "registration.html")
-		document.getElementById("login_dialog_header").innerHTML = "Manage Users/Employee";
-	if (redirect_site === "kiosk-devices.html")
-		document.getElementById("login_dialog_header").innerHTML = "Manage Kiosk Devices";
-	if (redirect_site === "order-history.html")
-		document.getElementById("login_dialog_header").innerHTML = "Order History and Statistics";
-	if (redirect_site === "designer.html")
-		document.getElementById("login_dialog_header").innerHTML = "Menu/Kiosk Designer";
-
-	fav_dialog.showModal();
-}
-
-function login() {
-	console.log("called login()");
-	const redirect_site = document.getElementById("login_redirect_site").textContent;
-
-	const login_username = document.getElementById("login_username").value.trim();
-	const login_password = document.getElementById("login_password").value;
-	const login_password_hash = crypto.createHash('sha256').update(login_password).digest('hex');
-
-	const feature_privilege_map = {
-		"inventory.html": "inventory_priv",
-		"registration.html": "manage_employee_priv",
-		"kiosk-devices.html": "manage_devices_priv",
-		"order-history.html": "view_reports_priv",
-		"designer.html": "design_priv",
-	}
-	let feature_privilege = feature_privilege_map[redirect_site];
-
-	const query = `SELECT name, password_hash, ${feature_privilege} FROM registered_employees WHERE name = "${login_username}"`;
-	connection.query(query, (error, result) => {
-		if (error) throw error;
-
-		const user_data = result;
-
-		// Error function if the username didn't exists
-		if (user_data.length === 0) {
-			dialog_open('login_invalid_username_dialog');
-		}
-
-		if (user_data.length > 0) {
-			const user_row = user_data[0];
-			const password = user_row.password_hash;
-			const converted_hash_password = Buffer.from(password).toString('utf8');
-			const feature_priv_status = user_row[feature_privilege];
-
-			if (converted_hash_password === login_password_hash) {
-				if (feature_priv_status === 1) {
-					location.replace(redirect_site);
-				}
-				else {
-					dialog_open('lack_access_privilege_dialog');
-					// clear password input box
-					document.getElementById("login_password").value = ""
-				}
-			}
-			else {
-				dialog_open('login_invalid_password_dialog');
-				// clear password input box
-				document.getElementById("login_password").value = ""
-			}
-		}
-	});
 } */
 
 function daily_order_stats() {

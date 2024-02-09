@@ -38,9 +38,11 @@
 			</a>
 			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
 				<button onclick="refresh_menu_items()" class="btn border btn-outline-secondary border-1 shadow-sm">
-					<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-						<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
-						<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+					<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
+						class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+						<path
+							d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
 					</svg>
 					Refresh
 				</button>
@@ -50,7 +52,8 @@
 	<!--End of Navigation Bar-->
 
 	<!--Sidebar-->
-	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
 		<div class="offcanvas-header">
 			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -60,31 +63,36 @@
 				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
 					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
 				</a>
-				<button onclick="login_dialog_open('inventory_revised.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
 				</button>
-				<button onclick="login_dialog_open('registration.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('registration.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
 				</button>
-				<button onclick="login_dialog_open('kiosk-devices.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('kiosk-devices.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
 				</button>
-				<button  onclick="login_dialog_open('order-history.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('order-history.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
 				</button>
-				<button onclick="login_dialog_open('designer.html')" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('designer.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
 				</button>
-				<button id="logout_button" onclick="logout_user()" class="d-none position-absolute bottom-0 btn mb-2 border border-1 shadow-sm pb-2">
+				<button id="logout_button" onclick="logout_user()"
+					class="d-none position-absolute bottom-0 btn btn-outline-warning mb-2 shadow-sm pb-2">
 					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
 					<span>Logout</span>
 					<span id="user_span" class="d-none">
-						"
-						<span id="user_name">user name</span>
-						"
+						"<span id="user_name">user name</span>"
 					</span>
 				</button>
-				<button id="login_button" onclick="login_dialog_open()" class="position-absolute bottom-0 btn mb-2 border border-1 shadow-sm pb-2">
+				<button id="login_button" onclick="login_dialog_open()"
+					class="position-absolute bottom-0 btn btn-outline-primary mb-2 shadow-sm pb-2">
 					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
 					Login
 				</button>
@@ -113,8 +121,8 @@
 		<!-- 			<th class="text-center">Actions</th> -->
 		<!-- 		</tr> -->
 		<!-- 	</thead> -->
-			<!-- <tbody id="order-list"> -->
-			<!-- </tbody> -->
+		<!-- <tbody id="order-list"> -->
+		<!-- </tbody> -->
 		<!-- </table> -->
 		<div class="row fw-bold p-3">
 			<div class="col text-center">
@@ -142,55 +150,54 @@
 	<br><br>
 
 	<!-- Cancel Order Dialog -->
-	<dialog id="cancel_order_dialog" class="hidden rounded border border-dark-subtle shadow">
-		<div class="container text-center">
-			<h5 class="text-center ">You are about to cancel a order!</h5>
-			<div class="row pb-2">
-				<div class="col">
-					<span class="">Order #</span>
-					<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number"
-						class="text-center form-control mb-2" disabled />
+	<dialog id="cancel_order_dialog" class="d-none rounded border border-2 border-danger shadow" style="width: 650px">
+		<div class="text-center">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 class="">You are about to cancel an order!</h5>
+			<span for="cancel_order_queue_num">Queue Number</span>
+			<div id="cancel_order_queue_num" class="fw-bold fs-1">
+			</div>
+		</div>
 
-					<span class="">Food ordered</span>
-					<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered"
-						class="form-control text-center mb-2" disabled>
-					</textarea>
+		<div class="row pb-2">
+			<div class="col-md-6">
+				<span class="">Item/s ordered</span>
+				<div id="cancel_order_items" class="border border-1 shadow rounded-3 mb-2 p-2">
 
-					<span class="">Customer name</span>
-					<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel"
-						placeholder="Customer Name" class="form-control text-center mb-2"
-						disabled />
-
-					<span class="">Total Price</span>
-					<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price"
-						class="form-control text-center" disabled />
 				</div>
-				<div class="col align-self-center">
-					<div>
-						<p class="">Proceed anyways?</p>
-						<center>
-							<button onclick="dialog_close('cancel_order_dialog')"
-								class="btn border btn-outline-success border-1 shadow-sm">
-								<span class="mx-2"> NO </span>
-							</button>
-						</center>
-						<br>
-						<center>
-							<button onclick="order_cancel()"
-								class="btn border btn-outline-danger border-1 shadow-sm">
-								<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
-								<span class="mx-2"> YES </span>
-								<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
-							</button>
-						</center>
-					</div>
+
+				<span class="">Customer name</span>
+				<div id="cancel_order_customer_name" class="border border-1 shadow rounded-3 mb-2 p-2">
+				</div>
+
+				<span class="">Total Cost</span>
+				<div id="cancel_order_total_cost" class="fw-bold fs-1 text-center border border-1 shadow rounded-3">
+				</div>
+			</div>
+			<div class="col text-center pt-4">
+				<div>
+					<p class="fs-3">Proceed anyways?</p>
+					<center>
+						<button onclick="dialog_close('cancel_order_dialog')"
+							class="btn btn-outline-success border-1 rounded-pill shadow-sm">
+							<span class="mx-2"> NO </span>
+						</button>
+					</center>
+					<br>
+					<center>
+						<button onclick="order_cancel()" class="btn btn-outline-danger border-1 rounded-pill shadow-sm">
+							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+							<span class="mx-2"> YES </span>
+							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+						</button>
+					</center>
 				</div>
 			</div>
 		</div>
 	</dialog>
 
 	<!--Cancel Order Success Dialog-->
-	<dialog id="cancel_order_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+	<dialog id="cancel_order_success_dialog" class="d-none rounded-lg drop-shadow-lg mx-auto text-center">
 		<span>Order #</span>
 		<span id="cancel_order_num_placeholder">Order Number</span>
 		<span> is successfully canceled!</span><br>
@@ -201,42 +208,37 @@
 	</dialog>
 
 	<!--Done Order Success Dialog-->
-	<dialog id="done_order_success_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
+	<dialog id="done_order_success_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
 		<span>Order #</span>
 		<span id="done_order_num_placeholder">Order Number</span>
 		<span> is successfully served!</span><br>
-		<button onclick="location.reload()"
-			class="btn border btn-success border-1 shadow-sm">
+		<button onclick="location.reload()" class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- login dialog -->
-	<dialog id="login_dialog" class="hidden rounded border border-dark-subtle shadow">
-		<p id="login_redirect_site" class="hidden"></p>
+	<dialog id="login_dialog" class="d-none rounded border border-dark-subtle shadow">
+		<p id="login_redirect_site" class="d-none"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
 
 		<center>
-			<input type="text" id="login_username" placeholder=""
-				class="form-control text-center w-75">
+			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75">
 			<label for="login_username" class="pb-2">Username</label>
 
-			<input type="password" id="login_password" placeholder=""
-				class="form-control w-75 text-center">
+			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center">
 			<label for="login_password" class="">Password</label>
 		</center>
 
 		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
 			<center>
-				<button onclick="login_user()"
-					class="btn border btn-success border-1 shadow-sm">
+				<button onclick="login_user()" class="btn border btn-success border-1 shadow-sm">
 					LOGIN
 				</button>
 
 				<br>
 
-				<button onclick="dialog_close('login_dialog')"
-					class="btn border btn-danger border-1 shadow-sm">
+				<button onclick="dialog_close('login_dialog')" class="btn border btn-danger border-1 shadow-sm">
 					CANCEL
 				</button>
 			</center>
@@ -244,28 +246,25 @@
 	</dialog>
 
 	<!-- invalid login username dialog -->
-	<dialog id="login_invalid_username_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
+	<dialog id="login_invalid_username_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
 		<h1>This username doesn't exists!</h1>
-		<button onclick="dialog_close('login_invalid_username_dialog')"
-			class="btn border btn-success border-1 shadow-sm">
+		<button onclick="dialog_close('login_invalid_username_dialog')" class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- invalid login password dialog -->
-	<dialog id="login_invalid_password_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
+	<dialog id="login_invalid_password_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
 		<h1>Password doesn't matched!</h1>
-		<button onclick="dialog_close('login_invalid_password_dialog')"
-			class="btn border btn-success border-1 shadow-sm">
+		<button onclick="dialog_close('login_invalid_password_dialog')" class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- when the user lacks access privilege -->
-	<dialog id="lack_access_privilege_dialog" class="hidden rounded text-center border border-dark-subtle shadow">
+	<dialog id="lack_access_privilege_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
 		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
-		<button onclick="dialog_close('lack_access_privilege_dialog')"
-			class="btn border btn-success border-1 shadow-sm">
+		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
