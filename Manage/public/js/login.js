@@ -123,9 +123,9 @@ function process_site_access_rights(site) {
 		// console.log(`redirect to ${site}`);
 		location.replace(site);
 	}
-	// if the navbar login button is clicked then redirect to main.html
+	// if the navbar login button is clicked then redirect to main_revised.html
 	else if (site === "")
-		location.replace("main.html");
+		location.replace("main_revised.html");
 	else {
 		dialog_open("lack_access_privilege_dialog");
 	}
@@ -138,7 +138,7 @@ function logout_user() {
 	console.log("called logout_user()");
 	sessionStorage.removeItem("employee_name");
 	sessionStorage.removeItem("employee_rights");
-	location.replace("main.html");
+	location.replace("main_revised.html");
 
 	// hide login button, show logout button
 	login_button.classList.remove("d-none");

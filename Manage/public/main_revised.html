@@ -41,39 +41,47 @@
 	<!--End of Navigation Bar-->
 
 	<!--Sidebar-->
-	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
 		<div class="offcanvas-header">
 			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		</div>
 		<div class="offcanvas-body">
-			<div>
-				<span id="navbar_user" class="d-none">
+			<div class="mb-5">
+				<span id="user_span" class="d-none">
 					User:
-					<span id="navbar_username">test</span>
+					<span id="user_name">test</span>
 				</span>
+				<button id="login_button" onclick="login_dialog_open()" class="btn">Login</button>
+				<button id="logout_button" onclick="logout_user()" class="btn d-none">Logout</button>
 			</div>
-			<button id="navbar_login" onclick="login_dialog_open()" class="btn btn-outline-primary my-2">Login</button>
-			<button id="navbar_logout" onclick="logout_user()" class="btn btn-outline-primary d-none my-2">Logout</button>
-			<br>
 			<div class="list-group">
-				<!-- <a href="inventory.html">Menu Items</a> -->
-				<button class="list-group-item list-group-item-action active">Ordere Queue</button>
+				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</a>
+				<button class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration.html')"
+					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices.html')"
+					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button onclick="login_dialog_open('order-history.html')"
+					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button onclick="login_dialog_open('designer.html')"
+					class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+			</div>
+			<div>
 
-				<!-- <a href="inventory.html">Menu Items</a> -->
-				<button onclick="login_dialog_open('inventory_revised.html')" class="list-group-item list-group-item-action">Menu Items</button>
-
-				<!-- <a href="registration.html">Manage Users</a> -->
-				<button onclick="login_dialog_open('registration.html')" class="list-group-item list-group-item-action">Manage Users</button>
-
-				<!-- <a href="kiosk-devices.html">Kiosk Devices</a> -->
-				<button onclick="login_dialog_open('kiosk-devices.html')" class="list-group-item list-group-item-action">Kiosk Devices</button>
-
-				<!-- <a href="order-stats.html">Order Stats</a> -->
-				<button onclick="login_dialog_open('order-history.html')" class="list-group-item list-group-item-action">Order Stats</button>
-				
-				<!-- <a href="designer.html">Designer</a> -->
-				<button onclick="login_dialog_open('designer.html')" class="list-group-item list-group-item-action">Designer</button>
 			</div>
 		</div>
 	</div>
