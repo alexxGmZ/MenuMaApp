@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MenuMaApp Manage: Designer Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+</head>
+
+<body>
+	<!-- navbar -->
+	<div class="navbar fixed-top border border-bottom bg-body-tertiary z-3">
+		<div class="d-flex flex-row">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+			</a>
+			<button onclick="dialog_open('create_canvas_dialog')" title="Create new design"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/create-note-svgrepo-com.svg" width="20px">
+			</button>
+			<input type="file" id="input_canvas_json" class="d-none" accept=".json">
+			<button onclick="load_canvas_from_json()" title="Open an existing design"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/open-folder-svgrepo-com.svg" width="20px">
+			</button>
+
+			<button onclick="save_canvas_to_json()" title="Save design" class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/save-svgrepo-com.svg" width="20px">
+			</button>
+			<button onclick="save_canvas_to_jpeg()" title="Export design to JPEG format"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/file-jpg-svgrepo-com.svg" width="20px">
+			</button>
+			<button onclick="save_canvas_to_png()" title="Export design to PNG format"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/file-png-svgrepo-com.svg" width="20px">
+			</button>
+			<input id="canvas_import_image" type="file" class="d-none" accept="image/*">
+			<button onclick="import_image()" title="Import image to canvas" class="btn btn-outline-primary border me-5">
+				<img src="./assets/svg/designer/download-svgrepo-com.svg" width="20px">
+			</button>
+
+			<button onclick="copy_selected_objects()" title="Copy selected object/s"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/copy-svgrepo-com.svg" width="20px">
+			</button>
+			<button onclick="cut_selected_objects()" title="Cut selected object/s"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/cut-svgrepo-com.svg" width="20px">
+			</button>
+			<button onclick="paste_copied_objects()" title="Paste copied/cutted object/s"
+				class="btn btn-outline-primary border me-1">
+				<img src="assets/svg/designer/paste-svgrepo-com.svg" width="20px">
+			</button>
+		</div>
+	</div>
+	<!-- end of navbar -->
+
+	<!-- sidebar -->
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+				<a href="./main_revised.html"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</a>
+				<button onclick="" class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button onclick="login_dialog_open('order-history.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button class="btn btn-outline-primary bg-primary-subtle mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+				<button id="logout_button" onclick="logout_user()"
+					class="d-none position-absolute bottom-0 btn btn-outline-warning mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
+					<span>Logout</span>
+					<span id="user_span" class="d-none">
+						"<span id="user_name">user name</span>"
+					</span>
+				</button>
+				<button id="login_button" onclick="login_dialog_open()"
+					class="position-absolute bottom-0 btn btn-outline-primary mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
+					Login
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- end of sidebar -->
+
+	<!-- sidebar tools -->
+	<div class="d-flex position-fixed flex-column h-100 bg-body-tertiary border-end border-2">
+		<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
+			class="btn btn-outline-warning mx-1 mb-1 rounded-pill" style="margin-top: 100px">
+			<img src="./assets/svg/bootstrap/arrow-repeat.svg" width="20px" alt="">
+		</button>
+		<button onclick="dialog_open('load_current_synced_design_dialog')" title="Load current synced design"
+			class="btn btn-outline-warning mx-1 mb-4 rounded-pill">
+			<img src="./assets/svg/bootstrap/bi-box-arrow-in-down.svg" width="20px" alt="">
+		</button>
+
+		<button onclick="generate_rectangle()" title="Generate rectangle"
+			class="btn btn-outline-primary mx-1 mb-1 rounded-pill">
+			<img src="assets/svg/designer/rectangle-tool-svgrepo-com.svg" width="20px" alt="">
+		</button>
+		<button onclick="generate_circle()" title="Generate circle"
+			class="btn btn-outline-primary mx-1 mb-1 rounded-pill">
+			<img src="assets/svg/designer/circle-tool-svgrepo-com.svg" width="20px" alt="">
+		</button>
+		<button onclick="generate_text()" title="Generate a text box"
+			class="btn btn-outline-primary mx-1 mb-1 rounded-pill">
+			<img src="assets/svg/designer/text-tool-svgrepo-com.svg" width="20px" alt="">
+		</button>
+		<button onclick="generate_line()" title="Generate a line" class="btn btn-outline-primary mx-1 mb-1 rounded-pill">
+			<img src="assets/svg/designer/line-tool-svgrepo-com.svg" width="20px" alt="">
+		</button>
+		<button onclick="dialog_open('generate_item_objects_dialog'); display_item_cards()"
+			title="Generate objects from items in the inventory" class="btn btn-outline-primary mx-1 mb-1 rounded-pill">
+			<img src="assets/svg/designer/cards-svgrepo-com.svg" width="20px" alt="">
+		</button>
+	</div>
+	<!-- end of sidebar tools -->
+
+	<!-- statusbar -->
+	<div class="fixed-bottom bg-body-tertiary p-1 border-top">
+		<div class="row">
+			<div class="col d-flex flex-row">
+				<span class="fs-6 me-1">Canvas Resolution: </span>
+				<span id="canvas_resolution" class="fs-6 fw-bold me-2"></span>
+				<button onclick="dialog_open('change_canvas_resolution_dialog')"
+					class="bg-white border border-2 rounded-pill me-3">
+					<img src="assets/svg/designer/edit-2-svgrepo-com.svg" width="15px">
+				</button>
+
+				<label for="canvas_pointer_coordinates_x" class="me-1">x:</label>
+				<span id="canvas_pointer_coordinates_x" class="me-2 fw-bold"></span>
+				<label for="canvas_pointer_coordinates_y" class="me-1">y:</label>
+				<span id="canvas_pointer_coordinates_y" class="fw-bold"></span>
+			</div>
+			<div class="col d-flex justify-content-end">
+				<span id="scale_multiplier_text" class="me-1"></span>
+				<button id="canvas_scaler_minus" class="bg-white border border-2 rounded-pill me-1">
+					<img src="assets/svg/designer/minus-circle-1442-svgrepo-com.svg" width="10px" alt="">
+				</button>
+				<input id="canvas_scale_range_input" type="range" value="1" min="0.3" max="2" step="0.1" class="me-1">
+				<button id="canvas_scaler_plus" class="bg-white border border-2 rounded-pill">
+					<img src="assets/svg/designer/plus-circle-1441-svgrepo-com.svg" width="10px" alt="">
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- end of statusbar -->
+
+	<!-- canvas area -->
+	<div id="canvas_area" class="" style="margin-left: 70px; padding-top: 70px; margin-bottom: 60px">
+	</div>
+	<!-- end of canvas area -->
+
+	<!-- load current synced design dialog -->
+	<dialog id="load_current_synced_design_dialog" class="d-none border border-2 border-warning bg-warning-subtle rounded-3">
+		<div class="text-center">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h3>Load current synced design?</h3>
+			<p class="mb-5">
+				Save current canvas or you might lose your changes.
+			</p>
+			<button onclick="dialog_close('load_current_synced_design_dialog')" class="btn btn-outline-secondary rounded-pill mb-4">Cancel</button>
+			<br>
+			<button onclick="load_current_synced_design()" class="btn btn-warning rounded-pill">Load</button>
+		</div>
+	</dialog>
+
+	<!-- change canvas resolution dialog -->
+	<dialog id="change_canvas_resolution_dialog" class="d-none">
+		<h1 class="">Change canvas Resolution</h1>
+		<div class="">
+			<label for="change_res_width">Width:</label>
+			<input id="change_res_width" type="number" class="">
+			<p>px</p>
+		</div>
+		<div class="">
+			<label for="change_res_height">Height:</label>
+			<input id="change_res_height" type="number" class="">
+			<p>px</p>
+		</div>
+		<p class="">
+			<b>!!WARNING!!</b>
+			Objects will not scale along with the canvas.
+		</p>
+		<center>
+			<button id="change_canvas_res_button" class="">Change</button>
+			<button onclick="dialog_close('change_canvas_resolution_dialog')" class="">Cancel</button>
+		</center>
+	</dialog>
+
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+
+	<script src="./js/designer/designer.js"></script>
+	<script src="./js/designer/global_events.js"></script>
+	<script src="./js/designer/context_menu.js"></script>
+	<script src="./js/designer/canvas_scaler.js"></script>
+</body>
+
+</html>
