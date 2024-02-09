@@ -27,7 +27,7 @@ function login_dialog_open(redirect_site) {
 	if (!employee_name || employee_name === "") {
 		console.log("not logged in");
 		login_dialog.classList.add("active-dialog");
-		login_dialog.classList.remove("hidden");
+		login_dialog.classList.remove("d-none");
 
 		document.getElementById("login_redirect_site").textContent = redirect_site;
 
