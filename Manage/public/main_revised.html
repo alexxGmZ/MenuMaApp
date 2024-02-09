@@ -1,0 +1,234 @@
+<!--
+	This is for Queue Mode.
+	It facilitates order queue.
+	Intended functions:
+		* cancel orders
+		* release or finish order
+
+	Refer to the designed prototype "Laptop Queue" or "Queue".
+	NOTE: The design or layout may change depending on the status of the project.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MenuMaApp Manage: Queue Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/order-queue.css" rel="stylesheet">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+</head>
+
+<body class="">
+	<!-- navbar -->
+	<nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+				Libres Cafe
+			</a>
+		</div>
+	</nav>
+	<!--End of Navigation Bar-->
+
+	<!--Sidebar-->
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div>
+				<span id="navbar_user" class="d-none">
+					User:
+					<span id="navbar_username">test</span>
+				</span>
+			</div>
+			<button id="navbar_login" onclick="login_dialog_open()" class="btn btn-outline-primary my-2">Login</button>
+			<button id="navbar_logout" onclick="logout_user()" class="btn btn-outline-primary d-none my-2">Logout</button>
+			<br>
+			<div class="list-group">
+				<!-- <a href="inventory.html">Menu Items</a> -->
+				<button class="list-group-item list-group-item-action active">Ordere Queue</button>
+
+				<!-- <a href="inventory.html">Menu Items</a> -->
+				<button onclick="login_dialog_open('inventory_revised.html')" class="list-group-item list-group-item-action">Menu Items</button>
+
+				<!-- <a href="registration.html">Manage Users</a> -->
+				<button onclick="login_dialog_open('registration.html')" class="list-group-item list-group-item-action">Manage Users</button>
+
+				<!-- <a href="kiosk-devices.html">Kiosk Devices</a> -->
+				<button onclick="login_dialog_open('kiosk-devices.html')" class="list-group-item list-group-item-action">Kiosk Devices</button>
+
+				<!-- <a href="order-stats.html">Order Stats</a> -->
+				<button onclick="login_dialog_open('order-history.html')" class="list-group-item list-group-item-action">Order Stats</button>
+				
+				<!-- <a href="designer.html">Designer</a> -->
+				<button onclick="login_dialog_open('designer.html')" class="list-group-item list-group-item-action">Designer</button>
+			</div>
+		</div>
+	</div>
+	<!--END OF Sidebar-->
+
+	<br>
+	<br>
+	<br>
+
+	<center>
+		<h1 class="font-extrabold">Order Queue Below</h1>
+	</center>
+
+	<!--SHOW FOOD QUEUE ORDERS-->
+	<div class="ml-16 border-l">
+		<table id="order_table" class="justify-center mx-auto table-fixed md:table-fixed" onclick="row_click()">
+			<tbody id="order-list" class="grid grid-cols-3 gap-4 place-content-center">
+
+				<!-- call the display_orders() function -->
+
+			</tbody>
+		</table>
+	</div>
+
+	<br><br>
+
+	<!-- Cancel Order Dialog -->
+	<dialog id="cancel_order_dialog" class="hidden rounded-lg drop-shadow-lg bg-red-200 mx-auto">
+		<p class="text-center">You are about to cancel a order!</p>
+		<div class="grid grid-cols-2 gap-4 place-content-center">
+			<div>
+				<p class="text-center font-bold">Order #</p>
+				<input type="text" id="order_num_cancel" name="order_num_cancel" placeholder="Order Number"
+					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled />
+
+				<p class="text-center font-bold">Food ordered</p>
+				<textarea type="text" id="order_foods_cancel" name="order_foods_cancel" placeholder="Foods Ordered"
+					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md h-24" disabled>
+				</textarea>
+
+				<p class="text-center font-bold">Customer name</p>
+				<input type="text" id="order_customer_name_cancel" name="order_customer_name_cancel"
+					placeholder="Customer Name" class="bg-white w-full placeholder:text-slate-800 text-center rounded-md"
+					disabled />
+
+				<p class="text-center font-bold">Total Price</p>
+				<input type="text" id="order_price_cancel" name="order_price_cancel" placeholder="Total Price"
+					class="bg-white w-full placeholder:text-slate-800 text-center rounded-md" disabled />
+			</div>
+			<div class="grid place-items-center">
+				<div>
+					<p class="text-center pb-3">Proceed anyways?</p>
+					<center>
+						<button onclick="dialog_close('cancel_order_dialog')"
+							class="font-bold rounded-full mt-2 py-2 px-2 bg-green-600 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+							<span class="mx-2"> NO </span>
+						</button>
+					</center>
+					<center>
+						<button onclick="order_cancel()"
+							class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-red-500 bg-red-600 hover:text-zinc-50 hover:drop-shadow-lg w-11/12 flex items-center justify-center">
+							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+							<span class="mx-2"> YES </span>
+							<img src="assets/svg/exclamation.svg" class="hover:text-zinc-50">
+						</button>
+					</center>
+				</div>
+			</div>
+		</div>
+	</dialog>
+
+	<!--Cancel Order Success Dialog-->
+	<dialog id="cancel_order_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+		<span>Order #</span>
+		<span id="cancel_order_num_placeholder">Order Number</span>
+		<span> is successfully canceled!</span><br>
+		<button onclick="location.reload()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+	<!--Done Order Success Dialog-->
+	<dialog id="done_order_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+		<span>Order #</span>
+		<span id="done_order_num_placeholder">Order Number</span>
+		<span> is successfully served!</span><br>
+		<button onclick="location.reload()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK
+		</button>
+	</dialog>
+
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto w-full max-w-xs">
+		<p id="login_redirect_site" class="hidden"></p>
+		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
+
+		<center>
+			<input type="text" id="login_username" placeholder=""
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none sm:text-sm w-2/3 text-center"><br>
+			<label for="login_username" class="">Username</label><br>
+
+			<input type="password" id="login_password" placeholder=""
+				class="my-1.5 placeholder:text-slate-400 bg-white border border-slate-300 rounded-md py-2 pl-2 pr-3 mt-4 shadow-sm focus:outline-none sm:text-sm w-2/3 text-center"><br>
+			<label for="login_password" class="">Password</label>
+		</center>
+
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
+			<center>
+				<button onclick="login_user()"
+					class="rounded-full bg-teal-400 text-white py-1 hover:bg-teal-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+					LOGIN
+				</button>
+
+				<br>
+
+				<button onclick="dialog_close('login_dialog')"
+					class="rounded-full bg-rose-500 text-white py-1 hover:bg-rose-800 hover:text-zinc-50 hover:drop-shadow-lg mt-4 w-1/2">
+					CANCEL
+				</button>
+			</center>
+		</div>
+	</dialog>
+
+	<!-- invalid login username dialog -->
+	<dialog id="login_invalid_username_dialog" class="hidden text-center rounded-lg drop-shadow-lg">
+		<h1>This username doesn't exists!</h1>
+		<button onclick="dialog_close('login_invalid_username_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+			OK
+		</button>
+	</dialog>
+
+	<!-- invalid login password dialog -->
+	<dialog id="login_invalid_password_dialog" class="hidden text-center rounded-lg drop-shadow-lg">
+		<h1>Password doesn't matched!</h1>
+		<button onclick="dialog_close('login_invalid_password_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">
+			OK
+		</button>
+	</dialog>
+
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
+		<button onclick="dialog_close('lack_access_privilege_dialog')"
+			class="mt-4 font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg w-3/12">
+			OK
+		</button>
+	</dialog>
+
+	<script src="./js/login.js"></script>
+	<script src="./js/order-queue.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+</body>
+
+</html>
