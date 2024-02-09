@@ -79,7 +79,7 @@
 					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
 				</button>
-				<button onclick="login_dialog_open('designer.html')"
+				<button onclick="login_dialog_open('designer_revised.html')"
 					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
 				</button>
@@ -151,9 +151,11 @@
 
 	<!-- Cancel Order Dialog -->
 	<dialog id="cancel_order_dialog" class="d-none rounded border border-2 border-danger shadow" style="width: 650px">
-		<div class="text-center">
+		<div class="text-center bg-danger-subtle rounded-3 p-2 mb-2">
 			<img src="assets/svg/exclamation.svg" width="80px" class="">
 			<h5 class="">You are about to cancel an order!</h5>
+		</div>
+		<div class="text-center">
 			<span for="cancel_order_queue_num">Queue Number</span>
 			<div id="cancel_order_queue_num" class="fw-bold fs-1">
 			</div>

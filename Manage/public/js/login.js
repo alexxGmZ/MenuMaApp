@@ -37,7 +37,7 @@ function login_dialog_open(redirect_site) {
 			"registration.html": "Manage Users/Employee",
 			"kiosk-devices.html": "Manage Kiosk Devices",
 			"order-history.html": "Order History and Statistics",
-			"designer.html": "Menu/Kiosk Designer"
+			"designer_revised.html": "Menu/Kiosk Designer"
 		};
 
 		login_dialog_header.innerHTML = siteHeaders[redirect_site] || "";
@@ -110,7 +110,7 @@ function process_site_access_rights(site) {
 	// console.log("employee_rights", employee_rights);
 
 	const site_access_rights_map = {
-		"designer.html": "designer",
+		"designer_revised.html": "designer",
 		"inventory_revised.html": "menu_items",
 		"order-history.html": "reports",
 		"registration.html": "manage_users",
@@ -130,9 +130,6 @@ function process_site_access_rights(site) {
 		dialog_open("lack_access_privilege_dialog");
 	}
 }
-
-// Example usage:
-// process_site_access_rights("designer.html");
 
 function logout_user() {
 	console.log("called logout_user()");
