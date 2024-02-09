@@ -26,7 +26,7 @@ let canvas_height = 0;
 let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
-const canvas_css_classes = "border-gray-200 border-2 rounded-lg dark:border-gray-700 mt-1 sm:order-1 sm:ml-0 sm:mr-4"
+const canvas_css_classes = ""
 let canvas_bg_color = "rgb(255, 255, 255)"
 
 function create_canvas() {
@@ -179,19 +179,11 @@ function generate_canvas_area(canvas_height, canvas_width, callback) {
 	// canvas_element.width = canvas_width
 	// canvas_element.height = canvas_height
 
-	// WARN: do not remove coz i don't know why but if this is removed there is no margin
-	// bellow the canvas and tailwind css class like "mb" doesn't work
-	const canvas_resolution_element = document.createElement("p");
-	canvas_resolution_element.id = "canvas_padding";
-	canvas_resolution_element.className = "mt-10";
-	// canvas_resolution_element.textContent = `Canvas Resolution: ${canvas_width}x${canvas_height}`;
-
 	document.getElementById("canvas_resolution").textContent = `${canvas_width}x${canvas_height}`;
 
 	// Append the canvas element to the container div
 	const canvas_placeholder = document.querySelector("#canvas_area");
 	canvas_placeholder.innerHTML = "";
-	canvas_placeholder.appendChild(canvas_resolution_element);
 	canvas_placeholder.appendChild(canvas_element);
 
 	canvas = new fabric.Canvas("canvas", {
