@@ -339,8 +339,8 @@ function row_click() {
 }
 
 // function to categorized the table
-function display_choosed_category(category) {
-	console.log(`called display_choosed_category(${category})`);
+function categorize_items(category) {
+	console.log(`called categorized(${category})`);
 
 	// empty the registered_devices table body
 	const table_body = document.getElementById("menu_items_list");
@@ -382,30 +382,6 @@ function display_choosed_category(category) {
 	})
 }
 
-// sorting drink table based on the category
-function drink_categorized_table() { display_choosed_category('Drinks') }
-
-// sorting snacks table based on the category
-function snacks_categorized_table() { display_choosed_category('Snacks') }
-
-// sorting add_day_silog table based on the category
-function alldaysilog_categorized_table() { display_choosed_category('All Day Silog') }
-
-// sorting short_orders table based on the category
-function shortorders_categorized_table() { display_choosed_category('Short Orders') }
-
-// sorting freshly table based on the category
-function freshly_categorized_table() { display_choosed_category('Freshly Squeeze') }
-
-// sorting other_beverages table based on the category
-function other_categorized_table() { display_choosed_category('Other Beverages') }
-
-// sorting beer table based on the category
-function beer_categorized_table() { display_choosed_category('Beer') }
-
-// sorting extras table based on the category
-function extras_categorized_table() { display_choosed_category('Extras') }
-
 // function to view the items via ID only
 function search_item() {
 	console.log("called search_item()")
@@ -425,7 +401,7 @@ function search_item() {
 		document.getElementById("search_error_text_placeholder").innerHTML = "Only numbers are allowed!"
 
 	} else {
-		
+
 		// proceed if number
 		const error_search_text = document.getElementById("search_error_text_placeholder")
 		error_search_text.style.display = "none"

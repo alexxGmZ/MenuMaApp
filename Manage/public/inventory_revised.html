@@ -53,27 +53,28 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" id="drink_category_dropdown" href="#"
-									onclick="drink_categorized_table()">Drinks</a></li>
+									onclick="categorize_items('Drinks')">Drinks</a></li>
 							<li><a class="dropdown-item" id="snacks_category_dropdown" href="#"
-									onclick="snacks_categorized_table()">Snacks</a></li>
+									onclick="categorize_items('Snacks')">Snacks</a></li>
 							<li><a class="dropdown-item" id="alldaysilog_category_dropdown" href="#"
-									onclick="alldaysilog_categorized_table()">All Day Silog</a></li>
+									onclick="categorize_items('All Day Silog')">All Day Silog</a></li>
 							<li><a class="dropdown-item" id="shortorders_category_dropdown" href="#"
-									onclick="shortorders_categorized_table()">Short Orders</a></li>
+									onclick="categorize_items('Short Orders')">Short Orders</a></li>
 							<li><a class="dropdown-item" id="freshly_category_dropdown" href="#"
-									onclick="freshly_categorized_table()">Freshly Squeeze</a></li>
+									onclick="categorize_items('Freshly Squeeze')">Freshly Squeeze</a></li>
 							<li><a class="dropdown-item" id="other_category_dropdown" href="#"
-									onclick="other_categorized_table()">Other Beverages</a></li>
+									onclick="categorize_items('Other Beverages')">Other Beverages</a></li>
 							<li><a class="dropdown-item" id="beer_category_dropdown" href="#"
-									onclick="beer_categorized_table()">Beer</a></li>
+									onclick="categorize_items('Beer')">Beer</a></li>
 							<li><a class="dropdown-item" id="extras_category_dropdown" href="#"
-									onclick="extras_categorized_table()">Extras</a></li>
+									onclick="categorize_items('Extras')">Extras</a></li>
 						</ul>
 					</li>
 				</ul>
 				<div class="text-center">
 					<div class="input-group">
-						<input class="form-control me-2" type="search" placeholder="Search via ID" aria-label="Search" id="search_item_box">
+						<input class="form-control me-2" type="search" placeholder="Search via ID" aria-label="Search"
+							id="search_item_box">
 						<button class="btn btn-outline-primary px-2" type="submit" onclick="search_item()">Search</button>
 					</div>
 					<span class="text-danger" id="search_error_text_placeholder">Placeholder</span>
