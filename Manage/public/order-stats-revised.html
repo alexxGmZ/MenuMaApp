@@ -1,0 +1,446 @@
+<!--
+	This is for Order Stats Viewing Mode.
+	It facilitates order revenue every date.
+	Intended functions:
+	* manage order revenues
+
+	Refer to the designed prototype "Laptop Queue" or "Queue".
+	NOTE: The design or layout may change depending on the status of the project.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MenuMaApp Manage: Order Statistics</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+	<link href="./styles/c3css/c3.min.css" rel="stylesheet">
+	<script src="./js/c3js/d3.v5.min.js" charset="utf-8"></script>
+	<script src="./js/c3js/c3.min.js"></script>
+	<script src="./js/c3js/html2canvas.min.js"></script>
+</head>
+
+<body class="px-3 py-3">
+
+	<!--NAV BAR-->
+	<nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
+		<div class="d-flex flex-row">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+				Libres Cafe
+			</a>
+			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+				<a href="order-history-revised.html"
+					class="btn border btn-outline-secondary border-1 shadow-sm">
+					Back to order History
+				</a>
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<span class="ps-5 pe-2 align-self-center">View Charts:</span>
+					<li class="nav-item px-1">
+						<button onclick="dialog_open('total_order_dialog'); total_order_chart()" id=""
+							class="btn border btn-outline-primary border-1 shadow-sm">
+							<img src="assets/svg/pencil-alt.svg">
+							<span class="mx-2">Orders </span>
+						</button>
+					</li>
+					<li class="nav-item px-1">
+						<button onclick="dialog_open('total_earnings_dialog'); total_earnings_chart()" id=""
+							class="btn border btn-outline-info border-1 shadow-sm">
+							<img src="assets/svg/cash.svg">
+							<span class="mx-2">Earnings </span>
+						</button>
+					</li>
+					<li class="nav-item px-1">
+						<button onclick="dialog_open('best_seller_dialog'); best_seller_items()" id=""
+							class="btn border btn-outline-success border-1 shadow-sm">
+							<img src="assets/svg/thumb-up.svg">
+							<span class="mx-2">Best Seller </span>
+						</button>
+					</li>
+					<li class="nav-item px-1">
+						<button onclick="dialog_open('quantity_sold_dialog'); item_quantity_sold()" id=""
+							class="btn border btn-outline-secondary border-1 shadow-sm">
+							<img src="assets/svg/shopping-bag.svg">
+							<span class="mx-2">Items Sold </span>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--END OF NAV BAR-->
+	
+	<!--SIDE BAR-->
+
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</a>
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button onclick="login_dialog_open('designer_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+				<button id="logout_button" onclick="logout_user()"
+					class="d-none position-absolute bottom-0 btn btn-outline-warning mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
+					<span>Logout</span>
+					<span id="user_span" class="d-none">
+						"<span id="user_name">user name</span>"
+					</span>
+				</button>
+				<button id="login_button" onclick="login_dialog_open()"
+					class="position-absolute bottom-0 btn btn-outline-primary mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
+					Login
+				</button>
+			</div>
+		</div>
+	</div>
+	
+	<!--END OF SIDE BAR-->
+
+	<br><br><br>
+
+	<center>
+		<h1 class="font-extrabold pb-3">SHOWING ORDER STATS</h1>
+	</center>
+	<div>
+		<center>
+			<div class="input-group mb-3 w-25">
+				<span class="input-group-text">
+					Total Earnings:
+				</span>
+				<input type="text" placeholder="Number" id="total_earning_placeholder"
+						class="form-control text-center" disabled />
+			</div>
+		</center>
+		
+		<div class="">
+			<div class="row fw-bold p-3">
+				<div class="col text-center">
+					TRANSACTION DATE
+				</div>
+				<div class="col text-center">
+					ORDERS TAKEN
+				</div>
+				<div class="col text-center">
+					ORDERS SERVED
+				</div>
+				<div class="col text-center">
+					ORDERS CANCELLED
+				</div>
+				<div class="col text-center">
+					TOTAL EARNINGS
+				</div>
+			</div>
+			<div id="order_stats_list" class="list-group">
+				<!--OUTPUT OF HISTORY from order-stats.js-->
+			</div>
+		</div>
+	</div>
+
+	<br>
+	<br>
+
+	<!-- Dialog for deleting the stats -->
+	<dialog id="order_stats_dialog" class="rounded-lg drop-shadow-lg mx-auto w-full max-w-lg">
+		<p class="text-center">Confirm to remove this stats?</p>
+		<br>
+		<div class="grid grid-cols-2 gap-4">
+			<div>
+				<p class="pl-1 pb-1">Transaction Date:</p>
+				<input type="text" id="transaction_date_placeholder" name="transaction_date_placeholder"
+					placeholder="Transaction Date"
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
+
+				<p class="pl-1 pb-1 pt-1">Orders Taken:</p>
+				<input type="text" id="total_orders_taken_placeholder" name="total_orders_taken_placeholder"
+					placeholder="Orders Taken"
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
+
+				<p class="pl-1 pb-1 pt-1">Orders Served:</p>
+				<input type="text" id="total_orders_done_placeholder" name="total_orders_done_placeholder"
+					placeholder="Orders Served"
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
+			</div>
+			<div>
+				<p class="pl-1 pb-1">Orders Canceled:</p>
+				<input type="text" id="total_orders_canceled_placeholder" name="total_orders_canceled_placeholder"
+					placeholder="Orders Canceled"
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled />
+
+				<p class="pl-1 pb-1">Earnings:</p>
+				<input type="text" id="earnings_placeholder" name="earnings_placeholder" placeholder="Earnings"
+					class="bg-white placeholder:text-slate-800 rounded-md border border-slate-300 pl-2 font-bold mx-auto w-full max-w-lg"
+					disabled /><br>
+				<p class="text-center">Confirm to delete it?</p>
+				<center>
+					<button onclick="dialog_close('order_stats_dialog')"
+						class="font-bold rounded-lg mt-2 py-2 px-2 bg-gray-300 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg">
+						<span class="mx-2"> NO </span>
+					</button>
+					<button onclick="remove_stats()"
+						class="font-bold rounded-lg mt-2 py-2 px-2 hover:bg-green-500 bg-gray-300 hover:text-zinc-50 hover:drop-shadow-lg">
+						<span class="mx-2"> YES </span>
+					</button>
+				</center>
+			</div>
+		</div>
+	</dialog>
+
+	<!-- Dialog for success remove -->
+	<dialog id="order_stats_dialog_remove" class="rounded-lg drop-shadow-lg mx-auto">
+		<span class="text-center">The selected transaction date: </span>
+		<span id="transaction_date_remove_placeholder" class="font-bold">Transaction Date placeholder</span><br>
+		<center><span class=""> has been removed successfully!</span><br></center>
+		<center>
+			<button onclick="location.reload()"
+				class="font-bold rounded-lg mt-2 py-2 px-2 hover:bg-green-500 bg-gray-300 hover:text-zinc-50 hover:drop-shadow-lg">
+				<span class="mx-2"> OK </span>
+			</button>
+		</center>
+	</dialog>
+
+	<!--Dialog for selecting date_start is empty (Daily)-->
+	<dialog id="date_selected_error_dialog_start" class="rounded border border-2 shadow w-25">
+		<center>
+			<span>Starting date is empty! please select a proper date.</span><br><br>
+			<button onclick="dialog_close('date_selected_error_dialog_start')"
+				class="btn border btn-outline-success border-1 shadow-sm w-50">
+				OK
+			</button>
+		</center>
+	</dialog>
+
+	<!--Dialog for selecting date_end is empty (Daily)-->
+	<dialog id="date_selected_error_dialog_end" class="rounded border border-2 shadow w-25">
+		<center>
+			<span>Endpoint is empty! please select a proper date.</span><br><br>
+			<button onclick="dialog_close('date_selected_error_dialog_end')"
+				class="btn border btn-outline-success border-1 shadow-sm w-50">
+				OK
+			</button>
+		</center>
+	</dialog>
+
+	<!--CHART DIALOG FOR TOTAL ORDER-->
+	<dialog id="total_order_dialog" class="rounded border border-2 shadow w-100">
+		<div class="float-end">
+			<button onclick="dialog_close('total_order_dialog')"
+			class="btn border btn-outline-danger border-1 shadow-sm">
+				Close
+			</button>
+			<button onclick="generate_png_total_order()"
+			class="btn border btn-outline-primary border-1 shadow-sm">
+				Generate PNG
+			</button>
+		</div>
+		<div class="text-center">
+			<center>
+			<div class="rounded border border-2 shadow-sm w-50 align-self-center py-3">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="start_date" name="start_date"
+					class="rounded border border-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="end_date" name="end_date"
+					class="rounded border border-2">
+				<br>
+				<br>
+				<center>
+					<button onclick="total_order_daily_selected_date()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Daily
+					</button>
+					<button onclick="total_order_monthly_selected_date()"
+						class="btn border btn-outline-secondary border-1 shadow-sm mx-3 w-25">
+						Monthly
+					</button>
+					<button onclick="total_order_yearly_selected_date()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Yearly
+					</button>
+				</center>
+			</div>
+			</center>
+		</div>
+		<div id="chart2" class="pt-2"></div> <!--WORKING CHART (TOTAL ORDERS TAKEN / ORDER & CANCELED)-->
+	</dialog>
+
+	<!--CHART FOR TOTAL EARNINGS-->
+	<dialog id="total_earnings_dialog" class="rounded border border-2 shadow w-100">
+		<div class="float-end">
+			<button onclick="dialog_close('total_earnings_dialog')"
+			class="btn border btn-outline-danger border-1 shadow-sm">
+				Close
+			</button>
+			<button onclick="generate_png_total_earnings()"
+			class="btn border btn-outline-primary border-1 shadow-sm">
+				Generate PNG
+			</button>
+		</div>
+		<div class="text-center">
+			<center>
+			<div class="rounded border border-2 shadow-sm w-50 align-self-center py-3">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="earning_start_date" name="earning_start_date"
+					class="rounded border border-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="earning_end_date" name="earning_end_date"
+					class="rounded border border-2">
+				<br>
+				<br>
+				<center>
+					<button onclick="total_earning_daily_selected_date()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Daily
+					</button>
+					<button onclick="total_earning_monthly_selected_date()"
+						class="btn border btn-outline-secondary border-1 shadow-sm mx-3 w-25">
+						Monthly
+					</button>
+					<button onclick="total_earning_yearly_selected_date()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Yearly
+					</button>
+				</center>
+			</div>
+			</center>
+		</div>
+		<div id="chart3"></div> <!--WORKING CHART (TOTAL EARNINGS)-->
+	</dialog>
+
+	<!--CHART FOR BEST SELLER-->
+	<dialog id="best_seller_dialog" class="rounded border border-2 shadow w-100">
+		<div class="float-end">
+			<button onclick="dialog_close('best_seller_dialog')"
+			class="btn border btn-outline-danger border-1 shadow-sm">
+				Close
+			</button>
+			<button onclick="generate_png_best_seller()"
+				class="btn border btn-outline-primary border-1 shadow-sm">
+				Generate PNG
+			</button>
+		</div>
+		<div class="text-center">
+			<center>
+			<div class="rounded border border-2 shadow-sm w-50 align-self-center py-3">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="best_seller_start_date" name="best_seller_start_date"
+					class="rounded border border-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="best_seller_end_date" name="best_seller_end_date"
+					class="rounded border border-2">
+				<center>
+					<button onclick="best_seller_items_daily()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Daily
+					</button>
+					<button onclick="best_seller_items_monthly()"
+						class="btn border btn-outline-secondary border-1 shadow-sm mx-3 w-25">
+						Monthly
+					</button>
+					<button onclick="best_seller_items_yearly()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Yearly
+					</button>
+				</center>
+			</div>
+			</center>
+		</div>
+		<div id="chart4"></div> <!--REMOVED and replaced by BEST ITEM SELLER (TOTAL EARNINGS (MONTHLY))-->
+	</dialog>
+
+	<!--CHART FOR ITEM QUANTITY SOLD-->
+	<dialog id="quantity_sold_dialog" class="rounded border border-2 shadow w-100">
+		<div class="float-end">
+			<button onclick="dialog_close('quantity_sold_dialog')"
+			class="btn border btn-outline-danger border-1 shadow-sm">
+				Close
+			</button>
+			<button onclick="generate_png_total_items_sold()"
+			class="btn border btn-outline-primary border-1 shadow-sm">
+				Generate PNG
+			</button>
+		</div>
+		<div class="mx-auto w-full max-w-xl">
+			<center>
+			<div class="rounded border border-2 shadow-sm w-50 align-self-center py-3">
+				<!--Date Picker-->
+				<p class="text-center mb-2 font-medium">Organize by: </p>
+				<span class="px-2">Starting date:</span>
+				<input type="date" id="quantity_start_date" name="quantity_start_date"
+					class="rounded border border-2">
+				<span class="px-2">Endpoint to:</span>
+				<input type="date" id="quantity_end_date" name="quantity_end_date"
+					class="rounded border border-2">
+				<center>
+					<button onclick="item_quantity_sold_daily()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Daily
+					</button>
+					<button onclick="item_quantity_sold_monthly()"
+						class="btn border btn-outline-secondary border-1 shadow-sm mx-3 w-25">
+						Monthly
+					</button>
+					<button onclick="item_quantity_sold_yearly()"
+						class="btn border btn-outline-secondary border-1 shadow-sm w-25">
+						Yearly
+					</button>
+				</center>
+			</div>
+			</center>
+		</div>
+		<div id="chart5"></div> <!--REPLACED by ITEM SOLD QUANTITY ()-->
+	</dialog>
+
+	<script src="./js/order-stats.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+	<script src="./js/login.js"></script>
+
+</body>
+
+</html>

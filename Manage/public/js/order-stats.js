@@ -24,7 +24,7 @@ function display_order_stats() {
 
 	connection.query("SELECT * FROM order_stats ORDER BY transaction_date DESC", function(err, order_stats_result, fields) {
 		if (err) throw err;
-		console.log(order_stats_result);
+		// console.log(order_stats_result);
 
 		let placeholder = document.querySelector("#order_stats_list");
 		let out = "";
@@ -44,6 +44,7 @@ function display_order_stats() {
 			let row_background_change = rowNum % 2 === 0 ? 'bg-zinc-50' : 'bg-white';
 
 			out += `
+				<!--
 				<tr class="${row_background_change} border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 					<td>${formattedDate}</td>
 					<td class="font-bold text-center">${row.total_orders_taken}</td>
@@ -60,6 +61,27 @@ function display_order_stats() {
 						</span>
 					</td>
 				</tr>
+				-->
+
+				<div class="shadow-sm mb-2 rounded-4 border border-2 p-3">
+					<div class="row">
+						<div class="col text-center fs-6 align-self-center">
+							${formattedDate}
+						</div>
+						<div class="col text-center fs-6 align-self-center">
+							${row.total_orders_taken}
+						</div>
+						<div class="col text-center fs-6 align-self-center">
+							${row.total_orders_done}
+						</div>
+						<div class="col fs-6 text-center fs-6 align-self-center">
+							${row.total_orders_canceled}
+						</div>
+						<div class="col fs-6 text-center fs-6 align-self-center">
+							₱${row.total_earnings}
+						</div>
+					</div>
+				</div>
 			`;
 			// Design purposes
 			rowNum++;
@@ -93,17 +115,26 @@ function remove_stats() {
 // function to get all earnings
 function all_earnings() {
 	console.log("called all_earning()")
-	var table = document.getElementById("order_stats_table");
 
-	let total = 0;
-	for (var i = 1, row; row = table.rows[i]; i++) {
-		var earnings = row.cells[4];
-		var earnings_data = earnings.innerHTML;
-		var remove_currency = Number(earnings_data.replace(/[^0-9\.-]+/g, ""));
+	// Get all elements with the class 'col' within the 'order_stats_list' container
+	const earningsColumns = document.querySelectorAll('#order_stats_list .col:nth-child(5)');
 
-		total = total + remove_currency;
-	}
-	document.getElementById("total_earning_placeholder").value = "₱" + total;
+	// Iterate over the earnings columns and extract the values
+	const earningsValues = [];
+	earningsColumns.forEach(column => {
+		const earningsText = column.textContent.trim();
+		// Remove the '₱' symbol and convert the value to a number
+		const earningsValue = parseFloat(earningsText.replace('₱', ''));
+		earningsValues.push(earningsValue);
+	});
+
+	// Now, earningsValues array contains all the earnings values
+	// console.log(earningsValues);
+
+	// Sum all of it
+	const totalEarnings = earningsValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+	document.getElementById("total_earning_placeholder").value = "₱ " + totalEarnings;
 
 }
 
