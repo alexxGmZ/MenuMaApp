@@ -200,70 +200,71 @@ function order_cancel() {
 							console.log(error);
 						} else {
 							console.log("Removed success from order_queue")
-							dialog_open('cancel_order_success_dialog');
+							dialog_close("cancel_order_dialog");
+							refresh_menu_items();
 							document.getElementById("cancel_order_num_placeholder").innerHTML = order;
 						}
 					});
+
+					// const itemsOrderedResult = items_ordered_data_result;
+					const orderQueueResult = order_queue_data_result;
+
+					// Get specific data when clicked for order queue
+					if (orderQueueResult.length > 0) {
+						const orderRow = orderQueueResult[0];
+						var status = "Cancelled";
+
+						// Insertion Query
+						const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
+						// function of insert data into order_queue_history
+						connection.query(insert_order_queue_query, [orderRow.order_id, orderRow.queue_number, orderRow.transaction_date, orderRow.customer_name, orderRow.total_price, orderRow.kiosk_ip_address, status], (error, results) => {
+							if (error) {
+								console.log(error);
+							} else {
+								console.log("Successfully Added! (Order Queue)");
+							}
+						});
+
+						// this will be the order_stats function
+						//Gets the date today
+						const currentDate = new Date();
+						let current_year = currentDate.getFullYear();
+						let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
+						let current_day = String(currentDate.getDate()).padStart(2, '0');
+						let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
+						console.log("Current date is: " + current_formatted_date);
+
+						// SQL query to get the dates in table
+						const update_order_stats = `UPDATE order_stats
+							SET total_orders_taken = total_orders_taken + '1',
+								total_orders_canceled = total_orders_canceled + '1'
+							WHERE transaction_date = "${current_formatted_date}";
+							`;
+						connection.query(update_order_stats, error => {
+							if (error) {
+								console.log(error);
+							} else {
+								console.log("Order Stat cancel success");
+							}
+						});
+					}
+
+					// console.log("Here are the orders per row:")
+					for (let itemRow of items_ordered_data_result) {
+						//Insertion query
+						const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+
+						// function to insert data into items_ordered_history
+						connection.query(insert_items_ordered_query, [itemRow.items_ordered_id, itemRow.order_id, itemRow.item_id, itemRow.item_name, itemRow.item_price, itemRow.quantity, itemRow.quantity_times_price, itemRow.queue_number], (error, results) => {
+							if (error) {
+								console.log(error)
+							} else {
+								console.log("Successfully Added! (Items Ordered)")
+							}
+						});
+					}
 				}
 			});
-
-			// const itemsOrderedResult = items_ordered_data_result;
-			const orderQueueResult = order_queue_data_result;
-
-			// Get specific data when clicked for order queue
-			if (orderQueueResult.length > 0) {
-				const orderRow = orderQueueResult[0];
-				var status = "Cancelled";
-
-				// Insertion Query
-				const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
-				// function of insert data into order_queue_history
-				connection.query(insert_order_queue_query, [orderRow.order_id, orderRow.queue_number, orderRow.transaction_date, orderRow.customer_name, orderRow.total_price, orderRow.kiosk_ip_address, status], (error, results) => {
-					if (error) {
-						console.log(error);
-					} else {
-						console.log("Successfully Added! (Order Queue)")
-					}
-				});
-
-				// this will be the order_stats function
-				//Gets the date today
-				const currentDate = new Date();
-				let current_year = currentDate.getFullYear();
-				let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
-				let current_day = String(currentDate.getDate()).padStart(2, '0');
-				let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
-				console.log("Current date is: " + current_formatted_date);
-
-				// SQL query to get the dates in table
-				const update_order_stats = `UPDATE order_stats
-					SET total_orders_taken = total_orders_taken + '1',
-						total_orders_canceled = total_orders_canceled + '1'
-					WHERE transaction_date = "${current_formatted_date}";
-					`;
-				connection.query(update_order_stats, error => {
-					if (error) {
-						console.log(error);
-					} else {
-						console.log("Order Stat cancel success");
-					}
-				});
-			}
-
-			// console.log("Here are the orders per row:")
-			for (let itemRow of items_ordered_data_result) {
-				//Insertion query
-				const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
-
-				// function to insert data into items_ordered_history
-				connection.query(insert_items_ordered_query, [itemRow.items_ordered_id, itemRow.order_id, itemRow.item_id, itemRow.item_name, itemRow.item_price, itemRow.quantity, itemRow.quantity_times_price, itemRow.queue_number], (error, results) => {
-					if (error) {
-						console.log(error)
-					} else {
-						console.log("Successfully Added! (Items Ordered)")
-					}
-				})
-			}
 		});
 	});
 }
