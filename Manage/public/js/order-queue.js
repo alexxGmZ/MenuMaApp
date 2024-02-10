@@ -121,6 +121,35 @@ function order_done(encoded_order) {
 
 			const orderQueueResult = order_queue_data_result;
 
+			// This will be the delete function after order is done or cancelled
+			const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order.queue_number}"`;
+			const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order.queue_number}"`;
+
+			connection.query(items_ordered_query, error => {
+				if (error) console.log(error);
+				else {
+					console.log("Removed Success from items_ordered");
+
+					connection.query(ordered_num_query, error => {
+						if (error) console.log(error);
+
+						else {
+							console.log("Removed success from order_queue")
+							dialog_open('done_order_success_dialog');
+
+							document.getElementById("done_order_queue_num").innerHTML = order.queue_number;
+							document.getElementById("done_order_items").innerHTML = "";
+							order.items_ordered.forEach(item => {
+								const item_markup = `<span>${item.quantity} ${item.item_name}</span><br>`;
+								document.getElementById("done_order_items").insertAdjacentHTML("beforeend", item_markup)
+							})
+							document.getElementById("done_order_customer_name").textContent = order.customer_name;
+							document.getElementById("done_order_total_cost").textContent = order.total_price;
+						}
+					});
+				}
+			});
+
 			// Get specific data when clicked for order queue
 			if (orderQueueResult.length > 0) {
 				const orderRow = orderQueueResult[0];
@@ -191,35 +220,6 @@ function order_done(encoded_order) {
 						else console.log("The revenue has been updated!");
 					});
 				}
-
-				// This will be the delete function after order is done or cancelled
-				const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order.queue_number}"`;
-				const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order.queue_number}"`;
-
-				connection.query(items_ordered_query, error => {
-					if (error) console.log(error);
-					else {
-						console.log("Removed Success from items_ordered");
-
-						connection.query(ordered_num_query, error => {
-							if (error) console.log(error);
-
-							else {
-								console.log("Removed success from order_queue")
-								dialog_open('done_order_success_dialog');
-
-								document.getElementById("done_order_queue_num").innerHTML = order.queue_number;
-								document.getElementById("done_order_items").innerHTML = "";
-								order.items_ordered.forEach(item => {
-									const item_markup = `<span>${item.quantity} ${item.item_name}</span><br>`;
-									document.getElementById("done_order_items").insertAdjacentHTML("beforeend", item_markup)
-								})
-								document.getElementById("done_order_customer_name").textContent = order.customer_name;
-								document.getElementById("done_order_total_cost").textContent = order.total_price;
-							}
-						});
-					}
-				});
 
 			}
 		});
