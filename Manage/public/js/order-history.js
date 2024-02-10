@@ -57,7 +57,7 @@ function display_order_history() {
 				nestedData.forEach((order_history, index) => {
 
 					const food_items = order_history.items_ordered.map((item) => {
-						return `${item.quantity} ${item.item_name}\n`;
+						return `${item.quantity} ${item.item_name}<br>`;
 					})
 					const removed_comma = food_items.join('');
 
@@ -73,15 +73,16 @@ function display_order_history() {
 					// Design purposes for served or cancelled
 					let statusClass = '';
 					if (order_history.order_status === 'Served') {
-						statusClass = 'text-green-700 bg-green-200';
+						statusClass = 'bg-success text-light';
 					} else if (order_history.order_status === 'Cancelled') {
-						statusClass = 'text-red-700 bg-red-200';
+						statusClass = 'bg-danger text-light';
 					}
 
 					//Design purposes for changing color background per row
 					const rowColors = index % 2 === 0 ? 'bg-white' : 'bg-zinc-50';
 
 					const markup = `
+						<!--
 						<tr class="bg-white border-b dark:border-gray-700 border-r border-l ${rowColors}">
 							<td class="px-2">${order_history.order_id}</td>
 							<td class="px-2">Order #${order_history.queue_number}</td>
@@ -91,14 +92,38 @@ function display_order_history() {
 							<td class="">${formattedDate}</td>
 							<td class="">${order_history.kiosk_ip_address}</td>
 							<td class="text-center"><p class="rounded-full font-bold py-2 mx-4 ${statusClass}">${order_history.order_status}</p></td>
-							<td>
-								<span class="action-btn">
-									<center><button onclick="dialog_open('remove_item_dialog'); row_click()" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
-										<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
-									</button></center>
-								</span>
-							</td>
 						</tr>
+						-->
+
+						<div class="shadow-sm mb-2 rounded-4 border border-2 p-3">
+							<div class="row">
+								<div class="col text-center fs-6 align-self-center">
+									${order_history.order_id}
+								</div>
+								<div class="col text-center fs-6 align-self-center">
+									${order_history.queue_number}
+								</div>
+								<div class="col text-center fs-6 align-self-center">
+									${order_history.customer_name}
+								</div>
+								<div class="col fs-6 text-nowrap overflow-x-auto align-self-center">
+									${removed_comma}
+								</div>
+								<div class="col text-center fs-6 align-self-center">
+									${order_history.total_price}
+								</div>
+								<div class="col text-center fs-6 align-self-center">
+									${formattedDate}
+								</div>
+								<div class="col text-center fs-6 align-self-center">
+									${order_history.kiosk_ip_address}
+								</div>
+								<div class="col text-center fs-6 ${statusClass} align-self-center py-2 mx-2 rounded-pill">
+									${order_history.order_status}
+								</div>
+							</div>
+						</div>
+
 					`;
 					document.querySelector("#order_history_list").insertAdjacentHTML('beforeend', markup);
 

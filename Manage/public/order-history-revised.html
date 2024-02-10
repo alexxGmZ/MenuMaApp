@@ -1,0 +1,233 @@
+<!--
+	This is for Order History Viewing Mode.
+	It facilitates order queue histories.
+	Intended functions:
+		* manage order histories
+
+	Refer to the designed prototype "Laptop Queue" or "Queue".
+	NOTE: The design or layout may change depending on the status of the project.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MenuMaApp Manage: Order History</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+</head>
+
+<body class="px-3 py-3">
+
+	<!--NAV BAR-->
+	<nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+				Libres Cafe
+			</a>
+			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+				<a href="order-stats.html"
+					class="btn border btn-outline-secondary border-1 shadow-sm">
+					View Order Statistics
+				</a>
+			</div>
+		</div>
+	</nav>
+	<!--END OF NAV BAR-->
+
+	<!--SIDE BAR-->
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</a>
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button onclick="login_dialog_open('order-history-revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button onclick="login_dialog_open('designer_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+				<button id="logout_button" onclick="logout_user()"
+					class="d-none position-absolute bottom-0 btn btn-outline-warning mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
+					<span>Logout</span>
+					<span id="user_span" class="d-none">
+						"<span id="user_name">user name</span>"
+					</span>
+				</button>
+				<button id="login_button" onclick="login_dialog_open()"
+					class="position-absolute bottom-0 btn btn-outline-primary mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
+					Login
+				</button>
+			</div>
+		</div>
+	</div>
+	<!--END OF SIDE BAR-->
+
+	<br>
+	<br>
+	<br>
+
+	<center>
+		<h1 class="font-extrabold pb-3">SHOWING ORDER HISTORY</h1>
+	</center>
+
+	<div class="">
+		<div class="row fw-bold p-3">
+			<div class="col text-center">
+				Oder ID#
+			</div>
+			<div class="col text-center">
+				Queue Order#
+			</div>
+			<div class="col text-center">
+				Customer Name
+			</div>
+			<div class="col text-center">
+				Items Ordered
+			</div>
+			<div class="col text-center">
+				Total Price
+			</div>
+			<div class="col text-center">
+				Transaction Date
+			</div>
+			<div class="col text-center">
+				Kiosk IP Address
+			</div>
+			<div class="col text-center">
+				Status
+			</div>
+		</div>
+		<div id="order_history_list" class="list-group">
+			<!--OUTPUT OF HISTORY from order-history.js-->
+		</div>
+	</div>
+
+	<!--ORDER HISTORY TABLE-->
+	<div>
+		<table id="order_history_table" onclick="" class="text-left w-full mx-auto shadow-md table-fixed">
+			<thead class="text-zinc-950 uppercase font-bold">
+				<tr>
+					<th>Order ID#</th>
+					<th>Queue Order#</th>
+					<th>Customer Name</th>
+					<th>Items Ordered</th>
+					<th>Total Price</th>
+					<th>Transaction Date</th>
+					<th>Kiosk IP Address</th>
+					<th class="pl-6">Status</th>
+				</tr>
+			</thead>
+			<tbody id="order_history_list">
+				<!--OUTPUT OF HISTORY from order-history.js-->
+			</tbody>
+		</table>
+	</div>
+
+	<!--Dialog for remove history item-->
+	<dialog id="remove_item_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto">
+		<p class="text-center">Confirm to remove this order history?</p>
+		<br>
+		<div class="grid grid-cols-2 gap-4">
+			<div>
+				<p>History item selected:</p><br>
+
+				<p>Order ID</p>
+				<input type="text" id="history_id" name="history_id" placeholder="Order ID"
+					class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled />
+
+				<p class="pt-2">Order Queue</p>
+				<input type="text" id="history_queue_number" name="history_queue_number" placeholder="Order Queue#"
+					class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled />
+
+				<p class="pt-2">Customer Name</p>
+				<input type="text" id="history_customer" name="history_customer" placeholder="Customer Name"
+					class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled />
+
+				<p>Total Price</p>
+				<input type="text" id="history_price" name="history_price" placeholder="Customer Name"
+					class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled />
+
+			</div>
+			<div>
+				<br><br>
+				<p>Items Ordered</p>
+				<textarea type="text" id="history_items" name="history_items" placeholder="Foods Ordered"
+					class="bg-white w-full placeholder:text-slate-800 rounded-md h-24 border border-slate-300 pl-2"
+					disabled></textarea>
+
+				<p>Transaction Date</p>
+				<input type="text" id="history_date" name="history_date" placeholder="Customer Name"
+					class="bg-white w-full placeholder:text-slate-800 rounded-md border border-slate-300 pl-2" disabled />
+
+				<span>Status</span>
+				<span id="history_status" class="text-center">Status Placeholder</span>
+			</div>
+		</div>
+		<div>
+			<center>
+				<button onclick="dialog_close('remove_item_dialog')"
+					class="font-bold rounded-full mt-2 py-2 px-2 bg-gray-300 hover:bg-red-500 hover:text-zinc-50 hover:drop-shadow-lg w-full flex items-center justify-center">
+					<span class="mx-2"> NO </span>
+				</button>
+			</center>
+			<center>
+				<button onclick="remove_history()"
+					class="font-bold rounded-full mt-2 py-2 px-2 hover:bg-green-500 bg-gray-300 hover:text-zinc-50 hover:drop-shadow-lg w-full flex items-center justify-center">
+					<span class="mx-2"> YES </span>
+				</button>
+			</center>
+		</div>
+	</dialog>
+
+	<!--Remove success dialog-->
+	<dialog id="history_remove_success_dialog" class="hidden rounded-lg drop-shadow-lg mx-auto text-center">
+		<span>History ID #</span>
+		<span id="history_id_remove_placeholder">HISTORY ID</span>
+		<span> is successfully removed!</span><br>
+		<button onclick="location.reload()"
+			class="font-bold rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-500 hover:text-zinc-50 hover:drop-shadow-lg">
+			OK </button>
+	</dialog>
+
+
+	<script src="./js/order-history.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+	<script src="./js/login.js"></script>
+
+</body>
+
+</html>
