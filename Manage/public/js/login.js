@@ -113,7 +113,7 @@ function process_site_access_rights(site) {
 		"designer_revised.html": "designer",
 		"inventory_revised.html": "menu_items",
 		"order-history.html": "reports",
-		"registration.html": "manage_users",
+		"registration_revised.html": "manage_users",
 		"kiosk-devices.html": "manage_devices",
 	};
 

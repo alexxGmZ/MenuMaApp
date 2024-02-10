@@ -1,0 +1,293 @@
+<!--
+	This is for Register Mode.
+	It enables food service establishments owners or managers to register employees that
+		will utilize the Manage application. It is to avoid inside job attacks, because
+		certain features of the application will require a Login-In
+
+	Intended functions:
+		* employee registration
+		* CRUD
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MenuMaApp Manage: Registration Mode</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<script src="./js/registration.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+</head>
+
+<body class="px-3 py-3">
+
+	<br>
+	<br>
+	<br>
+
+	<!--NAV BAR-->
+	<nav class="navbar navbar-expand-lg shadow bg-white p-2 fixed-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+				Libres Cafe
+			</a>
+			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+				<button onclick="dialog_open('add_employee_dialog')"
+					class="btn border btn-outline-secondary border-1 shadow-sm">
+					<img src="assets/svg/plus-circle.svg" class="hover:text-zinc-50">
+					<span class="mx-2">ADD NEW USER</span>
+				</button>
+				<button onclick="refresh_employee_table()"
+					class="btn border btn-outline-secondary border-1 shadow-sm ms-2">
+					<img src="assets/svg/refresh.svg" class="hover:text-zinc-50">
+					<span class="mx-2">Refresh table</span>
+				</button>
+			</div>
+		</div>
+	</nav>
+	<!--END OF NAV BAR-->
+
+	<!--SIDE BAR-->
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</a>
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button onclick="login_dialog_open('order-history.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button onclick="login_dialog_open('designer_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+				<button id="logout_button" onclick="logout_user()"
+					class="d-none position-absolute bottom-0 btn btn-outline-warning mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
+					<span>Logout</span>
+					<span id="user_span" class="d-none">
+						"<span id="user_name">user name</span>"
+					</span>
+				</button>
+				<button id="login_button" onclick="login_dialog_open()"
+					class="position-absolute bottom-0 btn btn-outline-primary mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
+					Login
+				</button>
+			</div>
+		</div>
+	</div>
+	<!--END SIDE BAR-->
+
+	<!-- MAIN TABLE -->
+	<h1 class="text-center">Registered Employees</h1>
+
+	<br>
+
+	<div class="table-responsive">
+		<table id="employee_table" class="table table-sm table-hover align-middle">
+			<thead class="text-center">
+				<tr>
+					<th data-column="employee_id">ID</th>
+					<th data-column="employee_name">Name</th>
+					<th data-column="employee_design_priv">Design Privilege</th>
+					<th data-column="employee_inventory_priv">Inventory Privilege</th>
+					<th data-column="employee_reports_priv">View Reports Privilege</th>
+					<th data-column="employee_manage_priv">View Employees Privilege</th>
+					<th data-column="employee_devices_priv">View Devices Privilege</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<!-- registered employees -->
+			<tbody id="registered_employees" class="text-center">
+				<!-- call the list_registered_employees() function -->
+			</tbody>
+		</table>
+	</div>
+
+	<!-- UPDATE MODAL -->
+	<dialog id="update_employee_dialog" class="hidden d-none rounded border border-2 shadow">
+		<center>
+			<label for="name">Name</label>
+		</center>
+		<input type="text" name="name_2" id="name_2"
+			class="form-control text-center"><br>
+
+		<ul class="list-group">
+			<li class="list-group-item">
+				<input type="checkbox" name="design_priv_2" id="design_priv_2"
+					class="w-25">
+				<label for="design_priv">Design Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2"
+					class="w-25">
+				<label for="inventory_priv">Inventory Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="report_priv_2" id="report_priv_2"
+					class="w-25">
+				<label for="report_priv">View Reports Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="employee_priv_2" id="employee_priv_2"
+					class="w-25">
+				<label for="employee_priv_2">View Employee Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="devices_priv_2" id="devices_priv_2"
+					class="w-25">
+			<label for="devices_priv">View Devices Privilege</label>
+			</li>
+		</ul>
+
+		<div class="pt-3">
+			<button onclick="dialog_close('update_employee_dialog')"
+				class="btn border btn-outline-danger border-1 shadow-sm">
+				Cancel update
+			</button>
+			<button onclick="update_employee(); dialog_close('update_employee_dialog')"
+				class="btn border btn-outline-success border-1 shadow-sm">
+				Update Employee
+			</button>
+		</div>
+	</dialog>
+
+	<!-- UPDATE EMPLOYEE SUCCESS -->
+	<dialog id="update_employee_successs_dialog" class="hidden d-none rounded border border-2 shadow">
+		<span id="update_employee_placeholder">Employee NAME</span>
+		<span> is successfully updated.</span><br><br>
+		<div class="d-flex justify-content-center">
+			<button onclick="refresh_employee_table()"
+				class="btn border btn-outline-success border-1 shadow-sm d-flex justify-content-center">
+				OK
+			</button>
+		</div>
+	</dialog>
+
+
+	<!-- ADD NEW EMPLOYEE DIALOG -->
+	<dialog id="add_employee_dialog" class="hidden d-none rounded border border-2 shadow">
+		<p class="text-center">Add new employee</p>
+		<p class="hidden" id="id"></p>
+
+		<!-- <label for="name">Name:</label> -->
+		<input type="text" name="name" id="name" placeholder="Enter employee name"
+			class="form-control mb-2 text-center">
+
+		<!-- <label for="password">Password:</label> -->
+		<input type="text" name="password" id="password" placeholder="Enter password"
+			class="form-control mb-4 text-center">
+
+		<ul class="list-group">
+			<li class="list-group-item">
+				<input type="checkbox" name="design_priv" id="design_priv"
+					class="">
+				<label for="design_priv">Design Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="inventory_priv" id="inventory_priv"
+					class="">
+				<label for="inventory_priv">Inventory Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="report_priv" id="report_priv"
+					class="">
+				<label for="report_priv">View Reports Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="employee_priv" id="employee_priv"
+					class="">
+				<label for="employee_priv">View Employee Privilege</label>
+			</li>
+			<li class="list-group-item">
+				<input type="checkbox" name="devices_priv" id="devices_priv"
+					class="">
+				<label for="devices_priv">View Devices Privilege</label>
+			</li>
+		</ul>
+		<div class="pt-3">
+			<button onclick="dialog_close('add_employee_dialog')"
+				class="btn border btn-outline-danger border-1 shadow-sm">
+				CANCEL
+			</button>
+			<button onclick="register_employee(); dialog_close('add_employee_dialog')"
+				class="btn border btn-outline-success border-1 shadow-sm">
+				SUBMIT EMPLOYEE
+			</button>
+		</div>
+	</dialog>
+
+	<!-- ADD EMPLOYEE SUCCESS -->
+	<dialog id="add_employee_successs_dialog" class="hidden d-none rounded border border-2 shadow text-center">
+		<span id="add_employee_placeholder" class="font-bold"></span>
+		<span> is successfully added.</span><br><br>
+		<button onclick="refresh_employee_table()"
+			class="btn border btn-outline-success border-1 shadow-sm">
+			OK
+		</button>
+	</dialog>
+
+	<!-- ADD EMPLOYEE NAME BLANK ERROR -->
+	<dialog id="add_employee_name_error_dialog" class="hidden d-none rounded border border-2 shadow text-center">
+		<span> Name cant be blank!</span><br>
+		<button onclick="dialog_close('add_employee_name_error_dialog')"
+			class="btn border btn-outline-success border-1 shadow-sm">
+			OK
+		</button>
+	</dialog>
+
+	<!-- ADD EMPLOYEE PASSWORD BLANK ERROR -->
+	<dialog id="add_employee_password_error_dialog" class="hidden d-none rounded border border-2 shadow text-center">
+		<span> Password cant be blank!</span><br>
+		<button onclick="dialog_close('add_employee_password_error_dialog')"
+			class="btn border btn-outline-success border-1 shadow-sm">
+			OK
+		</button>
+	</dialog>
+
+	<!-- REMOMVE SUCCESS Modal -->
+	<dialog id="remove_employee_success_dialog" class="hhidden d-none rounded border border-2 shadow text-center">
+		<span id="removed_employee_placeholder" class="font-bold"></span>
+		<span> is successfully removed.</span><br><br>
+		<button onclick="refresh_employee_table()"
+			class="btn border btn-outline-success border-1 shadow-sm">
+			OK
+		</button>
+	</dialog>
+
+
+	<script src="./js/login.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+
+</body>
+
+</html>

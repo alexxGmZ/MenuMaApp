@@ -120,20 +120,20 @@ function list_registered_employees() {
 
 
 			out += `
-				<tr class="bg-white border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-					<td data-column="employee_id" class="text-center">${row.employee_id}</td>
-					<td data-column="employee_name" class="text-center">${row.name}</td>
-					<td data-column="employee_design_priv" class="text-center">${row.design_priv}</td>
-					<td data-column="employee_inventory_priv" class="text-center">${row.inventory_priv}</td>
-					<td data-column="employee_reports_priv" class="text-center">${row.view_reports_priv}</td>
-					<td data-column="employee_manage_priv" class="text-center">${row.manage_employee_priv}</td>
-					<td data-column="employee_devices_priv" class="text-center">${row.manage_devices_priv}</td>
-					<td class="text-center">
+				<tr>
+					<td data-column="employee_id">${row.employee_id}</td>
+					<td data-column="employee_name">${row.name}</td>
+					<td data-column="employee_design_priv">${row.design_priv}</td>
+					<td data-column="employee_inventory_priv">${row.inventory_priv}</td>
+					<td data-column="employee_reports_priv">${row.view_reports_priv}</td>
+					<td data-column="employee_manage_priv">${row.manage_employee_priv}</td>
+					<td data-column="employee_devices_priv">${row.manage_devices_priv}</td>
+					<td>
 						<span class="action-btn">
-							<button onclick="dialog_open('update_employee_dialog'); rowClick()" class="rounded-lg bg-sky-400 my-4 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg">
+							<button onclick="dialog_open('update_employee_dialog'); rowClick()" class="btn border btn-outline-secondary border-1 shadow-sm ms-2">
 								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
 							</button>
-							<button onclick="delete_employee()" class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg">
+							<button onclick="delete_employee()" class="btn border btn-outline-secondary border-1 shadow-sm ms-2">
 								<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
 							</button>
 						</span>

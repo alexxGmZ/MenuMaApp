@@ -245,6 +245,28 @@ function order_cancel() {
 		connection.query(order_queue_data, function(err, order_queue_data_result) {
 			if (err) throw err;
 
+			// This will be the delete function after order is done or cancelled
+			const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order}"`;
+			const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order}"`;
+
+			connection.query(items_ordered_query, error => {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log("Removed Success from items_ordered");
+
+					connection.query(ordered_num_query, error => {
+						if (error) {
+							console.log(error);
+						} else {
+							console.log("Removed success from order_queue")
+							dialog_open('cancel_order_success_dialog');
+							document.getElementById("cancel_order_num_placeholder").innerHTML = order;
+						}
+					});
+				}
+			});
+
 			// const itemsOrderedResult = items_ordered_data_result;
 			const orderQueueResult = order_queue_data_result;
 
@@ -313,28 +335,6 @@ function order_cancel() {
 				})
 
 			}
-
-			// This will be the delete function after order is done or cancelled
-			const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order}"`;
-			const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order}"`;
-
-			connection.query(items_ordered_query, error => {
-				if (error) {
-					console.log(error);
-				} else {
-					console.log("Removed Success from items_ordered");
-
-					connection.query(ordered_num_query, error => {
-						if (error) {
-							console.log(error);
-						} else {
-							console.log("Removed success from order_queue")
-							dialog_open('cancel_order_success_dialog');
-							document.getElementById("cancel_order_num_placeholder").innerHTML = order;
-						}
-					});
-				}
-			});
 
 		});
 
