@@ -165,7 +165,6 @@
 			<div class="col-md-6">
 				<span class="">Item/s ordered</span>
 				<div id="cancel_order_items" class="border border-1 shadow rounded-3 mb-2 p-2">
-
 				</div>
 
 				<span class="">Customer name</span>
@@ -210,11 +209,31 @@
 	</dialog>
 
 	<!--Done Order Success Dialog-->
-	<dialog id="done_order_success_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
-		<span>Order #</span>
-		<span id="done_order_num_placeholder">Order Number</span>
-		<span> is successfully served!</span><br>
-		<button onclick="location.reload()" class="btn border btn-success border-1 shadow-sm">
+	<dialog id="done_order_success_dialog" class="d-none rounded text-center border-2 border-success shadow"
+		style="width: 650px">
+		<div class="text-center bg-success-subtle rounded-3 p-2 mb-2">
+			<img src="./assets/svg/bootstrap/bi-check-circle.svg" width="80px" class="">
+			<h5 class="">Order served</h5>
+		</div>
+		<span for="done_order_queue_num">Queue Number</span>
+		<div id="done_order_queue_num" class="fw-bold fs-1 mb-3">
+		</div>
+		<div class="row mb-4">
+			<div class="col">
+				<span class="">Item/s ordered</span>
+				<div id="done_order_items" class="border border-1 shadow rounded-3 mb-2 p-2">
+				</div>
+			</div>
+			<div class="col">
+				<span class="">Customer name</span>
+				<div id="done_order_customer_name" class="border border-1 shadow rounded-3 mb-2 p-2">
+				</div>
+				<span class="">Total Cost</span>
+				<div id="done_order_total_cost" class="fw-bold fs-1 text-center border border-1 shadow rounded-3">
+				</div>
+			</div>
+		</div>
+		<button onclick="dialog_close('done_order_success_dialog'); refresh_menu_items()" class="btn btn-outline-success rounded-pill shadow-sm">
 			OK
 		</button>
 	</dialog>

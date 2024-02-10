@@ -94,7 +94,7 @@ function order_done(encoded_order) {
 	const order = JSON.parse(decodeURIComponent(encoded_order));
 	/*
 	console.log(order.queue_number);
-	
+
 	const food_items = order.items_ordered.map((item) => {
 		return `${item.quantity} ${item.item_name}<br>`;
 	})
@@ -110,7 +110,7 @@ function order_done(encoded_order) {
 	// Queries for getting data from order queue and items ordered tables specific for orders / row click
 	const items_ordered_data = `SELECT * FROM manage_db.items_ordered WHERE queue_number = "${order.queue_number}"`;
 	const order_queue_data = `SELECT * FROM manage_db.order_queue WHERE queue_number = "${order.queue_number}"`;
-	
+
 	// get all data from items ordered table
 	connection.query(items_ordered_data, function(err, items_ordered_data_result) {
 		if (err) throw err;
@@ -120,7 +120,7 @@ function order_done(encoded_order) {
 			if (err) throw err;
 
 			const orderQueueResult = order_queue_data_result;
-			
+
 			// Get specific data when clicked for order queue
 			if (orderQueueResult.length > 0) {
 				const orderRow = orderQueueResult[0];
@@ -165,7 +165,7 @@ function order_done(encoded_order) {
 				// Get Specific data when clicked for items ordered
 				console.log("Here are the orders per row:")
 				for (let itemRow of items_ordered_data_result) {
-					
+
 					//Insertion query
 					const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 					// functio nto insert data into items_ordered_history
@@ -173,7 +173,7 @@ function order_done(encoded_order) {
 						if (error) console.log(error)
 						else console.log("Successfully Added! (Items Ordered)")
 					})
-					
+
 				}
 
 				// Update revenue everytime if the order is served
@@ -207,7 +207,15 @@ function order_done(encoded_order) {
 							else {
 								console.log("Removed success from order_queue")
 								dialog_open('done_order_success_dialog');
-								document.getElementById("done_order_num_placeholder").innerHTML = order.queue_number;
+
+								document.getElementById("done_order_queue_num").innerHTML = order.queue_number;
+								document.getElementById("done_order_items").innerHTML = "";
+								order.items_ordered.forEach(item => {
+									const item_markup = `<span>${item.quantity} ${item.item_name}</span><br>`;
+									document.getElementById("done_order_items").insertAdjacentHTML("beforeend", item_markup)
+								})
+								document.getElementById("done_order_customer_name").textContent = order.customer_name;
+								document.getElementById("done_order_total_cost").textContent = order.total_price;
 							}
 						});
 					}
