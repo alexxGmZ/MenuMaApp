@@ -34,7 +34,7 @@ function login_dialog_open(redirect_site) {
 		const login_dialog_header = document.getElementById("login_dialog_header");
 		const siteHeaders = {
 			"inventory_revised.html": "Manage Menu Items",
-			"registration.html": "Manage Users/Employee",
+			"registration_revised.html": "Manage Users/Employee",
 			"kiosk-devices.html": "Manage Kiosk Devices",
 			"order-history.html": "Order History and Statistics",
 			"designer_revised.html": "Menu/Kiosk Designer"
