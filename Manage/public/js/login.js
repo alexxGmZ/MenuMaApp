@@ -64,7 +64,9 @@ function login_user() {
 
 		const employee_data = result;
 		if (employee_data.length === 0) {
-			dialog_open('login_invalid_username_dialog');
+			toggle_warn_banner("user");
+			// clear password input box
+			document.getElementById("login_password").value = "";
 		}
 		else {
 			const employee_row = employee_data[0];
@@ -96,7 +98,7 @@ function login_user() {
 				user_name.textContent = sessionStorage.getItem("employee_name");
 			}
 			else {
-				dialog_open('login_invalid_password_dialog');
+				toggle_warn_banner("password");
 				// clear password input box
 				document.getElementById("login_password").value = "";
 			}
@@ -127,6 +129,7 @@ function process_site_access_rights(site) {
 	else if (site === "")
 		location.replace("main_revised.html");
 	else {
+		dialog_close("login_dialog")
 		dialog_open("lack_access_privilege_dialog");
 	}
 }
@@ -145,3 +148,29 @@ function logout_user() {
 	user_span.classList.add("d-none");
 	user_name.textContent = "";
 }
+
+function toggle_warn_banner(warning) {
+	console.log(`called toggle_warn_banner(${warning})`)
+	const warning_banner = document.getElementById("login_dialog_warn_banner");
+	const warning_user = document.getElementById("login_dialog_warn_user");
+	const warning_password = document.getElementById("login_dialog_warn_password");
+	const warning_access = document.getElementById("login_dialog_warn_access");
+
+	warning_banner.classList.add("d-none");
+	warning_user.classList.add("d-none");
+	warning_password.classList.add("d-none");
+	warning_access.classList.add("d-none");
+
+	if (warning === "user") {
+		warning_banner.classList.remove("d-none");
+		warning_user.classList.remove("d-none");
+	}
+	else if (warning === "password") {
+		warning_banner.classList.remove("d-none");
+		warning_password.classList.remove("d-none");
+	}
+	else {
+		console.log("Parameters: user, password");
+	}
+}
+

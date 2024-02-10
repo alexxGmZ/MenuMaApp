@@ -111,19 +111,6 @@
 
 	<!--SHOW FOOD QUEUE ORDERS-->
 	<div class="mx-5">
-		<!-- <table id="order_table" onclick="row_click()" class="text-start w-100 "> -->
-		<!-- 	<thead> -->
-		<!-- 		<tr> -->
-		<!-- 			<th class="text-center">Queue Number</th> -->
-		<!-- 			<th>Ordered Items</th> -->
-		<!-- 			<th class="text-center">Customer Name</th> -->
-		<!-- 			<th class="text-center">Price</th> -->
-		<!-- 			<th class="text-center">Actions</th> -->
-		<!-- 		</tr> -->
-		<!-- 	</thead> -->
-		<!-- <tbody id="order-list"> -->
-		<!-- </tbody> -->
-		<!-- </table> -->
 		<div class="row fw-bold p-3">
 			<div class="col text-center">
 				Queue Number
@@ -202,8 +189,7 @@
 		<span>Order #</span>
 		<span id="cancel_order_num_placeholder">Order Number</span>
 		<span> is successfully canceled!</span><br>
-		<button onclick="location.reload()"
-			class="btn border btn-success border-1 shadow-sm">
+		<button onclick="location.reload()" class="btn border btn-success border-1 shadow-sm">
 			OK
 		</button>
 	</dialog>
@@ -233,59 +219,45 @@
 				</div>
 			</div>
 		</div>
-		<button onclick="dialog_close('done_order_success_dialog'); refresh_menu_items()" class="btn btn-outline-success rounded-pill shadow-sm">
+		<button onclick="dialog_close('done_order_success_dialog'); refresh_menu_items()"
+			class="btn btn-outline-success rounded-pill shadow-sm">
 			OK
 		</button>
 	</dialog>
 
 	<!-- login dialog -->
 	<dialog id="login_dialog" class="d-none rounded border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="d-none bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_user" class="d-none">User doesn't exist.</h5>
+			<h5 id="login_dialog_warn_password" class="d-none">Wrong Password.</h5>
+		</div>
 		<p id="login_redirect_site" class="d-none"></p>
 		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
-
 		<center>
-			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75">
+			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75 rounded-pill">
 			<label for="login_username" class="pb-2">Username</label>
-
-			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center">
-			<label for="login_password" class="">Password</label>
+			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center rounded-pill">
+			<label for="login_password" class="mb-3">Password</label>
 		</center>
-
-		<div class="grid grid-cols-1 px-5 pt-2 gap-4">
-			<center>
-				<button onclick="login_user()" class="btn border btn-success border-1 shadow-sm">
-					LOGIN
-				</button>
-
-				<br>
-
-				<button onclick="dialog_close('login_dialog')" class="btn border btn-danger border-1 shadow-sm">
-					CANCEL
-				</button>
-			</center>
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4 text-center">
+			<button onclick="login_user()" class="btn btn-primary rounded-pill mb-2">
+				LOGIN
+			</button>
+			<br>
+			<button onclick="dialog_close('login_dialog')" class="btn btn-outline-secondary border-1 rounded-pill">
+				CANCEL
+			</button>
 		</div>
-	</dialog>
-
-	<!-- invalid login username dialog -->
-	<dialog id="login_invalid_username_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
-		<h1>This username doesn't exists!</h1>
-		<button onclick="dialog_close('login_invalid_username_dialog')" class="btn border btn-success border-1 shadow-sm">
-			OK
-		</button>
-	</dialog>
-
-	<!-- invalid login password dialog -->
-	<dialog id="login_invalid_password_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
-		<h1>Password doesn't matched!</h1>
-		<button onclick="dialog_close('login_invalid_password_dialog')" class="btn border btn-success border-1 shadow-sm">
-			OK
-		</button>
 	</dialog>
 
 	<!-- when the user lacks access privilege -->
 	<dialog id="lack_access_privilege_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
-		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
-		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn border btn-success border-1 shadow-sm">
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_access" class="">Lack access rights for this feature.</h5>
+		</div>
+		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn btn-outline-primary shadow-sm">
 			OK
 		</button>
 	</dialog>
