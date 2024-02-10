@@ -220,6 +220,118 @@ function order_done(encoded_order) {
 
 function order_cancel() {
 	console.log("called order_cancel()");
+
+	// START SA ITEMS ORDERED BAGO ORDER QUEUE ang pag DELETE
+	const order = document.getElementById("cancel_order_queue_num").innerHTML;
+	// console.log("The order num is : " + order)
+
+	// Queries for getting data from order queue and items ordered
+	const items_ordered_data = `SELECT * FROM manage_db.items_ordered WHERE queue_number = "${order}"`;
+	const order_queue_data = `SELECT * FROM manage_db.order_queue WHERE queue_number = "${order}"`;
+
+	// get all data from items ordered table
+	connection.query(items_ordered_data, function(err, items_ordered_data_result) {
+		if (err) throw err;
+
+		// get all data from order queue table
+		connection.query(order_queue_data, function(err, order_queue_data_result) {
+			if (err) throw err;
+
+			// const itemsOrderedResult = items_ordered_data_result;
+			const orderQueueResult = order_queue_data_result;
+
+			// Get specific data when clicked for order queue
+			if (orderQueueResult.length > 0) {
+				const orderRow = orderQueueResult[0];
+				// const order_num = orderRow.queue_number;
+				// const order_id = orderRow.order_id;
+				// const customer_names = orderRow.customer_name;
+				// const overall_price = orderRow.total_price;
+				// const kiosks = orderRow.kiosk_ip_address;
+				var status = "Cancelled";
+
+				// Insertion Query
+				const insert_order_queue_query = `INSERT INTO order_queue_history (order_id, queue_number, transaction_date, customer_name, total_price, kiosk_ip_address, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)`
+				// function of insert data into order_queue_history
+				connection.query(insert_order_queue_query, [orderRow.order_id, orderRow.queue_number, orderRow.transaction_date, orderRow.customer_name, orderRow.total_price, orderRow.kiosk_ip_address, status], (error, results) => {
+					if (error) {
+						console.log(error);
+					} else {
+						console.log("Successfully Added! (Order Queue)")
+					}
+				});
+
+				// this will be the order_stats function
+				//Gets the date today
+				const currentDate = new Date();
+				let current_year = currentDate.getFullYear();
+				let current_month = String(currentDate.getMonth() + 1).padStart(2, '0');
+				let current_day = String(currentDate.getDate()).padStart(2, '0');
+				let current_formatted_date = `${current_year}-${current_month}-${current_day}`;
+				console.log("Current date is: " + current_formatted_date);
+
+				const order_taken_count = 1;
+				const order_cancelled_count = 1;
+
+				// SQL query to get the dates in table
+				const update_order_stats = `UPDATE order_stats
+								SET total_orders_taken = total_orders_taken + '1',
+									total_orders_canceled = total_orders_canceled + '1'
+								WHERE transaction_date = "${current_formatted_date}";
+								`;
+				connection.query(update_order_stats, error => {
+					if (error) {
+						console.log(error);
+					} else {
+						console.log("Order Stat cancel success");
+					}
+				});
+
+			}
+
+			// console.log("Here are the orders per row:")
+			for (let itemRow of items_ordered_data_result) {
+
+				//Insertion query
+				const insert_items_ordered_query = `INSERT INTO items_ordered_history (items_ordered_id, order_id, item_id, item_name, item_price, quantity, quantity_times_price, queue_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+
+				// function to insert data into items_ordered_history
+				connection.query(insert_items_ordered_query, [itemRow.items_ordered_id, itemRow.order_id, itemRow.item_id, itemRow.item_name, itemRow.item_price, itemRow.quantity, itemRow.quantity_times_price, itemRow.queue_number], (error, results) => {
+					if (error) {
+						console.log(error)
+					} else {
+						console.log("Successfully Added! (Items Ordered)")
+					}
+				})
+
+			}
+
+			// This will be the delete function after order is done or cancelled
+			const items_ordered_query = `DELETE FROM items_ordered WHERE queue_number = "${order}"`;
+			const ordered_num_query = `DELETE FROM order_queue WHERE queue_number = "${order}"`;
+
+			connection.query(items_ordered_query, error => {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log("Removed Success from items_ordered");
+
+					connection.query(ordered_num_query, error => {
+						if (error) {
+							console.log(error);
+						} else {
+							console.log("Removed success from order_queue")
+							dialog_open('cancel_order_success_dialog');
+							document.getElementById("cancel_order_num_placeholder").innerHTML = order;
+						}
+					});
+				}
+			});
+
+		});
+
+	});
+
 }
 
 function row_click(encoded_order) {
