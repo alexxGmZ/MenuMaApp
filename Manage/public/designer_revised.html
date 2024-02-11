@@ -122,13 +122,16 @@
 				<div class="mb-2">
 					<h2 class="fw-bold">Background Color:</h2>
 					<label for="rgb_r">Red:</label>
-					<input id="rgb_r" type="number" min="0" max="255" value="255" class="border rounded-3" style="width: 60px">
+					<input id="rgb_r" type="number" min="0" max="255" value="255" class="border rounded-3"
+						style="width: 60px">
 					<br>
 					<label for="rgb_g">Green:</label>
-					<input id="rgb_g" type="number" min="0" max="255" value="255" class="border rounded-3" style="width: 60px">
+					<input id="rgb_g" type="number" min="0" max="255" value="255" class="border rounded-3"
+						style="width: 60px">
 					<br>
 					<label for="rgb_b">Blue:</label>
-					<input id="rgb_b" type="number" min="0" max="255" value="255" class="border rounded-3" style="width: 60px">
+					<input id="rgb_b" type="number" min="0" max="255" value="255" class="border rounded-3"
+						style="width: 60px">
 					<br>
 				</div>
 				<div id="canvas_color_picker">
@@ -548,25 +551,28 @@
 	</dialog>
 
 	<!-- change canvas resolution dialog -->
-	<dialog id="change_canvas_resolution_dialog" class="d-none">
-		<h1 class="">Change canvas Resolution</h1>
-		<div class="">
-			<label for="change_res_width">Width:</label>
-			<input id="change_res_width" type="number" class="">
-			<p>px</p>
+	<dialog id="change_canvas_resolution_dialog" class="d-none border border-1 rounded-3">
+		<h3 class="mb-3 text-center">Change canvas Resolution</h3>
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-3">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5>Objects will not scale along with the canvas.</h5>
 		</div>
-		<div class="">
-			<label for="change_res_height">Height:</label>
-			<input id="change_res_height" type="number" class="">
-			<p>px</p>
+		<div class="mb-4">
+			<div class="d-flex">
+				<label for="change_res_width" class="me-2">Width:</label>
+				<input id="change_res_width" type="number" class="border rounded-3">
+				<span>px</span>
+			</div>
+			<div class="d-flex">
+				<label for="change_res_height" class="me-2">Height:</label>
+				<input id="change_res_height" type="number" class="border rounded-3">
+				<span>px</span>
+			</div>
 		</div>
-		<p class="">
-			<b>!!WARNING!!</b>
-			Objects will not scale along with the canvas.
-		</p>
 		<center>
-			<button id="change_canvas_res_button" class="">Change</button>
-			<button onclick="dialog_close('change_canvas_resolution_dialog')" class="">Cancel</button>
+			<button id="change_canvas_res_button" class="btn btn-primary rounded-pill">Change</button>
+			<button onclick="dialog_close('change_canvas_resolution_dialog')"
+				class="btn btn-outline-secondary rounded-pill">Cancel</button>
 		</center>
 	</dialog>
 
@@ -602,7 +608,8 @@
 			<img src="assets/svg/exclamation.svg" width="80px" class="">
 			<h5 id="login_dialog_warn_access" class="">Lack access rights for this feature.</h5>
 		</div>
-		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn btn-outline-primary shadow-sm rounded-pill">
+		<button onclick="dialog_close('lack_access_privilege_dialog')"
+			class="btn btn-outline-primary shadow-sm rounded-pill">
 			OK
 		</button>
 	</dialog>
