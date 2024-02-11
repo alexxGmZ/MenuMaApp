@@ -26,7 +26,7 @@ let canvas_height = 0;
 let canvas_width = 0;
 const canvas_element_id = "canvas"
 // using tailwind css classes
-const canvas_css_classes = ""
+const canvas_css_classes = "border border-2"
 let canvas_bg_color = "rgb(255, 255, 255)"
 
 function create_canvas() {

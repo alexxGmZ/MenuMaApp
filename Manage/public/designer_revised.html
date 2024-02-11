@@ -114,47 +114,50 @@
 	<!-- end of sidebar -->
 
 	<!-- create canvas dialog -->
-	<dialog id="create_canvas_dialog" class="d-none">
-		<h1 class="">Generate Canvas</h1>
+	<dialog id="create_canvas_dialog" class="d-none border border-2 rounded-3" style="width: 700px">
+		<h1 class="text-center">Generate Canvas</h1>
+		<br>
+		<div class="row">
+			<div class="col">
+				<div class="mb-2">
+					<h2 class="fw-bold">Background Color:</h2>
+					<label for="rgb_r">Red:</label>
+					<input id="rgb_r" type="number" min="0" max="255" value="255" class="border rounded-3" style="width: 60px">
+					<br>
+					<label for="rgb_g">Green:</label>
+					<input id="rgb_g" type="number" min="0" max="255" value="255" class="border rounded-3" style="width: 60px">
+					<br>
+					<label for="rgb_b">Blue:</label>
+					<input id="rgb_b" type="number" min="0" max="255" value="255" class="border rounded-3" style="width: 60px">
+					<br>
+				</div>
+				<div id="canvas_color_picker">
+				</div>
+			</div>
+			<div class="col">
+				<h2 class="fw-bold">Canvas Resolution:</h2>
+				<div class="d-flex">
+					<label for="custom_canvas_height">Height:</label>
+					<input type="text" id="custom_canvas_height" class="border rounded-3" style="width: 70px">
+					<span>px</span>
+				</div>
+				<div class="d-flex">
+					<label for="custom_canvas_width">Width:</label>
+					<input type="text" id="custom_canvas_width" class="border rounded-3" style="width: 70px">
+					<span>px</span>
+				</div>
+			</div>
+		</div>
 		<br>
 
-		<div class="">
-			<div class="">
-				<h2 class="">Background Color:</h2>
-				<label for="rgb_r">Red:</label>
-				<input id="rgb_r" type="number" min="0" max="255" value="255" class="">
-				<br>
-				<label for="rgb_g">Green:</label>
-				<input id="rgb_g" type="number" min="0" max="255" value="255" class="">
-				<br>
-				<label for="rgb_b">Blue:</label>
-				<input id="rgb_b" type="number" min="0" max="255" value="255" class="">
-				<br>
-			</div>
-			<div id="canvas_color_picker">
-			</div>
-		</div>
-		<br>
-
-		<h2 class="">Canvas Resolution:</h2>
-		<div class="">
-			<label for="custom_canvas_height">Height:</label>
-			<input type="text" id="custom_canvas_height" class="">
-			<p>px</p>
-		</div>
-		<div class="">
-			<label for="custom_canvas_width">Width:</label>
-			<input type="text" id="custom_canvas_width" class="">
-			<p>px</p>
-		</div>
-		<center>
-			<button onclick="create_canvas()" class="">
+		<div class="text-center">
+			<button onclick="create_canvas()" class="btn btn-primary rounded-pill me-3">
 				Create
 			</button>
-			<button onclick="dialog_close('create_canvas_dialog')" class="">
-				Cancel
+			<button onclick="dialog_close('create_canvas_dialog')" class="btn btn-outline-secondary rounded-pill">
+				Close
 			</button>
-		</center>
+		</div>
 	</dialog>
 	<!-- create canvas dialog -->
 
@@ -510,7 +513,7 @@
 	</dialog>
 
 	<!-- generate item card dialog -->
-	<dialog id="generate_item_objects_dialog" class="d-none rounded-3 border border-1 p-0">
+	<dialog id="generate_item_objects_dialog" class="d-none rounded-3 border border-1 p-0 pb-2">
 		<div class="sticky-top bg-white">
 			<div class="d-flex justify-content-end">
 				<button onclick="dialog_close('generate_item_objects_dialog')" class="btn border-0">
@@ -540,7 +543,7 @@
 		<br>
 		<center>
 			<button onclick="dialog_close('generate_item_objects_dialog')"
-				class="btn btn-outline-secondary rounded-pill">Cancel</button>
+				class="btn btn-outline-secondary rounded-pill">Close</button>
 		</center>
 	</dialog>
 
