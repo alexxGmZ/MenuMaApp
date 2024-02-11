@@ -113,6 +113,51 @@
 	</div>
 	<!-- end of sidebar -->
 
+	<!-- create canvas dialog -->
+	<dialog id="create_canvas_dialog" class="d-none">
+		<h1 class="">Generate Canvas</h1>
+		<br>
+
+		<div class="">
+			<div class="">
+				<h2 class="">Background Color:</h2>
+				<label for="rgb_r">Red:</label>
+				<input id="rgb_r" type="number" min="0" max="255" value="255" class="">
+				<br>
+				<label for="rgb_g">Green:</label>
+				<input id="rgb_g" type="number" min="0" max="255" value="255" class="">
+				<br>
+				<label for="rgb_b">Blue:</label>
+				<input id="rgb_b" type="number" min="0" max="255" value="255" class="">
+				<br>
+			</div>
+			<div id="canvas_color_picker">
+			</div>
+		</div>
+		<br>
+
+		<h2 class="">Canvas Resolution:</h2>
+		<div class="">
+			<label for="custom_canvas_height">Height:</label>
+			<input type="text" id="custom_canvas_height" class="">
+			<p>px</p>
+		</div>
+		<div class="">
+			<label for="custom_canvas_width">Width:</label>
+			<input type="text" id="custom_canvas_width" class="">
+			<p>px</p>
+		</div>
+		<center>
+			<button onclick="create_canvas()" class="">
+				Create
+			</button>
+			<button onclick="dialog_close('create_canvas_dialog')" class="">
+				Cancel
+			</button>
+		</center>
+	</dialog>
+	<!-- create canvas dialog -->
+
 	<!-- sidebar tools -->
 	<div class="d-flex position-fixed flex-column h-100 bg-body-tertiary border-end border-2 z-2">
 		<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
@@ -202,16 +247,19 @@
 			</li>
 			<li id="layer_bring_to_front" class="d-flex">
 				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="me-2">
-				<button onclick="adjust_object_layer('bring_to_front')" class="border border-0 bg-white">Bring to front</button>
+				<button onclick="adjust_object_layer('bring_to_front')" class="border border-0 bg-white">Bring to
+					front</button>
 			</li>
 			<li id="layer_bring_forward" class="d-flex">
 				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="me-2">
-				<button onclick="adjust_object_layer('bring_forward')" class="border border-0 bg-white">Bring forward</button>
+				<button onclick="adjust_object_layer('bring_forward')" class="border border-0 bg-white">Bring
+					forward</button>
 			</li>
 			<li id="layer_send_backward" class="d-flex">
 				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="me-2"
 					style="transform: scaleY(-1)">
-				<button onclick="adjust_object_layer('send_backward')" class="border border-0 bg-white">Send backward</button>
+				<button onclick="adjust_object_layer('send_backward')" class="border border-0 bg-white">Send
+					backward</button>
 			</li>
 			<li id="layer_send_to_back" class="d-flex">
 				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="me-2"
@@ -258,6 +306,41 @@
 			class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
 		<br>
 		<button onclick="load_current_synced_design()" class="btn btn-warning rounded-pill">Load</button>
+	</dialog>
+
+	<!-- generate item card dialog -->
+	<dialog id="generate_item_objects_dialog" class="d-none rounded-3 border border-1 p-0">
+		<div class="sticky-top bg-white">
+			<div class="d-flex justify-content-end">
+				<button onclick="dialog_close('generate_item_objects_dialog')" class="btn border-0">
+					<img src="./assets/svg/bootstrap/bi-x-lg.svg">
+				</button>
+			</div>
+			<h4 class="text-center font-bold mb-3">Generate Item Objects</h4>
+		</div>
+		<div class="px-2">
+			<table id="item_card_table" class="table fs-6">
+				<thead>
+					<tr class="border-top text-center border-bottom bg-primary-subtle">
+						<th class="px-2">ID</th>
+						<th class="px-2">Name</th>
+						<th class="border-r px-2">Price</th>
+						<th class="px-2">Name</th>
+						<th class="px-2">Price</th>
+						<th class="px-2">Description</th>
+						<th class="px-2">Image</th>
+						<th class="px-2"></th>
+					</tr>
+				</thead>
+				<tbody id="item_card_list">
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<center>
+			<button onclick="dialog_close('generate_item_objects_dialog')"
+				class="btn btn-outline-secondary rounded-pill">Cancel</button>
+		</center>
 	</dialog>
 
 	<!-- change canvas resolution dialog -->
