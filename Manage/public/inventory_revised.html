@@ -268,10 +268,39 @@
 	</div>
 	<!--End of UPDATE ITEM MODAL DIALOG-->
 
-	<dialog id="lack_access_privilege_dialog" class="d-none">
-		<h1>You lack access privilege for the feature, contact the owner for more information.</h1>
-		<button onclick="dialog_close('lack_access_privilege_dialog')"
-			class="">
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="d-none rounded border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="d-none bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_user" class="d-none">User doesn't exist.</h5>
+			<h5 id="login_dialog_warn_password" class="d-none">Wrong Password.</h5>
+		</div>
+		<p id="login_redirect_site" class="d-none"></p>
+		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
+		<center>
+			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75 rounded-pill">
+			<label for="login_username" class="pb-2">Username</label>
+			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center rounded-pill">
+			<label for="login_password" class="mb-3">Password</label>
+		</center>
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4 text-center">
+			<button onclick="login_user()" class="btn btn-primary rounded-pill mb-2">
+				LOGIN
+			</button>
+			<br>
+			<button onclick="dialog_close('login_dialog')" class="btn btn-outline-secondary border-1 rounded-pill">
+				CANCEL
+			</button>
+		</div>
+	</dialog>
+
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_access" class="">Lack access rights for this feature.</h5>
+		</div>
+		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn btn-outline-primary shadow-sm rounded-pill">
 			OK
 		</button>
 	</dialog>
