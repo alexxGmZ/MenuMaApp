@@ -102,12 +102,12 @@ function display_item_cards() {
 			// to read the blob data type
 			let image_src = row.item_image ? `data:image/jpeg;base64,${row.item_image.toString('base64')}` : '';
 			out += `
-				<tr class="border-b">
+				<tr class="border-bottom text-center">
 					<td data-column="item_id" class="px-2">${row.item_id}</td>
 					<td data-column="item_name" class="px-2">${row.item_name}</td>
-					<td data-column="item_desc" class="hidden">${row.item_desc}</td>
-					<td data-column="item_img" class="hidden"><img src="${image_src}" alt="Foods Image" width="300"></td>
-					<td data-column="item_price" class="border-r px-2">${row.item_price}</td>
+					<td data-column="item_desc" class="d-none">${row.item_desc}</td>
+					<td data-column="item_img" class="d-none"><img src="${image_src}" alt="Foods Image" width="300"></td>
+					<td data-column="item_price" class="border-end px-2">${row.item_price}</td>
 					<td data-column="item_name_checkbox" class="">
 						<input type="checkbox">
 					</td>
@@ -121,7 +121,7 @@ function display_item_cards() {
 						<input type="checkbox">
 					</td>
 					<td data-column="" class="">
-						<button onclick="item_card_row_click(this)" class="border rounded-xl px-2">Generate</button>
+						<button onclick="item_card_row_click(this)" class="border rounded-pill">Generate</button>
 					</td>
 				</tr>
 			`;

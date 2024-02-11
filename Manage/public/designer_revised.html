@@ -76,7 +76,8 @@
 					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
 				</a>
-				<button onclick="login_dialog_open('inventory_revised.html')" class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
 				</button>
 				<button onclick="login_dialog_open('registration_revised.html')"
@@ -112,8 +113,59 @@
 	</div>
 	<!-- end of sidebar -->
 
+	<!-- create canvas dialog -->
+	<dialog id="create_canvas_dialog" class="d-none border border-2 rounded-3" style="width: 700px">
+		<h1 class="text-center">Generate Canvas</h1>
+		<br>
+		<div class="row">
+			<div class="col">
+				<div class="mb-2">
+					<h2 class="fw-bold">Background Color:</h2>
+					<label for="rgb_r">Red:</label>
+					<input id="rgb_r" type="number" min="0" max="255" value="255" class="border rounded-3"
+						style="width: 60px">
+					<br>
+					<label for="rgb_g">Green:</label>
+					<input id="rgb_g" type="number" min="0" max="255" value="255" class="border rounded-3"
+						style="width: 60px">
+					<br>
+					<label for="rgb_b">Blue:</label>
+					<input id="rgb_b" type="number" min="0" max="255" value="255" class="border rounded-3"
+						style="width: 60px">
+					<br>
+				</div>
+				<div id="canvas_color_picker">
+				</div>
+			</div>
+			<div class="col">
+				<h2 class="fw-bold">Canvas Resolution:</h2>
+				<div class="d-flex">
+					<label for="custom_canvas_height">Height:</label>
+					<input type="text" id="custom_canvas_height" class="border rounded-3" style="width: 70px">
+					<span>px</span>
+				</div>
+				<div class="d-flex">
+					<label for="custom_canvas_width">Width:</label>
+					<input type="text" id="custom_canvas_width" class="border rounded-3" style="width: 70px">
+					<span>px</span>
+				</div>
+			</div>
+		</div>
+		<br>
+
+		<div class="text-center">
+			<button onclick="create_canvas()" class="btn btn-primary rounded-pill me-3">
+				Create
+			</button>
+			<button onclick="dialog_close('create_canvas_dialog')" class="btn btn-outline-secondary rounded-pill">
+				Close
+			</button>
+		</div>
+	</dialog>
+	<!-- create canvas dialog -->
+
 	<!-- sidebar tools -->
-	<div class="d-flex position-fixed flex-column h-100 bg-body-tertiary border-end border-2">
+	<div class="d-flex position-fixed flex-column h-100 bg-body-tertiary border-end border-2 z-2">
 		<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
 			class="btn btn-outline-warning mx-1 mb-1 rounded-pill" style="margin-top: 100px">
 			<img src="./assets/svg/bootstrap/arrow-repeat.svg" width="20px" alt="">
@@ -146,7 +198,7 @@
 	<!-- end of sidebar tools -->
 
 	<!-- statusbar -->
-	<div class="fixed-bottom bg-body-tertiary p-1 border-top">
+	<div class="fixed-bottom bg-body-tertiary p-1 border-top z-2">
 		<div class="row">
 			<div class="col d-flex flex-row">
 				<span class="fs-6 me-1">Canvas Resolution: </span>
@@ -180,41 +232,386 @@
 	</div>
 	<!-- end of canvas area -->
 
+	<!-- context menu (right-click menu) -->
+	<div id="context_menu"
+		class="d-none position-absolute border border-1 bg-white p-1 rounded-2 text-xs drop-shadow-lg z-3">
+		<ul class="m-0 p-0">
+			<li id="context_menu_copy" class="d-flex">
+				<img src="assets/svg/designer/copy-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="copy_selected_objects()" class="border border-0 bg-white">Copy</button>
+			</li>
+			<li id="context_menu_cut" class="d-flex">
+				<img src="assets/svg/designer/cut-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="cut_selected_objects()" class="border border-0 bg-white">Cut</button>
+			</li>
+			<li id="context_menu_paste" class="d-flex">
+				<img src="assets/svg/designer/paste-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="paste_copied_objects('mouse')" class="border border-0 bg-white">Paste</button>
+			</li>
+			<li id="context_menu_select_group" class="d-flex">
+				<img src="assets/svg/designer/object-group-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="get_selected_object_group()" class="border border-0 bg-white">Select Group</button>
+			</li>
+			<li id="layer_bring_to_front" class="d-flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="adjust_object_layer('bring_to_front')" class="border border-0 bg-white">Bring to
+					front</button>
+			</li>
+			<li id="layer_bring_forward" class="d-flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="adjust_object_layer('bring_forward')" class="border border-0 bg-white">Bring
+					forward</button>
+			</li>
+			<li id="layer_send_backward" class="d-flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="me-2"
+					style="transform: scaleY(-1)">
+				<button onclick="adjust_object_layer('send_backward')" class="border border-0 bg-white">Send
+					backward</button>
+			</li>
+			<li id="layer_send_to_back" class="d-flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="me-2"
+					style="transform: scaleY(-1)">
+				<button onclick="adjust_object_layer('send_to_back')" class="border border-0 bg-white">Send to back</button>
+			</li>
+			<li id="context_menu_properties" class="d-flex">
+				<button onclick="object_properties('show')" class="border border-0 bg-white">Properties</button>
+			</li>
+		</ul>
+	</div>
+	<!-- end of context menu (right-click menu) -->
+
+	<!-- object properties -->
+	<div id="object_properties" class="d-none position-absolute bg-white fs-6 rounded-3 border px-4 pb-2 overflow-auto"
+		style="white-space: nowrap; z-index: 50;">
+		<div id="object_properties_header" class="fw-bold text-center" style="cursor: move">
+			<div class="row">
+				<div class="col">
+					Object Properties
+				</div>
+				<div class="col d-flex justify-content-end">
+					<button onclick="object_properties('hide')" class="bg-white border-0">
+						<img src="./assets/svg/bootstrap/bi-x-lg.svg">
+					</button>
+				</div>
+			</div>
+		</div>
+		<label for="object_properties_group_id" class="fw-bold">Group ID:</label>
+		<span id="object_properties_group_id"></span>
+		<br>
+
+		<label for="object_properties_object_id" class="fw-bold">Object ID:</label>
+		<span id="object_properties_object_id"></span>
+		<br>
+
+		<label for="object_properties_object_type" class="fw-bold">Object type:</label>
+		<span id="object_properties_object_type"></span>
+		<br><br>
+
+		<div class="mb-6">
+			<!-- modifiable object properties for a text object -->
+			<div id="object_properties_text" class="">
+				<label for="text_font" class="fw-bold">Font:</label>
+				<select id="text_font" class="border rounded-3 px-2">
+					<option value="Arial">Arial</option>
+					<option value="Calibri">Calibri</option>
+					<option value="Cambria">Cambria</option>
+					<option value="Courier New">Courier New</option>
+					<option value="Times New Roman">Times New Roman</option>
+				</select>
+				<br>
+
+				<label for="text_font_size" class="fw-bold">Font Size:</label>
+				<input type="number" id="text_font_size" class="border rounded-3 px-2" style="width: 70px">
+				<br>
+
+				<p class="fw-bold">Fill Color</p>
+				<label for="text_fill_color_r">R:</label>
+				<input type="number" min="0" max="255" id="text_fill_color_r" class="border rounded-3 px-1"
+					style="width: 60px">
+				<label for="text_fill_color_g">G:</label>
+				<input type="number" min="0" max="255" id="text_fill_color_g" class="border rounded-3 px-1"
+					style="width: 60px">
+				<label for="text_fill_color_b">B:</label>
+				<input type="number" min="0" max="255" id="text_fill_color_b" class="border rounded-3 px-1"
+					style="width: 60px">
+				<button id="text_fill_change" class="bg-white border border-1 rounded-pill">
+					Change
+				</button>
+				<br>
+				<br>
+				<div id="text_fill_color_picker">
+				</div>
+			</div>
+
+			<!-- modifiable object properties for an image object -->
+			<div id="object_properties_img" class="">
+				<span>Show image object properties here</span>
+			</div>
+
+			<!-- modifiable object properties for a rectangle object -->
+			<div id="object_properties_rect" class="">
+				<label for="rect_radius" class="fw-bold">Radius:</label>
+				<input type="number" id="rect_radius" min="0" step="0.1" class="border rounded-3 px-2" style="width: 70px">
+
+				<div class="mb-2">
+					<p class="fw-bold">Fill Color</p>
+					<label for="rect_fill_color_r">R:</label>
+					<input type="number" min="0" max="255" id="rect_fill_color_r" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="rect_fill_color_g">G:</label>
+					<input type="number" min="0" max="255" id="rect_fill_color_g" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="rect_fill_color_b">B:</label>
+					<input type="number" min="0" max="255" id="rect_fill_color_b" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="rect_fill_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="rect_fill_color_a" class="border rounded-3 px-1"
+						style="width: 60px">
+					<button id="rect_fill_change" class="bg-white rounded-pill border px-1 ">
+						Change
+					</button>
+				</div>
+				<div id="rect_fill_color_picker" class="mb-3">
+				</div>
+
+				<label for="rect_stroke_width" class="fw-bold">Stroke Width:</label>
+				<input type="number" id="rect_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2"
+					style="width: 70px">
+				<br>
+
+				<div class="mb-2">
+					<p class="fw-bold">Stroke Color</p>
+					<label for="rect_stroke_color_r">R:</label>
+					<input type="number" min="0" max="255" id="rect_stroke_color_r" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="rect_stroke_color_g">G:</label>
+					<input type="number" min="0" max="255" id="rect_stroke_color_g" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="rect_stroke_color_b">B:</label>
+					<input type="number" min="0" max="255" id="rect_stroke_color_b" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="rect_stroke_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="rect_stroke_color_a"
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="rect_stroke_change" class="bg-white rounded-pill border px-1">
+						Change
+					</button>
+				</div>
+				<div id="rect_stroke_color_picker">
+				</div>
+			</div>
+
+			<!-- modifiable object properties for a circle object -->
+			<div id="object_properties_circ" class="">
+				<div class="mb-2">
+					<p class="fw-bold">Fill Color</p>
+					<label for="circ_fill_color_r">R:</label>
+					<input type="number" min="0" max="255" id="circ_fill_color_r" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="circ_fill_color_g">G:</label>
+					<input type="number" min="0" max="255" id="circ_fill_color_g" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="circ_fill_color_b">B:</label>
+					<input type="number" min="0" max="255" id="circ_fill_color_b" class="border rounded-3 px-1"
+						style="width: 60px">
+					<label for="circ_fill_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="circ_fill_color_a"
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="circ_fill_change" class="bg-white rounded-pill border px-1 ">
+						Change
+					</button>
+				</div>
+				<div id="circ_fill_color_picker" class="mb-3">
+				</div>
+
+				<label for="circ_stroke_width" class="fw-bold">Stroke Width:</label>
+				<input type="number" id="circ_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2"
+					style="width: 70px">
+				<br>
+				<div class="mb-2">
+					<p class="fw-bold">Stroke Color</p>
+					<label for="circ_stroke_color_r">R:</label>
+					<input type="number" min="0" max="255" id="circ_stroke_color_r" class="border  rounded-3 px-1"
+						style="width: 60px">
+					<label for="circ_stroke_color_g">G:</label>
+					<input type="number" min="0" max="255" id="circ_stroke_color_g" class="border  rounded-3 px-1"
+						style="width: 60px">
+					<label for="circ_stroke_color_b">B:</label>
+					<input type="number" min="0" max="255" id="circ_stroke_color_b" class="border  rounded-3 px-1"
+						style="width: 60px">
+					<label for="circ_stroke_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="circ_stroke_color_a"
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="circ_stroke_change" class="bg-white rounded-pill border px-1 ">
+						Change
+					</button>
+				</div>
+				<div id="circ_stroke_color_picker" class="mb-3">
+				</div>
+			</div>
+
+			<!-- modifiable object properties for a line object -->
+			<div id="object_properties_line" class="">
+				<div class="mb-6">
+					<p class="fw-bold">Color</p>
+					<label for="line_stroke_color_r">R:</label>
+					<input type="number" min="0" max="255" id="line_stroke_color_r" class="border  rounded-3 px-1"
+						style="width: 60px">
+					<label for="line_stroke_color_g">G:</label>
+					<input type="number" min="0" max="255" id="line_stroke_color_g" class="border  rounded-3 px-1"
+						style="width: 60px">
+					<label for="line_stroke_color_b">B:</label>
+					<input type="number" min="0" max="255" id="line_stroke_color_b" class="border  rounded-3 px-1"
+						style="width: 60px">
+					<label for="line_stroke_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="line_stroke_color_a"
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="line_stroke_change" class="bg-white rounded-pill border px-1 ">
+						Change
+					</button>
+				</div>
+				<div id="line_stroke_color_picker">
+				</div>
+			</div>
+		</div>
+		<center>
+			<button onclick="object_properties('hide')" class="btn btn-outline-primary rounded-pill">Close</button>
+		</center>
+	</div>
+	<!-- end of object properties -->
+
+	<!-- sync design dialog -->
+	<dialog id="sync_design_dialog" class="d-none rounded-3 border border-2 border-warning text-center">
+		<div class="bg-warning-subtle rounded-3 p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h3>Sync to connection Kiosk Devices?</h3>
+		</div>
+		<p class="mb-4" style="white-space: pre-line;">
+			Make sure that all kiosk devices are not being currently used for operation.
+			It is to prevent misconfiguration during ongoing customer transaction.
+			You can save the design instead.
+		</p>
+		<br>
+
+		<button onclick="dialog_close('sync_design_dialog')"
+			class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
+		<br>
+		<button onclick="sync_design_to_order()" class="btn btn-warning rounded-pill">Sync</button>
+	</dialog>
+	<!-- end of sync design dialog -->
+
 	<!-- load current synced design dialog -->
-	<dialog id="load_current_synced_design_dialog" class="d-none border border-2 border-warning bg-warning-subtle rounded-3">
-		<div class="text-center">
+	<dialog id="load_current_synced_design_dialog" class="d-none border border-2 border-warning rounded-3 text-center">
+		<div class="bg-warning-subtle rounded-3 p-2 mb-2">
 			<img src="assets/svg/exclamation.svg" width="80px" class="">
 			<h3>Load current synced design?</h3>
-			<p class="mb-5">
-				Save current canvas or you might lose your changes.
-			</p>
-			<button onclick="dialog_close('load_current_synced_design_dialog')" class="btn btn-outline-secondary rounded-pill mb-4">Cancel</button>
-			<br>
-			<button onclick="load_current_synced_design()" class="btn btn-warning rounded-pill">Load</button>
 		</div>
+		<p class="mb-4">
+			Save current canvas or you might lose your changes.
+		</p>
+		<button onclick="dialog_close('load_current_synced_design_dialog')"
+			class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
+		<br>
+		<button onclick="load_current_synced_design()" class="btn btn-warning rounded-pill">Load</button>
+	</dialog>
+
+	<!-- generate item card dialog -->
+	<dialog id="generate_item_objects_dialog" class="d-none rounded-3 border border-1 p-0 pb-2">
+		<div class="sticky-top bg-white">
+			<div class="d-flex justify-content-end">
+				<button onclick="dialog_close('generate_item_objects_dialog')" class="btn border-0">
+					<img src="./assets/svg/bootstrap/bi-x-lg.svg">
+				</button>
+			</div>
+			<h4 class="text-center fw-bold mb-3">Generate Item Objects</h4>
+		</div>
+		<div class="px-2">
+			<table id="item_card_table" class="table fs-6">
+				<thead>
+					<tr class="border-top text-center border-bottom bg-primary-subtle">
+						<th class="px-2">ID</th>
+						<th class="px-2">Name</th>
+						<th class="border-r px-2">Price</th>
+						<th class="px-2">Name</th>
+						<th class="px-2">Price</th>
+						<th class="px-2">Description</th>
+						<th class="px-2">Image</th>
+						<th class="px-2"></th>
+					</tr>
+				</thead>
+				<tbody id="item_card_list">
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<center>
+			<button onclick="dialog_close('generate_item_objects_dialog')"
+				class="btn btn-outline-secondary rounded-pill">Close</button>
+		</center>
 	</dialog>
 
 	<!-- change canvas resolution dialog -->
-	<dialog id="change_canvas_resolution_dialog" class="d-none">
-		<h1 class="">Change canvas Resolution</h1>
-		<div class="">
-			<label for="change_res_width">Width:</label>
-			<input id="change_res_width" type="number" class="">
-			<p>px</p>
+	<dialog id="change_canvas_resolution_dialog" class="d-none border border-1 rounded-3">
+		<h3 class="mb-3 text-center">Change canvas Resolution</h3>
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-3">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5>Objects will not scale along with the canvas.</h5>
 		</div>
-		<div class="">
-			<label for="change_res_height">Height:</label>
-			<input id="change_res_height" type="number" class="">
-			<p>px</p>
+		<div class="mb-4">
+			<div class="d-flex">
+				<label for="change_res_width" class="me-2">Width:</label>
+				<input id="change_res_width" type="number" class="border rounded-3">
+				<span>px</span>
+			</div>
+			<div class="d-flex">
+				<label for="change_res_height" class="me-2">Height:</label>
+				<input id="change_res_height" type="number" class="border rounded-3">
+				<span>px</span>
+			</div>
 		</div>
-		<p class="">
-			<b>!!WARNING!!</b>
-			Objects will not scale along with the canvas.
-		</p>
 		<center>
-			<button id="change_canvas_res_button" class="">Change</button>
-			<button onclick="dialog_close('change_canvas_resolution_dialog')" class="">Cancel</button>
+			<button id="change_canvas_res_button" class="btn btn-primary rounded-pill">Change</button>
+			<button onclick="dialog_close('change_canvas_resolution_dialog')"
+				class="btn btn-outline-secondary rounded-pill">Cancel</button>
 		</center>
+	</dialog>
+
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="d-none rounded border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="d-none bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_user" class="d-none">User doesn't exist.</h5>
+			<h5 id="login_dialog_warn_password" class="d-none">Wrong Password.</h5>
+		</div>
+		<p id="login_redirect_site" class="d-none"></p>
+		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
+		<center>
+			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75 rounded-pill">
+			<label for="login_username" class="pb-2">Username</label>
+			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center rounded-pill">
+			<label for="login_password" class="mb-3">Password</label>
+		</center>
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4 text-center">
+			<button onclick="login_user()" class="btn btn-primary rounded-pill mb-2">
+				LOGIN
+			</button>
+			<br>
+			<button onclick="dialog_close('login_dialog')" class="btn btn-outline-secondary border-1 rounded-pill">
+				CANCEL
+			</button>
+		</div>
+	</dialog>
+
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_access" class="">Lack access rights for this feature.</h5>
+		</div>
+		<button onclick="dialog_close('lack_access_privilege_dialog')"
+			class="btn btn-outline-primary shadow-sm rounded-pill">
+			OK
+		</button>
 	</dialog>
 
 	<script src="./bootstrap/js/bootstrap.min.js"></script>
@@ -223,8 +620,11 @@
 	<script src="./js/login.js"></script>
 	<script src="./js/designer/designer.js"></script>
 	<script src="./js/designer/global_events.js"></script>
+	<script src="./js/designer/cut_copy_paste.js"></script>
+	<script src="./js/designer/left_sidebar.js"></script>
 	<script src="./js/designer/context_menu.js"></script>
 	<script src="./js/designer/canvas_scaler.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
 </body>
 
 </html>
