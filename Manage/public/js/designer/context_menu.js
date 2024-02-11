@@ -127,14 +127,18 @@ function object_properties(display_style) {
 			document.getElementById("text_font").removeEventListener("input", change_text_font_size_listener);
 
 		// hide object properties window
-		properties_element.style.display = "none";
+		// properties_element.style.display = "none";
+		properties_element.classList.add("d-none");
+		properties_element.classList.remove("d-block");
 	}
 
 	else if (display_style === "show") {
 		context_menu("hide");
 
 		// render object properties window
-		properties_element.style.display = 'block';
+		// properties_element.style.display = 'block';
+		properties_element.classList.remove("d-none");
+		properties_element.classList.add("d-block");
 		properties_element.style.left = ((pointer_x * canvas_zoom) + 80) + 'px';
 		properties_element.style.top = ((pointer_y * canvas_zoom) + 90) + 'px';
 		properties_window_drag_event();

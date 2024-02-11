@@ -227,7 +227,8 @@
 	<!-- end of canvas area -->
 
 	<!-- context menu (right-click menu) -->
-	<div id="context_menu" class="d-none position-absolute bg-white p-1 rounded-2 text-xs drop-shadow-lg z-3">
+	<div id="context_menu"
+		class="d-none position-absolute border border-1 bg-white p-1 rounded-2 text-xs drop-shadow-lg z-3">
 		<ul class="m-0 p-0">
 			<li id="context_menu_copy" class="d-flex">
 				<img src="assets/svg/designer/copy-svgrepo-com.svg" width="12px" class="me-2">
@@ -272,6 +273,180 @@
 		</ul>
 	</div>
 	<!-- end of context menu (right-click menu) -->
+
+	<!-- object properties -->
+	<div id="object_properties" class="d-none position-absolute bg-white fs-6 rounded-3 border px-4 pb-2 overflow-auto"
+		style="white-space: nowrap; z-index: 50;">
+		<div id="object_properties_header" class="fw-bold text-center" style="cursor: move">
+			Object Properties
+		</div>
+		<label for="object_properties_group_id" class="font-bold">Group ID:</label>
+		<span id="object_properties_group_id"></span>
+		<br>
+
+		<label for="object_properties_object_id" class="font-bold">Object ID:</label>
+		<span id="object_properties_object_id"></span>
+		<br>
+
+		<label for="object_properties_object_type" class="font-bold">Object type:</label>
+		<span id="object_properties_object_type"></span>
+		<br><br>
+
+		<div class="mb-6">
+			<!-- modifiable object properties for a text object -->
+			<div id="object_properties_text" class="">
+				<label for="text_font" class="fw-bold">Font:</label>
+				<select id="text_font" class="border rounded-3 px-2">
+					<option value="Arial">Arial</option>
+					<option value="Calibri">Calibri</option>
+					<option value="Cambria">Cambria</option>
+					<option value="Courier New">Courier New</option>
+					<option value="Times New Roman">Times New Roman</option>
+				</select>
+				<br>
+
+				<label for="text_font_size" class="fw-bold">Font Size:</label>
+				<input type="number" id="text_font_size" class="border rounded-3 px-2" style="width: 70px">
+				<br>
+
+				<p class="fw-bold">Fill Color</p>
+				<label for="text_fill_color_r">R:</label>
+				<input type="number" min="0" max="255" id="text_fill_color_r" class="border rounded-3 px-1"
+					style="width: 60px">
+				<label for="text_fill_color_g">G:</label>
+				<input type="number" min="0" max="255" id="text_fill_color_g" class="border rounded-3 px-1"
+					style="width: 60px">
+				<label for="text_fill_color_b">B:</label>
+				<input type="number" min="0" max="255" id="text_fill_color_b" class="border rounded-3 px-1"
+					style="width: 60px">
+				<button id="text_fill_change" class="bg-white border border-1 rounded-pill">
+					Change
+				</button>
+				<br>
+				<br>
+				<div id="text_fill_color_picker">
+				</div>
+			</div>
+
+			<!-- modifiable object properties for an image object -->
+			<div id="object_properties_img" class="hidden">
+				<span>Show image object properties here</span>
+			</div>
+
+			<!-- modifiable object properties for a rectangle object -->
+			<div id="object_properties_rect" class="">
+				<label for="rect_radius" class="font-bold">Radius:</label>
+				<input type="number" id="rect_radius" min="0" step="0.1" class="border rounded-3 px-2 w-[70px]">
+
+				<div class="mb-2">
+					<p class="font-bold">Fill Color</p>
+					<label for="rect_fill_color_r">R:</label>
+					<input type="number" min="0" max="255" id="rect_fill_color_r" class="border  rounded-3 px-1">
+					<label for="rect_fill_color_g">G:</label>
+					<input type="number" min="0" max="255" id="rect_fill_color_g" class="border  rounded-3 px-1">
+					<label for="rect_fill_color_b">B:</label>
+					<input type="number" min="0" max="255" id="rect_fill_color_b" class="border  rounded-3 px-1">
+					<label for="rect_fill_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="rect_fill_color_a"
+						class="border w-14 rounded-3 px-1">
+					<button id="rect_fill_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
+				<div id="rect_fill_color_picker" class="mb-3">
+				</div>
+
+				<label for="rect_stroke_width" class="font-bold">Stroke Width:</label>
+				<input type="number" id="rect_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2 w-[70px]">
+				<br>
+
+				<div class="mb-2">
+					<p class="font-bold">Stroke Color</p>
+					<label for="rect_stroke_color_r">R:</label>
+					<input type="number" min="0" max="255" id="rect_stroke_color_r" class="border  rounded-3 px-1">
+					<label for="rect_stroke_color_g">G:</label>
+					<input type="number" min="0" max="255" id="rect_stroke_color_g" class="border  rounded-3 px-1">
+					<label for="rect_stroke_color_b">B:</label>
+					<input type="number" min="0" max="255" id="rect_stroke_color_b" class="border  rounded-3 px-1">
+					<label for="rect_stroke_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="rect_stroke_color_a"
+						class="border w-14 rounded-3 px-1">
+					<button id="rect_stroke_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
+				<div id="rect_stroke_color_picker">
+				</div>
+			</div>
+
+			<!-- modifiable object properties for a circle object -->
+			<div id="object_properties_circ" class="hidden">
+				<div class="mb-2">
+					<p class="font-bold">Fill Color</p>
+					<label for="circ_fill_color_r">R:</label>
+					<input type="number" min="0" max="255" id="circ_fill_color_r" class="border  rounded-3 px-1">
+					<label for="circ_fill_color_g">G:</label>
+					<input type="number" min="0" max="255" id="circ_fill_color_g" class="border  rounded-3 px-1">
+					<label for="circ_fill_color_b">B:</label>
+					<input type="number" min="0" max="255" id="circ_fill_color_b" class="border  rounded-3 px-1">
+					<label for="circ_fill_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="circ_fill_color_a"
+						class="border w-14 rounded-3 px-1">
+					<button id="circ_fill_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
+				<div id="circ_fill_color_picker" class="mb-3">
+				</div>
+
+				<label for="circ_stroke_width" class="font-bold">Stroke Width:</label>
+				<input type="number" id="circ_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2 w-[70px]">
+				<br>
+				<div class="mb-2">
+					<p class="font-bold">Stroke Color</p>
+					<label for="circ_stroke_color_r">R:</label>
+					<input type="number" min="0" max="255" id="circ_stroke_color_r" class="border  rounded-3 px-1">
+					<label for="circ_stroke_color_g">G:</label>
+					<input type="number" min="0" max="255" id="circ_stroke_color_g" class="border  rounded-3 px-1">
+					<label for="circ_stroke_color_b">B:</label>
+					<input type="number" min="0" max="255" id="circ_stroke_color_b" class="border  rounded-3 px-1">
+					<label for="circ_stroke_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="circ_stroke_color_a"
+						class="border w-14 rounded-3 px-1">
+					<button id="circ_stroke_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
+				<div id="circ_stroke_color_picker" class="mb-3">
+				</div>
+			</div>
+
+			<!-- modifiable object properties for a line object -->
+			<div id="object_properties_line" class="hidden">
+				<div class="mb-6">
+					<p class="font-bold">Color</p>
+					<label for="line_stroke_color_r">R:</label>
+					<input type="number" min="0" max="255" id="line_stroke_color_r" class="border  rounded-3 px-1">
+					<label for="line_stroke_color_g">G:</label>
+					<input type="number" min="0" max="255" id="line_stroke_color_g" class="border  rounded-3 px-1">
+					<label for="line_stroke_color_b">B:</label>
+					<input type="number" min="0" max="255" id="line_stroke_color_b" class="border  rounded-3 px-1">
+					<label for="line_stroke_color_a">A:</label>
+					<input type="number" min="0" max="1" step="0.01" id="line_stroke_color_a"
+						class="border w-14 rounded-3 px-1">
+					<button id="line_stroke_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						Change
+					</button>
+				</div>
+				<div id="line_stroke_color_picker">
+				</div>
+			</div>
+		</div>
+		<center>
+			<button onclick="object_properties('hide')" class="btn btn-outline-primary rounded-pill">Close</button>
+		</center>
+	</div>
+	<!-- end of object properties -->
 
 	<!-- sync design dialog -->
 	<dialog id="sync_design_dialog" class="d-none rounded-3 border border-2 border-warning text-center">
