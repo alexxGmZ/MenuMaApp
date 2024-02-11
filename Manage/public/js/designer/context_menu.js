@@ -57,11 +57,14 @@ function context_menu(display_style) {
 	console.log(`called context_menu(${display_style})`)
 	const context_menu = document.getElementById('context_menu');
 
-	if (display_style === "hide")
-		context_menu.style.display = "none";
+	if (display_style === "hide"){
+		context_menu.classList.add("d-none");
+		context_menu.classList.remove("d-block");
+	}
 	else if (display_style === "show") {
 		// display context menu based on the mouse pointer position
-		context_menu.style.display = 'block';
+		context_menu.classList.remove("d-none");
+		context_menu.classList.add("d-block");
 		context_menu.style.left = ((pointer_x * canvas_zoom) + 80) + 'px';
 		context_menu.style.top = ((pointer_y * canvas_zoom) + 90) + 'px';
 

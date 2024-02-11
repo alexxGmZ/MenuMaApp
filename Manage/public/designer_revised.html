@@ -76,7 +76,8 @@
 					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
 				</a>
-				<button onclick="login_dialog_open('inventory_revised.html')" class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
 					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
 				</button>
 				<button onclick="login_dialog_open('registration_revised.html')"
@@ -113,7 +114,7 @@
 	<!-- end of sidebar -->
 
 	<!-- sidebar tools -->
-	<div class="d-flex position-fixed flex-column h-100 bg-body-tertiary border-end border-2">
+	<div class="d-flex position-fixed flex-column h-100 bg-body-tertiary border-end border-2 z-2">
 		<button onclick="dialog_open('sync_design_dialog')" title="Sync to Kiosk Devices"
 			class="btn btn-outline-warning mx-1 mb-1 rounded-pill" style="margin-top: 100px">
 			<img src="./assets/svg/bootstrap/arrow-repeat.svg" width="20px" alt="">
@@ -146,7 +147,7 @@
 	<!-- end of sidebar tools -->
 
 	<!-- statusbar -->
-	<div class="fixed-bottom bg-body-tertiary p-1 border-top">
+	<div class="fixed-bottom bg-body-tertiary p-1 border-top z-2">
 		<div class="row">
 			<div class="col d-flex flex-row">
 				<span class="fs-6 me-1">Canvas Resolution: </span>
@@ -180,18 +181,83 @@
 	</div>
 	<!-- end of canvas area -->
 
+	<!-- context menu (right-click menu) -->
+	<div id="context_menu" class="d-none position-absolute bg-white p-1 rounded-2 text-xs drop-shadow-lg z-3">
+		<ul class="m-0 p-0">
+			<li id="context_menu_copy" class="d-flex">
+				<img src="assets/svg/designer/copy-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="copy_selected_objects()" class="border border-0 bg-white">Copy</button>
+			</li>
+			<li id="context_menu_cut" class="d-flex">
+				<img src="assets/svg/designer/cut-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="cut_selected_objects()" class="border border-0 bg-white">Cut</button>
+			</li>
+			<li id="context_menu_paste" class="d-flex">
+				<img src="assets/svg/designer/paste-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="paste_copied_objects('mouse')" class="border border-0 bg-white">Paste</button>
+			</li>
+			<li id="context_menu_select_group" class="d-flex">
+				<img src="assets/svg/designer/object-group-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="get_selected_object_group()" class="border border-0 bg-white">Select Group</button>
+			</li>
+			<li id="layer_bring_to_front" class="d-flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="adjust_object_layer('bring_to_front')" class="border border-0 bg-white">Bring to front</button>
+			</li>
+			<li id="layer_bring_forward" class="d-flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="me-2">
+				<button onclick="adjust_object_layer('bring_forward')" class="border border-0 bg-white">Bring forward</button>
+			</li>
+			<li id="layer_send_backward" class="d-flex">
+				<img src="assets/svg/designer/arrow-up-svgrepo-com.svg" width="12px" class="me-2"
+					style="transform: scaleY(-1)">
+				<button onclick="adjust_object_layer('send_backward')" class="border border-0 bg-white">Send backward</button>
+			</li>
+			<li id="layer_send_to_back" class="d-flex">
+				<img src="assets/svg/designer/align-top-arrow-01-svgrepo-com.svg" width="12px" class="me-2"
+					style="transform: scaleY(-1)">
+				<button onclick="adjust_object_layer('send_to_back')" class="border border-0 bg-white">Send to back</button>
+			</li>
+			<li id="context_menu_properties" class="d-flex">
+				<button onclick="object_properties('show')" class="border border-0 bg-white">Properties</button>
+			</li>
+		</ul>
+	</div>
+	<!-- end of context menu (right-click menu) -->
+
+	<!-- sync design dialog -->
+	<dialog id="sync_design_dialog" class="d-none rounded-3 border border-2 border-warning text-center">
+		<div class="bg-warning-subtle rounded-3 p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h3>Sync to connection Kiosk Devices?</h3>
+		</div>
+		<p class="mb-4" style="white-space: pre-line;">
+			Make sure that all kiosk devices are not being currently used for operation.
+			It is to prevent misconfiguration during ongoing customer transaction.
+			You can save the design instead.
+		</p>
+		<br>
+
+		<button onclick="dialog_close('sync_design_dialog')"
+			class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
+		<br>
+		<button onclick="sync_design_to_order()" class="btn btn-warning rounded-pill">Sync</button>
+	</dialog>
+	<!-- end of sync design dialog -->
+
 	<!-- load current synced design dialog -->
-	<dialog id="load_current_synced_design_dialog" class="d-none border border-2 border-warning bg-warning-subtle rounded-3">
-		<div class="text-center">
+	<dialog id="load_current_synced_design_dialog" class="d-none border border-2 border-warning rounded-3 text-center">
+		<div class="bg-warning-subtle rounded-3 p-2 mb-2">
 			<img src="assets/svg/exclamation.svg" width="80px" class="">
 			<h3>Load current synced design?</h3>
-			<p class="mb-5">
-				Save current canvas or you might lose your changes.
-			</p>
-			<button onclick="dialog_close('load_current_synced_design_dialog')" class="btn btn-outline-secondary rounded-pill mb-4">Cancel</button>
-			<br>
-			<button onclick="load_current_synced_design()" class="btn btn-warning rounded-pill">Load</button>
 		</div>
+		<p class="mb-4">
+			Save current canvas or you might lose your changes.
+		</p>
+		<button onclick="dialog_close('load_current_synced_design_dialog')"
+			class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
+		<br>
+		<button onclick="load_current_synced_design()" class="btn btn-warning rounded-pill">Load</button>
 	</dialog>
 
 	<!-- change canvas resolution dialog -->
@@ -223,6 +289,8 @@
 	<script src="./js/login.js"></script>
 	<script src="./js/designer/designer.js"></script>
 	<script src="./js/designer/global_events.js"></script>
+	<script src="./js/designer/cut_copy_paste.js"></script>
+	<script src="./js/designer/left_sidebar.js"></script>
 	<script src="./js/designer/context_menu.js"></script>
 	<script src="./js/designer/canvas_scaler.js"></script>
 </body>
