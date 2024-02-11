@@ -278,17 +278,26 @@
 	<div id="object_properties" class="d-none position-absolute bg-white fs-6 rounded-3 border px-4 pb-2 overflow-auto"
 		style="white-space: nowrap; z-index: 50;">
 		<div id="object_properties_header" class="fw-bold text-center" style="cursor: move">
-			Object Properties
+			<div class="row">
+				<div class="col">
+					Object Properties
+				</div>
+				<div class="col d-flex justify-content-end">
+					<button onclick="object_properties('hide')" class="bg-white border-0">
+						<img src="./assets/svg/bootstrap/bi-x-lg.svg">
+					</button>
+				</div>
+			</div>
 		</div>
-		<label for="object_properties_group_id" class="font-bold">Group ID:</label>
+		<label for="object_properties_group_id" class="fw-bold">Group ID:</label>
 		<span id="object_properties_group_id"></span>
 		<br>
 
-		<label for="object_properties_object_id" class="font-bold">Object ID:</label>
+		<label for="object_properties_object_id" class="fw-bold">Object ID:</label>
 		<span id="object_properties_object_id"></span>
 		<br>
 
-		<label for="object_properties_object_type" class="font-bold">Object type:</label>
+		<label for="object_properties_object_type" class="fw-bold">Object type:</label>
 		<span id="object_properties_object_type"></span>
 		<br><br>
 
@@ -329,49 +338,56 @@
 			</div>
 
 			<!-- modifiable object properties for an image object -->
-			<div id="object_properties_img" class="hidden">
+			<div id="object_properties_img" class="">
 				<span>Show image object properties here</span>
 			</div>
 
 			<!-- modifiable object properties for a rectangle object -->
 			<div id="object_properties_rect" class="">
-				<label for="rect_radius" class="font-bold">Radius:</label>
-				<input type="number" id="rect_radius" min="0" step="0.1" class="border rounded-3 px-2 w-[70px]">
+				<label for="rect_radius" class="fw-bold">Radius:</label>
+				<input type="number" id="rect_radius" min="0" step="0.1" class="border rounded-3 px-2" style="width: 70px">
 
 				<div class="mb-2">
-					<p class="font-bold">Fill Color</p>
+					<p class="fw-bold">Fill Color</p>
 					<label for="rect_fill_color_r">R:</label>
-					<input type="number" min="0" max="255" id="rect_fill_color_r" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="rect_fill_color_r" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="rect_fill_color_g">G:</label>
-					<input type="number" min="0" max="255" id="rect_fill_color_g" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="rect_fill_color_g" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="rect_fill_color_b">B:</label>
-					<input type="number" min="0" max="255" id="rect_fill_color_b" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="rect_fill_color_b" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="rect_fill_color_a">A:</label>
-					<input type="number" min="0" max="1" step="0.01" id="rect_fill_color_a"
-						class="border w-14 rounded-3 px-1">
-					<button id="rect_fill_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+					<input type="number" min="0" max="1" step="0.01" id="rect_fill_color_a" class="border rounded-3 px-1"
+						style="width: 60px">
+					<button id="rect_fill_change" class="bg-white rounded-pill border px-1 ">
 						Change
 					</button>
 				</div>
 				<div id="rect_fill_color_picker" class="mb-3">
 				</div>
 
-				<label for="rect_stroke_width" class="font-bold">Stroke Width:</label>
-				<input type="number" id="rect_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2 w-[70px]">
+				<label for="rect_stroke_width" class="fw-bold">Stroke Width:</label>
+				<input type="number" id="rect_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2"
+					style="width: 70px">
 				<br>
 
 				<div class="mb-2">
-					<p class="font-bold">Stroke Color</p>
+					<p class="fw-bold">Stroke Color</p>
 					<label for="rect_stroke_color_r">R:</label>
-					<input type="number" min="0" max="255" id="rect_stroke_color_r" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="rect_stroke_color_r" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="rect_stroke_color_g">G:</label>
-					<input type="number" min="0" max="255" id="rect_stroke_color_g" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="rect_stroke_color_g" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="rect_stroke_color_b">B:</label>
-					<input type="number" min="0" max="255" id="rect_stroke_color_b" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="rect_stroke_color_b" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="rect_stroke_color_a">A:</label>
 					<input type="number" min="0" max="1" step="0.01" id="rect_stroke_color_a"
-						class="border w-14 rounded-3 px-1">
-					<button id="rect_stroke_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="rect_stroke_change" class="bg-white rounded-pill border px-1">
 						Change
 					</button>
 				</div>
@@ -380,40 +396,47 @@
 			</div>
 
 			<!-- modifiable object properties for a circle object -->
-			<div id="object_properties_circ" class="hidden">
+			<div id="object_properties_circ" class="">
 				<div class="mb-2">
-					<p class="font-bold">Fill Color</p>
+					<p class="fw-bold">Fill Color</p>
 					<label for="circ_fill_color_r">R:</label>
-					<input type="number" min="0" max="255" id="circ_fill_color_r" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="circ_fill_color_r" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="circ_fill_color_g">G:</label>
-					<input type="number" min="0" max="255" id="circ_fill_color_g" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="circ_fill_color_g" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="circ_fill_color_b">B:</label>
-					<input type="number" min="0" max="255" id="circ_fill_color_b" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="circ_fill_color_b" class="border rounded-3 px-1"
+						style="width: 60px">
 					<label for="circ_fill_color_a">A:</label>
 					<input type="number" min="0" max="1" step="0.01" id="circ_fill_color_a"
-						class="border w-14 rounded-3 px-1">
-					<button id="circ_fill_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="circ_fill_change" class="bg-white rounded-pill border px-1 ">
 						Change
 					</button>
 				</div>
 				<div id="circ_fill_color_picker" class="mb-3">
 				</div>
 
-				<label for="circ_stroke_width" class="font-bold">Stroke Width:</label>
-				<input type="number" id="circ_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2 w-[70px]">
+				<label for="circ_stroke_width" class="fw-bold">Stroke Width:</label>
+				<input type="number" id="circ_stroke_width" min="0.1" step="0.1" class="border rounded-3 px-2"
+					style="width: 70px">
 				<br>
 				<div class="mb-2">
-					<p class="font-bold">Stroke Color</p>
+					<p class="fw-bold">Stroke Color</p>
 					<label for="circ_stroke_color_r">R:</label>
-					<input type="number" min="0" max="255" id="circ_stroke_color_r" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="circ_stroke_color_r" class="border  rounded-3 px-1"
+						style="width: 60px">
 					<label for="circ_stroke_color_g">G:</label>
-					<input type="number" min="0" max="255" id="circ_stroke_color_g" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="circ_stroke_color_g" class="border  rounded-3 px-1"
+						style="width: 60px">
 					<label for="circ_stroke_color_b">B:</label>
-					<input type="number" min="0" max="255" id="circ_stroke_color_b" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="circ_stroke_color_b" class="border  rounded-3 px-1"
+						style="width: 60px">
 					<label for="circ_stroke_color_a">A:</label>
 					<input type="number" min="0" max="1" step="0.01" id="circ_stroke_color_a"
-						class="border w-14 rounded-3 px-1">
-					<button id="circ_stroke_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="circ_stroke_change" class="bg-white rounded-pill border px-1 ">
 						Change
 					</button>
 				</div>
@@ -422,19 +445,22 @@
 			</div>
 
 			<!-- modifiable object properties for a line object -->
-			<div id="object_properties_line" class="hidden">
+			<div id="object_properties_line" class="">
 				<div class="mb-6">
-					<p class="font-bold">Color</p>
+					<p class="fw-bold">Color</p>
 					<label for="line_stroke_color_r">R:</label>
-					<input type="number" min="0" max="255" id="line_stroke_color_r" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="line_stroke_color_r" class="border  rounded-3 px-1"
+						style="width: 60px">
 					<label for="line_stroke_color_g">G:</label>
-					<input type="number" min="0" max="255" id="line_stroke_color_g" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="line_stroke_color_g" class="border  rounded-3 px-1"
+						style="width: 60px">
 					<label for="line_stroke_color_b">B:</label>
-					<input type="number" min="0" max="255" id="line_stroke_color_b" class="border  rounded-3 px-1">
+					<input type="number" min="0" max="255" id="line_stroke_color_b" class="border  rounded-3 px-1"
+						style="width: 60px">
 					<label for="line_stroke_color_a">A:</label>
 					<input type="number" min="0" max="1" step="0.01" id="line_stroke_color_a"
-						class="border w-14 rounded-3 px-1">
-					<button id="line_stroke_change" class="rounded-pill border px-1 hover:drop-shadow-lg">
+						class="border w-14 rounded-3 px-1" style="width: 60px">
+					<button id="line_stroke_change" class="bg-white rounded-pill border px-1 ">
 						Change
 					</button>
 				</div>
@@ -491,7 +517,7 @@
 					<img src="./assets/svg/bootstrap/bi-x-lg.svg">
 				</button>
 			</div>
-			<h4 class="text-center font-bold mb-3">Generate Item Objects</h4>
+			<h4 class="text-center fw-bold mb-3">Generate Item Objects</h4>
 		</div>
 		<div class="px-2">
 			<table id="item_card_table" class="table fs-6">
@@ -539,6 +565,43 @@
 			<button id="change_canvas_res_button" class="">Change</button>
 			<button onclick="dialog_close('change_canvas_resolution_dialog')" class="">Cancel</button>
 		</center>
+	</dialog>
+
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="d-none rounded border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="d-none bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_user" class="d-none">User doesn't exist.</h5>
+			<h5 id="login_dialog_warn_password" class="d-none">Wrong Password.</h5>
+		</div>
+		<p id="login_redirect_site" class="d-none"></p>
+		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
+		<center>
+			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75 rounded-pill">
+			<label for="login_username" class="pb-2">Username</label>
+			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center rounded-pill">
+			<label for="login_password" class="mb-3">Password</label>
+		</center>
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4 text-center">
+			<button onclick="login_user()" class="btn btn-primary rounded-pill mb-2">
+				LOGIN
+			</button>
+			<br>
+			<button onclick="dialog_close('login_dialog')" class="btn btn-outline-secondary border-1 rounded-pill">
+				CANCEL
+			</button>
+		</div>
+	</dialog>
+
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_access" class="">Lack access rights for this feature.</h5>
+		</div>
+		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn btn-outline-primary shadow-sm">
+			OK
+		</button>
 	</dialog>
 
 	<script src="./bootstrap/js/bootstrap.min.js"></script>
