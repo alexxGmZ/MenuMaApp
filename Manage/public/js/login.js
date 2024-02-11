@@ -35,7 +35,7 @@ function login_dialog_open(redirect_site) {
 		const siteHeaders = {
 			"inventory_revised.html": "Manage Menu Items",
 			"registration_revised.html": "Manage Users/Employee",
-			"kiosk-devices.html": "Manage Kiosk Devices",
+			"kiosk-devices-revised.html": "Manage Kiosk Devices",
 			"order-history-revised.html": "Order History and Statistics",
 			"designer_revised.html": "Menu/Kiosk Designer"
 		};
@@ -116,7 +116,7 @@ function process_site_access_rights(site) {
 		"inventory_revised.html": "menu_items",
 		"order-history-revised.html": "reports",
 		"registration_revised.html": "manage_users",
-		"kiosk-devices.html": "manage_devices",
+		"kiosk-devices-revised.html": "manage_devices",
 	};
 
 	const required_site_rights = site_access_rights_map[site];

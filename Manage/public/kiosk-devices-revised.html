@@ -1,0 +1,404 @@
+<!--
+	This is for Kiosk Devices
+	This is where the establishment register and connects android devices that will serve
+		as an order kiosk
+
+	Intended functions or features:
+		* Generate unique API connection token for each authorized Android devices with
+			Order application
+		* List all authorized android connections
+		* Establish a secured connection throuh API connection tokens to an authorized
+			Android device with an Order application installed
+		* Search and List all LAN IP Addresses
+
+	NOTE: The intended functions or features might change depending on the status of the
+	project
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MenuMaApp Manage: Kiosk Devices</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
+</head>
+
+<body class="p-4">
+	<!--NAV BAR-->
+	<nav class="navbar navbar-expand-lg shadow-sm bg-white p-2 fixed-top">
+		<div class="container-fluid d-flex flex-row">
+			<a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+				aria-controls="offcanvasExample">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list pb-1"
+					viewBox="0 0 16 16">
+					<path fill-rule="evenodd"
+						d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+				</svg>
+				Libres Cafe
+			</a>
+			<div class="collapse navbar-collapse px-2" id="navbarSupportedContent">
+				<button onclick="dialog_open('add_new_device_dialog')"
+					class="btn border btn-outline-secondary border-1 shadow-sm me-2">
+					<img src="assets/svg/plus-circle.svg">
+					<span class="mx-2">REGISTER A DEVICE</span>
+				</button>
+			</div>
+		</div>
+	</nav>
+	<!--END OF NAV BAR-->
+
+	<!--SIDE BAR-->
+	<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Libres Cafe</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+				<a href="./main_revised.html" class="btn mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/home-icon-fill.svg" class="pe-2">Home
+				</a>
+				<button onclick="login_dialog_open('inventory_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/list.svg" class="pe-2">Menu Items
+				</button>
+				<button onclick="login_dialog_open('registration_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/people-circle.svg" class="pe-2">Manage Users
+				</button>
+				<button onclick="login_dialog_open('kiosk-devices-revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start bg-primary-subtle">
+					<img src="./assets/svg/bootstrap/tablet-landscape-fill.svg" class="pe-2">Kiosk Devices
+				</button>
+				<button onclick="login_dialog_open('order-history-revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/graph-up.svg" class="pe-2">Order Statistics
+				</button>
+				<button onclick="login_dialog_open('designer_revised.html')"
+					class="btn btn-outline-primary mb-2 border border-1 shadow-sm pb-2 text-start">
+					<img src="./assets/svg/bootstrap/palette-fill.svg" class="pe-2">Designer
+				</button>
+				<button id="logout_button" onclick="logout_user()"
+					class="d-none position-absolute bottom-0 btn btn-outline-warning mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-right.svg" class="pe-2">
+					<span>Logout</span>
+					<span id="user_span" class="d-none">
+						"<span id="user_name">user name</span>"
+					</span>
+				</button>
+				<button id="login_button" onclick="login_dialog_open()"
+					class="position-absolute bottom-0 btn btn-outline-primary mb-2 shadow-sm pb-2">
+					<img src="./assets/svg/bootstrap/box-arrow-left.svg" class="pe-2">
+					Login
+				</button>
+			</div>
+		</div>
+	</div>
+	<!--END OF SIDE BAR-->
+	
+	<!-- Dialog for addign a new device-->
+	<dialog id="add_new_device_dialog" class="rounded border border-2 border-dark-subtle shadow">
+		<h3 class="font-bold text-center">Register a Device</h3>
+		<div class="input-group">
+			<label for="device_ip" class="input-group-text">IP Address:</label>
+			<input type="text" id="device_ip" value=""
+				class="form-control">
+		</div>
+		<center class="mb-2">
+			<span class="text-danger class" id="invalid_ip_error_placeholder">Invalid IPV4 Address!</span>
+			<span class="text-danger class" id="invalid_ip_error_placeholder_exists">IPV4 Address already exists!</span>
+		</center>
+		<div class="input-group mb-2">
+			<label for="device_name" class="input-group-text">Device Name:</label>
+			<input type="text" id="device_name" value=""
+				class="form-control">
+		</div>
+		<div class="input-group">
+			<label for="device_mac_address" class="input-group-text">MAC Address:</label>
+			<input type="text" id="device_mac_address" value=""
+				class="form-control">
+		</div>
+		<center class="mb-2">
+			<span class="text-danger class" id="invalid_mac_error_placeholder">Invalid MAC Address!</span>
+			<span class="text-danger class" id="invalid_mac_error_placeholder_exists">MAC Address already exists!</span>
+		</center>
+		<div class="text-center">
+			<button onclick="dialog_close('add_new_device_dialog')"
+				class="btn btn-outline-danger mb-2 border border-1 shadow-sm pb-2">Cancel</button>
+			<button onclick="register_device()"
+				class="btn btn-outline-success mb-2 border border-1 shadow-sm pb-2">Register</button>
+		</div>
+	</dialog>
+
+	<br><br>
+
+	<!-- device register success dialog -->
+	<dialog id="device_register_success_dialog" class="rounded border border-2 border-dark-subtle shadow">
+		<div class="bg-success-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/check-circle.svg" width="80px" class="">
+			<h5 class="">Device successfully registered</h5>
+		</div>
+		<div class="input-group mb-2">
+			<label for="success_device_ip" class="input-group-text">IP Address:</label>
+			<span id="success_device_ip"
+				class="form-control"></span>
+		</div>
+		<div class="input-group mb-2">
+			<label for="success_device_name" class="input-group-text">Device Name:</label>
+			<span id="success_device_name"
+				class="form-control"></span>
+		</div>
+		<div class="input-group mb-2">
+			<label for="success_device_mac" class="input-group-text">MAC Address:</label>
+			<span id="success_device_mac"
+				class="form-control"></span>
+		</div>
+		<div class="input-group mb-2">
+			<label for="success_device_api_token" class="input-group-text">Token:</label>
+			<span id="success_device_api_token"
+				class="form-control"></span>
+		</div>
+		<center>
+			<button onclick="refresh_registered_devices_table()"
+				class="btn border btn-outline-success border-1 shadow-sm w-50">OK</button>
+		</center>
+	</dialog>
+
+	<!-- ipv4 address already exist dialog -->
+	<dialog id="ipv4_already_exist_dialog" class="hidden rounded-lg text-center mx-auto">
+		<p>
+			<span id="existing_ip" class="font-bold"></span>
+			already exist
+		</p>
+		<br>
+		<center>
+			<button onclick="dialog_close('ipv4_already_exist_dialog')"
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
+		</center>
+	</dialog>
+
+	<!-- mac address already exist dialog -->
+	<dialog id="mac_address_already_exist_dialog" class="hidden rounded-lg text-center mx-auto">
+		<p>
+			<span id="existing_mac_address" class="font-bold"></span>
+			already exist
+		</p>
+		<br>
+		<center>
+			<button onclick="dialog_close('mac_address_already_exist_dialog')"
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
+		</center>
+	</dialog>
+
+	<!-- invalid ipv4 dialog -->
+	<dialog id="invalid_ipv4_dialog" class="hidden rounded-lg text-center mx-auto">
+		<p>
+			<span id="invalid_ip" class="font-bold"></span>
+			is invalid IPV4 address
+		</p>
+		<br>
+		<center>
+			<button onclick="dialog_close('invalid_ipv4_dialog')"
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
+		</center>
+	</dialog>
+
+	<!-- invalid ipv4 dialog -->
+	<dialog id="invalid_mac_address_dialog" class="hidden rounded-lg text-center mx-auto">
+		<p>
+			<span id="invalid_mac_address" class="font-bold"></span>
+			is invalid MAC address
+		</p>
+		<br>
+		<center>
+			<button onclick="dialog_close('invalid_mac_address_dialog')"
+				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
+		</center>
+	</dialog>
+
+	<!-- display server ip address -->
+	<div class="float-start rounded border border-2 border-light-subtle shadow-sm p-2">
+		<p>Server IP Address</p>
+		<p title="Use if Server Device is PLUGGED IN in the modem/router">Ethernet: <span id="ethernet_ip_address"></span></p>
+		<p title="Use if Server Device is NOT PLUGGED IN in the modem/rounter">WLAN: <span id="wlan_ip_address"></span></p>
+		<!-- Refresh Button -->
+		<button onclick="refresh_registered_devices_table()"
+				class="btn border btn-outline-secondary border-1 shadow-sm">
+				<img src="assets/svg/refresh.svg" class="hover:text-zinc-50">
+			<span class="mx-2">Refresh table</span>
+		</button>
+	</div>
+
+	<br>
+	<br>
+
+	<center>
+	<h1 style="width: 100%; position: absolute;" class="pe-5">Registered Devices</h1>
+	</center>
+
+	<br><br><br><br><br><br>
+
+	<!-- list all registered android devices -->
+	<div class="mx-5">
+		<div class="row fw-bold p-3">
+			<div class="col text-center">
+				Local IP Address
+			</div>
+			<div class="col text-center">
+				Device Name
+			</div>
+			<div class="col text-center">
+				API Token
+			</div>
+			<div class="col text-center">
+				MAC Address
+			</div>
+			<div class="col text-center">
+				Timestamp
+			</div>
+			<div class="col text-center">
+				Actions
+			</div>
+		</div>
+		<div id="registered_devices" class="list-group">
+			<!-- call the display_orders() function -->
+		</div>
+	</div>
+
+	<br><br>
+
+	<!-- list all available devices in the LAN -->
+	<h1 class="font-bold text-center">Available Devices</h1>
+	<center>
+		<button onclick="list_available_devices()"
+			class="btn border btn-outline-secondary border-1 shadow-sm">
+			Scan Network for Devices
+		</button>
+	</center>
+	<br><br>
+
+	<table class="w-25 mx-auto table-fixed text-center">
+		<thead>
+			<tr>
+				<th>Device Name</th>
+				<th>Local IP Address</th>
+			</tr>
+		</thead>
+
+		<tbody id="local_devices">
+			<!-- call list_available_devices() function -->
+		</tbody>
+	</table>
+
+	<br><br>
+
+	<!-- update device details dialog -->
+	<dialog id="update_device_dialog" class="rounded border border-2 border-dark-subtle shadow">
+		<div class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/pencil-alt.svg" width="80px" class="">
+			<h5 class="">Updating Device...</h5>
+		</div>
+		<div class="input-group mb-2">
+			<label for="update_device_ip" class="input-group-text">Device IP</label>
+			<span id="update_device_ip" class="form-control bg-light-subtle"></span>
+		</div>
+		<div class="input-group mb-2">
+			<label for="" class="input-group-text">Device Name</label>
+			<input type="text" id="update_device_name" placeholder="Device Name"
+			class="form-control">
+		</div>
+		<div class="input-group mb-2">
+			<label for="update_device_api_token" class="input-group-text">API Token</label>
+			<span id="update_device_api_token" class="form-control bg-light-subtle"></span>
+			<button id="update_device_gen_token_button"
+				class="btn btn-outline-secondary">
+				Generate New Token
+			</button>
+		</div>
+		<div class="input-group">
+			<label for="update_device_mac_address" class="input-group-text">MAC Address</label>
+			<input type="text" id="update_device_mac_address"
+				class="form-control">
+		</div>
+		<center class="mb-2">
+			<span class="text-danger class" id="invalid_mac_error_placeholder_update">Invalid MAC Address!</span>
+		</center>
+		<center>
+			<button onclick="dialog_close('update_device_dialog')"
+				class="btn btn-outline-danger">Cancel</button>
+			<button onclick="update_device()"
+				class="btn btn-outline-success">Update</button>
+		</center>
+	</dialog>
+
+	<!-- update device success dialog -->
+	<dialog id="update_device_success_dialog" class="rounded border border-2 border-dark-subtle shadow">
+		<div class="bg-success-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/check-circle.svg" width="80px" class="">
+			<h5 id="update_device_success_ip" class="">Placeholder</h5>
+		</div>
+		<center>
+			<button onclick="refresh_registered_devices_table()"
+				class="btn btn-outline-success w-25">OK</button>
+		</center>
+	</dialog>
+
+	<!-- delete device dialog -->
+	<dialog id="delete_device_dialog" class="rounded border border-2 border-dark-subtle shadow">
+		<div class="bg-danger-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 class="">Delete Device?</h5>
+		</div>
+		<div class="input-group mb-2">
+			<label for="delete_device_ip" class="input-group-text">Device IP</label><br>
+			<span id="delete_device_ip"
+				class="form-control bg-light-subtle"></span>
+		</div>
+		<div class="input-group mb-2">
+			<label for="delete_device_name" class="input-group-text">Device Name</label><br>
+			<span id="delete_device_name"
+				class="form-control bg-light-subtle"></span>
+		</div>
+		<div class="input-group mb-2">
+			<label for="delete_device_api_token" class="input-group-text">API Token</label><br>
+			<span id="delete_device_api_token"
+				class="form-control bg-light-subtle"></span>
+		</div>
+		<div class="input-group mb-3">
+			<label for="delete_device_mac_address" class="input-group-text">MAC Address</label><br>
+			<span id="delete_device_mac_address"
+				class="form-control bg-light-subtle"></span>
+		</div>
+		<center>
+			<button onclick="dialog_close('delete_device_dialog')"
+				class="btn btn-outline-success">Cancel</button>
+			<button onclick="delete_device()"
+				class="btn btn-outline-danger">Yes</button>
+		</center>
+	</dialog>
+
+	<!-- delete device success dialog -->
+	<dialog id="delete_device_success_dialog" class="rounded border border-2 border-dark-subtle shadow">
+		<div class="bg-success-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/check-circle.svg" width="80px" class="">
+			<h5 id="delete_device_success_ip">Place Holder</h5>
+		</div>
+		<center>
+			<button onclick="refresh_registered_devices_table()"
+				class="btn btn-outline-success w-25">OK</button>
+		</center>
+	</dialog>
+
+	<script src="./js/login.js"></script>
+	<script src="./js/kiosk-devices.js"></script>
+	<script src="./js/modules/disable_next_previous_key.js"></script>
+</body>
+
+</html>
