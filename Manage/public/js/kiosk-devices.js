@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	list_available_devices();
 	list_registered_devices();
-	toggle_sort_devices_table();
 	display_wlan_ip_address();
 
 	// to hide errors for adding new device if ip/mac address is empty or invalid input
@@ -9,9 +8,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	document.getElementById("invalid_ip_error_placeholder_exists").style.display = "none";
 	document.getElementById("invalid_mac_error_placeholder").style.display = "none";
 	document.getElementById("invalid_mac_error_placeholder_exists").style.display = "none";
-
-	// to hide error for updating a device if mac address is empty
-	document.getElementById("invalid_mac_error_placeholder_update").style.display = "none";
 
 });
 
@@ -76,11 +72,17 @@ async function list_available_devices() {
 	let placeholder = document.querySelector("#local_devices");
 	let out = "";
 	for (let row of devices) {
-		out += `
+		/* out += `
 			<tr class="border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
 				<td>${row.deviceName}</td>
 				<td>${row.ip}</td>
 			</tr>
+		`; */
+		out += `
+			<div class="row border border-b">
+				<div class="col">${row.deviceName}</div>
+				<div class="col">${row.ip}</div>
+			</div>
 		`;
 	}
 	placeholder.innerHTML = out;
@@ -143,26 +145,6 @@ function list_registered_devices() {
 		for (let row of result) {
 			var formatted_timestamp = new Date(row.timestamp_column).toLocaleString();
 			out += `
-				<!--
-				<tr class="border-b dark:border-gray-700 border-r border-l hover:bg-gray-300">
-					<td data-column="ip_address">${row.ip_address}</td>
-					<td data-column="device_name">${row.device_name}</td>
-					<td data-column="api_token">${row.api_token}</td>
-					<td data-column="mac_address">${row.mac_address}</td>
-					<td data-column="timestamp_column">${formatted_timestamp}</td>
-					<td>
-						<span class="">
-							<button class="rounded-lg bg-sky-500 py-2 px-2 inline-flex hover:bg-sky-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('update_device_dialog'); row_click()">
-								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
-							</button>
-							<button class="rounded-lg bg-rose-500 py-2 px-2 inline-flex hover:bg-rose-300 text-zinc-50 hover:drop-shadow-lg" onclick="dialog_open('delete_device_dialog'); row_click()">
-								<img src="assets/svg/trash.svg" class="">
-							</button>
-						</span>
-					</td>
-				</tr>
-				-->
-
 				<div class="shadow-sm mb-2 rounded-4 border border-2 p-3">
 					<div class="row">
 						<div class="col text-center fs-6">
@@ -181,10 +163,10 @@ function list_registered_devices() {
 							${formatted_timestamp}
 						</div>
 						<div class="col text-center">
-							<button class="btn border btn-outline-primary border-1 shadow-sm" onclick="dialog_open('update_device_dialog'); row_click(\`${encodeURIComponent(JSON.stringify(row))}\`);">
+							<button class="btn btn-outline-primary shadow-sm" onclick="dialog_open('update_device_dialog'); row_click(\`${encodeURIComponent(JSON.stringify(row))}\`);">
 								<img src="assets/svg/pencil-fill.svg" class="hover:text-zinc-50">
 							</button>
-							<button class="btn border btn-outline-danger border-1 shadow-sm" onclick="dialog_open('delete_device_dialog'); row_click(\`${encodeURIComponent(JSON.stringify(row))}\`);">
+							<button class="btn btn-danger border-1 shadow-sm" onclick="dialog_open('delete_device_dialog'); row_click(\`${encodeURIComponent(JSON.stringify(row))}\`);">
 								<img src="assets/svg/trash3-fill.svg" class="">
 							</button>
 						</div>
@@ -227,8 +209,6 @@ function register_device() {
 		// if ip address is not valid or null, show error
 		document.getElementById("invalid_ip_error_placeholder").style.display = "block";
 		document.getElementById("invalid_ip_error_placeholder_exists").style.display = "none";
-
-		// return dialog_open("invalid_ipv4_dialog");
 		return;
 	}
 
@@ -257,7 +237,6 @@ function register_device() {
 			else {
 				const existing_ip_record_count = ipResults[0].count;
 				if (existing_ip_record_count > 0) {
-					// dialog_open("ipv4_already_exist_dialog");
 					document.getElementById("invalid_ip_error_placeholder_exists").style.display = "block";
 					document.getElementById("invalid_ip_error_placeholder").style.display = "none";
 					document.getElementById("invalid_mac_error_placeholder").style.display = "none";
@@ -346,7 +325,7 @@ function register_device() {
 
 													// close the current dialog to prevent overlapping dialogs
 													dialog_close("add_new_device_dialog");
-													
+
 												}
 											}
 										);
@@ -384,9 +363,11 @@ function update_device() {
 	const ip = document.getElementById("update_device_ip").textContent;
 
 	const mac_address = document.getElementById("update_device_mac_address").value.trim();
-	if (mac_address !== null && mac_address !== "" && !is_valid_mac_address(mac_address))
-		// return alert("Invalid Mac address");
-		return document.getElementById("invalid_mac_error_placeholder_update").style.display = "block";
+	if (mac_address !== null && mac_address !== "" && !is_valid_mac_address(mac_address)) {
+		document.getElementById("invalid_mac_error_placeholder_update").classList.remove("d-none");
+		document.getElementById("invalid_mac_error_placeholder_update").classList.add("d-block");
+		return;
+	}
 
 	const device_name = document.getElementById("update_device_name").value;
 	const api_token = document.getElementById("update_device_api_token").innerHTML;
@@ -403,27 +384,11 @@ function update_device() {
 				dialog_open("update_device_success_dialog");
 				dialog_close("update_device_dialog");
 				document.getElementById("update_device_success_ip").innerHTML = ip + " is successfully updated";
-				document.getElementById("invalid_mac_error_placeholder_update").style.display = "none";
+				document.getElementById("invalid_mac_error_placeholder_update").classList.add("d-none");
+				document.getElementById("invalid_mac_error_placeholder_update").classList.remove("d-block");
 			}
 		}
 	);
-}
-
-function toggle_sort_devices_table() {
-	console.log("called toggle_sort_devices_table()");
-	// Add click event listeners to table headers for sorting
-	const sortOrders = {};
-	const headers = document.querySelectorAll("#registered_devices_table th[data-column]");
-
-	headers.forEach((header) => {
-		const column = header.getAttribute("data-column");
-		sortOrders[column] = "asc"; // Set the initial sort order to ascending
-		header.addEventListener("click", () => {
-			// Toggle sort order on each click
-			sortOrders[column] = sortOrders[column] === "asc" ? "desc" : "asc";
-			sort_registered_devices(document.getElementById("registered_devices_table"), column, sortOrders[column]);
-		});
-	});
 }
 
 function sort_registered_devices(table, column, sortOrder) {
@@ -459,15 +424,8 @@ document.getElementById("update_device_gen_token_button").addEventListener(
 
 function row_click(encoded_device) {
 	console.log("called row_click()");
-	
-	const decoded_device = JSON.parse(decodeURIComponent(encoded_device));
 
-	console.log(decoded_device.ip_address);
-    console.log(decoded_device.device_name);
-    console.log(decoded_device.api_token);
-    console.log(decoded_device.mac_address);
-    var formatted_timestamp = new Date(decoded_device.timestamp_column).toLocaleString();
-    console.log(formatted_timestamp);
+	const decoded_device = JSON.parse(decodeURIComponent(encoded_device));
 
 	// for updating device
 	document.getElementById("update_device_ip").innerHTML = decoded_device.ip_address;

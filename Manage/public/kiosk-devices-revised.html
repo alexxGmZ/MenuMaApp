@@ -25,8 +25,6 @@
 	<link href="./styles/custom_scrollbar.css" rel="stylesheet">
 	<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<script src="./bootstrap/js/bootstrap.min.js"></script>
-	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
 </head>
 
 <body class="p-4">
@@ -102,9 +100,9 @@
 		</div>
 	</div>
 	<!--END OF SIDE BAR-->
-	
+
 	<!-- Dialog for addign a new device-->
-	<dialog id="add_new_device_dialog" class="rounded border border-2 border-dark-subtle shadow">
+	<dialog id="add_new_device_dialog" class="d-none rounded-3 border shadow">
 		<h3 class="font-bold text-center">Register a Device</h3>
 		<div class="input-group">
 			<label for="device_ip" class="input-group-text">IP Address:</label>
@@ -131,9 +129,9 @@
 		</center>
 		<div class="text-center">
 			<button onclick="dialog_close('add_new_device_dialog')"
-				class="btn btn-outline-danger mb-2 border border-1 shadow-sm pb-2">Cancel</button>
+				class="btn btn-outline-secondary mb-2 rounded-pill pb-2">Cancel</button>
 			<button onclick="register_device()"
-				class="btn btn-outline-success mb-2 border border-1 shadow-sm pb-2">Register</button>
+				class="btn btn-outline-success mb-2 pb-2 rounded-pill">Register</button>
 		</div>
 	</dialog>
 
@@ -167,59 +165,7 @@
 		</div>
 		<center>
 			<button onclick="refresh_registered_devices_table()"
-				class="btn border btn-outline-success border-1 shadow-sm w-50">OK</button>
-		</center>
-	</dialog>
-
-	<!-- ipv4 address already exist dialog -->
-	<dialog id="ipv4_already_exist_dialog" class="hidden rounded-lg text-center mx-auto">
-		<p>
-			<span id="existing_ip" class="font-bold"></span>
-			already exist
-		</p>
-		<br>
-		<center>
-			<button onclick="dialog_close('ipv4_already_exist_dialog')"
-				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
-		</center>
-	</dialog>
-
-	<!-- mac address already exist dialog -->
-	<dialog id="mac_address_already_exist_dialog" class="hidden rounded-lg text-center mx-auto">
-		<p>
-			<span id="existing_mac_address" class="font-bold"></span>
-			already exist
-		</p>
-		<br>
-		<center>
-			<button onclick="dialog_close('mac_address_already_exist_dialog')"
-				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
-		</center>
-	</dialog>
-
-	<!-- invalid ipv4 dialog -->
-	<dialog id="invalid_ipv4_dialog" class="hidden rounded-lg text-center mx-auto">
-		<p>
-			<span id="invalid_ip" class="font-bold"></span>
-			is invalid IPV4 address
-		</p>
-		<br>
-		<center>
-			<button onclick="dialog_close('invalid_ipv4_dialog')"
-				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
-		</center>
-	</dialog>
-
-	<!-- invalid ipv4 dialog -->
-	<dialog id="invalid_mac_address_dialog" class="hidden rounded-lg text-center mx-auto">
-		<p>
-			<span id="invalid_mac_address" class="font-bold"></span>
-			is invalid MAC address
-		</p>
-		<br>
-		<center>
-			<button onclick="dialog_close('invalid_mac_address_dialog')"
-				class="rounded-lg bg-gray-300 py-2 px-2 hover:bg-green-600 hover:text-zinc-50 hover:drop-shadow-lg w-1/2">OK</button>
+				class="btn btn-outline-success rounded-pill">OK</button>
 		</center>
 	</dialog>
 
@@ -246,7 +192,7 @@
 	<br><br><br><br><br><br>
 
 	<!-- list all registered android devices -->
-	<div class="mx-5">
+	<div class="">
 		<div class="row fw-bold p-3">
 			<div class="col text-center">
 				Local IP Address
@@ -284,27 +230,29 @@
 	</center>
 	<br><br>
 
-	<table class="w-25 mx-auto table-fixed text-center">
-		<thead>
-			<tr>
-				<th>Device Name</th>
-				<th>Local IP Address</th>
-			</tr>
-		</thead>
+	<div>
+		<div class="row fw-bold p-3">
+			<div class="col text-center">
+				Device Name
+			</div>
+			<div class="col text-center">
+				Local IP Address
+			</div>
+		</div>
+		<div id="local_devices" class="text-center p-3">
 
-		<tbody id="local_devices">
-			<!-- call list_available_devices() function -->
-		</tbody>
-	</table>
+		</div>
+	</div>
 
 	<br><br>
 
 	<!-- update device details dialog -->
-	<dialog id="update_device_dialog" class="rounded border border-2 border-dark-subtle shadow">
-		<div class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
-			<img src="assets/svg/pencil-alt.svg" width="80px" class="">
-			<h5 class="">Updating Device...</h5>
+	<dialog id="update_device_dialog" class="rounded-3 border border-2 shadow">
+		<div id="invalid_mac_error_placeholder_update" class="d-none mb-3 text-center bg-warning-subtle rounded-3 p-2">
+			<img src="./assets/svg/exclamation.svg" width="80px">
+			<h5 class="">Invalid Mac Address</h5>
 		</div>
+		<h5 class="text-center mb-3">Update Device</h5>
 		<div class="input-group mb-2">
 			<label for="update_device_ip" class="input-group-text">Device IP</label>
 			<span id="update_device_ip" class="form-control bg-light-subtle"></span>
@@ -322,19 +270,17 @@
 				Generate New Token
 			</button>
 		</div>
-		<div class="input-group">
+		<div class="input-group mb-3">
 			<label for="update_device_mac_address" class="input-group-text">MAC Address</label>
 			<input type="text" id="update_device_mac_address"
 				class="form-control">
 		</div>
-		<center class="mb-2">
-			<span class="text-danger class" id="invalid_mac_error_placeholder_update">Invalid MAC Address!</span>
-		</center>
 		<center>
 			<button onclick="dialog_close('update_device_dialog')"
-				class="btn btn-outline-danger">Cancel</button>
+				class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
+			<br>
 			<button onclick="update_device()"
-				class="btn btn-outline-success">Update</button>
+				class="btn btn-outline-success rounded-pill">Update</button>
 		</center>
 	</dialog>
 
@@ -346,7 +292,7 @@
 		</div>
 		<center>
 			<button onclick="refresh_registered_devices_table()"
-				class="btn btn-outline-success w-25">OK</button>
+				class="btn btn-outline-success rounded-pill">OK</button>
 		</center>
 	</dialog>
 
@@ -378,9 +324,10 @@
 		</div>
 		<center>
 			<button onclick="dialog_close('delete_device_dialog')"
-				class="btn btn-outline-success">Cancel</button>
+				class="btn btn-outline-secondary rounded-pill mb-2">Cancel</button>
+			<br>
 			<button onclick="delete_device()"
-				class="btn btn-outline-danger">Yes</button>
+				class="btn btn-danger rounded-pill">Yes</button>
 		</center>
 	</dialog>
 
@@ -392,13 +339,52 @@
 		</div>
 		<center>
 			<button onclick="refresh_registered_devices_table()"
-				class="btn btn-outline-success w-25">OK</button>
+				class="btn btn-outline-success rounded-pill">OK</button>
 		</center>
+	</dialog>
+
+	<!-- login dialog -->
+	<dialog id="login_dialog" class="d-none rounded border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="d-none bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_user" class="d-none">User doesn't exist.</h5>
+			<h5 id="login_dialog_warn_password" class="d-none">Wrong Password.</h5>
+		</div>
+		<p id="login_redirect_site" class="d-none"></p>
+		<h1 id="login_dialog_header" class="text-center font-bold"></h1><br>
+		<center>
+			<input type="text" id="login_username" placeholder="" class="form-control text-center w-75 rounded-pill">
+			<label for="login_username" class="pb-2">Username</label>
+			<input type="password" id="login_password" placeholder="" class="form-control w-75 text-center rounded-pill">
+			<label for="login_password" class="mb-3">Password</label>
+		</center>
+		<div class="grid grid-cols-1 px-5 pt-2 gap-4 text-center">
+			<button onclick="login_user()" class="btn btn-primary rounded-pill mb-2">
+				LOGIN
+			</button>
+			<br>
+			<button onclick="dialog_close('login_dialog')" class="btn btn-outline-secondary border-1 rounded-pill">
+				CANCEL
+			</button>
+		</div>
+	</dialog>
+
+	<!-- when the user lacks access privilege -->
+	<dialog id="lack_access_privilege_dialog" class="d-none rounded text-center border border-dark-subtle shadow">
+		<div id="login_dialog_warn_banner" class="bg-warning-subtle rounded-3 text-center p-2 mb-2">
+			<img src="assets/svg/exclamation.svg" width="80px" class="">
+			<h5 id="login_dialog_warn_access" class="">Lack access rights for this feature.</h5>
+		</div>
+		<button onclick="dialog_close('lack_access_privilege_dialog')" class="btn btn-outline-primary shadow-sm rounded-pill">
+			OK
+		</button>
 	</dialog>
 
 	<script src="./js/login.js"></script>
 	<script src="./js/kiosk-devices.js"></script>
 	<script src="./js/modules/disable_next_previous_key.js"></script>
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 
 </html>
