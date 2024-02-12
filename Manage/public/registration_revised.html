@@ -114,11 +114,11 @@
 				<tr>
 					<th data-column="employee_id">ID</th>
 					<th data-column="employee_name">Name</th>
-					<th data-column="employee_design_priv">Design Access Rights</th>
-					<th data-column="employee_inventory_priv">Inventory Access Rights</th>
-					<th data-column="employee_reports_priv">View Reports Access Rights</th>
-					<th data-column="employee_manage_priv">View Employees Access Rights</th>
-					<th data-column="employee_devices_priv">View Devices Access Rights</th>
+					<th data-column="employee_design_priv">Designer</th>
+					<th data-column="employee_inventory_priv">Menu Items</th>
+					<th data-column="employee_reports_priv">Order Statistics</th>
+					<th data-column="employee_manage_priv">Manage Users</th>
+					<th data-column="employee_devices_priv">Kiosk Devices</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -138,107 +138,96 @@
 		<input type="text" name="name_2" id="name_2"
 			class="form-control text-center"><br>
 
+		<span>Access rights:</span>
 		<ul class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox" name="design_priv_2" id="design_priv_2"
 					class="">
-				<label for="design_priv">Design Access Rights</label>
+				<label for="design_priv">Designer</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="inventory_priv_2" id="inventory_priv_2"
 					class="">
-				<label for="inventory_priv">Inventory Access Rights</label>
+				<label for="inventory_priv">Menu Items</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="report_priv_2" id="report_priv_2"
 					class="">
-				<label for="report_priv">View Reports Access Rights</label>
+				<label for="report_priv">Order Statistics</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="employee_priv_2" id="employee_priv_2"
 					class="">
-				<label for="employee_priv_2">View Employee Access Rights</label>
+				<label for="employee_priv_2">Manage Users</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="devices_priv_2" id="devices_priv_2"
 					class="">
-			<label for="devices_priv">View Devices Access Rights</label>
+			<label for="devices_priv">Kiosk Devices</label>
 			</li>
 		</ul>
 
 		<div class="pt-3">
 			<button onclick="dialog_close('update_employee_dialog')"
-				class="btn border btn-outline-danger border-1 shadow-sm">
+				class="btn btn-outline-secondary rounded-pill">
 				Cancel update
 			</button>
 			<button onclick="update_employee(); dialog_close('update_employee_dialog')"
-				class="btn border btn-outline-success border-1 shadow-sm">
-				Update Employee
+				class="btn btn-success rounded-pill">
+				Update User
 			</button>
 		</div>
 	</dialog>
-
-	<!-- UPDATE EMPLOYEE SUCCESS -->
-	<dialog id="update_employee_successs_dialog" class="hidden d-none rounded border border-2 shadow">
-		<span id="update_employee_placeholder">Employee NAME</span>
-		<span> is successfully updated.</span><br><br>
-		<div class="d-flex justify-content-center">
-			<button onclick="refresh_employee_table()"
-				class="btn border btn-outline-success border-1 shadow-sm d-flex justify-content-center">
-				OK
-			</button>
-		</div>
-	</dialog>
-
 
 	<!-- ADD NEW EMPLOYEE DIALOG -->
-	<dialog id="add_employee_dialog" class="hidden d-none rounded border border-2 shadow">
-		<p class="text-center">Add new employee</p>
-		<p class="hidden" id="id"></p>
+	<dialog id="add_employee_dialog" class="d-none rounded-3 border border-2 shadow">
+		<p class="text-center">Add new User</p>
+		<p class="d-none" id="id"></p>
 
 		<!-- <label for="name">Name:</label> -->
-		<input type="text" name="name" id="name" placeholder="Enter employee name"
+		<input type="text" name="name" id="name" placeholder="Name"
 			class="form-control mb-2 text-center">
 
 		<!-- <label for="password">Password:</label> -->
-		<input type="text" name="password" id="password" placeholder="Enter password"
+		<input type="text" name="password" id="password" placeholder="Password"
 			class="form-control mb-4 text-center">
 
+		<span>Access rights:</span>
 		<ul class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox" name="design_priv" id="design_priv"
 					class="">
-				<label for="design_priv">Design Access Rights</label>
+				<label for="design_priv">Design</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="inventory_priv" id="inventory_priv"
 					class="">
-				<label for="inventory_priv">Inventory Access Rights</label>
+				<label for="inventory_priv">Menu Items</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="report_priv" id="report_priv"
 					class="">
-				<label for="report_priv">View Reports Access Rights</label>
+				<label for="report_priv">Order Statistics</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="employee_priv" id="employee_priv"
 					class="">
-				<label for="employee_priv">View Employee Access Rights</label>
+				<label for="employee_priv">Manage Users</label>
 			</li>
 			<li class="list-group-item">
 				<input type="checkbox" name="devices_priv" id="devices_priv"
 					class="">
-				<label for="devices_priv">View Devices Access Rights</label>
+				<label for="devices_priv">Kiosk Devices</label>
 			</li>
 		</ul>
-		<div class="pt-3">
+		<div class="pt-3 text-center">
 			<button onclick="dialog_close('add_employee_dialog')"
-				class="btn border btn-outline-danger border-1 shadow-sm">
-				CANCEL
+				class="btn btn-outline-secondary rounded-pill">
+				Cancel
 			</button>
 			<button onclick="register_employee(); dialog_close('add_employee_dialog')"
-				class="btn border btn-outline-success border-1 shadow-sm">
-				SUBMIT EMPLOYEE
+				class="btn btn-outline-success rounded-pill">
+				Add
 			</button>
 		</div>
 	</dialog>

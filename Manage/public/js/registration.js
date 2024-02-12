@@ -130,11 +130,11 @@ function list_registered_employees() {
 					<td data-column="employee_devices_priv">${row.manage_devices_priv}</td>
 					<td>
 						<span class="action-btn">
-							<button onclick="dialog_open('update_employee_dialog'); rowClick()" class="btn border btn-outline-secondary border-1 shadow-sm ms-2">
-								<img src="assets/svg/pencil-alt.svg" class="hover:text-zinc-50">
+							<button onclick="dialog_open('update_employee_dialog'); rowClick()" class="btn btn-outline-primary">
+								<img src="assets/svg/pencil-alt.svg" class="">
 							</button>
-							<button onclick="delete_employee()" class="btn border btn-outline-secondary border-1 shadow-sm ms-2">
-								<img src="assets/svg/trash.svg" class="hover:text-zinc-50">
+							<button onclick="delete_employee()" class="btn btn-danger">
+								<img src="assets/svg/trash.svg" class="">
 							</button>
 						</span>
 					</td>
@@ -309,10 +309,6 @@ function update_employee() {
 		if (error) {
 			alert("Some fields are empty");
 			console.log(error);
-		}
-		else {
-			dialog_open('update_employee_successs_dialog');
-			document.getElementById("update_employee_placeholder").innerHTML = document.getElementById("name_2").value;
 		}
 	});
 }
